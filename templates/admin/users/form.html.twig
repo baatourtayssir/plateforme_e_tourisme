@@ -6,7 +6,7 @@ New under admin
 {% endblock %}
 
 {% block body %}
-  {% include "admin/navbar.html.twig" %}
+
 <div class="card-body text-centre">
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
 	<div class="container">
@@ -34,26 +34,27 @@ New under admin
 
 <section class="container">
     <div class="row">
-        <div class="col"></div>
+        <div class="col"></div> 
             <fieldset>
 
-                <h1>Create new user</h1>
+                <h1>Create/Edit user</h1> 
                 {{ form_start(form) }}
                 {{ form_widget(form) }}
 
-                <button class="btn btn-success">{{ button_label|default('Save') }}</button>
+                <button type="submit" class="btn btn-success">{{ button_label|default('Save') }}</button>
 
                 <br>
 
                 {{ form_end(form) }}
 
                 <br>
-                {# <a href="{{ path('app_sous_admin_index') }}" class="btn btn-dark">back to list</a> #}
+              
             </fieldset>
-
     </div>
 </section>
+
+
 </div>
-   {% include "admin/footer.html.twig" %}
+
 {% endblock %}
  

@@ -8,6 +8,7 @@ use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 
@@ -16,12 +17,12 @@ class AdminController extends AbstractController
     #[Route('/admin', name: 'admin_')]
     public function home(): Response
     {
-        return $this->render('admin/home.html.twig');
+        return $this->render('base.html.twig');
     }
 
-    #[Route('/add/user', name: 'user_')]
+    #[Route('/list/user', name: 'user_')]
     public function usersList(UserRepository $users){
-        return $this->render("admin/users/home.html.twig",[
+        return $this->render("admin/users/index.html.twig",[
             'users' =>$users->findAll()
         ]);
 
@@ -49,7 +50,7 @@ class AdminController extends AbstractController
 
 
 
-            return $this->renderForm('admin/users/index/edit.html.twig', [
+            return $this->renderForm('admin/users/form.html.twig', [
                 'user' => $user,
                 'form' => $form,
             ]);
@@ -59,14 +60,20 @@ class AdminController extends AbstractController
 
 
         #[Route('/new', name: 'app_users_new', methods: ['GET', 'POST'])]
-        public function new(Request $request, UserRepository $userRepository): Response
+        public function new(Request $request, UserRepository $userRepository, UserPasswordHasherInterface $userPasswordHasher): Response
         
         {
              $user = new User();
              $form = $this->createForm(CrudUsersType::class, $user);
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
-                $sousAdmin = $form->getData();
+            
+                $user->setPassword(
+                    $userPasswordHasher->hashPassword(
+                        $user,
+                        $form->get('password')->getData()
+                    )
+                );
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($user);
                 $entityManager->flush();
@@ -76,7 +83,7 @@ class AdminController extends AbstractController
             return $this->redirectToRoute('user_', [], Response::HTTP_SEE_OTHER);
         }
     
-            return $this->renderForm('admin/users/_form.html.twig', [
+            return $this->renderForm('admin/users/form.html.twig', [
                 'user' => $user,
                 'form' => $form,
             ]);
@@ -88,7 +95,6 @@ class AdminController extends AbstractController
     #[Route('/delete/{id}', name: 'app_users_delete')]
     public function delete(Request $request, $id)
     {
-        return $this->renderForm('admin/users/index/_delete_form.html.twig');
         $user = $this->getDoctrine()->getRepository(User::class)->find($id);
 
         $entityManager = $this->getDoctrine()->getManager();
