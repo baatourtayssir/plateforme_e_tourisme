@@ -20,6 +20,8 @@ class AdminController extends AbstractController
         return $this->render('base.html.twig');
     }
 
+
+    // gestion user
     #[Route('/list/user', name: 'user_')]
     public function usersList(UserRepository $users){
         return $this->render("admin/users/index.html.twig",[
@@ -42,13 +44,6 @@ class AdminController extends AbstractController
             $this->addFlash('message','user modify successfully');
             return $this->redirectToRoute('user_');
         }
-
-    //     return $this->renderForm('admin/users/index/edit.html.twig', [
-    //         'userForm' => $form->createView()
-    //     ]);
-    // }
-
-
 
             return $this->renderForm('admin/users/form.html.twig', [
                 'user' => $user,
@@ -105,8 +100,9 @@ class AdminController extends AbstractController
         $response = new Response();
         $response->send();
 
-
         return $this->redirectToRoute('user_');
+
+        
     }
 
   }

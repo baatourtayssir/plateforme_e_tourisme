@@ -13,20 +13,13 @@
 
 				<fieldset>
 					{# {% if  app.user %}
-																<h1>Edit user</h1>
-															{% else %}
-																<h1>Create new user</h1>
-															{% endif %} #}
+						<h1>Edit user</h1>
+					{% else %}
+						<h1>Create new user</h1>
+					{% endif %} #}
 					{{ form_start(form) }}
 					{{ form_widget(form) }}
-					{# {% for role in user.roles %}
-						{% if role == "ROLE_AGENT" %}
-							<div class="form-group">
-								<label>Nom agence:</label>
-								<input type="text" class="form-control" placeholder="Eugene Kopyov">
-							</div>
-						{% endif %}
-					{% endfor %} #}
+					
 					<div class="fc-left">
 						<button type="submit" class="btn btn-success">{{ button_label|default('Save') }}</button>
 					</div>
@@ -36,7 +29,7 @@
 
 				</fieldset>
 			</form>
-			<a href="{{ path("user_")}}">
+			<a href="{{ path("app_agence_index")}}">
 				<button class="btn btn-light">
 					Close
 				</button>

@@ -9,20 +9,20 @@
 	<script src="{{asset("global_assets/js/demo_pages/datatables_basic.js")}}"></script>
 	<!-- /theme JS files -->
 {% endblock %}
-{% block title %}User list
+{% block title %}Agence list
 {% endblock %}
 {% block menu %}
 	<h4>
 		<i class="icon-arrow-left52 mr-2"></i>
 		<span class="font-weight-semibold">Home</span>
-		- User pages</h4>
+		- Agence </h4>
 {% endblock %}
 {% block menu_petit %}
 	<div class="breadcrumb">
 		<a href="index.html" class="breadcrumb-item">
 			<i class="icon-home2 mr-2"></i>
 			Home</a>
-		<span class="breadcrumb-item active">User Pages - User management
+		<span class="breadcrumb-item active">Agence - Gestion agence
 		</span>
 	</div>
 {% endblock %}
@@ -34,16 +34,16 @@
 	<!-- Basic datatable -->
 	<div class="card">
 		<div class="card-header header-elements-inline">
-			<h5 class="card-title">Users list</h5>
+			<h5 class="card-title">Agence list</h5>
 			<div class="header-elements">
 				<div class="list-icons">
-					<a href="{{path('app_users_new')}}" class="nav-link">
+					<a href="{{path('app_agence_new')}}" class="nav-link">
 
 						<button type="submit" class="btn btn-success">
 							<b>
 								<i class="icon-plus3"></i>
 							</b>
-							Add user</button>
+							 Agence management </button>
 					</a>
 				</div>
 
@@ -54,43 +54,30 @@
 			<thead>
 				<tr>
 					<th>Id</th>
-					<th>Email</th>
-					<th>Password</th>
-					<th>Lastname</th>
-					<th>Roles</th>
+					<th>Nom</th>
+					<th>Numéro de téléphone</th>
+					<th>Adresse</th>
+					<th>Description</th>
+					<th>Logo</th>
 					<th class="text-center">Actions</th>
 				</tr>
+
+
 			</thead>
 			<tbody>
-				{% for user in users %}
+				{% for agence in agences %}
 					<tr>
-						<td>{{ user.id }}</td>
-						<td>{{ user.email }}</td>
-						<td>{{user.password}}</td>
-						<td>{{ user.lastname}}</td>
-						<td>
-							{% for role in user.roles %}
-								{% if role == "ROLE_USER" %}
-									User
-								{% elseif role == "ROLE_AGENT" %}
-									Agent
-								{% elseif role == "ROLE_ADMIN" %}
-									Admin
-									{# {% for agence in agences %}
-										<thead>
-											<th>Nom Agence</th>
-										</thead>
-										<tbody>
-											<td>{{agence.Nom}}</td>
-										</tbody>
-									{% endfor %} #}
-								{% endif %}
-							{% endfor %}
-						</td>
+						<td>{{ agence.id }}</td>
+						<td>{{ agence.Nom }}</td>
+						<td>{{agence.Numtel}}</td>
+						<td>{{ agence.Adresse}}</td>
+						<td>{{ agence.Description}}</td>
+						<td>{{ agence.Logo}}</td>
+					
 
 						<td>
 							<div class="modal-footer ">
-								<a href="{{ path('app_users_edit', {'id': user.id}) }}" class="btn btn-primary btn-block">Edit
+								<a href="{{ path('app_agence_edit', {'id': agence.id}) }}" class="btn btn-primary btn-block">Edit
 								</a>
 								<a class="btn btn-danger" data-toggle="modal" data-target="#modal_Delete">Delete</a>
 							</div>
@@ -108,13 +95,13 @@
 								<div
 									class="modal-body">
 									{# <h6 class="font-weight-semibold">Text in a modal</h6> #}
-									<p>Are you sure to delete this user.</p>
+									<p>Are you sure to delete this agence.</p>
 
 								</div>
 
 								<div class="modal-footer">
 									<button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
-									<a href="{{ path('app_users_delete',{'id': user.id})}}">
+									<a href="{{ path('app_agence_delete',{'id': agence.id})}}">
 										<button type="button" class="btn bg-primary">Delete</button>
 									</a>
 								</div>

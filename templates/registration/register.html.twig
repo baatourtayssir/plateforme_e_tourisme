@@ -1,4 +1,4 @@
-{% block title %}Log in!
+{% block title %}>Register !
 {% endblock %}
 <!-- Global stylesheets -->
 <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
@@ -38,97 +38,73 @@ href="{{asset("assets/css/colors.min.css")}}" rel="stylesheet" type="text/css">
 			class="content-wrapper">
 
 			<!-- Content area -->
-			<div class="content d-flex justify-content-center align-items-center">
+			<div
+				class="content d-flex justify-content-center align-items-center">
+				<!-- Registration form -->
 
-				<form method="post" class="login-form wmin-sm-400">
-
+				<form class="login-form">
 					<div class="card mb-0">
-
-						<ul class="nav nav-tabs nav-justified alpha-grey mb-0">
-							<li class="nav-item">
-								<a href="#login-tab1" class="nav-link border-y-0 border-left-0 active" data-toggle="tab">
-									<h6 class="my-1">Sign in</h6>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a href="#login-tab2" class="nav-link border-y-0 border-right-0" data-toggle="tab">
-									<h6 class="my-1">Register</h6>
-								</a>
-							</li>
-						</ul>
-
-						<div class="tab-content card-body">
-
-							<div class="tab-pane fade" id="login-tab2">
-								<div class="text-center mb-3">
-									<i class="icon-plus3 icon-2x text-success border-success border-3 rounded-round p-3 mb-3 mt-1"></i>
-									<h5 class="mb-0">Create account</h5>
-									<span class="d-block text-muted">All fields are required</span>
-								</div>
-
-								<div class="form-group form-group-feedback form-group-feedback-left">
-									<input type="text" class="form-control" placeholder="Your username">
-									<div class="form-control-feedback">
-										<i class="icon-user-check text-muted"></i>
-									</div>
-								</div>
-
-								<div class="form-group form-group-feedback form-group-feedback-left">
-									<input type="email" class="form-control" placeholder="Your email">
-									<div class="form-control-feedback">
-										<i class="icon-mention text-muted"></i>
-									</div>
-								</div>
-
-
-								<div class="form-group form-group-feedback form-group-feedback-left">
-									<input type="password" class="form-control" placeholder="Your password">
-									<div class="form-control-feedback">
-										<i class="icon-user-lock text-muted"></i>
-									</div>
-								</div>
-
-								<button type="submit" class="btn bg-dark btn-block">Register</button>
+						<div class="card-body">
+							<div class="text-center mb-3">
+								<i class="icon-plus3 icon-2x text-success border-success border-3 rounded-round p-3 mb-3 mt-1"></i>
+								<h5 class="mb-0">Create account</h5>
+								<span class="d-block text-muted">All fields are required</span>
 							</div>
+
+							<div class="form-group text-center text-muted content-divider">
+								<span class="px-2">Your credentials</span>
+							</div>
+
+
+							{{ form_start(registrationForm) }}
+							
+							{{ form_row(registrationForm.email) }}
+							{{ form_row(registrationForm.plainPassword, {label: 'Password'}) }}
+							{{ form_row(registrationForm.lastname) }}
+							<br>
+							{{ form_row(registrationForm.agreeTerms) }}
+
+							<button type="submit" class="btn bg-teal-400 btn-block">Register
+								<i class="icon-circle-right2 ml-2"></i>
+							</button>
+							{{ form_end(registrationForm) }}
+							
+
 
 						</div>
 					</div>
 				</form>
+				<!-- /registration form -->
 			</div>
-			<!-- /content area -->
-
 		</div>
-		<!-- /main content -->
-
 	</div>
-	<!-- /page content -->
 
 {% endblock %}
 
 
 {# {% extends 'base.html.twig' %}
-
-{% block title %}Register{% endblock %}
-
-{% block body %}
-{% include "security/navbar.html.twig" %}
-<section class="container">
-    <div class="row">
-        <div class="col"></div>
-            <fieldset>
-                <h1>Register</h1>
-
-                {{ form_start(registrationForm) }}
-                    {{ form_row(registrationForm.email) }}
-                    {{ form_row(registrationForm.plainPassword, {
-                        label: 'Password'
-                    }) }}
-                    {{ form_row(registrationForm.lastname) }}
-                    {{ form_row(registrationForm.agreeTerms) }}
-
-                    <button type="submit" class="btn">Register</button>
-                {{ form_end(registrationForm) }}
-            </fieldset>
-      </div>
-</section>
-{% endblock %} #}
+										
+										{% block title %}Register{% endblock %}
+										
+										{% block body %}
+										{% include "security/navbar.html.twig" %}
+										<section class="container">
+										    <div class="row">
+										        <div class="col"></div>
+										            <fieldset>
+										                <h1>Register</h1>
+										
+										                {{ form_start(registrationForm) }}
+										                    {{ form_row(registrationForm.email) }}
+										                    {{ form_row(registrationForm.plainPassword, {
+										                        label: 'Password'
+										                    }) }}
+										                    {{ form_row(registrationForm.lastname) }}
+										                    {{ form_row(registrationForm.agreeTerms) }}
+										
+										                    <button type="submit" class="btn">Register</button>
+										                {{ form_end(registrationForm) }}
+										            </fieldset>
+										      </div>
+										</section>
+										{% endblock %} #}

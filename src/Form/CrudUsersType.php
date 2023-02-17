@@ -49,7 +49,7 @@ class CrudUsersType extends AbstractType
             ->add('roles', ChoiceType::class,[
                 'choices' =>[
                     'user' => 'ROLE_USER',
-                    'Agent'=> 'ROLE_AGENT',
+                    'Agent'=> 'ROLE_AGENT', 
                     'Admin' => 'ROLE_ADMIN'
                 ],
                 'expanded' => true,
@@ -57,7 +57,6 @@ class CrudUsersType extends AbstractType
                 'label' => 'Roles'
             ])
 
-            
             
             // ->add('validate', SubmitType::class)
             ;
