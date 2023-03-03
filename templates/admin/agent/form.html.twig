@@ -1,41 +1,47 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-	User
+	Agent
 
+{% endblock %}
+{% block menu %}
+	<h4>
+		<i class="icon-arrow-left52 mr-2"></i>
+		<span class="font-weight-semibold">Home</span>
+		- Agent pages</h4>
+{% endblock %}
+{% block menu_petit %}
+	<div class="breadcrumb">
+		<a href="#" class="breadcrumb-item">
+			<i class="icon-home2 mr-2"></i>
+			Home</a>
+		<span class="breadcrumb-item active">Agent Pages -Agent management
+		</span>
+	</div>
 {% endblock %}
 
 {% block content %}
 	<div class="content d-flex justify-content-center align-items-center">
-		<div>
-			<form method="post" class="login-form wmin-sm-400">
+		<div class="login-form wmin-sm-400">
+			
+			{{ form_start(form, { 'multipart': true,'class' : 'login-form wmin-sm-400'}) }}
 
 
 				<fieldset>
-					{# {% if  app.user %}
-																<h1>Edit user</h1>
-															{% else %}
-																<h1>Create new user</h1>
-															{% endif %} #}
-					{{ form_start(form) }}
+				
+					
 					{{ form_widget(form) }}
-					{# {% for role in user.roles %}
-						{% if role == "ROLE_AGENT" %}
-							<div class="form-group">
-								<label>Nom agence:</label>
-								<input type="text" class="form-control" placeholder="Eugene Kopyov">
-							</div>
-						{% endif %}
-					{% endfor %} #}
+					
 					<div class="fc-left">
 						<button type="submit" class="btn btn-success">{{ button_label|default('Save') }}</button>
 					</div>
 					<br>
 
-					{{ form_end(form) }}
+				
 
-				</fieldset>
-			</form>
+				</fieldset>	
+			{{ form_end(form) }}
+			
 			<a href="{{ path("app_agent_index")}}">
 				<button class="btn btn-light">
 					Close

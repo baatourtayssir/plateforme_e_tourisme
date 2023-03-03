@@ -2,9 +2,16 @@
 
 namespace App\Controller;
 
+
+use App\Entity\Agence;
+use App\Entity\Agent;
 use App\Entity\User;
-use App\Form\RegistrationFormType;
+use App\Form\AgenceType;
+use App\Form\RegisterAgentType;
+use App\Form\UserType as FormUserType;
+use App\Service\KernelService;
 use App\Security\UsersAuthenticator;
+use App\Security\AgencyAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,7 +27,7 @@ class RegistrationController extends AbstractController
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, UsersAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
     {
         $user = new User();
-        $form = $this->createForm(RegistrationFormType::class, $user);
+        $form = $this->createForm(FormUserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -35,7 +42,7 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
             // do anything else you need here, like send an email
-           
+
             return $userAuthenticator->authenticateUser(
                 $user,
                 $authenticator,
@@ -47,4 +54,41 @@ class RegistrationController extends AbstractController
             'registrationForm' => $form->createView(),
         ]);
     }
+
+    #[Route('/agent/register', name: 'app_agent_register')]
+    public function registerAgency(Request $request, UserPasswordHasherInterface $userPasswordHasher, KernelService $kernelService, UserAuthenticatorInterface $userAuthenticator, AgencyAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
+    {
+        $agence = new Agence();
+        $agent = new Agent();
+        $agence->addAgent($agent);
+        $form = $this->createForm(RegisterAgentType::class, $agent);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // encode the plain password
+            $agent->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $agent,
+                    $form->get('password')->getData()
+                )
+            );
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($agence);
+            $entityManager->flush();
+
+        
+            return $userAuthenticator->authenticateUser(
+                $agent,
+                $authenticator,
+                $request
+            );
+        }
+
+        return $this->render('registration/register_agent.html.twig', [
+            'registrationForm' => $form->createView(),
+        ]);
+    }
 }
+
+// badeltt l agence bel agent juste bech tatna7a l'erreur

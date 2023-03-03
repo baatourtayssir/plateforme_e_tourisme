@@ -22,12 +22,6 @@ class CrudUsersType extends AbstractType
     {
         $builder
             ->add('email',EmailType::class,['attr'=>['class'=>'form-control']])
-
-            // 'Constraints' =>[
-            //     new NotBlank([
-            //         'message' => 'please enter an address'
-            //     ])
-            //     ],
             ->add('password', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller

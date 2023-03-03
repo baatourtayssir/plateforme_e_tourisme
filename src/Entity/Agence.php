@@ -1,20 +1,20 @@
 <?php
 
 namespace App\Entity;
+
 use App\Entity\Agent;
 use App\Repository\AgenceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-// use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use PHPUnit\TextUI\XmlConfiguration\File;
 
-// use Symfony\Component\HttpFoundation\File\File;
 
-// #[Vich\Uploadable]
 #[ORM\Entity(repositoryClass: AgenceRepository::class)]
-
-class Agence
+class Agence 
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -22,32 +22,35 @@ class Agence
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $Nom = null;
+    private ?string $name = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $Numtel = null;
+    private ?string $numtel = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $Adresse = null;
+    private ?string $adress = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    private ?string $Description = null;
+    private ?string $description = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $Logo;
+    private ?string $brochurefilename= null;
 
-    #[ORM\OneToMany(mappedBy: 'NomAgence', targetEntity: Agent::class)]
-    private Collection $agents;
+
+
+    #[ORM\OneToMany(mappedBy: 'Agence', targetEntity: Agent::class , cascade: ['persist'])]
+    private Collection $agent;
+
+    #[ORM\Column(length: 255)]
+    private ?string $email = null;
+
+
+
 
     public function __construct()
     {
-        $this->agents = new ArrayCollection();
+        $this->agent = new ArrayCollection();
     }
-
-
-    
-    // #[Vich\UploadableField(mapping: 'agence_images', fileNameProperty: 'Logo')]
-    // private $LogoFile;
 
 
 
@@ -56,96 +59,81 @@ class Agence
         return $this->id;
     }
 
-    public function getNom(): ?string
+    public function getName(): ?string
     {
-        return $this->Nom;
+        return $this->name;
     }
 
-    public function setNom(string $Nom): self
+    public function setName(string $name): self
     {
-        $this->Nom = $Nom;
+        $this->name = $name;
 
         return $this;
     }
 
     public function getNumTel(): ?string
     {
-        return $this->Numtel;
+        return $this->numtel;
     }
 
-    public function setNumTel(string $Numtel): self
+    public function setNumTel(string $numtel): self
     {
-        $this->Numtel = $Numtel;
+        $this->numtel = $numtel;
 
         return $this;
     }
 
-    public function getAdresse(): ?string
+    public function getAdress(): ?string
     {
-        return $this->Adresse;
+        return $this->adress;
     }
 
-    public function setAdresse(string $Adresse): self
+    public function setAdress(string $adress): self
     {
-        $this->Adresse = $Adresse;
+        $this->adress = $adress;
 
         return $this;
     }
 
     public function getDescription(): ?string
     {
-        return $this->Description;
+        return $this->description;
     }
 
-    public function setDescription(string $Description): self
+    public function setDescription(string $description): self
     {
-        $this->Description = $Description;
+        $this->description = $description;
 
         return $this;
     }
 
-    // public function setLogoFile(File $Logo = null)
-    // {
-    //     $this->LogoFile = $Logo;
-
-    //     // VERY IMPORTANT:
-    //     // It is required that at least one field changes if you are using Doctrine,
-    //     // otherwise the event listeners won't be called and the file is lost
-    //     // if ($image) {
-    //     //     // if 'updatedAt' is not defined in your entity, use another property
-    //     //     $this->Date = new \DateTime('now');
-    //     // }
-    // }
-
-    // public function getLogoFile()
-    // {
-    //     return $this->LogoFile;
-    // }
-
-    public function setLogo(string $Logo): self
+    public function getBrochurefilename(): ?string
     {
-        $this->Logo = $Logo;
+        return $this->brochurefilename;
+    }
+
+    public function setBrochurefilename(string $brochurefilename): self
+    {
+        $this->brochurefilename = $brochurefilename;
+
         return $this;
     }
 
-    public function getLogo(): ?string
-    {
-        return $this->Logo;
-    }
+
 
     /**
      * @return Collection<int, Agent>
      */
-    public function getAgents(): Collection
+    public function getAgent(): Collection
     {
-        return $this->agents;
+        return $this->agent;
     }
 
     public function addAgent(Agent $agent): self
     {
-        if (!$this->agents->contains($agent)) {
-            $this->agents->add($agent);
-            $agent->setNomAgence($this);
+        if (!$this->agent->contains($agent)) {
+            $this->agent->add($agent);
+            $agent->setAgence($this);
         }
 
         return $this;
@@ -153,21 +141,30 @@ class Agence
 
     public function removeAgent(Agent $agent): self
     {
-        if ($this->agents->removeElement($agent)) {
+        if ($this->agent->removeElement($agent)) {
             // set the owning side to null (unless already changed)
-            if ($agent->getNomAgence() === $this) {
-                $agent->setNomAgence(null);
+            if ($agent->getAgence() === $this) {
+                $agent->setAgence(null);
             }
         }
 
         return $this;
     }
 
-    public function __toString() {
-        return (string) $this->Nom;
+    public function getEmail(): ?string
+    {
+        return $this->email;
     }
 
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
 
-   
-   
+        return $this;
+    }
+
+    
+
+
+
 }

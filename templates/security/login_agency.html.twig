@@ -1,0 +1,100 @@
+{% block title %}Log in!
+{% endblock %}
+<!-- Global stylesheets -->
+<link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+<link href="{{asset("global_assets/css/icons/icomoon/styles.css")}}" rel="stylesheet" type="text/css">
+<link href="{{asset("assets/css/bootstrap.min.css")}}" rel="stylesheet" type="text/css">
+<link href="{{asset("assets/css/bootstrap_limitless.min.css")}}" rel="stylesheet" type="text/css">
+<link href="{{asset("assets/css/layout.min.css")}}" rel="stylesheet" type="text/css">
+<link href="{{asset("assets/css/components.min.css")}}" rel="stylesheet" type="text/css">
+<link
+href="{{asset("assets/css/colors.min.css")}}" rel="stylesheet" type="text/css">
+<!-- /global stylesheets -->
+{% block stylesheets %}{% endblock %}
+
+<!-- Core JS files -->
+<script src="{{asset("global_assets/js/main/jquery.min.js")}}"></script>
+<script src="{{asset("global_assets/js/main/bootstrap.bundle.min.js")}}"></script>
+<script src="{{asset("global_assets/js/plugins/loaders/blockui.min.js")}}"></script>
+<!-- /core JS files -->
+
+<!-- Theme JS files -->
+<script src="{{asset("global_assets/js/plugins/forms/styling/uniform.min.js")}}"></script>
+
+<script src="{{asset("assets/js/app.js")}}"></script>
+<script src="{{asset("global_assets/js/demo_pages/login.js")}}"></script>
+<!-- /theme JS files -->
+{% block javascripts %}{% endblock %}
+
+{% block body %}
+
+
+	<!-- Page content -->
+	<div
+		class="page-content login-cover">
+
+		<!-- Main content -->
+		<div
+			class="content-wrapper">
+
+			<!-- Content area -->
+			<div class="content d-flex justify-content-center align-items-center">
+
+				<form method="post" class="login-form wmin-sm-400">
+					<div class="card mb-0">
+						<ul class="nav nav-tabs nav-justified alpha-grey mb-0"></ul>
+						<div
+							class="tab-content card-body">
+							{# <div class="tab-pane fade" id="login-tab2"> #}
+							<div class="text-center mb-3">
+								<i class="icon-reading icon-2x text-slate-300 border-slate-300 border-3 rounded-round p-3 mb-3 mt-1"></i>
+								<h5 class="mb-0">Login to your account</h5>
+								<span class="d-block text-muted">As an agency</span>
+							</div>
+							{% if error %}
+								<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+							{% endif %}
+
+							{# {% if app.user %}
+								{# <div class="mb-3">
+									You are logged in as
+									{{ app.user.userIdentifier }},
+									<a href="{{ path('app_logout') }}">Logout</a>
+								</div> #}
+						{#	{% endif %} #}
+						
+								<div class="form-group form-group-feedback form-group-feedback-left">
+									<label for="inputEmail">Email</label>
+									<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+								</div>
+								<div class="form-group form-group-feedback form-group-feedback-left">
+									<label for="inputPassword">Password</label>
+									<input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+
+									<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+								</div>
+
+							<br>
+							<div class="form-group">
+								<button type="submit" class="btn btn-primary btn-block">Sign in</button>
+								<br>
+
+							</div>
+							<div class="text-center">
+								<a href="{{path("app_login")}}">Sign in as an admin?</a>
+							</div>
+
+
+							{# </div> #}
+						</div>
+					</div>
+				</form>
+			</div>
+			<!-- /content area -->
+
+		</div>
+		<!-- /main content -->
+
+	</div>
+	<!-- /page content -->
+{% endblock %}

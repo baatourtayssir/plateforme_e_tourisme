@@ -9,10 +9,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 #[Route('/agent')]
 class AgentController extends AbstractController
 {
+
+    
+
     #[Route('/', name: 'app_agent_index', methods: ['GET'])]
     public function index(AgentRepository $agentRepository): Response
     {
@@ -23,13 +27,21 @@ class AgentController extends AbstractController
 
 
     #[Route('/new', name: 'app_agent_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, AgentRepository $agentRepository): Response
+    public function new(Request $request, AgentRepository $agentRepository, UserPasswordHasherInterface $userPasswordHasher): Response
     {
         $agent = new Agent();
         $form = $this->createForm(AgentType::class, $agent);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $agent->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $agent,
+                    $form->get('password')->getData()
+                )
+            );
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($agent);
             $entityManager->flush();
@@ -45,8 +57,8 @@ class AgentController extends AbstractController
 
 
 
-    #[Route('/{id}/edit', name: 'app_agent_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Agent $agent, AgentRepository $agentRepository): Response
+    #[Route('/edit/{id}', name: 'app_agent_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Agent $agent, AgentRepository $agenceRepository): Response
     {
         $form = $this->createForm(AgentType::class, $agent);
         $form->handleRequest($request);
@@ -65,11 +77,10 @@ class AgentController extends AbstractController
         ]);
     }
 
+    
     #[Route('/delete/{id}', name: 'app_agent_delete')]
     public function delete(Request $request, $id): Response
     {
-
-
         $agent = $this->getDoctrine()->getRepository(Agent::class)->find($id);
 
         $entityManager = $this->getDoctrine()->getManager();

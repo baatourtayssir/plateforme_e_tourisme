@@ -4,11 +4,11 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
-    uploadLogo: '%kernel.project_dir%/public/upload/images/agences/'
-#   app.path.agence_images: /uploads/images/agences
-    
-
+    files_directory: '%kernel.project_dir%/public/uploads/images/agences/logo'   
 services:
+    App\Service\KernelService:
+        arguments:
+            targetDirectory: '%files_directory%'
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.

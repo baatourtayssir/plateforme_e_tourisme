@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{# bacground #324148 #}
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
@@ -11,6 +12,7 @@
 		{# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
 		<meta
 		name="viewport" content="width=device-width, initial-scale=1.0">
+
 
 
 		<!-- Global stylesheets -->
@@ -49,7 +51,7 @@
 	<body>
 
 		<!-- Main navbar -->
-		<div class="navbar navbar-expand-md navbar-dark">
+		<div class="navbar navbar-expand-md navbar-dark" style="background-color:#00796b;">
 			<div class="navbar-brand">
 				<a href="#" class="d-inline-block">
 					<img src="{{asset("global_assets/images/logo_light.png")}}" alt="">
@@ -82,14 +84,16 @@
 					<li class="nav-item dropdown dropdown-user">
 						<a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown">
 							<img src="{{asset("global_assets/images/placeholders/placeholder.jpg")}}" class="rounded-circle" alt="">
-							<span>baatour tayssire@gmailcom</span>
+							{% block email %}
+							<span>{{app.user.email}}</span>
+							{% endblock %}
 						</a>
 
 						<div class="dropdown-menu dropdown-menu-right">
-							<a href="#" class="dropdown-item">
+							<a href="{{ path('app_login') }}"  class="dropdown-item">
 								<i class="icon-user-plus"></i>
-								My profile</a>
-							<a href="#" class="dropdown-item">
+								Login in with anather account</a>
+							{# <a href="#" class="dropdown-item">
 								<i class="icon-coins"></i>
 								My balance</a>
 							<a href="#" class="dropdown-item">
@@ -100,8 +104,8 @@
 							<div class="dropdown-divider"></div>
 							<a href="#" class="dropdown-item">
 								<i class="icon-cog5"></i>
-								Account settings</a>
-							<a href="#" class="dropdown-item">
+								Account settings</a> #}
+							<a href="{{ path('app_logout') }}" class="dropdown-item">
 								<i class="icon-switch2"></i>
 								Logout</a>
 						</div>
@@ -118,7 +122,7 @@
 
 			<!-- Main sidebar -->
 			<div
-				class="sidebar sidebar-dark sidebar-main sidebar-expand-md">
+				class="sidebar sidebar-dark sidebar-main sidebar-expand-md" style="background-color:#009688;">
 
 				<!-- Sidebar mobile toggler -->
 				<div class="sidebar-mobile-toggler text-center">
@@ -135,97 +139,122 @@
 
 
 				<!-- Sidebar content -->
-				<div
-					class="sidebar-content">
+				<div class="sidebar-content">
 
-					<!-- User menu -->
-					<div class="sidebar-user">
-						<div class="card-body">
-							<div class="media">
-								<div class="mr-3">
+					{% block User_menu %}
+
+						<!-- User menu -->
+						<div class="sidebar-user">
+							<div class="card-body">
+								<div
+									class="media">
+									{# <div class="mr-3">
 									<a href="#"><img src="{{asset("global_assets/images/placeholders/placeholder.jpg")}}" width="38" height="38" class="rounded-circle" alt=""></a>
-								</div>
+									</div> #}
 
-								<div class="media-body">
-									<div class="media-title font-weight-semibold">baatour</div>
-									{# <div class="font-size-xs opacity-50">
-																																																					<i class="icon-pin font-size-sm"></i> &nbsp;Santa Ana, CA
-																																																				</div> #}
-								</div>
+									<div class=" media-body">
+										{% block name %}
+											<div class="media-title font-weight-semibold ">{{app.user.lastname}}</div>
+										{% endblock %}
+									</div>
 
-								<div class="ml-3 align-self-center">
-									<a href="#" class="text-white">
-										<i class="icon-cog3"></i>
-									</a>
+
 								</div>
 							</div>
 						</div>
-					</div>
-					<!-- /user menu -->
+						<!-- /user menu -->
+					{% endblock %}
+
+					{% block navigation %}
+						<!-- Main navigation -->
+						<div class="card card-sidebar-mobile">
+							<ul
+								class="nav nav-sidebar" data-nav-type="accordion">
+
+								<!-- Main -->
+								<li class="nav-item-header">
+									<div class="text-uppercase font-size-xs line-height-xs">Main</div>
+									<i class="icon-menu" title="Main"></i>
+								</li>
+								<li class="nav-item">
+									<a href="{{path('admin_')}}" class="nav-link active">
+										<i class="icon-home4"></i>
+										<span>
+											Dashboard
+										</span>
+									</a>
+								</li>
+
+								<li class="nav-item nav-item-submenu">
+									<a href="#" class="nav-link">
+										<i class="icon-people"></i>
+										<span>User pages</span>
+									</a>
+									<ul class="nav nav-group-sub" data-submenu-title="User pages">
+										<li class="nav-item">
+											<a href="{{path('user_')}}" class="nav-link">Add user</a>
+										</li>
+									</ul>
+									<!-- /page kits -->
+								</li>
 
 
-					<!-- Main navigation -->
-					<div class="card card-sidebar-mobile">
-						<ul
-							class="nav nav-sidebar" data-nav-type="accordion">
+								<li class="nav-item nav-item-submenu">
+									<a href="#" class="nav-link">
+										<i class="icon-puzzle4"></i>
+										<span>Agency</span>
+									</a>
+									<ul class="nav nav-group-sub" data-submenu-title="Agence">
+										<li class="nav-item">
+											<a href="{{path('app_agence_index')}}" class="nav-link">Agency list</a>
+										</li>
+									</ul>
+									<!-- /page kits -->
+								</li>
 
-							<!-- Main -->
-							<li class="nav-item-header">
-								<div class="text-uppercase font-size-xs line-height-xs">Main</div>
-								<i class="icon-menu" title="Main"></i>
-							</li>
-							<li class="nav-item">
-								<a href="#" class="nav-link active">
-									<i class="icon-home4"></i>
-									<span>
-										Dashboard
-									</span>
-								</a>
-							</li>
+								<li class="nav-item nav-item-submenu">
+									<a href="#" class="nav-link">
+										<i class="icon-people"></i>
+										<span>Agent</span>
+									</a>
+									<ul class="nav nav-group-sub" data-submenu-title="Agence">
+										<li class="nav-item">
+											<a href="{{path('app_agent_index')}}" class="nav-link">Agent list</a>
+										</li>
+									</ul>
+									<!-- /page kits -->
+								</li>
 
-							<li class="nav-item nav-item-submenu">
-								<a href="#" class="nav-link">
-									<i class="icon-people"></i>
-									<span>User pages</span>
-								</a>
-								<ul class="nav nav-group-sub" data-submenu-title="User pages">
-									<li class="nav-item">
-										<a href="{{path('user_')}}" class="nav-link">Add admin</a>
-									</li>
-								</ul>
-								<!-- /page kits -->
-							</li>
+								<li class="nav-item nav-item-submenu">
+									<a href="#" class="nav-link">
+										<i class="icon-sphere"></i>
+										<span>Country</span>
+									</a>
+									<ul class="nav nav-group-sub" data-submenu-title="Agence">
+										<li class="nav-item">
+											<a href="{{path('app_country_index')}}" class="nav-link">Country list</a>
+										</li>
+									</ul>
+									<!-- /page kits -->
+								</li>
 
+								<li class="nav-item nav-item-submenu">
+									<a href="#" class="nav-link">
+										<i class="icon-cube3"></i>
+										<span>Region</span>
+									</a>
+									<ul class="nav nav-group-sub" data-submenu-title="Agence">
+										<li class="nav-item">
+											<a href="{{path('app_region_index')}}" class="nav-link">Region list</a>
+										</li>
+									</ul>
+									<!-- /page kits -->
+								</li>
 
-							<li class="nav-item nav-item-submenu">
-								<a href="#" class="nav-link">
-									<i class="icon-puzzle4"></i>
-									<span>Agence</span>
-								</a>
-								<ul class="nav nav-group-sub" data-submenu-title="Agence">
-									<li class="nav-item">
-										<a href="{{path('app_agence_index')}}" class="nav-link">Agence list</a>
-									</li>
-								</ul>
-								<!-- /page kits -->
-							</li>
-
-							<li class="nav-item nav-item-submenu">
-								<a href="#" class="nav-link">
-									<i class="icon-puzzle4"></i>
-									<span>Agents</span>
-								</a>
-								<ul class="nav nav-group-sub" data-submenu-title="Agence">
-									<li class="nav-item">
-										<a href="{{path('app_agent_index')}}" class="nav-link">Agent list</a>
-									</li>
-								</ul>
-								<!-- /page kits -->
-							</li>
-
-						</ul>
-					</div>
-					<!-- /main navigation -->
+							</ul>
+						</div>
+						<!-- /main navigation -->
+					{% endblock %}
 
 				</div>
 				<!-- /sidebar content -->
@@ -308,7 +337,37 @@
 					class="content">
 
 					<!-- Basic modals -->
-					<div class="card"> {% block content %}{% endblock %}
+					<div class="card"  style="background-color:#d2d2c2;">
+					{% block content %}
+					
+						<!-- Schedule -->
+						<div class="timeline-row">
+							<div class="timeline-icon">
+								<img src="{{asset('global_assets/images/placeholders/placeholder.jpg')}}" alt="">
+							</div>
+
+							<div class="card">
+								<div class="card-header header-elements-inline">
+									<h6 class="card-title font-weight-semibold">Espace admin</h6>
+									<div class="header-elements">
+										<div class="list-icons">
+											<div class="list-icons-item dropdown">
+												
+											</div>
+					                	</div>
+				                	</div>
+								</div>
+
+								<div class="card-body">
+									<div class="my-schedule"></div>
+								</div>
+							</div>
+						</div>
+						<!-- /schedule -->
+					
+					
+					
+					{% endblock %}
 						</div>
 					</div>
 

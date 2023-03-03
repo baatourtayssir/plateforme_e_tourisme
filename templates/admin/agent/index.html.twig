@@ -4,8 +4,6 @@
 	<!-- Theme JS files -->
 	<script src="{{ asset("global_assets/js/plugins/tables/datatables/datatables.min.js")}}"></script>
 	<script src="{{ asset("global_assets/js/plugins/forms/selects/select2.min.js")}}"></script>
-
-	<script src="{{asset("assets/js/app.js")}}"></script>
 	<script src="{{asset("global_assets/js/demo_pages/datatables_basic.js")}}"></script>
 	<!-- /theme JS files -->
 {% endblock %}
@@ -19,7 +17,7 @@
 {% endblock %}
 {% block menu_petit %}
 	<div class="breadcrumb">
-		<a href="index.html" class="breadcrumb-item">
+		<a href="#" class="breadcrumb-item">
 			<i class="icon-home2 mr-2"></i>
 			Home</a>
 		<span class="breadcrumb-item active">Agent Pages -Agent management
@@ -57,10 +55,10 @@
 					<th>Email</th>
 					<th>Password</th>
 					<th>Lastname</th>
+					<th>Phone number</th>
+					<th>Adress</th>
+					<th>Name Agency</th>
 					<th>Roles</th>
-					<th>Num Tel</th>
-					<th>Adresse</th>
-					<th>Nom Agence</th>
 					<th class="text-center">Actions</th>
 
 				</tr>
@@ -72,35 +70,34 @@
 						<td>{{ agent.email }}</td>
 						<td>{{agent.password}}</td>
 						<td>{{ agent.lastname}}</td>
+						<td>{{ agent.numTel}}</td>
+						<td>{{ agent.adress}}</td>
+						<td>{{ agent.Agence.name}}</td>
 						<td>
 							{% for role in agent.roles %}
 								{% if role == "ROLE_USER" %}
 									User
 								{% elseif role == "ROLE_AGENT" %}
 									Agent
-								{% elseif role == "ROLE_ADMIN" %}
-									Admin
-									
 								{% endif %}
 							{% endfor %}
 						</td>
-						<td>{{ agent.NumTel}}</td>
-						<td>{{ agent.Adresse}}</td>
-						<td>{{ agent.NomAgence}}</td>
-
+						
 						<td>
-							<div class="modal-footer ">
-								<a href="{{ path('app_agent_edit', {'id': agent.id}) }}" class="btn btn-primary btn-block">Edit
+							<div class="modal-footer">
+								<a class="btn btn-primary btn-block" href="{{ path('app_agent_edit', {'id': agent.id}) }}">
+									Edit
 								</a>
-								<a class="btn btn-danger" data-toggle="modal" data-target="#modal_Delete">Delete</a>
+
+								<a class="btn btn-danger" data-toggle="modal" data-target="#modal_Delete{{agent.id}}">Delete</a>
 							</div>
 						</td>
 					</tr>
 					<!-- Delete modal -->
-					<div id="modal_Delete" class="modal fade" tabindex="-1">
+					<div id="modal_Delete{{agent.id}}" class="modal fade" tabindex="-1">
 						<div class="modal-dialog">
 							<div class="modal-content">
-								<div class="modal-header">
+								<div class="modal-header bg-danger">
 									<h5 class="modal-title">Deletion</h5>
 									<button type="button" class="close" data-dismiss="modal">&times;</button>
 								</div>

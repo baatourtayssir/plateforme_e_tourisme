@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-require_once('User.php');
+
 use App\Entity\Agence;
 use App\Repository\AgentRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -10,57 +10,49 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: AgentRepository::class)]
 class Agent extends User
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $NumTel = null;
+    private ?string $numtel = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $Adresse = null;
+    private ?string $adress = null;
 
-    #[ORM\ManyToOne(inversedBy: 'agents')]
-    private ?Agence $NomAgence = null;
+    #[ORM\ManyToOne(inversedBy: 'agent')]
+    #[ORM\JoinColumn(nullable:false , referencedColumnName :"id")]
+    private ?Agence $Agence = null;
 
-    public function getId(): ?int
+    public function getNumtel(): ?string
     {
-        return $this->id;
+        return $this->numtel;
     }
 
-    public function getNumTel(): ?string
+    public function setNumtel(string $numtel): self
     {
-        return $this->NumTel;
-    }
-
-    public function setNumTel(string $NumTel): self
-    {
-        $this->NumTel = $NumTel;
+        $this->numtel = $numtel;
 
         return $this;
     }
 
-    public function getAdresse(): ?string
+    public function getAdress(): ?string
     {
-        return $this->Adresse;
+        return $this->adress;
     }
 
-    public function setAdresse(string $Adresse): self
+    public function setAdress(string $adress): self
     {
-        $this->Adresse = $Adresse;
+        $this->adress = $adress;
 
         return $this;
     }
 
-    public function getNomAgence(): ?Agence
+    public function getAgence(): ?Agence
     {
-        return $this->NomAgence;
+        return $this->Agence;
     }
 
-    public function setNomAgence(?Agence $NomAgence): self
+    public function setAgence(?Agence $Agence): self
     {
-        $this->NomAgence = $NomAgence;
+        $this->Agence = $Agence;
 
         return $this;
     }
