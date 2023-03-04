@@ -12,23 +12,23 @@ class Agent extends User
 {
 
     #[ORM\Column(length: 255)]
-    private ?string $numtel = null;
+    private ?string $phoneNumber = null;
 
     #[ORM\Column(length: 255)]
     private ?string $adress = null;
 
-    #[ORM\ManyToOne(inversedBy: 'agent')]
-    #[ORM\JoinColumn(nullable:false , referencedColumnName :"id")]
+  
+    #[ORM\ManyToOne( inversedBy: 'agents',cascade:['persist'])]
     private ?Agence $Agence = null;
 
-    public function getNumtel(): ?string
+    public function getPhoneNumber(): ?string
     {
-        return $this->numtel;
+        return $this->phoneNumber;
     }
 
-    public function setNumtel(string $numtel): self
+    public function setPhoneNumber(string $phoneNumber): self
     {
-        $this->numtel = $numtel;
+        $this->phoneNumber = $phoneNumber;
 
         return $this;
     }

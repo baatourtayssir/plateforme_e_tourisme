@@ -53,8 +53,8 @@ class AgenceController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $myFile = $form['brochurefilename']->getData();
 
-                $fileName = $kernelService->upload($myFile);
-                $agence->setBrochurefilename($fileName);
+            $fileName = $kernelService->upload($myFile);
+            $agence->setBrochurefilename($fileName);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($agence);
@@ -71,12 +71,18 @@ class AgenceController extends AbstractController
 
 
     #[Route('/{id}/edit', name: 'app_agence_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Agence $agence, AgenceRepository $agenceRepository): Response
+    public function edit(Request $request, Agence $agence, AgenceRepository $agenceRepository, KernelService $kernelService): Response
     {
         $form = $this->createForm(AgenceType::class, $agence);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $myFile = $form['brochurefilename']->getData();
+
+            $fileName = $kernelService->upload($myFile);
+            $agence->setBrochurefilename($fileName);
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($agence);
             $entityManager->flush();

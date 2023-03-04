@@ -69,6 +69,7 @@ class AdminController extends AbstractController
                         $form->get('password')->getData()
                     )
                 );
+                $user->setRoles(["ROLE_USER","ROLE_ADMIN"]);
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($user);
                 $entityManager->flush();

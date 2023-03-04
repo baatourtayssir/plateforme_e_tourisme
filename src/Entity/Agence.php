@@ -25,7 +25,7 @@ class Agence
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $numtel = null;
+    private ?string $phoneNumber = null;
 
     #[ORM\Column(length: 255)]
     private ?string $adress = null;
@@ -37,9 +37,10 @@ class Agence
     private ?string $brochurefilename= null;
 
 
+    //
 
-    #[ORM\OneToMany(mappedBy: 'Agence', targetEntity: Agent::class , cascade: ['persist'])]
-    private Collection $agent;
+    #[ORM\OneToMany(mappedBy: 'Agence', targetEntity: Agent::class)]
+    private Collection $agents;
 
     #[ORM\Column(length: 255)]
     private ?string $email = null;
@@ -49,7 +50,7 @@ class Agence
 
     public function __construct()
     {
-        $this->agent = new ArrayCollection();
+        $this->agents = new ArrayCollection();
     }
 
 
@@ -71,14 +72,14 @@ class Agence
         return $this;
     }
 
-    public function getNumTel(): ?string
+    public function getPhoneNumber(): ?string
     {
-        return $this->numtel;
+        return $this->phoneNumber;
     }
 
-    public function setNumTel(string $numtel): self
+    public function setPhoneNumber(string $phoneNumber): self
     {
-        $this->numtel = $numtel;
+        $this->phoneNumber = $phoneNumber;
 
         return $this;
     }
@@ -124,15 +125,15 @@ class Agence
     /**
      * @return Collection<int, Agent>
      */
-    public function getAgent(): Collection
+    public function getAgents(): Collection
     {
-        return $this->agent;
+        return $this->agents;
     }
 
     public function addAgent(Agent $agent): self
     {
-        if (!$this->agent->contains($agent)) {
-            $this->agent->add($agent);
+        if (!$this->agents->contains($agent)) {
+            $this->agents->add($agent);
             $agent->setAgence($this);
         }
 
@@ -141,7 +142,7 @@ class Agence
 
     public function removeAgent(Agent $agent): self
     {
-        if ($this->agent->removeElement($agent)) {
+        if ($this->agents->removeElement($agent)) {
             // set the owning side to null (unless already changed)
             if ($agent->getAgence() === $this) {
                 $agent->setAgence(null);

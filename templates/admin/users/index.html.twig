@@ -7,116 +7,120 @@
 	<script src="{{asset("global_assets/js/demo_pages/datatables_basic.js")}}"></script>
 	<!-- /theme JS files -->
 {% endblock %}
-{% block title %}User list
+{% block title %}Admin list
 {% endblock %}
 {% block menu %}
 	<h4>
 		<i class="icon-arrow-left52 mr-2"></i>
 		<span class="font-weight-semibold">Home</span>
-		- User pages</h4>
+		- Admin pages</h4>
 {% endblock %}
 {% block menu_petit %}
 	<div class="breadcrumb">
 		<a href="index.html" class="breadcrumb-item">
 			<i class="icon-home2 mr-2"></i>
 			Home</a>
-		<span class="breadcrumb-item active">User Pages - User management
+		<span class="breadcrumb-item active">Admin Pages - Admin management
 		</span>
 	</div>
 {% endblock %}
 
 
 {% block content %}
+	<div
+		class="card" style="background-color:#d2d2c2;">
 
+		<!-- Basic datatable -->
+		<div class="card">
+			<div class="card-header header-elements-inline">
+				<h5 class="card-title">List of administrators</h5>
+				<div class="header-elements">
+					<div class="list-icons">
+						<a href="{{path('app_users_new')}}" class="nav-link">
 
-	<!-- Basic datatable -->
-	<div class="card">
-		<div class="card-header header-elements-inline">
-			<h5 class="card-title">Users list</h5>
-			<div class="header-elements">
-				<div class="list-icons">
-					<a href="{{path('app_users_new')}}" class="nav-link">
+							<button type="submit" class="btn btn-success">
+								<b>
+									<i class="icon-plus3"></i>
+								</b>
+								Add admin</button>
+						</a>
+					</div>
 
-						<button type="submit" class="btn btn-success">
-							<b>
-								<i class="icon-plus3"></i>
-							</b>
-							Add user</button>
-					</a>
 				</div>
-
 			</div>
-		</div>
 
-		<table class="table datatable-basic">
-			<thead>
-				<tr>
-					<th>Id</th>
-					<th>Email</th>
-					<th>Password</th>
-					<th>Lastname</th>
-					<th>Roles</th>
-					<th class="text-center">Actions</th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for user in users %}
+			<table class="table datatable-basic">
+				<thead>
 					<tr>
-						<td>{{ user.id }}</td>
-						<td>{{ user.email }}</td>
-						<td>{{user.password}}</td>
-						<td>{{ user.lastname}}</td>
-						<td>
-							{% for role in user.roles %}
-								{% if role == "ROLE_USER" %}
-									User
-								{% elseif role == "ROLE_AGENT" %}
-									Agent
-								{% elseif role == "ROLE_ADMIN" %}
-									Admin
-								{% endif %}
-							{% endfor %}
-						</td>
-
-						<td>
-							<div class="modal-footer ">
-								<a href="{{ path('app_users_edit', {'id': user.id}) }}" class="btn btn-primary btn-block">Edit
-								</a>
-								<a class="btn btn-danger" data-toggle="modal" data-target="#modal_Delete{{user.id}}">Delete</a>
-							</div>
-						</td>
+						<th>Id</th>
+						<th>Email</th>
+						<th>Password</th>
+						<th>Lastname</th>
+						<th>Roles</th>
+						<th class="text-center">Actions</th>
 					</tr>
-					<!-- Delete modal -->
-				  
-					<div id="modal_Delete{{user.id}}" class="modal fade" tabindex="-1">
-					
-						<div class="modal-dialog "> 
-						
-							<div class="modal-content">
-							
-								<div class="modal-header bg-danger">
-									<h5 class="modal-title">Deletion</h5>
-									<button type="button" class="close" data-dismiss="modal">&times;</button> 
-								</div>
-                                
-								<div
-									class="modal-body">
-									{# <h6 class="font-weight-semibold">Text in a modal</h6> #}
-									<p>Are you sure to delete this user.</p>
+				</thead>
+				<tbody>
+					{% for user in users %}
+						<tr>
+							<td>{{ user.id }}</td>
+							<td>{{ user.email }}</td>
+							<td>{{user.password}}</td>
+							<td>{{ user.lastname}}</td>
 
-								</div>
+							<td>
+								{% for role in user.roles %}
+									{% if role == "ROLE_USER" %}
+										User
+									
+									{% elseif role == "ROLE_ADMIN" %}
+										Admin
 
-								<div class="modal-footer">
-									<button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
-									<a href="{{ path('app_users_delete',{'id': user.id})}}">
-										<button type="button" class="btn bg-primary">Delete</button>
+									{% elseif role == "ROLE_SUPER_ADMIN" %}
+										Super admin
+									{% endif %}
+								{% endfor %}
+							</td>
+
+							<td>
+								<div class="modal-footer ">
+									<a href="{{ path('app_users_edit', {'id': user.id}) }}" class="btn btn-primary btn-sm mr-1">Edit
 									</a>
+									<a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal_Delete{{user.id}}">Delete</a>
+								</div>
+							</td>
+						</tr>
+						<!-- Delete modal -->
+
+						<div id="modal_Delete{{user.id}}" class="modal fade" tabindex="-1">
+
+							<div class="modal-dialog ">
+
+								<div class="modal-content">
+
+									<div class="modal-header bg-danger">
+										<h5 class="modal-title">Deletion</h5>
+										<button type="button" class="close" data-dismiss="modal">&times;</button>
+									</div>
+
+									<div
+										class="modal-body">
+										{# <h6 class="font-weight-semibold">Text in a modal</h6> #}
+										<p>Are you sure to delete this user.</p>
+
+									</div>
+
+									<div class="modal-footer">
+										<button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+										<a href="{{ path('app_users_delete',{'id': user.id})}}">
+											<button type="button" class="btn bg-primary">Delete</button>
+										</a>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				  </div>
-                  
+
 					<!-- /Delete modal -->
 				{% else %}
 					<tr>
@@ -127,5 +131,4 @@
 		</table>
 	</div>
 
-
-{% endblock %}
+</div>{% endblock %}

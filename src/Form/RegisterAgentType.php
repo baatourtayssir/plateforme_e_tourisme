@@ -16,6 +16,8 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+
 
 
 class RegisterAgentType extends AbstractType
@@ -45,18 +47,19 @@ class RegisterAgentType extends AbstractType
             ])
             ->add('lastname', TypeTextType::class, ['attr' => ['class' => 'form-control']])
 
-            ->add('numTel', NumberType::class, ['attr' => ['class' => 'form-control']])
+            ->add('phoneNumber', NumberType::class, ['attr' => ['class' => 'form-control']])
             ->add('adress', TypeTextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('Agence', AgenceType::class, [ 'mapped' => false ])
-            ->add('roles', ChoiceType::class, [
+            ->add('Agence', AgenceType::class) ;
+            /* ->add('roles', ChoiceType::class, [
                 'choices' => [
                     'user' => 'ROLE_USER',
-                    'Agent' => 'ROLE_AGENT'
+                    'Agent' => 'ROLE_Super_AGENT'
                 ],
                 'expanded' => true,
                 'multiple' => true,
                 'label' => 'Roles'
-            ]);
+            ]); */
+
     }
 
     public function configureOptions(OptionsResolver $resolver): void

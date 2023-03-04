@@ -28,10 +28,10 @@ class AgenceType extends AbstractType
         $builder
             ->add('name', TypeTextType::class, ['attr' => ['class' => 'form-control']])
             ->add('email', EmailType::class, ['attr' => ['class' => 'form-control']])
-            ->add('numtel', NumberType::class, ['attr' => ['class' => 'form-control']])
+            ->add('phoneNumber', NumberType::class, ['attr' => ['class' => 'form-control']])
             ->add('adress', TypeTextType::class, ['attr' => ['class' => 'form-control']])
             ->add('description', TextareaType::class, ['attr' => ['class' => 'form-control']])
-            ->add('brochurefilename', FileType::class);
+            ->add('brochurefilename', FileType::class,  array('label' => 'Logo'));
          
 
     }

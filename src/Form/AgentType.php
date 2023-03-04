@@ -42,7 +42,7 @@ class AgentType extends AbstractType
             ])
             ->add('lastname', TypeTextType::class, ['attr' => ['class' => 'form-control']])
 
-            ->add('numTel', NumberType::class, ['attr' => ['class' => 'form-control']])
+            ->add('phoneNumber', NumberType::class, ['attr' => ['class' => 'form-control']])
             ->add('adress', TypeTextType::class, ['attr' => ['class' => 'form-control']])
             ->add('Agence', EntityType::class, ['class' => Agence::class, 'choice_label' => 'name'])
             ->add('roles', ChoiceType::class, [

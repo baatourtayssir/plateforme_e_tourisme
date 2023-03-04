@@ -14,7 +14,6 @@
 		name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-
 		<!-- Global stylesheets -->
 		<link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
 		<link href="{{asset("global_assets/css/icons/icomoon/styles.css")}}" rel="stylesheet" type="text/css">
@@ -51,7 +50,7 @@
 	<body>
 
 		<!-- Main navbar -->
-		<div class="navbar navbar-expand-md navbar-dark" style="background-color:#00796b;">
+		<div class="navbar navbar-expand-md navbar-dark" {# style="background-color:#141d49;" #}>
 			<div class="navbar-brand">
 				<a href="#" class="d-inline-block">
 					<img src="{{asset("global_assets/images/logo_light.png")}}" alt="">
@@ -85,26 +84,26 @@
 						<a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown">
 							<img src="{{asset("global_assets/images/placeholders/placeholder.jpg")}}" class="rounded-circle" alt="">
 							{% block email %}
-							<span>{{app.user.email}}</span>
+								<span>{{app.user.email}}</span>
 							{% endblock %}
 						</a>
 
 						<div class="dropdown-menu dropdown-menu-right">
-							<a href="{{ path('app_login') }}"  class="dropdown-item">
+							<a href="{{ path('app_login') }}" class="dropdown-item">
 								<i class="icon-user-plus"></i>
 								Login in with anather account</a>
 							{# <a href="#" class="dropdown-item">
-								<i class="icon-coins"></i>
-								My balance</a>
-							<a href="#" class="dropdown-item">
-								<i class="icon-comment-discussion"></i>
-								Messages
-								<span class="badge badge-pill bg-blue ml-auto">58</span>
-							</a>
-							<div class="dropdown-divider"></div>
-							<a href="#" class="dropdown-item">
-								<i class="icon-cog5"></i>
-								Account settings</a> #}
+																																																																							<i class="icon-coins"></i>
+																																																																							My balance</a>
+																																																																						<a href="#" class="dropdown-item">
+																																																																							<i class="icon-comment-discussion"></i>
+																																																																							Messages
+																																																																							<span class="badge badge-pill bg-blue ml-auto">58</span>
+																																																																						</a>
+																																																																						<div class="dropdown-divider"></div>
+																																																																						<a href="#" class="dropdown-item">
+																																																																							<i class="icon-cog5"></i>
+																																																																							Account settings</a> #}
 							<a href="{{ path('app_logout') }}" class="dropdown-item">
 								<i class="icon-switch2"></i>
 								Logout</a>
@@ -122,7 +121,7 @@
 
 			<!-- Main sidebar -->
 			<div
-				class="sidebar sidebar-dark sidebar-main sidebar-expand-md" style="background-color:#009688;">
+				class="sidebar sidebar-dark sidebar-main sidebar-expand-md" {# style="background-color:#0b1235;" #}>
 
 				<!-- Sidebar mobile toggler -->
 				<div class="sidebar-mobile-toggler text-center">
@@ -149,8 +148,8 @@
 								<div
 									class="media">
 									{# <div class="mr-3">
-									<a href="#"><img src="{{asset("global_assets/images/placeholders/placeholder.jpg")}}" width="38" height="38" class="rounded-circle" alt=""></a>
-									</div> #}
+																																																																																										<a href="#"><img src="{{asset("global_assets/images/placeholders/placeholder.jpg")}}" width="38" height="38" class="rounded-circle" alt=""></a>
+																																																																																										</div> #}
 
 									<div class=" media-body">
 										{% block name %}
@@ -168,89 +167,121 @@
 					{% block navigation %}
 						<!-- Main navigation -->
 						<div class="card card-sidebar-mobile">
-							<ul
-								class="nav nav-sidebar" data-nav-type="accordion">
+							<ul class="nav nav-sidebar" data-nav-type="accordion">
+								{% if is_granted ('ROLE_USER') %}
 
-								<!-- Main -->
-								<li class="nav-item-header">
-									<div class="text-uppercase font-size-xs line-height-xs">Main</div>
-									<i class="icon-menu" title="Main"></i>
-								</li>
-								<li class="nav-item">
-									<a href="{{path('admin_')}}" class="nav-link active">
-										<i class="icon-home4"></i>
-										<span>
-											Dashboard
-										</span>
-									</a>
-								</li>
 
-								<li class="nav-item nav-item-submenu">
-									<a href="#" class="nav-link">
-										<i class="icon-people"></i>
-										<span>User pages</span>
-									</a>
-									<ul class="nav nav-group-sub" data-submenu-title="User pages">
-										<li class="nav-item">
-											<a href="{{path('user_')}}" class="nav-link">Add user</a>
+									<!-- Main -->
+									<li class="nav-item-header">
+										<div class="text-uppercase font-size-xs line-height-xs">Main</div>
+										<i class="icon-menu" title="Main"></i>
+									</li>
+									<li class="nav-item">
+										<a href="{{path('admin_')}}" class="nav-link active">
+											<i class="icon-home4"></i>
+											<span>
+												Dashboard
+											</span>
+										</a>
+									</li>
+
+
+									{% if is_granted ('ROLE_AGENT') %}
+
+
+										<li class="nav-item nav-item-submenu">
+											<a href="#" class="nav-link">
+												<i class="icon-puzzle4"></i>
+												<span>Agency</span>
+											</a>
+											<ul class="nav nav-group-sub" data-submenu-title="Agence">
+												<li class="nav-item">
+													<a href="{{path('app_agence_index')}}" class="nav-link">Agency list</a>
+												</li>
+											</ul>
+
 										</li>
-									</ul>
-									<!-- /page kits -->
-								</li>
 
+										<li class="nav-item nav-item-submenu">
+											<a href="#" class="nav-link">
+												<i class="icon-puzzle4"></i>
+												<span>Excursion</span>
+											</a>
+											<ul class="nav nav-group-sub" data-submenu-title="Agence">
+												<li class="nav-item">
+													<a href="#" class="nav-link">
+														Excursion offer</a>
+												</li>
+											</ul>
 
-								<li class="nav-item nav-item-submenu">
-									<a href="#" class="nav-link">
-										<i class="icon-puzzle4"></i>
-										<span>Agency</span>
-									</a>
-									<ul class="nav nav-group-sub" data-submenu-title="Agence">
-										<li class="nav-item">
-											<a href="{{path('app_agence_index')}}" class="nav-link">Agency list</a>
 										</li>
-									</ul>
-									<!-- /page kits -->
-								</li>
 
-								<li class="nav-item nav-item-submenu">
-									<a href="#" class="nav-link">
-										<i class="icon-people"></i>
-										<span>Agent</span>
-									</a>
-									<ul class="nav nav-group-sub" data-submenu-title="Agence">
-										<li class="nav-item">
-											<a href="{{path('app_agent_index')}}" class="nav-link">Agent list</a>
-										</li>
-									</ul>
-									<!-- /page kits -->
-								</li>
+										{% if is_granted ('ROLE_SUPER_AGENT') %}
 
-								<li class="nav-item nav-item-submenu">
-									<a href="#" class="nav-link">
-										<i class="icon-sphere"></i>
-										<span>Country</span>
-									</a>
-									<ul class="nav nav-group-sub" data-submenu-title="Agence">
-										<li class="nav-item">
-											<a href="{{path('app_country_index')}}" class="nav-link">Country list</a>
-										</li>
-									</ul>
-									<!-- /page kits -->
-								</li>
+											<li class="nav-item nav-item-submenu">
+												<a href="#" class="nav-link">
+													<i class="icon-people"></i>
+													<span>Agent</span>
+												</a>
+												<ul class="nav nav-group-sub" data-submenu-title="Agence">
+													<li class="nav-item">
+														<a href="{{path('app_agent_index')}}" class="nav-link">Agent list</a>
+													</li>
+												</ul>
+												<!-- /page kits -->
+											</li>
 
-								<li class="nav-item nav-item-submenu">
-									<a href="#" class="nav-link">
-										<i class="icon-cube3"></i>
-										<span>Region</span>
-									</a>
-									<ul class="nav nav-group-sub" data-submenu-title="Agence">
-										<li class="nav-item">
-											<a href="{{path('app_region_index')}}" class="nav-link">Region list</a>
-										</li>
-									</ul>
-									<!-- /page kits -->
-								</li>
+											{% if is_granted ('ROLE_ADMIN') %}
 
+												<li class="nav-item nav-item-submenu">
+													<a href="#" class="nav-link">
+														<i class="icon-sphere"></i>
+														<span>Country</span>
+													</a>
+													<ul class="nav nav-group-sub" data-submenu-title="Agence">
+														<li class="nav-item">
+															<a href="{{path('app_country_index')}}" class="nav-link">Country list</a>
+														</li>
+													</ul>
+													<!-- /page kits -->
+												</li>
+
+												<li class="nav-item nav-item-submenu">
+													<a href="#" class="nav-link">
+														<i class="icon-cube3"></i>
+														<span>Region</span>
+													</a>
+													<ul class="nav nav-group-sub" data-submenu-title="Agence">
+														<li class="nav-item">
+															<a href="{{path('app_region_index')}}" class="nav-link">Region list</a>
+														</li>
+													</ul>
+													<!-- /page kits -->
+												</li>
+
+												{% if is_granted ('ROLE_SUPER_ADMIN') %}
+
+													<li class="nav-item nav-item-submenu">
+														<a href="#" class="nav-link">
+															<i class="icon-people"></i>
+															<span>Admin</span>
+														</a>
+														<ul class="nav nav-group-sub" data-submenu-title="User pages">
+															<li class="nav-item">
+																<a href="{{path('user_')}}" class="nav-link">Admin list</a>
+															</li>
+														</ul>
+														<!-- /page kits -->
+													</li>
+
+
+												{% endif %}
+
+											{% endif %}
+
+										{% endif %}
+									{% endif %}
+								{% endif %}
 							</ul>
 						</div>
 						<!-- /main navigation -->
@@ -337,86 +368,85 @@
 					class="content">
 
 					<!-- Basic modals -->
-					<div class="card"  style="background-color:#d2d2c2;">
-					{% block content %}
-					
-						<!-- Schedule -->
-						<div class="timeline-row">
-							<div class="timeline-icon">
-								<img src="{{asset('global_assets/images/placeholders/placeholder.jpg')}}" alt="">
-							</div>
+					<div class="card">
+						{% block content %}
+							<div
+								class="card" style="background-color:#d2d2c2;">
+								<!-- Schedule -->
+								<div class="timeline-row">
+									<div class="timeline-icon">
+										<img src="{{asset('global_assets/images/placeholders/placeholder.jpg')}}" alt="">
+									</div>
 
-							<div class="card">
-								<div class="card-header header-elements-inline">
-									<h6 class="card-title font-weight-semibold">Espace admin</h6>
-									<div class="header-elements">
-										<div class="list-icons">
-											<div class="list-icons-item dropdown">
-												
+									<div class="card">
+										<div class="card-header header-elements-inline">
+											<h6 class="card-title font-weight-semibold">Espace admin</h6>
+											<div class="header-elements">
+												<div class="list-icons">
+													<div class="list-icons-item dropdown"></div>
+												</div>
 											</div>
-					                	</div>
-				                	</div>
-								</div>
+										</div>
 
-								<div class="card-body">
-									<div class="my-schedule"></div>
+										<div class="card-body">
+											<div class="my-schedule"></div>
+										</div>
+									</div>
 								</div>
+								<!-- /schedule -->
+
 							</div>
-						</div>
-						<!-- /schedule -->
-					
-					
-					
-					{% endblock %}
-						</div>
+
+						{% endblock %}
 					</div>
-
-
 				</div>
-				<!-- /main content -->
+
 
 			</div>
-			<!-- /page content -->
+			<!-- /main content -->
+
+		</div>
+		<!-- /page content -->
 
 
-			<!-- Footer -->
-			<div class="navbar navbar-expand-lg navbar-light">
-				<div class="text-center d-lg-none w-100">
-					<button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse" data-target="#navbar-footer">
-						<i class="icon-unfold mr-2"></i>
-						Footer
-					</button>
-				</div>
-
-				<div class="navbar-collapse collapse" id="navbar-footer">
-					<span class="navbar-text">
-						&copy; 2015 - 2018.
-						<a href="#">Limitless Web App Kit</a>
-						by
-						<a href="http://themeforest.net/user/Kopyov" target="_blank">Eugene Kopyov</a>
-					</span>
-
-					<ul class="navbar-nav ml-lg-auto">
-						<li class="nav-item">
-							<a href="https://kopyov.ticksy.com/" class="navbar-nav-link" target="_blank">
-								<i class="icon-lifebuoy mr-2"></i>
-								Support</a>
-						</li>
-						<li class="nav-item">
-							<a href="http://demo.interface.club/limitless/docs/" class="navbar-nav-link" target="_blank">
-								<i class="icon-file-text2 mr-2"></i>
-								Docs</a>
-						</li>
-						<li class="nav-item">
-							<a href="https://themeforest.net/item/limitless-responsive-web-application-kit/13080328?ref=kopyov" class="navbar-nav-link font-weight-semibold">
-								<span class="text-pink-400">
-									<i class="icon-cart2 mr-2"></i>
-									Purchase</span>
-							</a>
-						</li>
-					</ul>
-				</div>
+		<!-- Footer -->
+		<div class="navbar navbar-expand-lg navbar-light">
+			<div class="text-center d-lg-none w-100">
+				<button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse" data-target="#navbar-footer">
+					<i class="icon-unfold mr-2"></i>
+					Footer
+				</button>
 			</div>
-			<!-- /footer -->
-		</body>
-	</html>
+
+			<div class="navbar-collapse collapse" id="navbar-footer">
+				<span class="navbar-text">
+					&copy; 2015 - 2018.
+					<a href="#">Limitless Web App Kit</a>
+					by
+					<a href="http://themeforest.net/user/Kopyov" target="_blank">Eugene Kopyov</a>
+				</span>
+
+				<ul class="navbar-nav ml-lg-auto">
+					<li class="nav-item">
+						<a href="https://kopyov.ticksy.com/" class="navbar-nav-link" target="_blank">
+							<i class="icon-lifebuoy mr-2"></i>
+							Support</a>
+					</li>
+					<li class="nav-item">
+						<a href="http://demo.interface.club/limitless/docs/" class="navbar-nav-link" target="_blank">
+							<i class="icon-file-text2 mr-2"></i>
+							Docs</a>
+					</li>
+					<li class="nav-item">
+						<a href="https://themeforest.net/item/limitless-responsive-web-application-kit/13080328?ref=kopyov" class="navbar-nav-link font-weight-semibold">
+							<span class="text-pink-400">
+								<i class="icon-cart2 mr-2"></i>
+								Purchase</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<!-- /footer -->
+	</body>
+</html>

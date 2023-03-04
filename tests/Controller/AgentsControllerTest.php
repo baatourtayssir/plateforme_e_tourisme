@@ -2,15 +2,15 @@
 
 namespace App\Test\Controller;
 
-use App\Entity\Agents;
-use App\Repository\AgentsRepository;
+use App\Entity\Agent;
+use App\Repository\AgentRepository;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class AgentsControllerTest extends WebTestCase
 {
     private KernelBrowser $client;
-    private AgentsRepository $repository;
+    private AgentRepository $repository;
     private string $path = '/test/';
 
     protected function setUp(): void
@@ -61,14 +61,14 @@ class AgentsControllerTest extends WebTestCase
     public function testShow(): void
     {
         $this->markTestIncomplete();
-        $fixture = new Agents();
+        $fixture = new Agent();
         $fixture->setEmail('My Title');
         $fixture->setRoles('My Title');
         $fixture->setPassword('My Title');
         $fixture->setLastname('My Title');
         $fixture->setNumtel('My Title');
-        $fixture->setAdresse('My Title');
-        $fixture->setNomAgence('My Title');
+        $fixture->setAdress('My Title');
+        $fixture->setAgence('My Title');
 
         $this->repository->save($fixture, true);
 
@@ -83,14 +83,14 @@ class AgentsControllerTest extends WebTestCase
     public function testEdit(): void
     {
         $this->markTestIncomplete();
-        $fixture = new Agents();
+        $fixture = new Agent();
         $fixture->setEmail('My Title');
         $fixture->setRoles('My Title');
         $fixture->setPassword('My Title');
         $fixture->setLastname('My Title');
         $fixture->setNumtel('My Title');
-        $fixture->setAdresse('My Title');
-        $fixture->setNomAgence('My Title');
+        $fixture->setAdress('My Title');
+        $fixture->setAgence('My Title');
 
         $this->repository->save($fixture, true);
 
@@ -115,8 +115,8 @@ class AgentsControllerTest extends WebTestCase
         self::assertSame('Something New', $fixture[0]->getPassword());
         self::assertSame('Something New', $fixture[0]->getLastname());
         self::assertSame('Something New', $fixture[0]->getNumtel());
-        self::assertSame('Something New', $fixture[0]->getAdresse());
-        self::assertSame('Something New', $fixture[0]->getNomAgence());
+        self::assertSame('Something New', $fixture[0]->getAdress());
+        self::assertSame('Something New', $fixture[0]->getAgence());
     }
 
     public function testRemove(): void
@@ -125,14 +125,14 @@ class AgentsControllerTest extends WebTestCase
 
         $originalNumObjectsInRepository = count($this->repository->findAll());
 
-        $fixture = new Agents();
+        $fixture = new Agent();
         $fixture->setEmail('My Title');
         $fixture->setRoles('My Title');
         $fixture->setPassword('My Title');
         $fixture->setLastname('My Title');
         $fixture->setNumtel('My Title');
-        $fixture->setAdresse('My Title');
-        $fixture->setNomAgence('My Title');
+        $fixture->setAdress('My Title');
+        $fixture->setAgence('My Title');
 
         $this->repository->save($fixture, true);
 

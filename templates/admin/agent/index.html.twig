@@ -28,7 +28,7 @@
 
 {% block content %}
 
-
+<div class="card"  style="background-color:#d2d2c2;">
 	<!-- Basic datatable -->
 	<div class="card">
 		<div class="card-header header-elements-inline">
@@ -70,7 +70,7 @@
 						<td>{{ agent.email }}</td>
 						<td>{{agent.password}}</td>
 						<td>{{ agent.lastname}}</td>
-						<td>{{ agent.numTel}}</td>
+						<td>{{ agent.phoneNumber}}</td>
 						<td>{{ agent.adress}}</td>
 						<td>{{ agent.Agence.name}}</td>
 						<td>
@@ -84,7 +84,7 @@
 						</td>
 						
 						<td>
-							<div class="modal-footer">
+							<div class="row ">
 								<a class="btn btn-primary btn-block" href="{{ path('app_agent_edit', {'id': agent.id}) }}">
 									Edit
 								</a>
@@ -129,4 +129,5 @@
 	</div>
 
 
+</div>
 {% endblock %}

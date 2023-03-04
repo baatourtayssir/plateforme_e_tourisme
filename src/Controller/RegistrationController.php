@@ -13,6 +13,7 @@ use App\Service\KernelService;
 use App\Security\UsersAuthenticator;
 use App\Security\AgencyAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Mapping\Id;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -55,12 +56,16 @@ class RegistrationController extends AbstractController
         ]);
     }
 
+
+
+
+
     #[Route('/agent/register', name: 'app_agent_register')]
     public function registerAgency(Request $request, UserPasswordHasherInterface $userPasswordHasher, KernelService $kernelService, UserAuthenticatorInterface $userAuthenticator, AgencyAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
     {
-        $agence = new Agence();
         $agent = new Agent();
-        $agence->addAgent($agent);
+        /*  $agence = new Agence(); */
+        /*  $agence->addAgent($agent); */
         $form = $this->createForm(RegisterAgentType::class, $agent);
         $form->handleRequest($request);
 
@@ -73,11 +78,12 @@ class RegistrationController extends AbstractController
                 )
             );
 
+            $agent->setRoles(["ROLE_USER","ROLE_SUPER_AGENT"]);
+           
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($agence);
+            $entityManager->persist($agent);
             $entityManager->flush();
 
-        
             return $userAuthenticator->authenticateUser(
                 $agent,
                 $authenticator,
@@ -90,5 +96,3 @@ class RegistrationController extends AbstractController
         ]);
     }
 }
-
-// badeltt l agence bel agent juste bech tatna7a l'erreur

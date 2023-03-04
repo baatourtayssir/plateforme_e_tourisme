@@ -32,6 +32,7 @@ security:
                 # target: app_any_route
             
             entry_point: App\Security\AgencyAuthenticator
+        
            
           
                 
@@ -45,12 +46,20 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-         #- { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY  }
+        - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY  }
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/agence/espace/agence, roles: [ROLE_AGENT,ROLE_SUPER_AGENT]}
          #- { path: ^/espace/agence, roles: ROLE_AGENT }
 
     role_hierarchy:
-        ROLE_AGENT: ROLE_USER
-        ROLE_ADMIN: ROLE_AGENT
+        #ROLE_AGENT: ROLE_USER
+        #ROLE_ADMIN: ROLE_AGENT
+        ROLE_CLIENT: ROLE_USER
+        ROLE_AGENT: ROLE_CLIENT
+        ROLE_SUPER_AGENT: ROLE_AGENT
+        ROLE_ADMIN: ROLE_SUPER_AGENT
+        ROLE_SUPER_ADMIN: ROLE_ADMIN
 
 when@test:
     security:
