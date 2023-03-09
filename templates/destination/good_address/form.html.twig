@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Good address
+
+{% endblock %}
+{% block menu %}
+	<h4>
+		<i class="icon-arrow-left52 mr-2"></i>
+		<span class="font-weight-semibold">Home</span>
+		- Good address
+	</h4>
+{% endblock %}
+{% block menu_petit %}
+	<div class="breadcrumb">
+		<a href="index.html" class="breadcrumb-item">
+			<i class="icon-home2 mr-2"></i>
+			Home</a>
+		<span class="breadcrumb-item active">Good address - Good address management
+		</span>
+	</div>
+{% endblock %}
+
+{% block content %}
+
+	<div class="content d-flex justify-content-center align-items-center">
+		<div class="login-form wmin-sm-400">
+
+			{{ form_start(form, {'multipart': true, 'class' : 'login-form wmin-sm-400'}) }}
+
+			<fieldset>
+
+
+				{{ form_widget(form) }}
+				
+
+
+				<br>
+
+				<div class="fc-left">
+					<button type="submit" class="btn btn-success">{{ button_label|default('Save') }}</button>
+				</div>
+				<br>
+
+
+			</fieldset>
+			{{ form_end(form) }}
+			<a href="{{ path("app_good_address_index")}}">
+				<button class="btn btn-light">
+					Close
+				</button>
+			</a>
+		</div>
+
+	</div>
+
+
+{% endblock %}

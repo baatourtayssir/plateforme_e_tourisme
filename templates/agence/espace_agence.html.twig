@@ -19,103 +19,33 @@
 	</div>
 {% endblock %}
 
-{% block User_menu %}
-	<!-- User menu -->
-	<div class="sidebar-user-material">
-		<div class="sidebar-user-material-body">
-			<div class="card-body text-center">
-				<a href="#">
-			{# 	<img src="{{ asset('uploads/images/agences/logo/' ~ agence.brochureFilename) }}" width="80"> #}
-					<img src="{{asset("global_assets/images/placeholders/placeholder.jpg")}}" class="img-fluid rounded-circle shadow-1 mb-3" width="80" height="80" alt="">
-				</a>
-				<h6 class="mb-0 text-white text-shadow-dark">{{app.user.agence.name}}</h6>
-				<span class="font-size-sm text-white text-shadow-dark">{{app.user.agence.adress}}</span>
-			</div>
+	{% block content %}
 
-			<div class="sidebar-user-material-footer">
-				<a href="{{ path('app_agence_edit', {'id': app.user.agence.id}) }}"  class=" d-flex justify-content-between" {# data-toggle="collapse" #}>
-					<span><i class="icon-pencil3 nav-link"></i></span>
-					
-				</a>
-			
-			</div>
-		</div>
+	
+		<div
+				class="card" style="background-color:#d2d2c2;">
+				<!-- Schedule -->
+				<div class="timeline-row">
+					<div class="timeline-icon">
+						<img src="{{asset('global_assets/images/placeholders/placeholder.jpg')}}" alt="">
+					</div>
 
-		<div class="collapse" id="user-nav">
-			{# <ul class="nav nav-sidebar">
-				<li class="nav-item">
-					<a href="{{ path('app_agence_edit', {'id': app.user.agence.id}) }}" class="nav-link">
-						<i class="icon-wrench3"></i>
-						<span>Edit agency</span>
-					</a>
-				 </li> #}
-			{#	<li class="nav-item">
-					<a href="#" class="nav-link">
-						<i class="icon-coins"></i>
-						<span>My balance</span>
-					</a>
-				</li>
-				<li class="nav-item">
-					<a href="#" class="nav-link">
-						<i class="icon-comment-discussion"></i>
-						<span>Messages</span>
-						<span class="badge bg-success-400 badge-pill align-self-center ml-auto">58</span>
-					</a>
-				</li>
-				<li class="nav-item">
-					<a href="#" class="nav-link">
-						<i class="icon-cog5"></i>
-						<span>Account settings</span>
-					</a>
-				</li>
-				<li class="nav-item">
-					<a href="#" class="nav-link">
-						<i class="icon-switch2"></i>
-						<span>Logout</span>
-					</a>
-				</li>
-			</ul> #}
-		</div>
-	</div>
-	<!-- /user menu -->
+					<div class="card">
+						<div class="card-header header-elements-inline">
+							<h6 class="card-title font-weight-semibold">Espace agence</h6>
+							<div class="header-elements">
+								<div class="list-icons">
+									<div class="list-icons-item dropdown"></div>
+								</div>
+							</div>
+						</div>
 
+						<div class="card-body">
+							<div class="my-schedule"></div>
+						</div>
+					</div>
+				</div>
+				<!-- /schedule -->
 
-{% endblock %}
+			</div>{% endblock %}
 
-{# {% block navigation %}
-	<div class="card card-sidebar-mobile">
-		<ul
-			class="nav nav-sidebar" data-nav-type="accordion">
-
-			<!-- Main -->
-			<li class="nav-item-header">
-				<div class="text-uppercase font-size-xs line-height-xs">Main</div>
-				<i class="icon-menu" title="Main"></i>
-			</li>
-			<li class="nav-item">
-				<a href="#" class="nav-link active">
-					<i class="icon-home4"></i>
-					<span>
-						Dashboard
-					</span>
-				</a>
-			</li>
-
-
-			<li class="nav-item nav-item-submenu">
-				<a href="#" class="nav-link">
-					<i class="icon-people"></i>
-					<span>Agent</span>
-				</a>
-				<ul class="nav nav-group-sub" data-submenu-title="Agence">
-					<li class="nav-item">
-						<a href="{{path('app_agent_index')}}" class="nav-link">Agent list</a>
-					</li>
-				</ul>
-				<!-- /page kits -->
-			</li>
-
-		</ul>
-	</div>
-{% endblock %} #}
-{% block content %}{% endblock %}

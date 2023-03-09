@@ -17,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 
 
@@ -49,6 +50,7 @@ class RegisterAgentType extends AbstractType
 
             ->add('phoneNumber', NumberType::class, ['attr' => ['class' => 'form-control']])
             ->add('adress', TypeTextType::class, ['attr' => ['class' => 'form-control']])
+            ->add('avatar', FileType::class,  array('data_class' => null,'required' => false ,'label' => 'Profile picture'))
             ->add('Agence', AgenceType::class) ;
             /* ->add('roles', ChoiceType::class, [
                 'choices' => [

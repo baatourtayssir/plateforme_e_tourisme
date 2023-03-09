@@ -1,0 +1,120 @@
+{% extends 'base.html.twig' %}
+
+{% block javascripts %}
+	<!-- Theme JS files -->
+	<script src="{{ asset("global_assets/js/plugins/tables/datatables/datatables.min.js")}}"></script>
+	<script src="{{ asset("global_assets/js/plugins/forms/selects/select2.min.js")}}"></script>
+	<script src="{{asset("global_assets/js/demo_pages/datatables_basic.js")}}"></script>
+	<!-- /theme JS files -->
+{% endblock %}
+{% block title %}Article list
+{% endblock %}
+{% block menu %}
+	<h4>
+		<i class="icon-arrow-left52 mr-2"></i>
+		<span class="font-weight-semibold">Home</span>
+		- Reviews pages</h4>
+{% endblock %}
+{% block menu_petit %}
+	<div class="breadcrumb">
+		<a href="index.html" class="breadcrumb-item">
+			<i class="icon-home2 mr-2"></i>
+			Home</a>
+		<span class="breadcrumb-item active">Reviews Pages - Reviews management
+		</span>
+	</div>
+{% endblock %}
+
+
+{% block content %}
+	<div
+		class="card" style="background-color:#d2d2c2;">
+
+		<!-- Basic datatable -->
+		<div class="card">
+			<div class="card-header header-elements-inline">
+				<h5 class="card-title">Reviews list</h5>
+				<div class="header-elements">
+					<div class="list-icons">
+						<a href="{{path('app_reviews_new')}}" class="nav-link">
+
+							<button type="submit" class="btn btn-success">
+								<b>
+									<i class="icon-plus3"></i>
+								</b>
+								Add reviews</button>
+						</a>
+					</div>
+
+				</div>
+			</div>
+
+			<table class="table datatable-basic">
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>Comment</th>
+						<th>Article</th>
+						<th>Picture</th>
+						<th>Mutiple pictures</th>
+						<th class="">Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for review in reviews %}
+						<tr>
+							<td>{{ review.id }}</td>
+							<td>{{ review.comment }}</td>
+							<td>{{review.article.title}}</td>
+							<td><img src="{{ asset('uploads/images/reviews/picture/' ~ review.picture) }}" width="70" height="70"></td>
+							<td>
+								{% for image in review.images %}
+									<img src="{{ asset('/public/uploads/images/reviews/pictures/' ~ image) }}" alt="">
+								{% endfor %}
+
+							</td>
+							<td>
+								<div class="row ">
+									<a href="{{ path('app_reviews_edit', {'id': review.id}) }}" class="btn btn-primary btn-sm mr-1">Edit
+									</a>
+									<a class="btn btn-danger btn-sm " data-toggle="modal" data-target="#modal_Delete{{review.id}}">Delete</a>
+								</div>
+							</td>
+						</tr>
+						<!-- Delete modal -->
+						<div id="modal_Delete{{review.id}}" class="modal fade" tabindex="-1">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header bg-danger">
+										<h5 class="modal-title">Deletion</h5>
+										<button type="button" class="close" data-dismiss="modal">&times;</button>
+									</div>
+
+									<div
+										class="modal-body">
+										{# <h6 class="font-weight-semibold">Text in a modal</h6> #}
+										<p>Are you sure to delete this reviews.</p>
+
+									</div>
+
+									<div class="modal-footer">
+										<button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+										<a href="{{ path('app_reviews_delete',{'id': review.id})}}">
+											<button type="button" class="btn bg-danger">Delete</button>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- /Delete modal -->
+					{% else %}
+						<tr>
+							<td colspan="5">no records found</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+
+	</div>
+{% endblock %}

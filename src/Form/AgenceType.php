@@ -31,7 +31,7 @@ class AgenceType extends AbstractType
             ->add('phoneNumber', NumberType::class, ['attr' => ['class' => 'form-control']])
             ->add('adress', TypeTextType::class, ['attr' => ['class' => 'form-control']])
             ->add('description', TextareaType::class, ['attr' => ['class' => 'form-control']])
-            ->add('brochurefilename', FileType::class,  array('label' => 'Logo'));
+            ->add('brochurefilename', FileType::class,  array('data_class' => null,'required' => false ,'label' => 'Logo'));
          
 
     }

@@ -21,9 +21,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 #[Route('/agence')]
 class AgenceController extends AbstractController
 {
-
-
-
     private $manager;
     public function __construct(EntityManagerInterface $manager)
     {
@@ -33,7 +30,17 @@ class AgenceController extends AbstractController
     #[Route('/espace/agence', name: 'agence_')]
     public function home(): Response
     {
+        
         return $this->render('agence/espace_agence.html.twig');
+    }
+
+
+    #[Route('/espace/agence/show/{id}', name: 'show_agency_')]
+    public function show($id)
+    {
+        $agence = $this->getDoctrine()->getRepository(Agence::class)
+            ->find($id);
+        return $this->render('admin/agence/show_agency.html.twig', array('agence' => $agence));
     }
 
     #[Route('/', name: 'app_agence_index', methods: ['GET'])]

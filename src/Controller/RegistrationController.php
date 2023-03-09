@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-
 use App\Entity\Agence;
 use App\Entity\Agent;
 use App\Entity\User;
@@ -22,16 +21,27 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 
 
+
 class RegistrationController extends AbstractController
 {
     #[Route('/register', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, UsersAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, KernelService $kernelService, UserAuthenticatorInterface $userAuthenticator, UsersAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
     {
         $user = new User();
         $form = $this->createForm(FormUserType::class, $user);
         $form->handleRequest($request);
 
+
+      
+
+
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $myFile = $form['avatar']->getData();
+            if ($myFile) {
+                $fileName = $kernelService->loadProfile($myFile);
+                $user->setAvatar($fileName);
+            }
             // encode the plain password
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
@@ -39,6 +49,7 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
+            $user->setRoles(["ROLE_ADMIN"]);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
@@ -61,15 +72,22 @@ class RegistrationController extends AbstractController
 
 
     #[Route('/agent/register', name: 'app_agent_register')]
-    public function registerAgency(Request $request, UserPasswordHasherInterface $userPasswordHasher, KernelService $kernelService, UserAuthenticatorInterface $userAuthenticator, AgencyAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
+    public function registerAgency(Request $request, UserPasswordHasherInterface $userPasswordHasher, KernelService $kernelService,  UserAuthenticatorInterface $userAuthenticator, AgencyAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
     {
         $agent = new Agent();
-        /*  $agence = new Agence(); */
+        /* $agence = new Agence(); */
         /*  $agence->addAgent($agent); */
         $form = $this->createForm(RegisterAgentType::class, $agent);
         $form->handleRequest($request);
 
+
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $myFile = $form['avatar']->getData();
+            if ($myFile) {
+                $fileName = $kernelService->loadProfile($myFile);
+                $agent->setAvatar($fileName);
+            }
             // encode the plain password
             $agent->setPassword(
                 $userPasswordHasher->hashPassword(
@@ -77,9 +95,9 @@ class RegistrationController extends AbstractController
                     $form->get('password')->getData()
                 )
             );
+         
+            $agent->setRoles(["ROLE_USER", "ROLE_SUPER_AGENT"]);
 
-            $agent->setRoles(["ROLE_USER","ROLE_SUPER_AGENT"]);
-           
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($agent);
             $entityManager->flush();

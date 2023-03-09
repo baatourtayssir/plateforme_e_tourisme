@@ -1,0 +1,365 @@
+{% extends 'base.html.twig' %}
+
+{% block javascripts %}
+	<!-- Theme JS files -->
+	<script src="{{ asset("global_assets/js/plugins/tables/datatables/datatables.min.js")}}"></script>
+	<script src="{{ asset("global_assets/js/plugins/forms/selects/select2.min.js")}}"></script>
+	<script src="{{asset("global_assets/js/demo_pages/datatables_basic.js")}}"></script>
+	<!-- /theme JS files -->
+{% endblock %}
+{% block title %}Show agency
+{% endblock %}
+
+{% block menu %}
+	<h4>
+		<i class="icon-arrow-left52 mr-2"></i>
+		<span class="font-weight-semibold">Home</span>
+		- Agency
+	</h4>
+{% endblock %}
+{% block menu_petit %}
+	<div class="breadcrumb">
+		<a href="index.html" class="breadcrumb-item">
+			<i class="icon-home2 mr-2"></i>
+			Home</a>
+		<span class="breadcrumb-item active">Agency - Show agency
+		</span>
+	</div>
+{% endblock %}
+
+
+{% block content %}
+
+
+<div
+	class="page_agency">
+
+	<!-- Cover area -->
+	<div class="profile-cover">
+		<div class="profile-cover-img" style="background-image: url(../../../../global_assets/images/placeholders/avion.jpg)"></div>
+		<div class="media align-items-center text-center text-md-left flex-column flex-md-row m-0">
+			<div class="mr-md-3 mb-2 mb-md-0">
+				<a href="#" class="profile-thumb">
+					<img src="{{ asset('uploads/images/agences/logo/' ~ agence.brochureFilename) }}" class="border-white rounded-circle" width="48" height="48" alt="">
+				</a>
+			</div>
+
+			<div class="media-body text-white">
+
+				<h1 class="mb-0">{{agence.name}}</h1>
+				<span class="d-block">{{agence.adress}}</span>
+			</div>
+
+		</div>
+	</div>
+	<!-- /cover area -->
+
+
+	<div class="content">
+
+
+		<div class="d-flex align-items-start flex-column flex-md-row">
+
+
+			<div class="tab-content w-100 order-2 order-md-1">
+				<div
+					class="tab-pane fade active show" id="activity">
+
+					<!-- Sales stats -->
+					<div class="card">
+						<div class="card-header header-elements-sm-inline">
+							<h1 class="card-title">{{agence.name}}</h1>
+
+							<div
+								class="header-elements">
+								{# <span><i class="icon-history mr-2 text-success"></i> Updated 3 hours ago</span> #}
+
+								<div class="list-icons ml-3">
+									<a class="list-icons-item" data-action="reload"></a>
+								</div>
+							</div>
+						</div>
+
+						<div class="card-body">
+							<div class="chart-container">
+								<div class="chart has-fixed-height" id="weekly_statistics">
+
+									<h6>
+										<i class="icon-mail5 text-muted"></i>
+										{{agence.email}}</h6>
+									<h6>
+										<i class="icon-phone2"></i>
+										{{agence.phoneNumber}}</h6>
+
+									<br><br><br><br>
+									<div class="card-body" style="background-color:#f8fdf7;">
+										<div class="card">
+											<h4>{{agence.description}}</h4>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="text-right ">
+								<a
+									class="btn btn-primary" data-toggle="modal" data-target="#modal_form_horizontal{{agence.id}}">
+									{# <a href="{{ path('app_agence_edit', {'id': agence.id}) }}" class="btn btn-primary" > #}
+									Edit
+									<i class=" icon-paperplane ml-2"></i>
+								</a>
+							</div>
+
+
+							<!-- Horizontal form modal -->
+							<div id="modal_form_horizontal{{agence.id}}" {# id ="editmodal" #} class="modal fade" tabindex="-1">
+								<div class="modal-dialog modal-lg">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title">Edit
+												{{agence.name}}</h5>
+											<button type="button" class="close" data-dismiss="modal">&times;</button>
+										</div>
+
+
+										<form action="edit.php" method="POST" class="form-horizontal">
+											<div class="modal-body">
+												<input type="hidden" name="update_id" id="update_id">
+
+
+												<div class="form-group row">
+													<label class="col-form-label col-sm-3">Name</label>
+													<div class="col-sm-9">
+														<input type="text" name="fname" placeholder={{agence.name}} class="form-control">
+													</div>
+												</div>
+
+
+												<div class="form-group row">
+													<label class="col-form-label col-sm-3">Email</label>
+													<div class="col-sm-9">
+														<input type="text" name="email" placeholder={{agence.email}} class="form-control">
+
+													</div>
+												</div>
+
+												<div class="form-group row">
+													<label class="col-form-label col-sm-3">Phone Number
+													</label>
+													<div class="col-sm-9">
+														<input type="text" name="phoneNumber" placeholder={{agence.phoneNumber}} data-mask="+99-99-9999-9999" class="form-control">
+
+													</div>
+												</div>
+
+												<div class="form-group row">
+													<label class="col-form-label col-sm-3">Address
+													</label>
+													<div class="col-sm-9">
+														<input type="text" name="adress" placeholder={{agence.adress}} class="form-control">
+													</div>
+												</div>
+
+												<div class="form-group row">
+													<label class="col-form-label col-sm-3">Description</label>
+													<div class="col-sm-9">
+														<input type="text" name="description" placeholder={{agence.description}} class="form-control">
+													</div>
+												</div>
+
+												<div class="form-group row">
+													<label class="col-form-label col-sm-3">Logo</label>
+													<div class="col-sm-9">
+														<input type="FileType" name="brochureFilename" placeholder={{agence.brochureFilename}} class="form-control">
+													</div>
+												</div>
+
+
+												<div class="modal-footer">
+													<button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+													<button type="submit" class="btn bg-primary editbtn" name="editData">Edit form</button>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
+								<!-- /horizontal form modal -->
+
+
+							</div>
+
+						</div>
+						<!-- /sales stats -->
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+	{# {% endfor %} #}
+
+	<script>/*    $(document).ready(function(){
+	 $('.editbtn').on('click',function(){
+		$('#editmodal').modal('show');
+
+		  $tr = $(this).closest('tr');
+
+		  var data = $tr.children("td").map(function(){
+			  return $(this).text();
+		  }).get(); 
+
+		  console.log(data);
+
+		  $('update_id').val(data[0]);
+		  $('name').val(data[1]);
+		  $('email').val(data[2]);
+		  $('phoneNumber').val(data[3]);
+		  $('adress').val(data[4]);
+		  $('description').val(data[5]);
+		  $('brochurefilename').val(data[5]);
+	});
+    });  */</script>
+
+{% if  is_granted ('ROLE_SUPER_AGENT') %}
+	<!-- Basic datatable -->
+	<div class="card">
+		<div class="card-header header-elements-inline">
+			<h5 class="card-title">Agent list</h5>
+			<div class="header-elements">
+				<div
+					class="list-icons">
+
+
+					{# {% if is_granted ('ROLE_ADMIN') %} #}
+					<a href="{{path('app_agent_new')}}" class="nav-link">
+
+						<button type="submit" class="btn btn-success">
+							<b>
+								<i class="icon-plus3"></i>
+							</b>
+							Add agent</button>
+					</a>
+
+					{# {% elseif not is_granted ('ROLE_ADMIN') %} #}
+				{# <a href="{{path('app_agentSansAgence_new')}}" class="nav-link">
+												
+																				<button type="submit" class="btn btn-success">
+																					<b>
+																						<i class="icon-plus3"></i>
+																					</b>
+																					Add agent</button>
+																			</a> #}
+					{# {% endif %} #}
+
+				</div>
+
+			</div>
+		</div>
+
+		<table class="table datatable-basic">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Email</th>
+					<th>Password</th>
+					<th>Lastname</th>
+					<th>Phone number</th>
+					<th>Adress</th>
+					<th>Profile picture</th>
+					{# {% if is_granted ('ROLE_ADMIN') %}
+																						<th>Name Agency</th>
+																					{% endif %} #}
+					<th>Roles</th>
+					<th class="text-center">Actions</th>
+
+				</tr>
+			</thead>
+			<tbody>
+				{% for agent in agence.agents %}
+					<tr>
+						<td>{{ agent.id }}</td>
+						<td>{{ agent.email }}</td>
+						<td>{{agent.password}}</td>
+						<td>{{ agent.lastname}}</td>
+						<td>{{ agent.phoneNumber}}</td>
+						<td>{{ agent.adress}}</td>
+						<td>
+							{% if agent.avatar == true %}
+
+								<img src="{{ asset('uploads/images/user/images/' ~ agent.avatar) }}" width="45" height="45" class="rounded-circle">
+
+
+							{% elseif agent.avatar == false %}
+								<img src="../../../../global_assets/images/placeholders/profile.png" width="45" height="45" class="rounded-circle">
+
+
+							{% endif %}
+						</td>
+						{# {% if is_granted ('ROLE_ADMIN') %}
+																								<td>{{ agent.Agence.name}}</td>
+																							{% endif %} #}
+						<td>
+							{% for role in agent.roles %}
+								{% if role == "ROLE_USER" %}
+									User
+								{% elseif role == "ROLE_AGENT" %}
+									Agent
+								{% elseif role == "ROLE_SUPER_AGENT" %}
+									Super agent
+								{% endif %}
+							{% endfor %}
+						</td>
+
+						<td>
+							<div
+								class="row ">
+								{# {% if is_granted ('ROLE_ADMIN') %}#}
+
+								<a class="btn btn-primary btn-sm mr-1" href="{{ path('app_agent_edit', {'id': agent.id}) }}">
+									Edit
+								</a>
+
+								{# {% elseif not is_granted ('ROLE_ADMIN') %} #}
+
+								{# <a class="btn btn-primary btn-sm mr-1" href="{{ path('app_agentSansAgence_edit', {'id': agent.id}) }}">
+																																	Edit
+																																</a> #}
+								{# {% endif %} #}
+									<a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal_Delete{{agent.id}}"> Delete</a>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</tbody>
+		</tr>
+		<!-- Delete modal -->
+		<div id="modal_Delete{{agent.id}}" class="modal fade" tabindex="-1">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header bg-danger">
+						<h5 class="modal-title">Deletion</h5>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+
+					<div
+						class="modal-body">
+						{# <h6 class="font-weight-semibold">Text in a modal</h6> #}
+						<p>Are you sure to delete this agent.</p>
+
+					</div>
+
+					<div class="modal-footer">
+						<button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+						<a href="{{ path('app_agent_delete',{'id': agent.id})}}">
+							<button type="button" class="btn bg-danger">Delete</button>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /Delete modal -->
+	{% else %}
+		<tr>
+			<td colspan="5">no records found</td>
+		</tr>
+	{% endfor %}
+</tbody></table></div><br><br>{% endif %}{% endblock %}

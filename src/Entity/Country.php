@@ -25,10 +25,23 @@ class Country
     #[ORM\OneToMany(mappedBy: 'Country', targetEntity: Region::class)]
     private Collection $regions;
 
+    #[ORM\OneToMany(mappedBy: 'country', targetEntity: GoodAddress::class)]
+    private Collection $goodAddresses;
+
+    #[ORM\OneToMany(mappedBy: 'country', targetEntity: Hotel::class)]
+    private Collection $hotels;
+
+    #[ORM\ManyToMany(targetEntity: Offer::class, mappedBy: 'country')]
+    private Collection $offers;
+
     public function __construct()
     {
-        $this->regions = new ArrayCollection();
+        $this->offers = new ArrayCollection();
     }
+
+
+
+
 
     public function getId(): ?int
     {
@@ -92,5 +105,96 @@ class Country
     // {
     //     return (string) $this->entitled;
     // }
+
+    /**
+     * @return Collection<int, GoodAddress>
+     */
+    public function getGoodAddresses(): Collection
+    {
+        return $this->goodAddresses;
+    }
+
+    public function addGoodAddress(GoodAddress $goodAddress): self
+    {
+        if (!$this->goodAddresses->contains($goodAddress)) {
+            $this->goodAddresses->add($goodAddress);
+            $goodAddress->setCountry($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGoodAddress(GoodAddress $goodAddress): self
+    {
+        if ($this->goodAddresses->removeElement($goodAddress)) {
+            // set the owning side to null (unless already changed)
+            if ($goodAddress->getCountry() === $this) {
+                $goodAddress->setCountry(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Hotel>
+     */
+    public function getHotels(): Collection
+    {
+        return $this->hotels;
+    }
+
+    public function addHotel(Hotel $hotel): self
+    {
+        if (!$this->hotels->contains($hotel)) {
+            $this->hotels->add($hotel);
+            $hotel->setCountry($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHotel(Hotel $hotel): self
+    {
+        if ($this->hotels->removeElement($hotel)) {
+            // set the owning side to null (unless already changed)
+            if ($hotel->getCountry() === $this) {
+                $hotel->setCountry(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Offer>
+     */
+    public function getOffers(): Collection
+    {
+        return $this->offers;
+    }
+
+    public function addOffer(Offer $offer): self
+    {
+        if (!$this->offers->contains($offer)) {
+            $this->offers->add($offer);
+            $offer->addCountry($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOffer(Offer $offer): self
+    {
+        if ($this->offers->removeElement($offer)) {
+            $offer->removeCountry($this);
+        }
+
+        return $this;
+    }
+
+
+
+  
 
 }

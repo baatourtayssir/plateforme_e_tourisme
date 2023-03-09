@@ -5,10 +5,23 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
     files_directory: '%kernel.project_dir%/public/uploads/images/agences/logo'   
+    reviews_directory: '%kernel.project_dir%/public/uploads/images/reviews/picture/' 
+    pictures_directory: '%kernel.project_dir%/public/uploads/images/reviews/pictures/' 
+    
+    goodAddressPicture_directory: '%kernel.project_dir%/public/uploads/images/goodAddress/picture/' 
+    profile_directory:  '%kernel.project_dir%/public/uploads/images/user/images/' 
+    HotelPicture_directory: '%kernel.project_dir%/public/uploads/images/hotel/picture/' 
+    OfferPicture_directory: '%kernel.project_dir%/public/uploads/images/offer/picture/'
+    ExcursionPicture_directory: '%kernel.project_dir%/public/uploads/images/offer/excursion/picture/'
+
 services:
     App\Service\KernelService:
         arguments:
             targetDirectory: '%files_directory%'
+            targetReviewDirectory: '%reviews_directory%'
+            targetProfileDirectory: '%profile_directory%'
+            targetPicturesDirectory: '%pictures_directory%'
+            targetGoodAdressePictureDirectory: '%goodAddressPicture_directory%'
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
@@ -25,3 +38,12 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+# mappings:
+#     reviews_directory:
+#        delete_on_remove: true
+#        delete_on_update: true
+#     pictures_directory:
+#        delete_on_remove: true
+#        delete_on_update: true
+            

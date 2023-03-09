@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Review
+
+{% endblock %}
+{% block menu %}
+	<h4>
+		<i class="icon-arrow-left52 mr-2"></i>
+		<span class="font-weight-semibold">Home</span>
+		- Reviews pages</h4>
+{% endblock %}
+{% block menu_petit %}
+	<div class="breadcrumb">
+		<a href="index.html" class="breadcrumb-item">
+			<i class="icon-home2 mr-2"></i>
+			Home</a>
+		<span class="breadcrumb-item active">Reviews Pages - Reviews management
+		</span>
+	</div>
+{% endblock %}
+
+{% block content %}
+	<div class="content d-flex justify-content-center align-items-center">
+		<div class="login-form wmin-sm-400">
+
+
+			{{ form_start(form) }}
+			<fieldset>
+
+
+				{{ form_widget(form) }}
+
+				
+
+
+				{# {% if app.request.attributes.get('_route') == 'app_reviews_edit' %}
+									<h2>Pictures</h2>
+									{% for image in reviews.multiplePictures %}
+										<div>
+											<img
+											src="{{ asset('/uploads/images/reviews/pictures/' ~ image.name) }}" alt="" width="100">
+				
+											{# On ajoute un lien permettant de supprimer une image (sera géré en Ajax) #}
+				{#	<a href="{{ path('reviews_delete_pictures', {id: image.id})}}" data-delete data-token="{{ csrf_token('delete' ~ image.id )}}">Supprimer</a>
+										</div>
+									{% endfor %}
+								{% endif %}  #}
+
+
+				<br>
+				<br>
+
+				<div class="fc-left">
+					<button type="submit" class="btn btn-success">{{ button_label|default('Save') }}</button>
+				</div>
+
+
+				<br>
+			</fieldset>
+			{{ form_end(form) }}
+
+			<a href="{{ path("app_reviews_index")}}">
+				<button class="btn btn-light">
+					Close
+				</button>
+			</a>
+		</div>
+
+	</div>
+
+
+{% endblock %}

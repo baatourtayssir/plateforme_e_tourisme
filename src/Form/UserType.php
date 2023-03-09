@@ -18,6 +18,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 
 class UserType extends AbstractType
@@ -45,6 +46,7 @@ class UserType extends AbstractType
                 ],
             ])
             ->add('lastname', TypeTextType::class, ['attr' => ['class' => 'form-control']])
+            ->add('avatar', FileType::class,  array('data_class' => null,'required' => false ,'label' => 'Profile picture'))
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [

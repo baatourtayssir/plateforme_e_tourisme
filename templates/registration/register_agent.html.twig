@@ -1,5 +1,5 @@
-{% block title %}Register !
-{% endblock %}
+{# {% block title %}Register !
+{% endblock %} #}
 <!-- Global stylesheets -->
 <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
 <link href="{{asset("global_assets/css/icons/icomoon/styles.css")}}" rel="stylesheet" type="text/css">
@@ -62,10 +62,18 @@ href="{{asset("assets/css/colors.min.css")}}" rel="stylesheet" type="text/css">
 							{{ form_row(registrationForm.lastname) }}
 							{{ form_row(registrationForm.phoneNumber) }}
 							{{ form_row(registrationForm.adress) }}
+							{{ form_row(registrationForm.avatar) }}
+							<br>
+
+							<div class="form-group text-center text-muted content-divider">
+								<span class="px-2">Your agency</span>
+							</div>
+							
+
 							{{ form_row(registrationForm.Agence) }}
 							{# {{ form_row(registrationForm.roles) }} #}
 							<br>
-						
+						     
 							<br>
 
 

@@ -56,6 +56,7 @@
 						<th>Email</th>
 						<th>Password</th>
 						<th>Lastname</th>
+						<th>Profile picture</th>
 						<th>Roles</th>
 						<th class="text-center">Actions</th>
 					</tr>
@@ -67,17 +68,36 @@
 							<td>{{ user.email }}</td>
 							<td>{{user.password}}</td>
 							<td>{{ user.lastname}}</td>
+							<td>
+								{% if user.avatar == true %}
+
+									<img src="{{ asset('uploads/images/user/images/' ~ user.avatar) }}" width="45" height="45" class="rounded-circle">
+
+
+								{% elseif user.avatar == false %}
+									<img src="../../../../global_assets/images/placeholders/profile.png" width="45" height="45" class="rounded-circle">
+
+
+								{% endif %}
+							</td>
 
 							<td>
 								{% for role in user.roles %}
 									{% if role == "ROLE_USER" %}
 										User
-									
+
 									{% elseif role == "ROLE_ADMIN" %}
 										Admin
 
 									{% elseif role == "ROLE_SUPER_ADMIN" %}
-										Super admin
+										Super-admin
+
+									{% elseif role == "ROLE_AGENT" %}
+
+										Agent
+									{% elseif role == "ROLE_SUPER_AGENT" %}
+										Super-agent
+
 									{% endif %}
 								{% endfor %}
 							</td>
@@ -113,7 +133,7 @@
 									<div class="modal-footer">
 										<button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
 										<a href="{{ path('app_users_delete',{'id': user.id})}}">
-											<button type="button" class="btn bg-primary">Delete</button>
+											<button type="button" class="btn bg-danger">Delete</button>
 										</a>
 									</div>
 								</div>

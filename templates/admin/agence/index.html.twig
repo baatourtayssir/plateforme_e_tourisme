@@ -67,17 +67,15 @@
 				{% for agence in agences %}
 					<tr>
 						<td>{{ agence.id }}</td>
-						<td>{{ agence.name }}</td>
+						<td><a href="{{ path('show_agency_', {'id': agence.id}) }}">{{ agence.name }}</a></td>
 						<td>{{ agence.email }}</td>
 						<td>{{agence.phoneNumber}}</td>
-						<td>{{ agence.adress}}</td>
+						<td required="required">{{ agence.adress}}</td>
 						<td>{{ agence.description}}</td>
-						{# <td>{{ agence.brochurefilename}}</td> #}
-						{# <td><img src={{asset('uploads/images/agences/logo' ~ agence.brochurefilename )}} alt="Image" width="150"></td> #}
 						<td><img src="{{ asset('uploads/images/agences/logo/' ~ agence.brochureFilename) }}" width="80"></a></td>
 						
 						<td>
-							<div class="row ">
+							<div class="row">
 								<a href="{{ path('app_agence_edit', {'id': agence.id}) }}" class="btn btn-primary btn-sm mr-1">Edit
 								</a>
 								<a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal_Delete{{agence.id}}">Delete</a>
@@ -103,7 +101,7 @@
 								<div class="modal-footer">
 									<button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
 									<a href="{{ path('app_agence_delete',{'id': agence.id})}}">
-										<button type="button" class="btn bg-primary">Delete</button>
+										<button type="button" class="btn bg-danger">Delete</button>
 									</a>
 								</div>
 							</div>
@@ -120,4 +118,10 @@
 	</div>
 
 </div>
+
+
+
+
+
+
 {% endblock %}

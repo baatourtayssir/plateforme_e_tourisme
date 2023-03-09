@@ -30,6 +30,8 @@ class Agence
     #[ORM\Column(length: 255)]
     private ?string $adress = null;
 
+
+
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
@@ -37,7 +39,7 @@ class Agence
     private ?string $brochurefilename= null;
 
 
-    //
+    
 
     #[ORM\OneToMany(mappedBy: 'Agence', targetEntity: Agent::class)]
     private Collection $agents;
@@ -45,15 +47,15 @@ class Agence
     #[ORM\Column(length: 255)]
     private ?string $email = null;
 
-
-
+    #[ORM\OneToMany(mappedBy: 'agence', targetEntity: Offer::class)]
+    private Collection $offers;
 
     public function __construct()
     {
-        $this->agents = new ArrayCollection();
+        $this->offers = new ArrayCollection();
     }
 
-
+   
 
     public function getId(): ?int
     {
@@ -163,6 +165,39 @@ class Agence
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Offer>
+     */
+    public function getOffers(): Collection
+    {
+        return $this->offers;
+    }
+
+    public function addOffer(Offer $offer): self
+    {
+        if (!$this->offers->contains($offer)) {
+            $this->offers->add($offer);
+            $offer->setAgence($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOffer(Offer $offer): self
+    {
+        if ($this->offers->removeElement($offer)) {
+            // set the owning side to null (unless already changed)
+            if ($offer->getAgence() === $this) {
+                $offer->setAgence(null);
+            }
+        }
+
+        return $this;
+    }
+
+
+
 
     
 

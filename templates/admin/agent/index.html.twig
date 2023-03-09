@@ -57,6 +57,7 @@
 					<th>Lastname</th>
 					<th>Phone number</th>
 					<th>Adress</th>
+					<th>Profile picture</th>
 					<th>Name Agency</th>
 					<th>Roles</th>
 					<th class="text-center">Actions</th>
@@ -72,6 +73,18 @@
 						<td>{{ agent.lastname}}</td>
 						<td>{{ agent.phoneNumber}}</td>
 						<td>{{ agent.adress}}</td>
+						<td>
+							{% if agent.avatar == true %}
+
+								<img src="{{ asset('uploads/images/user/images/' ~ agent.avatar) }}" width="45" height="45" class="rounded-circle">
+
+
+							{% elseif agent.avatar == false %}
+								<img src="../../../../global_assets/images/placeholders/profile.png" width="45" height="45" class="rounded-circle">
+
+
+							{% endif %}
+						</td>
 						<td>{{ agent.Agence.name}}</td>
 						<td>
 							{% for role in agent.roles %}
@@ -79,17 +92,19 @@
 									User
 								{% elseif role == "ROLE_AGENT" %}
 									Agent
+								{% elseif role == "ROLE_SUPER_AGENT" %}
+									Super-agent
 								{% endif %}
 							{% endfor %}
 						</td>
 						
 						<td>
 							<div class="row ">
-								<a class="btn btn-primary btn-block" href="{{ path('app_agent_edit', {'id': agent.id}) }}">
+								<a class="btn btn-primary btn-sm mr-1" href="{{ path('app_agent_edit', {'id': agent.id}) }}">
 									Edit
 								</a>
 
-								<a class="btn btn-danger" data-toggle="modal" data-target="#modal_Delete{{agent.id}}">Delete</a>
+								<a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal_Delete{{agent.id}}">Delete</a>
 							</div>
 						</td>
 					</tr>
@@ -112,7 +127,7 @@
 								<div class="modal-footer">
 									<button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
 									<a href="{{ path('app_agent_delete',{'id': agent.id})}}">
-										<button type="button" class="btn bg-primary">Delete</button>
+										<button type="button" class="btn bg-danger">Delete</button>
 									</a>
 								</div>
 							</div>

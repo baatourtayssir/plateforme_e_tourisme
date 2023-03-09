@@ -30,6 +30,7 @@
 
 
 				{{ form_widget(form) }}
+				<br><br>
 
 				<div class="fc-left">
 					<button type="submit" class="btn btn-success">{{ button_label|default('Save') }}</button>
@@ -40,7 +41,7 @@
 			</fieldset>
 			{{ form_end(form) }}
 
-			<a href="{{ path("app_country_index")}}">
+			<a href="{{ path("app_region_index")}}">
 				<button class="btn btn-light">
 					Close
 				</button>

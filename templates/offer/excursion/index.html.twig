@@ -1,0 +1,143 @@
+{% extends 'base.html.twig' %}
+
+{% block javascripts %}
+	<!-- Theme JS files -->
+	<script src="{{ asset("global_assets/js/plugins/tables/datatables/datatables.min.js")}}"></script>
+	<script src="{{ asset("global_assets/js/plugins/forms/selects/select2.min.js")}}"></script>
+	<script src="{{asset("global_assets/js/demo_pages/datatables_basic.js")}}"></script>
+	<!-- /theme JS files -->
+{% endblock %}
+{% block title %}Excursion list
+{% endblock %}
+{% block menu %}
+	<h4>
+		<i class="icon-arrow-left52 mr-2"></i>
+		<span class="font-weight-semibold">Home</span>
+		- Excursion
+	</h4>
+{% endblock %}
+{% block menu_petit %}
+	<div class="breadcrumb">
+		<a href="index.html" class="breadcrumb-item">
+			<i class="icon-home2 mr-2"></i>
+			Home</a>
+		<span class="breadcrumb-item active">Excursion  - Excursion management
+		</span>
+	</div>
+{% endblock %}
+
+
+{% block content %}
+	<div
+		class="card" style="background-color:#d2d2c2;">
+
+		<!-- Basic datatable -->
+		<div class="card">
+			<div class="card-header header-elements-inline">
+				<h5 class="card-title">Excursion list</h5>
+				<div class="header-elements">
+					<div class="list-icons">
+						<a href="{{path('app_excursion_new')}}" class="nav-link">
+
+							<button type="submit" class="btn btn-success">
+								<b>
+									<i class="icon-plus3"></i>
+								</b>
+								Add excursion
+							</button>
+						</a>
+					</div>
+
+				</div>
+			</div>
+
+			<table class="table datatable-basic">
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>Title</th>
+						<th>Description</th>
+						<th>Country</th>
+						<th>Region</th>
+						<th>Good Address</th>
+						<th>Agence</th>
+						<th>Picture</th>
+						{# <th>Reviews</th> #}
+
+
+						<th class="">Actions</th>
+					</tr>
+
+
+				</thead>
+				<tbody>
+					{% for excursion in excursions %}
+						<tr>
+							<td>{{ excursion.id }}</td>
+							<td>{{ excursion.description }}</td>
+							{% for country in excursion.country %}
+									{{ country.entitled }}
+								{% endfor %}
+							{# <td>{{ excursion.country.entitled }}</td> #}
+							<td>
+								{% for region in excursion.regions %}
+									{{ region.entitled }}
+								{% endfor %}
+							</td>
+							{# <td>{{ excursion.region.entitled }}</td> #}
+
+							{# <td>{{ excursion.goodAddress }}</td> #}
+
+							{% for goodAddress in excursion.goodAddress %}
+								{{ goodAddress.title }}
+							{% endfor %}
+							<td>{{ excursion.agence.name }}</td>
+
+
+							<td><img src="{{ asset('uploads/images/offer/excursion/picture/' ~ excursion.picture) }}" width="80"></td>
+							{# <td>{{ agent.reviews.comment}}</td> #}
+						</tr>
+					</a>
+				</tbody>
+			</td>
+
+			<td>
+				<div class="row">
+					<a href="{{ path('app_excusion_edit', {'id': excursion.id}) }}" class="btn btn-primary btn-sm mr-1">Edit
+					</a>
+					<a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal_Delete{{excursion.id}}">Delete</a>
+				</div>
+			</td>
+		</tr>
+		<!-- Delete modal -->
+		<div id="modal_Delete{{excursion.id}}" class="modal fade" tabindex="-1">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header bg-danger">
+						<h5 class="modal-title">Deletion</h5>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+
+					<div
+						class="modal-body">
+						{# <h6 class="font-weight-semibold">Text in a modal</h6> #}
+						<p>Are you sure to delete this excursion.</p>
+
+					</div>
+
+					<div class="modal-footer">
+						<button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+						<a href="{{ path('app_excursion_delete',{'id': excursion.id})}}">
+							<button type="button" class="btn bg-danger">Delete</button>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /Delete modal -->
+	{% else %}
+		<tr>
+			<td colspan="5">no records found</td>
+		</tr>
+	{% endfor %}
+</tbody></table></div></div>{% endblock %}
