@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 #[Route('/agence')]
 class AgenceController extends AbstractController
@@ -30,18 +31,18 @@ class AgenceController extends AbstractController
     #[Route('/espace/agence', name: 'agence_')]
     public function home(): Response
     {
-        
+
         return $this->render('agence/espace_agence.html.twig');
     }
 
 
-    #[Route('/espace/agence/show/{id}', name: 'show_agency_')]
+    /*    #[Route('/espace/agence/show/{id}', name: 'show_agency_')]
     public function show($id)
     {
         $agence = $this->getDoctrine()->getRepository(Agence::class)
             ->find($id);
         return $this->render('admin/agence/show_agency.html.twig', array('agence' => $agence));
-    }
+    } */
 
     #[Route('/', name: 'app_agence_index', methods: ['GET'])]
     public function index(AgenceRepository $agenceRepository): Response
@@ -50,6 +51,15 @@ class AgenceController extends AbstractController
             'agences' => $agenceRepository->findAll(),
         ]);
     }
+
+    #[Route('/form', name: 'app_agence_form', methods: ['GET'])]
+    public function form(AgenceRepository $agenceRepository): Response
+    {
+        return $this->render('admin/agence/form.html.twig', [
+            'agences' => $agenceRepository->findAll(),
+        ]);
+    }
+
 
     #[Route('/new', name: 'app_agence_new', methods: ['GET', 'POST'])]
     public function new(Request $request, AgenceRepository $agenceRepository, KernelService $kernelService): Response
@@ -67,6 +77,7 @@ class AgenceController extends AbstractController
             $entityManager->persist($agence);
             $entityManager->flush();
 
+
             return $this->redirectToRoute('app_agence_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -78,11 +89,14 @@ class AgenceController extends AbstractController
 
 
     #[Route('/{id}/edit', name: 'app_agence_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Agence $agence, AgenceRepository $agenceRepository, KernelService $kernelService): Response
+    public function edit(Request $request, Agence $agence, AgenceRepository $agenceRepository, KernelService $kernelService, int $id): Response
     {
+        $entityManager = $this->getDoctrine()->getManager();
+        $agence = $entityManager->getRepository(Agence::class)->find($id);
         $form = $this->createForm(AgenceType::class, $agence);
         $form->handleRequest($request);
-
+        $agent = $this->getUser();
+        $role[] = $agent->getRoles();
         if ($form->isSubmitted() && $form->isValid()) {
 
             $myFile = $form['brochurefilename']->getData();
@@ -90,16 +104,57 @@ class AgenceController extends AbstractController
             $fileName = $kernelService->upload($myFile);
             $agence->setBrochurefilename($fileName);
 
-            $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($agence);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_agence_index', [], Response::HTTP_SEE_OTHER);
+            if ($role == 'ROLE_ADMIN') {
+                return $this->redirectToRoute('app_agence_index', [], Response::HTTP_SEE_OTHER);
+            }
+            elseif ($role == 'ROLE_AGENT') {
+                return $this->redirectToRoute('app_agence_form', [], Response::HTTP_SEE_OTHER);
+            }
+
+
+
+
+            /*   return $this->redirectToRoute('app_agence_index', [], Response::HTTP_SEE_OTHER); */
         }
 
         return $this->renderForm('admin/agence/form.html.twig', [
+
             'agence' => $agence,
             'form' => $form,
+
+        ]);
+    }
+
+
+
+    #[Route('/{id}/editModale', name: 'app_agence_edit_modale', methods: ['GET', 'POST'])]
+    public function editModal(Request $request, Agence $agence, AgenceRepository $agenceRepository, KernelService $kernelService, int $id): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $agence = $entityManager->getRepository(Agence::class)->find($id);
+        $forma = $this->createForm(AgenceType::class, $agence);
+        $forma->handleRequest($request);
+        
+        if ($forma->isSubmitted() && $forma->isValid()) {
+
+
+            $myFile = $forma['brochurefilename']->getData();
+
+            $fileName = $kernelService->upload($myFile);
+            $agence->setBrochurefilename($fileName);
+            $entityManager->persist($agence);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_agence_form', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('admin/agence/form.html.twig', [
+            'forma' => $forma->createView(),
+            'agence' => $agence,
+
         ]);
     }
 

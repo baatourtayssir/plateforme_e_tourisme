@@ -1,5 +1,9 @@
 {% extends 'base.html.twig' %}
-
+{% block javascripts %}
+	<script src="{{asset("global_assets/js/plugins/editors/summernote/summernote.min.js")}}"></script>
+	<script src="{{asset("global_assets/js/plugins/forms/styling/uniform.min.js")}}"></script>
+	<script src="{{asset("global_assets/js/demo_pages/editor_summernote.js")}}"></script>
+{% endblock %}
 {% block title %}
 	Good address
 
@@ -23,36 +27,80 @@
 
 {% block content %}
 
-	<div class="content d-flex justify-content-center align-items-center">
-		<div class="login-form wmin-sm-400">
-
-			{{ form_start(form, {'multipart': true, 'class' : 'login-form wmin-sm-400'}) }}
-
-			<fieldset>
+	<div class="content justify-content-center align-items-center">
+		{{ form_start(form) }}
 
 
-				{{ form_widget(form) }}
-				
-
-
-				<br>
-
-				<div class="fc-left">
-					<button type="submit" class="btn btn-success">{{ button_label|default('Save') }}</button>
-				</div>
-				<br>
-
-
-			</fieldset>
-			{{ form_end(form) }}
-			<a href="{{ path("app_good_address_index")}}">
-				<button class="btn btn-light">
-					Close
-				</button>
-			</a>
+		<div {# class="form-control" #}>
+			<i class="fa fa-calendar"></i>
+			{{ form_label(form.intitule) }}
+			{{ form_widget(form.intitule) }}
+			<div class="form-error">
+				{{ form_errors(form.intitule) }}
+			</div>
 		</div>
+		<br>
+		<div {# class="form-control" #}>
+			<i class="fa fa-calendar"></i>
+			{{ form_label(form.address) }}
+			{{ form_widget(form.address) }}
+			<div class="form-error">
+				{{ form_errors(form.address) }}
+			</div>
+		</div>
+		<br>
+		<div {# class="form-control" #}>
+			<i class="fa fa-calendar"></i>
+			{{ form_label(form.region) }}
+			{{ form_widget(form.region) }}
+			<div class="form-error">
+				{{ form_errors(form.region) }}
+			</div>
+		</div>
+		<br>
+		
+		<div {# class="form-control" #}>
+			<i class="fa fa-calendar"></i>
+			{{ form_label(form.description) }}
+			{{ form_widget(form.description, { 'attr': {'class': 'summernote'} }) }}
+			<div class="form-error">
+				{{ form_errors(form.description) }}
+			</div>
+		</div>
+		<br>
+		<div {# class="form-control" #}>
+			<i class="fa fa-calendar"></i>
+			{{ form_label(form.category) }}
+			{{ form_widget(form.category) }}
+			<div class="form-error">
+				{{ form_errors(form.category) }}
+			</div>
+		</div>
+		<br>
+		{{ form_label(form.picture) }}
+		<div class="form-control">
+			<i class="fa fa-calendar"></i>
+			{{ form_widget(form.picture) }}
+			<div class="form-error">
+				{{ form_errors(form.picture) }}
+			</div>
+		</div>
+		<br>
 
+		<br>
+
+		<div class="fc-left">
+			<button type="submit" class="btn btn-success">{{ button_label|default('Save') }}</button>
+		</div>
+		<br>
+
+
+		{{ form_end(form) }}
+		<a href="{{ path("app_good_address_index")}}">
+			<button class="btn btn-light">
+				Close
+			</button>
+		</a>
 	</div>
 
-
-{% endblock %}
+</div>{% endblock %}

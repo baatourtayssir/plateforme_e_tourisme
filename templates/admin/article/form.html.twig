@@ -1,7 +1,12 @@
 {% extends 'base.html.twig' %}
 
+{% block javascripts %}
+	<script src="{{asset("global_assets/js/plugins/editors/summernote/summernote.min.js")}}"></script>
+	<script src="{{asset("global_assets/js/plugins/forms/styling/uniform.min.js")}}"></script>
+	<script src="{{asset("global_assets/js/demo_pages/editor_summernote.js")}}"></script>
+{% endblock %}
 {% block title %}
-	Region
+	Article
 
 {% endblock %}
 {% block menu %}
@@ -21,32 +26,101 @@
 {% endblock %}
 
 {% block content %}
-	<div class="content d-flex justify-content-center align-items-center">
-		<div class="login-form wmin-sm-400">
 
 
-			{{ form_start(form) }}
-			<fieldset>
-
-
-				{{ form_widget(form) }}
-				<br><br>
-				<div class="fc-left">
-					<button type="submit" class="btn btn-success">{{ button_label|default('Save') }}</button>
+	<!-- Summernote editor -->
+	<div class="card">
+		<div class="card-header header-elements-inline">
+			<h5 class="card-title">{{article.title}}</h5>
+			<div class="header-elements">
+				<div class="list-icons">
+					<a class="list-icons-item" data-action="collapse"></a>
+					<a class="list-icons-item" data-action="reload"></a>
+					<a class="list-icons-item" data-action="remove"></a>
 				</div>
-				<br>
-
-
-			</fieldset>
-			{{ form_end(form) }}
-
-			<a href="{{ path("app_article_index")}}">
-				<button class="btn btn-light">
-					Close
-				</button>
-			</a>
+			</div>
 		</div>
 
+
+		<div class="content  justify-content-center align-items-center">
+			<div>
+
+
+				{{ form_start(form) }}
+
+
+				<div {# class="form-control" #}>
+					<i class="fa fa-calendar"></i>
+					{{ form_label(form.title) }}
+					{{ form_widget(form.title) }}
+					<div class="form-error">
+						{{ form_errors(form.title) }}
+					</div>
+				</div>
+				<br>
+				<div {# class="form-control" #}>
+					<i class="fa fa-calendar"></i>
+					{{ form_label(form.shortDescription) }}
+					{{ form_widget(form.shortDescription, { 'attr': {'class': 'summernote'} }) }}
+					<div class="form-error">
+						{{ form_errors(form.shortDescription) }}
+					</div>
+				</div>
+				<br>
+				<div {# class="form-control" #}>
+					<i class="fa fa-calendar"></i>
+					{{ form_label(form.description) }}
+					{{ form_widget(form.description, { 'attr': {'class': 'summernote'} }) }}
+					<div class="form-error">
+						{{ form_errors(form.description) }}
+					</div>
+				</div>
+				<br>
+				<i class="fa fa-calendar"></i>
+				{{ form_label(form.picture) }}
+				<div class="form-control">
+					{{ form_widget(form.picture) }}
+
+
+					<div class="form-error">
+						{{ form_errors(form.picture) }}
+					</div>
+				</div>
+				<br>
+				<i class="fa fa-calendar"></i>
+				{{ form_label(form.images) }}
+				<div class="form-control">
+					{{ form_widget(form.images) }}
+
+
+					<div class="form-error">
+						{{ form_errors(form.images) }}
+					</div>
+				</div>
+
+
+				<br><br>
+
+
+				<button type="submit" class="btn btn-success">{{ button_label|default('Save') }}
+					<i class="icon-paperplane ml-2"></i>
+				</button>
+
+				<br>
+
+				{{ form_end(form) }}
+
+
+				<a href="{{ path("app_article_index")}}">
+					<button class="btn btn-light">
+						Close
+					</button>
+				</a>
+
+
+			</div>
+
+		</div>
 	</div>
 
 

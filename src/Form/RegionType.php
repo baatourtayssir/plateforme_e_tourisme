@@ -15,9 +15,9 @@ class RegionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        ->add('entitled', TypeTextType::class,[ 'attr'=>['class'=>'form-control']])
+        ->add('intitule', TypeTextType::class,[ 'attr'=>['class'=>'form-control']])
         ->add('category', TypeTextType::class,[ 'attr'=>['class'=>'form-control']])
-        ->add('Country', EntityType::class, ['class' => Country::class, 'choice_label' => 'entitled', 'attr' => ['class' => 'form-control']])
+        ->add('Country', EntityType::class, ['class' => Country::class, 'choice_label' => 'intitule', 'attr' => ['class' => 'form-control']])
        
         ;
     }

@@ -22,8 +22,17 @@ class OfferType extends AbstractType
         $builder
             ->add('title', TypeTextType::class, ['attr' => ['class' => 'form-control']])
             ->add('description', TextareaType::class, ['attr' => ['class' => 'form-control']])
-            ->add('country', EntityType::class, ['class' => Country::class, 'choice_label' => 'entitled' , 'attr' => ['class' => 'form-control']])
-            ->add('goodAddress', EntityType::class, array(
+           
+            ->add('country', EntityType::class, array(
+                'class'     => Country::class,
+                'choice_label' => 'entitled',
+                'expanded'  => true,
+                'multiple'  => true,
+                'attr' => ['class' => 'form-control'],
+            ))
+
+/*             ->add('country', EntityType::class, ['class' => Country::class, 'choice_label' => 'entitled' , 'attr' => ['class' => 'form-control']])
+ */            ->add('goodAddress', EntityType::class, array(
                 'class'     => GoodAddress::class,
                 'expanded'  => true,
                 'multiple'  => true,

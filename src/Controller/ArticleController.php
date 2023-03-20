@@ -4,11 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Form\ArticleType;
+use App\Entity\Pictures;
 use App\Repository\ArticleRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Service\KernelService;
 
 #[Route('/article')]
 class ArticleController extends AbstractController
@@ -22,13 +24,39 @@ class ArticleController extends AbstractController
     }
 
     #[Route('/new', name: 'app_article_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, ArticleRepository $articleRepository): Response
+    public function new(Request $request, ArticleRepository $articleRepository, KernelService $kernelService): Response
     {
         $article = new Article();
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $myFile = $form['picture']->getData();
+            if ($myFile) {
+                $fileName = $kernelService->loadPictureArticle($myFile);
+                $article->setPicture($fileName);
+            }
+
+        /*     $images = $form->get('images')->getData();
+
+            // On boucle sur les images
+            foreach ($images as $image) {
+                // On génère un nouveau nom de fichier
+                $fichier = md5(uniqid()) . '.' . $image->guessExtension();
+
+                // On copie le fichier dans le dossier uploads
+                $image->move(
+                    $this->getParameter('ArticlePictures_directory'),
+                    $fichier
+                );
+
+                // On crée l'image dans la base de données
+                $img = new Pictures();
+                $img->setName($fichier);
+                $article->addImage($img);
+            } */
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($article);
             $entityManager->flush();
@@ -51,12 +79,39 @@ class ArticleController extends AbstractController
     }
  */
     #[Route('/{id}/edit', name: 'app_article_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Article $article, ArticleRepository $articleRepository): Response
+    public function edit(Request $request, Article $article, ArticleRepository $articleRepository, KernelService $kernelService): Response
     {
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $myFile = $form['picture']->getData();
+            if ($myFile) {
+                $fileName = $kernelService->loadPictureArticle($myFile);
+                $article->setPicture($fileName);
+            }
+
+           /*  $images = $form->get('images')->getData();
+
+            // On boucle sur les images
+            foreach ($images as $image) {
+                // On génère un nouveau nom de fichier
+                $fichier = md5(uniqid()) . '.' . $image->guessExtension();
+
+                // On copie le fichier dans le dossier uploads
+                $image->move(
+                    $this->getParameter('ArticlePictures_directory'),
+                    $fichier
+                );
+
+                // On crée l'image dans la base de données
+                $img = new Pictures();
+                $img->setName($fichier);
+                $article->addImage($img);
+            } */
+
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($article);
             $entityManager->flush();

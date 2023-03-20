@@ -17,14 +17,11 @@ class GoodAddress
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $entitled = null;
+    private ?string $intitule = null;
 
     #[ORM\Column(length: 255)]
     private ?string $address = null;
 
-    #[ORM\ManyToOne(inversedBy: 'goodAddresses')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Country $country = null;
 
     #[ORM\Column(length: 255)]
     private ?string $description = null;
@@ -37,6 +34,9 @@ class GoodAddress
 
     #[ORM\ManyToMany(targetEntity: Offer::class, mappedBy: 'goodAddress')]
     private Collection $offers;
+
+    #[ORM\ManyToOne(inversedBy: 'goodAddresses')]
+    private ?Region $region = null;
 
     public function __construct()
     {
@@ -52,14 +52,14 @@ class GoodAddress
         return $this->id;
     }
 
-    public function getEntitled(): ?string
+    public function getIntitule(): ?string
     {
-        return $this->entitled;
+        return $this->intitule;
     }
 
-    public function setEntitled(string $entitled): self
+    public function setIntitule(string $intitule): self
     {
-        $this->entitled = $entitled;
+        $this->intitule = $intitule;
 
         return $this;
     }
@@ -76,17 +76,6 @@ class GoodAddress
         return $this;
     }
 
-    public function getCountry(): ?Country
-    {
-        return $this->country;
-    }
-
-    public function setCountry(?Country $country): self
-    {
-        $this->country = $country;
-
-        return $this;
-    }
 
     public function getDescription(): ?string
     {
@@ -147,6 +136,18 @@ class GoodAddress
         if ($this->offers->removeElement($offer)) {
             $offer->removeGoodAddress($this);
         }
+
+        return $this;
+    }
+
+    public function getRegion(): ?Region
+    {
+        return $this->region;
+    }
+
+    public function setRegion(?Region $region): self
+    {
+        $this->region = $region;
 
         return $this;
     }

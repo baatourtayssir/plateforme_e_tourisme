@@ -20,6 +20,10 @@ class Pictures
     #[ORM\JoinColumn(nullable: false)]
     private ?Reviews $reviews = null;
 
+/*     #[ORM\ManyToOne(inversedBy: 'images')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Article $article = null; */
+
     public function getId(): ?int
     {
         return $this->id;
@@ -49,8 +53,20 @@ class Pictures
         return $this;
     }
 
+/*     public function getArticle(): ?Article
+    {
+        return $this->article;
+    }
+
+    public function setArticle(?Article $article): self
+    {
+        $this->article = $article;
+
+        return $this;
+    } */
+
     public function __toString(): string
-{
-    return $this->name;
-}
+    {
+        return $this->name;
+    }
 }

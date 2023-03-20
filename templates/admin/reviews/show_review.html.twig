@@ -1,0 +1,101 @@
+{% extends 'base.html.twig' %}
+
+{% block javascripts %}
+	<!-- Theme JS files -->
+	<script src="{{ asset("global_assets/js/plugins/tables/datatables/datatables.min.js")}}"></script>
+	<script src="{{ asset("global_assets/js/plugins/forms/selects/select2.min.js")}}"></script>
+	<script src="{{asset("global_assets/js/demo_pages/datatables_basic.js")}}"></script>
+	<!-- /theme JS files -->
+{% endblock %}
+{% block title %}Show agency
+{% endblock %}
+
+{% block menu %}
+	<h4>
+		<i class="icon-arrow-left52 mr-2"></i>
+		<span class="font-weight-semibold">Home</span>
+		- Agency
+	</h4>
+{% endblock %}
+{% block menu_petit %}
+	<div class="breadcrumb">
+		<a href="index.html" class="breadcrumb-item">
+			<i class="icon-home2 mr-2"></i>
+			Home</a>
+		<span class="breadcrumb-item active">Agency - Show agency
+		</span>
+	</div>
+{% endblock %}
+
+
+{% block content %}
+
+	<div class="d-flex align-items-start flex-column flex-md-row">
+
+
+		<div class="tab-content w-100 order-2 order-md-1">
+			<div
+				class="tab-pane fade active show" id="activity">
+
+				<!-- Sales stats -->
+				<div class="card">
+
+					<div class="content">
+						<div class="profile-cover">
+
+							<div class="mr-md-3 mb-2 mb-md-0">
+								<a href="#">
+									<img src="{{ asset('uploads/images/reviews/picture/' ~ review.picture) }}" class="border-white " width="1550" height="300" alt="">
+								</a>
+							</div>
+
+							<div class="media-body ">
+
+								<h1 class="text-center">Comment on the article :
+									{{review.article.title}}
+								</h1>
+
+							</div>
+
+
+						</div>
+					</div>
+
+					<div class="card-body">
+						<div class="chart-container">
+							<div class="chart has-fixed-height" id="weekly_statistics">
+								<div class="card-body" style="background-color:#f8fdf7;">
+									<div class="card">
+										<h4>{{review.comment}}</h4>
+									</div>
+								</div>
+								<br><br>
+								<div class="content-wrapper">
+									<table>
+										{# <caption align="TOP">Pictures for review</caption> #}
+										<thead>
+											<tr>
+												<th {# colspan="5" class="text-center" #}>{# Pictures #}</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												{% for image in review.images %}
+													<td>
+														<img src="{{ asset('uploads/images/reviews/pictures/' ~ image) }}" width="100" height="100" alt="">
+													</td>
+												{% endfor %}
+											</tr>
+										</tbody>
+									</table>
+								</div>
+
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

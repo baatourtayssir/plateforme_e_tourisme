@@ -9,6 +9,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType as TypeTextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class ArticleType extends AbstractType
@@ -17,7 +18,15 @@ class ArticleType extends AbstractType
     {
         $builder
             ->add('title', TypeTextType::class,[ 'attr'=>['class'=>'form-control']])
+            ->add('shortDescription', TextareaType::class, ['attr' => ['class' => 'form-control']])
             ->add('description', TextareaType::class, ['attr' => ['class' => 'form-control']])
+            ->add('picture', FileType::class,  array('data_class' => null,'required' => false ,'label' => 'Picture'))
+            ->add('images', FileType::class,[
+                'label' => false,
+                'multiple' => true,
+                'mapped' => false,
+                'required' => false
+            ])
             
         ;
     }

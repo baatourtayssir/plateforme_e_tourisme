@@ -10,9 +10,12 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping\InheritanceType;
 use Doctrine\ORM\Mapping\DiscriminatorColumn;
 use Doctrine\ORM\Mapping\Table;
+use Doctrine\ORM\Mapping\DiscriminatorMap;
+use App\Entity\Agent;
+use App\Entity\Admin;
 
 
-
+/* #[DiscriminatorMap(['user' => User::class, 'agent' => Agent::class, 'admin' => Admin::class])] */
 #[Table(name: "user")]
 #[InheritanceType("JOINED")]
 #[DiscriminatorColumn(name: "type", type: "string")]

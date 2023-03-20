@@ -178,7 +178,7 @@
 									</div>
 
 									<div class="sidebar-user-material-footer">
-										<a href="{{ path('show_agency_', {'id': app.user.agence.id}) }}" class=" d-flex justify-content-between">
+										<a href="{{ path('app_agence_edit', {'id': app.user.agence.id}) }}"class=" d-flex justify-content-between">
 											<span>
 												<i class="icon-pencil3 nav-link"></i>
 											</span>
@@ -237,12 +237,12 @@
 											</a>
 											<ul class="nav nav-group-sub" data-submenu-title="User pages">
 												<li class="nav-item">
-													<a href="{{path('user_')}}" class="nav-link">Admin list</a>
+													<a href="{{path('app_admin_index')}}" class="nav-link">Admin list</a>
 												</li>
 											</ul>
 											<ul class="nav nav-group-sub" data-submenu-title="User pages">
 												<li class="nav-item">
-													<a href="{{path('app_users_new')}}" class="nav-link">Add admin</a>
+													<a href="{{path('app_admin_new')}}" class="nav-link">Add admin</a>
 												</li>
 											</ul>
 
@@ -632,7 +632,7 @@ class="content-wrapper">
 
 					<div class="card">
 						<div class="card-header header-elements-inline">
-							<h6 class="card-title font-weight-semibold">Espace admin</h6>
+							<h6 class="card-title font-weight-semibold">Administrator space</h6>
 							<div class="header-elements">
 								<div class="list-icons">
 									<div class="list-icons-item dropdown"></div>

@@ -13,7 +13,8 @@
 	<h4>
 		<i class="icon-arrow-left52 mr-2"></i>
 		<span class="font-weight-semibold">Home</span>
-		- Good address </h4>
+		- Good address
+	</h4>
 {% endblock %}
 {% block menu_petit %}
 	<div class="breadcrumb">
@@ -27,21 +28,22 @@
 
 
 {% block content %}
-<div class="card"  style="background-color:#d2d2c2;">
+
 
 	<!-- Basic datatable -->
 	<div class="card">
 		<div class="card-header header-elements-inline">
-			<h5 class="card-title">Good addresse list</h5>
+			<h5 class="card-title">Good address list</h5>
 			<div class="header-elements">
 				<div class="list-icons">
 					<a href="{{path('app_good_address_new')}}" class="nav-link">
 
 						<button type="submit" class="btn btn-success">
 							<b>
-								<i class="icon-plus3"></i>
+								<i class="icon-plus3 mr-1"></i>
 							</b>
-							  Add good address </button>
+						<big>Add good address</big>	
+						</button>
 					</a>
 				</div>
 
@@ -53,7 +55,7 @@
 				<tr>
 					<th>Id</th>
 					<th>Entitled</th>
-					<th>Country</th>
+					<th>Region</th>
 					<th>Address</th>
 					<th>Description</th>
 					<th>Category</th>
@@ -67,19 +69,26 @@
 				{% for good_address in good_addresses %}
 					<tr>
 						<td>{{ good_address.id }}</td>
-						<td>{{ good_address.entitled }}</td>
-                        <td>{{ good_address.country.entitled }}</td>
+						<td>{{ good_address.intitule }}</td>
+						<td>{{ good_address.region.intitule }}</td>
 						<td>{{ good_address.address }}</td>
-						<td>{{ good_address.description }}</td>
+						<td>{{ good_address.description|raw}}</td>
 						<td>{{good_address.category}}</td>
-				
-						<td><img src="{{ asset('uploads/images/goodAddress/picture/' ~ good_address.picture) }}" width="80"></a></td>
-						
+
+						<td><img src="{{ asset('uploads/images/goodAddress/picture/' ~ good_address.picture) }}" width="80"></td>
+
+
 						<td>
 							<div class="row">
-								<a href="{{ path('app_good_address_edit', {'id': good_address.id}) }}" class="btn btn-primary btn-sm mr-1">Edit
+								<a href="{{ path('app_good_address_edit', {'id': good_address.id}) }}" class="btn btn-primary btn-sm mr-1">
+									<i class="icon-pencil7 mr-1"></i>
+
+									Edit
 								</a>
-								<a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal_Delete{{good_address.id}}">Delete</a>
+								<a class="btn btn-danger btn-sm text-white" data-toggle="modal" data-target="#modal_Delete{{good_address.id}}">
+									<i class="icon-bin mr-1"></i>
+
+									Delete</a>
 							</div>
 						</td>
 					</tr>
@@ -117,12 +126,4 @@
 			</tbody>
 		</table>
 	</div>
-
-</div>
-
-
-
-
-
-
 {% endblock %}

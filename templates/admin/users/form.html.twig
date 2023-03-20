@@ -21,30 +21,97 @@
 {% endblock %}
 
 {% block content %}
-	<div class="content d-flex justify-content-center align-items-center">
-		<div class="login-form wmin-sm-400">
-			{{ form_start(form) }}
-			<fieldset>
 
 
-				{{ form_widget(form) }}
-                  <br> 
-				<div class="fc-left">
-					<button type="submit" class="btn btn-success">{{ button_label|default('Save') }}</button>
+	<!-- Left and right buttons -->
+	<div class="card">
+		<div class="card-header header-elements-inline">
+			<h6 class="card-title">Left/right buttons</h6>
+			<div class="header-elements">
+				<div class="list-icons">
+					<a class="list-icons-item" data-action="collapse"></a>
+					<a class="list-icons-item" data-action="reload"></a>
+					<a class="list-icons-item" data-action="remove"></a>
 				</div>
-				<br>
-
-
-			</fieldset>
-			{{ form_end(form) }}
-			<a href="{{ path("user_")}}">
-				<button class="btn btn-light">
-					Close
-				</button>
-			</a>
+			</div>
 		</div>
 
-	</div>
+		<div
+			class="card-body">
+
+			{{ form_start(form) }}
 
 
-{% endblock %}
+			<div {# class="form-control" #}>
+				<i class="fa fa-calendar"></i>
+				{{ form_label(form.lastname) }}
+				{{ form_widget(form.lastname) }}
+
+
+				<div class="form-error">
+					{{ form_errors(form.lastname) }}
+				</div>
+			</div>
+			<br>
+			<div>
+				<i class="fa fa-calendar"></i>
+				{{ form_label(form.email) }}
+				{{ form_widget(form.email) }}
+
+
+				<div class="form-error">
+					{{ form_errors(form.email) }}
+				</div>
+			</div>
+			<br>
+
+			<div>
+				<i class="fa fa-calendar"></i>
+				{{ form_label(form.password) }}
+				{{ form_widget(form.password) }}
+
+
+				<div class="form-error">
+					{{ form_errors(form.password) }}
+				</div>
+			</div>
+			<br>
+
+			<i class="fa fa-calendar"></i>
+			{{ form_label(form.avatar) }}
+			<div class="form-control">
+				{{ form_widget(form.avatar) }}
+
+
+				<div class="form-error">
+					{{ form_errors(form.avatar) }}
+				</div>
+			</div>
+
+			<br>
+			<br>
+			
+			{{ form_widget(form) }}
+			<br>
+			<br>
+
+			<div class="row">
+
+
+				<button type="submit" class="btn btn-success">{{ button_label|default('Save') }}
+					<i class="icon-paperplane ml-2"></i>
+				</button>
+				<br>
+				{{ form_end(form) }}
+
+				
+			</div>
+			<a href="{{ path("app_admin_index")}}">
+					<button class="btn btn-light">
+						Close
+					</button>
+				</a>
+		</div>
+	
+
+	{% endblock %}

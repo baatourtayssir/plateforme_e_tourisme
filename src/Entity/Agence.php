@@ -11,8 +11,10 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use PHPUnit\TextUI\XmlConfiguration\File;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 
+#[UniqueEntity(fields: ['name'], message: 'There is already an agency with this name')]
 #[ORM\Entity(repositoryClass: AgenceRepository::class)]
 class Agence 
 {
@@ -31,14 +33,11 @@ class Agence
     private ?string $adress = null;
 
 
-
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
     private ?string $brochurefilename= null;
-
-
     
 
     #[ORM\OneToMany(mappedBy: 'Agence', targetEntity: Agent::class)]

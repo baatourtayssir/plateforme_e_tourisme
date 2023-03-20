@@ -10,23 +10,27 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: ExcursionRepository::class)]
 class Excursion extends Offer
 {
-    #[ORM\Id]
+  /*   #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private ?int $id = null; */
 
     #[ORM\ManyToMany(targetEntity: Region::class, inversedBy: 'excursions')]
+    #[ORM\JoinTable(name: "excursion_region")]
     private Collection $regions;
+
+    
 
     public function __construct()
     {
         $this->regions = new ArrayCollection();
+    
     }
 
-    public function getId(): ?int
+   /*  public function getId(): ?int
     {
         return $this->id;
-    }
+    } */
 
     /**
      * @return Collection<int, Region>

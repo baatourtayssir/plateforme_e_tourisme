@@ -24,6 +24,17 @@ class Article
     #[ORM\OneToMany(mappedBy: 'article', targetEntity: Reviews::class)]
     private Collection $reviews;
 
+    #[ORM\Column(length: 255)]
+    private ?string $shortDescription = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $picture = null;
+
+/*     #[ORM\OneToMany(mappedBy: 'article', targetEntity: Pictures::class , cascade: ['persist','remove'])]
+    private Collection $images;
+ */
+
+
     public function __construct()
     {
         $this->reviews = new ArrayCollection();
@@ -87,4 +98,59 @@ class Article
 
         return $this;
     }
+
+    public function getShortDescription(): ?string
+    {
+        return $this->shortDescription;
+    }
+
+    public function setShortDescription(string $shortDescription): self
+    {
+        $this->shortDescription = $shortDescription;
+
+        return $this;
+    }
+
+    public function getPicture(): ?string
+    {
+        return $this->picture;
+    }
+
+    public function setPicture(string $picture): self
+    {
+        $this->picture = $picture;
+
+        return $this;
+    }
+
+    
+ /*    // Getter et setter pour le champ `images`
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(Pictures $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
+            $image->setArticle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Pictures $image): self
+    {
+        if ($this->images->contains($image)) {
+            $this->images->removeElement($image);
+            if ($image->getArticle() === $this) {
+                $image->setArticle(null);
+            }
+        }
+
+        return $this;
+    } */
+
+ 
 }

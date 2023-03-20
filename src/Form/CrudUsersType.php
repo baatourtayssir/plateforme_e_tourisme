@@ -42,7 +42,8 @@ class CrudUsersType extends AbstractType
             ])
             ->add('lastname', TypeTextType::class,[ 'attr'=>['class'=>'form-control']])
             ->add('avatar', FileType::class,  array('data_class' => null,'required' => false ,'label' => 'Profile picture'))
-            ->add('roles', ChoiceType::class,[
+
+           /*  ->add('roles', ChoiceType::class,[
                 'choices' =>[
                     'user' => 'ROLE_USER',
                     'Agent'=> 'ROLE_AGENT', 
@@ -53,10 +54,8 @@ class CrudUsersType extends AbstractType
                 'expanded' => true,
                 'multiple' => true,
                 'label' => 'Roles'
-            ])
+            ]) */
 
-            
-            // ->add('validate', SubmitType::class)
             ;
     }
 

@@ -24,6 +24,14 @@ class ReviewsController extends AbstractController
         $this->manager = $manager;
     }
 
+    #[Route('/show/review/article/{id}', name: 'show_review_')]
+    public function show($id)
+    {
+        $review = $this->getDoctrine()->getRepository(Reviews::class)
+            ->find($id);
+        return $this->render('admin/reviews/show_review.html.twig', array('review' => $review));
+    }
+
 
     #[Route('/', name: 'app_reviews_index', methods: ['GET'])]
     public function index(ReviewsRepository $reviewsRepository): Response
@@ -50,43 +58,24 @@ class ReviewsController extends AbstractController
                 $review->setPicture($fileName);
             }
 
+            $images = $form->get('images')->getData();
 
-            
-          /*       foreach ($review->getImages() as $image) {
-                    // Enregistrer le fichier sur le serveur
-                    $filename = md5(uniqid()) . '.' . $image->getClientOriginalExtension();
-                    $image->move($this->getParameter('pictures_directory'), $filename);
-        
-                    // Créer une nouvelle entité Image et l'ajouter à l'entité Product
-                    $newImage = new Pictures();
-                    $newImage->setName($filename);
-                    $review->addImage($newImage);
-                } */
+            // On boucle sur les images
+            foreach ($images as $image) {
+                // On génère un nouveau nom de fichier
+                $fichier = md5(uniqid()) . '.' . $image->guessExtension();
 
+                // On copie le fichier dans le dossier uploads
+                $image->move(
+                    $this->getParameter('pictures_directory'),
+                    $fichier
+                );
 
-
-                $images = $form->get('images')->getData();
-    
-                // On boucle sur les images
-                foreach($images as $image){
-                    // On génère un nouveau nom de fichier
-                    $fichier = md5(uniqid()).'.'.$image->guessExtension();
-                    
-                    // On copie le fichier dans le dossier uploads
-                    $image->move(
-                        $this->getParameter('pictures_directory'),
-                        $fichier
-                    );
-                    
-                    // On crée l'image dans la base de données
-                    $img = new Pictures();
-                    $img->setName($fichier);
-                    $review->addImage($img);
-                }
-            
-
-
-
+                // On crée l'image dans la base de données
+                $img = new Pictures();
+                $img->setName($fichier);
+                $review->addImage($img);
+            }
             
 
             $entityManager = $this->getDoctrine()->getManager();
@@ -126,19 +115,27 @@ class ReviewsController extends AbstractController
                 $fileName = $kernelService->loadpicture($myFile);
                 $review->setPicture($fileName);
             }
-          
-           
-                foreach ($review->getImages() as $image) {
-                    // Enregistrer le fichier sur le serveur
-                    $filename = md5(uniqid()) . '.' . $image->getClientOriginalExtension();
-                    $image->move($this->getParameter('pictures_directory'), $filename);
-        
-                    // Créer une nouvelle entité Image et l'ajouter à l'entité Product
-                    $newImage = new Pictures();
-                    $newImage->setName($filename);
-                    $review->addImage($newImage);
-                }
-            
+
+
+            $images = $form->get('images')->getData();
+
+            // On boucle sur les images
+            foreach ($images as $image) {
+                // On génère un nouveau nom de fichier
+                $fichier = md5(uniqid()) . '.' . $image->guessExtension();
+
+                // On copie le fichier dans le dossier uploads
+                $image->move(
+                    $this->getParameter('pictures_directory'),
+                    $fichier
+                );
+
+                // On crée l'image dans la base de données
+                $img = new Pictures();
+                $img->setName($fichier);
+                $review->addImage($img);
+            }
+
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($review);

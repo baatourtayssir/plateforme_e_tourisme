@@ -21,33 +21,8 @@ class ReviewsType extends AbstractType
             ->add('comment', TextareaType::class, ['attr' => ['class' => 'form-control']])
             ->add('Article', EntityType::class, ['class' => Article::class, 'choice_label' => 'title' , 'attr' => ['class' => 'form-control']])
             ->add('picture', FileType::class,  array('data_class' => null,'required' => false ,'label' => 'Picture'))
-           /*  ->add('images', CollectionType::class, [
-                'entry_type' => FileType::class,
-                'entry_options' => [
-                    'required' => false,
-                    'constraints' => [
-                        new Valid(),
-                    ],
-                ],
-                'allow_add' => true,
-                'allow_delete' => true,
-                'prototype' => true,
-                'by_reference' => false,
-                'required' => false,
-            ]) */
-
-            /* ->add('images', FileType::class,[
-                'label' => false,
-                'multiple' => true,
-                'mapped' => false,
-                'constraints' => [
-                    new Valid(),
-                ],
-                'required' => false
-            ]) */
-
             ->add('images', FileType::class,[
-                'label' => false,
+                'label' => 'Pictures',
                 'multiple' => true,
                 'mapped' => false,
                 'required' => false

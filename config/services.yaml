@@ -7,6 +7,10 @@ parameters:
     files_directory: '%kernel.project_dir%/public/uploads/images/agences/logo'   
     reviews_directory: '%kernel.project_dir%/public/uploads/images/reviews/picture/' 
     pictures_directory: '%kernel.project_dir%/public/uploads/images/reviews/pictures/' 
+    Article_directory: '%kernel.project_dir%/public/uploads/images/article/picture/'
+    ArticlePictures_directory: '%kernel.project_dir%/public/uploads/images/article/pictures/'
+    
+
     
     goodAddressPicture_directory: '%kernel.project_dir%/public/uploads/images/goodAddress/picture/' 
     profile_directory:  '%kernel.project_dir%/public/uploads/images/user/images/' 
@@ -21,7 +25,9 @@ services:
             targetReviewDirectory: '%reviews_directory%'
             targetProfileDirectory: '%profile_directory%'
             targetPicturesDirectory: '%pictures_directory%'
+            targetArticlePicturesDirectory: '%ArticlePictures_directory%'
             targetGoodAdressePictureDirectory: '%goodAddressPicture_directory%'
+
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.

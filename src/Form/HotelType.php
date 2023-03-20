@@ -18,9 +18,9 @@ class HotelType extends AbstractType
     {
         $builder
             
-            ->add('entitled', TypeTextType::class, ['attr' => ['class' => 'form-control']])
+            ->add('intitule', TypeTextType::class, ['attr' => ['class' => 'form-control']])
             ->add('address', TypeTextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('country', EntityType::class, ['class' => Country::class, 'choice_label' => 'entitled' , 'attr' => ['class' => 'form-control']])
+            ->add('country', EntityType::class, ['class' => Country::class, 'choice_label' => 'intitule' , 'attr' => ['class' => 'form-control']])
             ->add('characteristic', TextareaType::class, ['attr' => ['class' => 'form-control']])
             ->add('picture', FileType::class,  array('data_class' => null, 'required' => false, 'label' => 'Picture'));
             

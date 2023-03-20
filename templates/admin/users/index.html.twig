@@ -27,119 +27,119 @@
 
 
 {% block content %}
-	<div
-		class="card" style="background-color:#d2d2c2;">
 
-		<!-- Basic datatable -->
-		<div class="card">
-			<div class="card-header header-elements-inline">
-				<h5 class="card-title">List of administrators</h5>
-				<div class="header-elements">
-					<div class="list-icons">
-						<a href="{{path('app_users_new')}}" class="nav-link">
 
-							<button type="submit" class="btn btn-success">
-								<b>
-									<i class="icon-plus3"></i>
-								</b>
-								Add admin</button>
-						</a>
-					</div>
+	<!-- Basic datatable -->
+	<div class="card">
+		<div class="card-header header-elements-inline">
+			<h5 class="card-title">List of administrators</h5>
+			<div class="header-elements">
+				<div class="list-icons">
+					<a href="{{path('app_admin_new')}}" class="nav-link">
 
+						<button type="submit" class="btn btn-success">
+							<b>
+								<i class="icon-plus3 mr-1"></i>
+							</b>
+							<big>Add admin</big>
+						</button>
+					</a>
 				</div>
+
 			</div>
+		</div>
 
-			<table class="table datatable-basic">
-				<thead>
+		<table class="table datatable-basic">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Lastname</th>
+					<th>Profile picture</th>
+					<th>Email</th>
+					<th>Roles</th>
+					<th class="text-center">Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for admin in admins %}
 					<tr>
-						<th>Id</th>
-						<th>Email</th>
-						<th>Password</th>
-						<th>Lastname</th>
-						<th>Profile picture</th>
-						<th>Roles</th>
-						<th class="text-center">Actions</th>
-					</tr>
-				</thead>
-				<tbody>
-					{% for user in users %}
-						<tr>
-							<td>{{ user.id }}</td>
-							<td>{{ user.email }}</td>
-							<td>{{user.password}}</td>
-							<td>{{ user.lastname}}</td>
-							<td>
-								{% if user.avatar == true %}
+						<td>{{ admin.id }}</td>
+						<td>{{ admin.lastname}}</td>
 
-									<img src="{{ asset('uploads/images/user/images/' ~ user.avatar) }}" width="45" height="45" class="rounded-circle">
+						<td>
+							{% if admin.avatar == true %}
+
+								<img src="{{ asset('uploads/images/user/images/' ~ admin.avatar) }}" width="60" height="60" class="rounded-circle">
 
 
-								{% elseif user.avatar == false %}
-									<img src="../../../../global_assets/images/placeholders/profile.png" width="45" height="45" class="rounded-circle">
+							{% elseif admin.avatar == false %}
+								<img src="../../../../global_assets/images/placeholders/profile.png" width="60" height="60" class="rounded-circle">
 
+
+							{% endif %}
+						</td>
+						<td>{{ admin.email }}</td>
+
+
+						<td>
+							{% for role in admin.roles %}
+
+								{% if role == "ROLE_ADMIN" %}
+									Admin
+
+
+								{% elseif role == "ROLE_SUPER_ADMIN" %}
+
+									Super-admin
 
 								{% endif %}
-							</td>
+							{% endfor %}
+						</td>
 
-							<td>
-								{% for role in user.roles %}
-									{% if role == "ROLE_USER" %}
-										User
+						<td>
+							<div class="modal-footer ">
+								<a href="{{ path('app_admin_edit', {'id': admin.id}) }}" class="btn btn-primary btn-sm mr-1 ">
+									<i class="icon-pencil7 mr-1{# icon-2x #} "></i>
+									Edit
+								</a>
+								<a class="btn btn-danger btn-sm text-white" data-toggle="modal" data-target="#modal_Delete{{admin.id}}">
+									<i class="icon-bin mr-1 {# icon-2x #}"></i>
 
-									{% elseif role == "ROLE_ADMIN" %}
-										Admin
+									Delete
+								</a>
+							</div>
+						</td>
+					</tr>
+					<!-- Delete modal -->
 
-									{% elseif role == "ROLE_SUPER_ADMIN" %}
-										Super-admin
+					<div id="modal_Delete{{admin.id}}" class="modal fade" tabindex="-1">
 
-									{% elseif role == "ROLE_AGENT" %}
+						<div class="modal-dialog ">
 
-										Agent
-									{% elseif role == "ROLE_SUPER_AGENT" %}
-										Super-agent
+							<div class="modal-content">
 
-									{% endif %}
-								{% endfor %}
-							</td>
-
-							<td>
-								<div class="modal-footer ">
-									<a href="{{ path('app_users_edit', {'id': user.id}) }}" class="btn btn-primary btn-sm mr-1">Edit
-									</a>
-									<a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal_Delete{{user.id}}">Delete</a>
+								<div class="modal-header bg-danger">
+									<h5 class="modal-title">Deletion</h5>
+									<button type="button" class="close" data-dismiss="modal">&times;</button>
 								</div>
-							</td>
-						</tr>
-						<!-- Delete modal -->
 
-						<div id="modal_Delete{{user.id}}" class="modal fade" tabindex="-1">
+								<div
+									class="modal-body">
+									{# <h6 class="font-weight-semibold">Text in a modal</h6> #}
+									<p>Are you sure to delete this user.</p>
 
-							<div class="modal-dialog ">
+								</div>
 
-								<div class="modal-content">
-
-									<div class="modal-header bg-danger">
-										<h5 class="modal-title">Deletion</h5>
-										<button type="button" class="close" data-dismiss="modal">&times;</button>
-									</div>
-
-									<div
-										class="modal-body">
-										{# <h6 class="font-weight-semibold">Text in a modal</h6> #}
-										<p>Are you sure to delete this user.</p>
-
-									</div>
-
-									<div class="modal-footer">
-										<button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
-										<a href="{{ path('app_users_delete',{'id': user.id})}}">
-											<button type="button" class="btn bg-danger">Delete</button>
-										</a>
-									</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+									<a href="{{ path('app_admin_delete',{'id': admin.id})}}">
+										<button type="button" class="btn bg-danger">Delete</button>
+									</a>
 								</div>
 							</div>
 						</div>
 					</div>
+
 
 					<!-- /Delete modal -->
 				{% else %}
@@ -151,4 +151,5 @@
 		</table>
 	</div>
 
-</div>{% endblock %}
+
+{% endblock %}

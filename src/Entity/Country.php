@@ -17,7 +17,7 @@ class Country
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $entitled = null;
+    private ?string $intitule = null;
 
     #[ORM\Column(length: 255)]
     private ?string $category = null;
@@ -25,13 +25,11 @@ class Country
     #[ORM\OneToMany(mappedBy: 'Country', targetEntity: Region::class)]
     private Collection $regions;
 
-    #[ORM\OneToMany(mappedBy: 'country', targetEntity: GoodAddress::class)]
-    private Collection $goodAddresses;
-
     #[ORM\OneToMany(mappedBy: 'country', targetEntity: Hotel::class)]
     private Collection $hotels;
 
     #[ORM\ManyToMany(targetEntity: Offer::class, mappedBy: 'country')]
+  
     private Collection $offers;
 
     public function __construct()
@@ -40,22 +38,19 @@ class Country
     }
 
 
-
-
-
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getEntitled(): ?string
+    public function getIntitule(): ?string
     {
-        return $this->entitled;
+        return $this->intitule;
     }
 
-    public function setEntitled(string $entitled): self
+    public function setIntitule(string $intitule): self
     {
-        $this->entitled = $entitled;
+        $this->intitule = $intitule;
 
         return $this;
     }
@@ -103,38 +98,10 @@ class Country
     }
     // public function __toString()
     // {
-    //     return (string) $this->entitled;
+    //     return (string) $this->intitule;
     // }
 
-    /**
-     * @return Collection<int, GoodAddress>
-     */
-    public function getGoodAddresses(): Collection
-    {
-        return $this->goodAddresses;
-    }
-
-    public function addGoodAddress(GoodAddress $goodAddress): self
-    {
-        if (!$this->goodAddresses->contains($goodAddress)) {
-            $this->goodAddresses->add($goodAddress);
-            $goodAddress->setCountry($this);
-        }
-
-        return $this;
-    }
-
-    public function removeGoodAddress(GoodAddress $goodAddress): self
-    {
-        if ($this->goodAddresses->removeElement($goodAddress)) {
-            // set the owning side to null (unless already changed)
-            if ($goodAddress->getCountry() === $this) {
-                $goodAddress->setCountry(null);
-            }
-        }
-
-        return $this;
-    }
+  
 
     /**
      * @return Collection<int, Hotel>

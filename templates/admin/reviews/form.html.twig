@@ -21,53 +21,65 @@
 {% endblock %}
 
 {% block content %}
-	<div class="content d-flex justify-content-center align-items-center">
-		<div class="login-form wmin-sm-400">
+
+	<div class="content justify-content-center align-items-center">
+		{{ form_start(form) }}
 
 
-			{{ form_start(form) }}
-			<fieldset>
-
-
-				{{ form_widget(form) }}
-
-				
-
-
-				{# {% if app.request.attributes.get('_route') == 'app_reviews_edit' %}
-									<h2>Pictures</h2>
-									{% for image in reviews.multiplePictures %}
-										<div>
-											<img
-											src="{{ asset('/uploads/images/reviews/pictures/' ~ image.name) }}" alt="" width="100">
-				
-											{# On ajoute un lien permettant de supprimer une image (sera géré en Ajax) #}
-				{#	<a href="{{ path('reviews_delete_pictures', {id: image.id})}}" data-delete data-token="{{ csrf_token('delete' ~ image.id )}}">Supprimer</a>
-										</div>
-									{% endfor %}
-								{% endif %}  #}
-
-
-				<br>
-				<br>
-
-				<div class="fc-left">
-					<button type="submit" class="btn btn-success">{{ button_label|default('Save') }}</button>
-				</div>
-
-
-				<br>
-			</fieldset>
-			{{ form_end(form) }}
-
-			<a href="{{ path("app_reviews_index")}}">
-				<button class="btn btn-light">
-					Close
-				</button>
-			</a>
+		<div {# class="form-control" #}>
+			<i class="fa fa-calendar"></i>
+			{{ form_label(form.comment) }}
+			{{ form_widget(form.comment) }}
+			<div class="form-error">
+				{{ form_errors(form.comment) }}
+			</div>
+		</div>
+		<br>
+		<div {# class="form-control" #}>
+			<i class="fa fa-calendar"></i>
+			{{ form_label(form.Article) }}
+			{{ form_widget(form.Article) }}
+			<div class="form-error">
+				{{ form_errors(form.Article) }}
+			</div>
+		</div>
+		<br>
+		{{ form_label(form.picture) }}
+		<div class="form-control">
+			<i class="fa fa-calendar"></i>
+			{{ form_widget(form.picture) }}
+			<div class="form-error">
+				{{ form_errors(form.picture) }}
+			</div>
+		</div>
+		<br>
+		{{ form_label(form.images) }}
+		<div class="form-control">
+			<i class="fa fa-calendar"></i>
+			{{ form_widget(form.images) }}
+			<div class="form-error">
+				{{ form_errors(form.images) }}
+			</div>
 		</div>
 
-	</div>
 
+		<br>
+		<br>
+
+		<div class="fc-left">
+			<button type="submit" class="btn btn-success">{{ button_label|default('Save') }}</button>
+		</div>
+
+
+		<br>
+
+		{{ form_end(form) }}
+
+		<a href="{{ path("app_reviews_index")}}">
+			<button class="btn btn-light">
+				Close
+			</button>
+		</a>
+	</div>
 
 {% endblock %}

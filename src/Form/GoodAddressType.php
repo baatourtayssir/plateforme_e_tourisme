@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\GoodAddress;
 use App\Entity\Country;
+use App\Entity\Region;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -17,8 +18,8 @@ class GoodAddressType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('entitled', TypeTextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('country', EntityType::class, ['class' => Country::class, 'choice_label' => 'entitled' , 'attr' => ['class' => 'form-control']])
+            ->add('intitule', TypeTextType::class, ['attr' => ['class' => 'form-control']])
+            ->add('region', EntityType::class, ['class' => Region::class, 'choice_label' => 'intitule' , 'attr' => ['class' => 'form-control']])
             ->add('address', TypeTextType::class, ['attr' => ['class' => 'form-control']])
             ->add('description', TextareaType::class, ['attr' => ['class' => 'form-control']])
             ->add('category', TypeTextType::class, ['attr' => ['class' => 'form-control']])

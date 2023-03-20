@@ -25,27 +25,26 @@ class ExcursionType extends AbstractType
 
             ->add('title', TypeTextType::class, ['attr' => ['class' => 'form-control']])
             ->add('description', TextareaType::class, ['attr' => ['class' => 'form-control']])
-            ->add('country', EntityType::class, array(
-                'class'     => Country::class,
-                'choice_label' => 'entitled',
-                'expanded'  => true,
-                'multiple'  => true,
-                'attr' => ['class' => 'form-control'],
-            ))
+            
 /*             ->add('country', EntityType::class, ['class' => Country::class, 'choice_label' => 'entitled', 'attr' => ['class' => 'form-control']])
  */            ->add('regions', EntityType::class, array(
                 'class'     => Region::class,
+                'choice_label' => 'intitule',
+                'group_by'  => 'country.intitule',
+                'multiple'  => true,
+                'attr' => ['class' => 'form-control select'],
+            ))
+          /*   ->add('country', EntityType::class, array(
+                'class'     => Country::class,
                 'choice_label' => 'entitled',
-                'expanded'  => true,
                 'multiple'  => true,
                 'attr' => ['class' => 'form-control'],
-            ))
+            )) */
             ->add('goodAddress', EntityType::class, array(
                 'class'     => GoodAddress::class,
-                'choice_label' => 'entitled',
-                'expanded'  => true,
+                'choice_label' => 'intitule',
                 'multiple'  => true,
-                'attr' => ['class' => 'form-control'],
+                'attr' => ['class' => 'form-control select'],
             ))
             ->add('agence', EntityType::class, ['class' => Agence::class, 'choice_label' => 'name', 'attr' => ['class' => 'form-control']])
             ->add('picture', FileType::class,  array('data_class' => null, 'required' => false, 'label' => 'Picture'))

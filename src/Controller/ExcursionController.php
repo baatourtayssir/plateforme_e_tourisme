@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Excursion;
 use App\Form\ExcursionType;
 use App\Repository\ExcursionRepository;
+use App\Repository\OfferRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,6 +15,11 @@ use App\Service\KernelService;
 #[Route('/excursion')]
 class ExcursionController extends AbstractController
 {
+
+    public function __construct(private OfferRepository $offerRepository)
+    {
+    }
+
     #[Route('/', name: 'app_excursion_index', methods: ['GET'])]
     public function index(ExcursionRepository $excursionRepository): Response
     {
@@ -27,8 +33,9 @@ class ExcursionController extends AbstractController
     {
         $excursion = new Excursion();
         $form = $this->createForm(ExcursionType::class, $excursion);
+      
         $form->handleRequest($request);
-
+/* dd($excursion); */
         if ($form->isSubmitted() && $form->isValid()) {
 
             $myFile = $form['picture']->getData();
@@ -38,9 +45,14 @@ class ExcursionController extends AbstractController
 
             $entityManager = $this->getDoctrine()->getManager();
 
-            
-            // Récupération des tags associés à l'article
-           /*  $regions = $form->get('regions')->getData();
+
+           /*  $selectedCountries = $form->get('country')->getData();
+            foreach ($selectedCountries as $country) {
+                $excursion->addCountry($country);
+            }
+
+
+            $regions = $form->get('regions')->getData();
             foreach ($regions as $region) {
                 $excursion->addRegion($regions);
             } */
@@ -57,7 +69,7 @@ class ExcursionController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_excursion_show', methods: ['GET'])]
+    #[Route('{id}/show', name: 'app_excursion_show', methods: ['GET'])]
     public function show(Excursion $excursion): Response
     {
         return $this->render('excursion/show.html.twig', [
@@ -65,7 +77,7 @@ class ExcursionController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_excursion_edit', methods: ['GET', 'POST'])]
+    #[Route('{id}/edit', name: 'app_excursion_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Excursion $excursion, ExcursionRepository $excursionRepository, KernelService $kernelService): Response
     {
         $form = $this->createForm(ExcursionType::class, $excursion);
@@ -90,7 +102,7 @@ class ExcursionController extends AbstractController
         ]);
     }
 
-    #[Route('/delete/{id}', name: 'app_excursion_delete')]
+    #[Route('{id}/delete', name: 'app_excursion_delete')]
     public function delete(Request $request, $id): Response
     {
 

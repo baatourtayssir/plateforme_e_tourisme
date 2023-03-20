@@ -17,7 +17,7 @@ class Region
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $entitled = null;
+    private ?string $intitule = null;
 
     #[ORM\Column(length: 255)]
     private ?string $category = null;
@@ -28,9 +28,13 @@ class Region
     #[ORM\ManyToMany(targetEntity: Excursion::class, mappedBy: 'regions')]
     private Collection $excursions;
 
+    #[ORM\OneToMany(mappedBy: 'region', targetEntity: GoodAddress::class)]
+    private Collection $goodAddresses;
+
     public function __construct()
     {
         $this->excursions = new ArrayCollection();
+        $this->goodAddresses = new ArrayCollection();
     }
 
 
@@ -40,14 +44,14 @@ class Region
         return $this->id;
     }
 
-    public function getEntitled(): ?string
+    public function getIntitule(): ?string
     {
-        return $this->entitled;
+        return $this->intitule;
     }
 
-    public function setEntitled(string $entitled): self
+    public function setIntitule(string $intitule): self
     {
-        $this->entitled = $entitled;
+        $this->intitule = $intitule;
 
         return $this;
     }
@@ -98,6 +102,36 @@ class Region
     {
         if ($this->excursions->removeElement($excursion)) {
             $excursion->removeRegion($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, GoodAddress>
+     */
+    public function getGoodAddresses(): Collection
+    {
+        return $this->goodAddresses;
+    }
+
+    public function addGoodAddress(GoodAddress $goodAddress): self
+    {
+        if (!$this->goodAddresses->contains($goodAddress)) {
+            $this->goodAddresses->add($goodAddress);
+            $goodAddress->setRegion($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGoodAddress(GoodAddress $goodAddress): self
+    {
+        if ($this->goodAddresses->removeElement($goodAddress)) {
+            // set the owning side to null (unless already changed)
+            if ($goodAddress->getRegion() === $this) {
+                $goodAddress->setRegion(null);
+            }
         }
 
         return $this;

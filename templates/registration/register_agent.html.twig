@@ -31,15 +31,15 @@ href="{{asset("assets/css/colors.min.css")}}" rel="stylesheet" type="text/css">
 
 	<!-- Page content -->
 	<div
-		class="page-content login-cover">
+		class="page-content login-cover ">
 
 		<!-- Main content -->
-		<div
+		<div 
 			class="content-wrapper">
 
 			<!-- Content area -->
 			<div
-				class="content d-flex justify-content-center align-items-center">
+				class="content d-flex justify-content-center align-items-center ">
 				<!-- Registration form -->
 
 				<div class="login-form">
@@ -57,21 +57,93 @@ href="{{asset("assets/css/colors.min.css")}}" rel="stylesheet" type="text/css">
 
 
 							{{ form_start(registrationForm) }}
-							{{ form_row(registrationForm.email) }}
-							{{ form_row(registrationForm.password, {label: 'Password'}) }}
-							{{ form_row(registrationForm.lastname) }}
-							{{ form_row(registrationForm.phoneNumber) }}
-							{{ form_row(registrationForm.adress) }}
-							{{ form_row(registrationForm.avatar) }}
+				
+				<i class="fa fa-calendar"></i>
+				{{ form_label(registrationForm.email) }}
+				{{ form_widget(registrationForm.email) }}
+
+
+				<div class="form-error">
+					{{ form_errors(registrationForm.email) }}
+				</div>
+				<i class="fa fa-calendar"></i>
+				{{ form_label(registrationForm.password) }}
+				{{ form_widget(registrationForm.password) }}
+
+
+				<div class="form-error">
+					{{ form_errors(registrationForm.password) }}
+				</div>
+
+				<i class="fa fa-calendar"></i>
+				{{ form_label(registrationForm.lastname) }}
+				{{ form_widget(registrationForm.lastname) }}
+
+
+				<div class="form-error">
+					{{ form_errors(registrationForm.lastname) }}
+				</div>
+				<i class="fa fa-calendar"></i>
+				{{ form_label(registrationForm.phoneNumber) }}
+				{{ form_widget(registrationForm.phoneNumber) }}
+
+
+				<div class="form-error">
+					{{ form_errors(registrationForm.phoneNumber) }}
+				</div>
+				<i class="fa fa-calendar"></i>
+				{{ form_label(registrationForm.adress) }}
+				{{ form_widget(registrationForm.adress) }}
+
+
+				<div class="form-error">
+					{{ form_errors(registrationForm.adress) }}
+				</div>
+				<i class="fa fa-calendar"></i>
+				{{ form_label(registrationForm.avatar) }}
+				{{ form_widget(registrationForm.avatar) }}
+
+
+				<div class="form-error">
+					{{ form_errors(registrationForm.avatar) }}
+				</div>
+			
+			</div>
+					</div>
+				</div>
+				<!-- /registration form -->
+			</div>
+			</div>
+		
+	
+			
+
+
+		<!-- Main content -->
+	<div
+			 class="content-wrapper" >
+
+			<!-- Content area -->
+			<div
+				class="content d-flex justify-content-center align-items-center">
+				<!-- Registration form -->
+
+				<div class="login-form">
+					<div class="card mb-0">
+						<div class="card-body">
 							<br>
 
 							<div class="form-group text-center text-muted content-divider">
 								<span class="px-2">Your agency</span>
 							</div>
 							
-
-							{{ form_row(registrationForm.Agence) }}
-							{# {{ form_row(registrationForm.roles) }} #}
+                          {{form_row(registrationForm.Agence.name)}}
+						  {{form_row(registrationForm.Agence.email)}}
+						  {{form_row(registrationForm.Agence.phoneNumber)}}
+						  {{form_row(registrationForm.Agence.adress)}}
+						  {{form_row(registrationForm.Agence.description)}}
+						  {{form_row(registrationForm.Agence.brochurefilename)}}
+							
 							<br>
 						     
 							<br>

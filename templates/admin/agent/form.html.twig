@@ -22,33 +22,99 @@
 
 {% block content %}
 
-	<div class="content d-flex justify-content-center align-items-center">
-		<div class="login-form wmin-sm-400">
-			
-			{{ form_start(form, { 'multipart': true,'class' : 'login-form wmin-sm-400'}) }}
+	<div class="content  justify-content-center align-items-center">
 
 
-				<fieldset>
-				
-					
-					{{ form_widget(form) }}
-					
-					<div class="fc-left">
-						<button type="submit" class="btn btn-success">{{ button_label|default('Save') }}</button>
-					</div>
-					<br>
+		{{ form_start(form) }}
 
-				
 
-				</fieldset>	
-			{{ form_end(form) }}
-			
-			<a href="{{ path("app_agent_index")}}">
-				<button class="btn btn-light">
-					Close
-				</button>
-			</a>
+		<div {# class="form-control" #}>
+			<i class="fa fa-calendar"></i>
+			{{ form_label(form.email) }}
+			{{ form_widget(form.email) }}
+			<div class="form-error">
+				{{ form_errors(form.email) }}
+			</div>
 		</div>
+		<br>
+		<div {# class="form-control" #}>
+			<i class="fa fa-calendar"></i>
+			{{ form_label(form.password) }}
+			{{ form_widget(form.password) }}
+			<div class="form-error">
+				{{ form_errors(form.password) }}
+			</div>
+		</div>
+		<br>
+		<div {# class="form-control" #}>
+			<i class="fa fa-calendar"></i>
+			{{ form_label(form.lastname) }}
+			{{ form_widget(form.lastname) }}
+			<div class="form-error">
+				{{ form_errors(form.lastname) }}
+			</div>
+		</div>
+		<br>
+		<div {# class="form-control" #}>
+			<i class="fa fa-calendar"></i>
+			{{ form_label(form.phoneNumber) }}
+			{{ form_widget(form.phoneNumber) }}
+			<div class="form-error">
+				{{ form_errors(form.phoneNumber) }}
+			</div>
+		</div>
+		<br>
+		<div {# class="form-control" #}>
+			<i class="fa fa-calendar"></i>
+			{{ form_label(form.adress) }}
+			{{ form_widget(form.adress) }}
+			<div class="form-error">
+				{{ form_errors(form.adress) }}
+			</div>
+		</div>
+		<br>
+		<div {# class="form-control" #}>
+			<i class="fa fa-calendar"></i>
+			{{ form_label(form.Agence) }}
+			{{ form_widget(form.Agence) }}
+			<div class="form-error">
+				{{ form_errors(form.Agence) }}
+			</div>
+		</div>
+		<br>
+		{{ form_label(form.avatar) }}
+		<div class="form-control">
+			<i class="fa fa-calendar"></i>
+
+			{{ form_widget(form.avatar) }}
+			<div class="form-error">
+				{{ form_errors(form.avatar) }}
+			</div>
+		</div>
+		<br>
+		<div {# class="form-check-label" #}>
+			<i class="fa fa-calendar"></i>
+			{{ form_label(form.roles) }}
+			{{ form_widget(form.roles) }}
+			<div class="form-error">
+				{{ form_errors(form.roles) }}
+			</div>
+		</div>
+
+		<br>
+		<div class="fc-left">
+			<button type="submit" class="btn btn-success">{{ button_label|default('Save') }}</button>
+		</div>
+		<br>
+
+		{{ form_end(form) }}
+
+		<a href="{{ path("app_agent_index")}}">
+			<button class="btn btn-light">
+				Close
+			</button>
+		</a>
+
 
 	</div>
 

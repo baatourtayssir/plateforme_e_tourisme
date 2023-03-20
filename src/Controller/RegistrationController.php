@@ -83,6 +83,11 @@ class RegistrationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+           /*  $myFile = $form['brochurefilename']->getData();
+
+            $fileName = $kernelService->upload($myFile);
+            $agence->setBrochurefilename($fileName); */
+
             $myFile = $form['avatar']->getData();
             if ($myFile) {
                 $fileName = $kernelService->loadProfile($myFile);
@@ -100,6 +105,7 @@ class RegistrationController extends AbstractController
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($agent);
+            /* $entityManager->persist($agence); */
             $entityManager->flush();
 
             return $userAuthenticator->authenticateUser(

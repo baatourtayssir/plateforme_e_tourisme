@@ -14,8 +14,8 @@ use App\Service\KernelService;
 
 
 class AdminController extends AbstractController
-{
-    #[Route('/admin', name: 'admin_')]
+ {
+   /* #[Route('/admin', name: 'admin_')]
     public function home(): Response
     {
         return $this->render('base.html.twig');
@@ -29,15 +29,15 @@ class AdminController extends AbstractController
         return $this->render("admin/users/index.html.twig", [
             'users' => $users->findAll()
         ]);
-    }
-
-    #[Route('/edit/{id}', name: 'app_users_edit')]
+    } 
+ */
+  /*  #[Route('/edit/{id}', name: 'app_users_edit')]
     public function edit(User $user, Request $request, KernelService $kernelService)
     {
         $form = $this->createForm(CrudUsersType::class, $user);
         $form->handleRequest($request);
 
-       
+
 
         if ($form->isSubmitted() && $form->isValid()) {
 
@@ -47,7 +47,7 @@ class AdminController extends AbstractController
                 $user->setAvatar($fileName);
             }
 
-            /* $user->setRoles(["ROLE_USER","ROLE_ADMIN"]); */
+            $user->setRoles(["ROLE_USER", "ROLE_ADMIN"]);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
@@ -74,7 +74,7 @@ class AdminController extends AbstractController
         $form = $this->createForm(CrudUsersType::class, $user);
         $form->handleRequest($request);
 
-        
+
         if ($form->isSubmitted() && $form->isValid()) {
 
             $myFile = $form['avatar']->getData();
@@ -90,6 +90,7 @@ class AdminController extends AbstractController
                 )
             );
             
+            $user->setRoles(["ROLE_USER", "ROLE_ADMIN"]);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
@@ -122,5 +123,5 @@ class AdminController extends AbstractController
         $response->send();
 
         return $this->redirectToRoute('user_');
-    }
-}
+    }*/
+} 

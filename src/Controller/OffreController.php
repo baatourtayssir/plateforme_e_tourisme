@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Service\KernelService;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[Route('/offer')]
 class OfferController extends AbstractController
@@ -28,6 +29,7 @@ class OfferController extends AbstractController
         $offer = new Offer();
         $form = $this->createForm(OfferType::class, $offer);
         $form->handleRequest($request);
+        $entityManager = $this->getDoctrine()->getManager();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $myFile = $form['picture']->getData();
@@ -35,7 +37,20 @@ class OfferController extends AbstractController
             $fileName = $kernelService->loadOfferPicture($myFile);
             $offer->setPicture($fileName);
 
-            $entityManager = $this->getDoctrine()->getManager();
+
+            $countryIds = $request->request->get('country');
+            $countries = $entityManager->getRepository(Country::class)->findBy(['id' => $countryIds]);
+
+            // Association des pays à l'offre
+            $offer->addCountry($countries);
+
+
+            /*   $countrys = $form->get('country')->getData();
+            foreach ($countrys as $country) {
+                $offer->addCountry($country);
+            } */
+
+
             $entityManager->persist($offer);
             $entityManager->flush();
 
@@ -96,6 +111,4 @@ class OfferController extends AbstractController
 
         return $this->redirectToRoute('app_offer_index');
     }
-
-
 }

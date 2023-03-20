@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\DiscriminatorColumn;
+use Doctrine\ORM\Mapping\DiscriminatorMap;
 use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\InheritanceType;
@@ -15,6 +16,7 @@ use Doctrine\ORM\Mapping\InheritanceType;
 #[Table(name: "offer")]
 #[InheritanceType("JOINED")]
 #[DiscriminatorColumn(name: "type", type: "string")]
+#[DiscriminatorMap(['offer' => Offer::class, 'excursion' => Excursion::class])]
 #[ORM\Entity(repositoryClass: OfferRepository::class)]
 class Offer
 {
@@ -24,30 +26,28 @@ class Offer
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $title = null;
+    public ?string $title = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $description = null;
-
+    public ?string $description = null;
+ 
     #[ORM\ManyToMany(targetEntity: Country::class, inversedBy: 'offers')]
-    #[InheritanceType("JOINED")]
-    #[DiscriminatorColumn(name: "type", type: "string")] 
     #[ORM\JoinTable(name: "offer_country")]
-    #[ORM\JoinColumn(name: "offer_id", referencedColumnName: "id")]
-    #[ORM\JoinColumn(name: "country_id", referencedColumnName: "id")]
-    private Collection $country;
+    public Collection $country;
+    
 
     #[ORM\ManyToMany(targetEntity: GoodAddress::class, inversedBy: 'offers')]
-    private Collection $goodAddress;
+    #[ORM\JoinTable(name: "offer_good_address")]
+    public Collection $goodAddress;
 
     #[ORM\ManyToOne(inversedBy: 'offers')]
-    private ?Agence $agence = null;
+    public ?Agence $agence = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $picture = null;
+    public ?string $picture = null;
 
     #[ORM\OneToMany(mappedBy: 'offer', targetEntity: Reviews::class)]
-    private Collection $reviews;
+    public Collection $reviews;
 
     public function __construct()
     {
@@ -91,12 +91,17 @@ class Offer
     public function getCountry(): Collection
     {
         return $this->country;
+       /*  return $this->country ?? new ArrayCollection(); */
     }
 
     public function addCountry(Country $country): self
     {
-        if (!$this->country->contains($country)) {
+      /*   if (!$this->country->contains($country)) {
             $this->country->add($country);
+        } */
+
+        if (!$this->country->contains($country)) {
+            $this->country[] = $country;
         }
 
         return $this;

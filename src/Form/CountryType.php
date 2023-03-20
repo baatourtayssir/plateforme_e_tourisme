@@ -13,7 +13,7 @@ class CountryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('entitled', TypeTextType::class,[ 'attr'=>['class'=>'form-control']])
+            ->add('intitule', TypeTextType::class,[ 'attr'=>['class'=>'form-control']])
             ->add('category', TypeTextType::class,[ 'attr'=>['class'=>'form-control']])
         ;
     }

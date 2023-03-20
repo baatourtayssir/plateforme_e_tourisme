@@ -14,7 +14,7 @@ class Hotel
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $entitled = null;
+    private ?string $intitule = null;
 
     #[ORM\Column(length: 255)]
     private ?string $address = null;
@@ -33,14 +33,14 @@ class Hotel
         return $this->id;
     }
 
-    public function getEntitled(): ?string
+    public function getIntitule(): ?string
     {
-        return $this->entitled;
+        return $this->intitule;
     }
 
-    public function setEntitled(string $entitled): self
+    public function setIntitule(string $intitule): self
     {
-        $this->entitled = $entitled;
+        $this->intitule = $intitule;
 
         return $this;
     }

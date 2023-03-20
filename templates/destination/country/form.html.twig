@@ -21,31 +21,41 @@
 {% endblock %}
 
 {% block content %}
-	<div class="content d-flex justify-content-center align-items-center">
-		<div class="login-form wmin-sm-400">
-			
-             {{ form_start(form) }}
+	<div class="content justify-content-center align-items-center">
+		{{ form_start(form) }}
 
-				<fieldset>
-					{{ form_widget(form) }}
-					<br>
-					
-					<div class="fc-left">
-						<button type="submit" class="btn btn-success">{{ button_label|default('Save') }}</button>
-					</div>
-					<br>
 
-				</fieldset>
-			{{ form_end(form) }}
-			
-			<a href="{{ path("app_country_index")}}">
-				<button class="btn btn-light">
-					Close
-				</button>
-			</a>
+		<div {# class="form-control" #}>
+			<i class="fa fa-calendar"></i>
+			{{ form_label(form.intitule) }}
+			{{ form_widget(form.intitule) }}
+			<div class="form-error">
+				{{ form_errors(form.intitule) }}
+			</div>
 		</div>
+		<br>
+		<div {# class="form-control" #}>
+			<i class="fa fa-calendar"></i>
+			{{ form_label(form.category) }}
+			{{ form_widget(form.category) }}
+			<div class="form-error">
+				{{ form_errors(form.category) }}
+			</div>
+		</div>
+		<br>
+		<br>
 
-	</div>
+		<div class="fc-left">
+			<button type="submit" class="btn btn-success">{{ button_label|default('Save') }}</button>
+		</div>
+		<br>
 
+	</fieldset>
+	{{ form_end(form) }}
 
-{% endblock %}
+	<a href="{{ path("app_country_index")}}">
+		<button class="btn btn-light">
+			Close
+		</button>
+	</a>
+</div></div>{% endblock %}

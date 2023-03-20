@@ -27,11 +27,11 @@
 
 
 {% block content %}
-<div class="card"  style="background-color:#d2d2c2;">
+	{# <div
+			class="card" style="background-color:#d2d2c2;"> #}
 
 	<!-- Basic datatable -->
-	<div class="card">
-		<div class="card-header header-elements-inline">
+		<div class="card"> <div class="card-header header-elements-inline">
 			<h5 class="card-title">Article list</h5>
 			<div class="header-elements">
 				<div class="list-icons">
@@ -39,9 +39,10 @@
 
 						<button type="submit" class="btn btn-success">
 							<b>
-								<i class="icon-plus3"></i>
+								<i class="icon-plus3 mr-1"></i>
 							</b>
-							Add article</button>
+							<big>Add article</big>
+						</button>
 					</a>
 				</div>
 
@@ -53,9 +54,10 @@
 				<tr>
 					<th>Id</th>
 					<th>Title</th>
+					<th>Picture</th>
+					<th>Short description</th>
 					<th>Description</th>
-                    
-                    <th class="">Actions</th>
+					<th class="">Actions</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -63,16 +65,21 @@
 					<tr>
 						<td>{{ article.id }}</td>
 						<td>{{ article.title }}</td>
-						<td>{{article.description}}</td>
-                        
-						
-					
+						<td><img src="{{ asset('uploads/images/article/picture/' ~ article.picture) }}" width="70" height="70"></td>
+
+						<td>{{article.shortDescription|raw}}</td>
+						<td>{{article.description|raw}}</td>
+
 
 						<td>
-							<div class="row ">
-								<a href="{{ path('app_article_edit', {'id': article.id}) }}" class="btn btn-primary btn-sm mr-1">Edit
+							<div class="modal-footer ">
+								<a href="{{ path('app_article_edit', {'id': article.id}) }}" class="btn btn-primary btn-sm mr-1">
+									<i class="icon-pencil7 mr-1"></i>
+									Edit
 								</a>
-								<a class="btn btn-danger btn-sm " data-toggle="modal" data-target="#modal_Delete{{article.id}}">Delete</a>
+								<a class="btn btn-danger btn-sm text-white" data-toggle="modal" data-target="#modal_Delete{{article.id}}">
+									<i class="icon-bin mr-1 "></i>
+									Delete</a>
 							</div>
 						</td>
 					</tr>
@@ -111,5 +118,5 @@
 		</table>
 	</div>
 
-</div>
+	{# </div> #}
 {% endblock %}

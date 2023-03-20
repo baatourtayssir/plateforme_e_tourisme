@@ -48,14 +48,12 @@ class AgentType extends AbstractType
             ->add('Agence', EntityType::class, ['class' => Agence::class, 'choice_label' => 'name', 'attr' => ['class' => 'form-control']])
             ->add('avatar', FileType::class,  array('data_class' => null,'required' => false ,'label' => 'Profile picture'))
                 
-            
-            
-      
             ->add('roles', ChoiceType::class, [
                 'choices' => [
                     
                     'Super-agent' => 'ROLE_SUPER_AGENT'
                 ],
+                
                 'expanded' => true,
                 'multiple' => true,
                 'label' => 'Roles'
