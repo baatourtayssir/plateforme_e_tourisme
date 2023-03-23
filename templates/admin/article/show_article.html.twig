@@ -13,14 +13,14 @@
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<!-- Include the above in your HEAD tag -->
 {% endblock %}
-{% block title %}Show review
+{% block title %}Show article
 {% endblock %}
 
 {% block menu %}
 	<h4>
 		<i class="icon-arrow-left52 mr-2"></i>
 		<span class="font-weight-semibold">Home</span>
-		- Reviews
+		- Article
 	</h4>
 {% endblock %}
 {% block menu_petit %}
@@ -28,7 +28,7 @@
 		<a href="index.html" class="breadcrumb-item">
 			<i class="icon-home2 mr-2"></i>
 			Home</a>
-		<span class="breadcrumb-item active">Reviews - Show review
+		<span class="breadcrumb-item active">Article - Show article
 		</span>
 	</div>
 {% endblock %}
@@ -51,15 +51,18 @@
 
 							<div class="mr-md-3 mb-2 mb-md-0">
 								<a href="#">
-									<img src="{{ asset('uploads/images/reviews/picture/' ~ review.picture) }}" class="border-white " width="1550" height="300" alt="">
+									<img src="{{ asset('uploads/images/article/picture/' ~ article.picture) }}" class="border-white " width="1550" height="300" alt="">
 								</a>
 							</div>
 
 							<div class="media-body ">
 
-								<h1 class="text-center">Comment on the article :
-									{{review.article.title}}
+								<h1 class="text-center"> Article :
+									{{article.title}}
 								</h1>
+								<div class="card">
+									<h4>{{article.shortDescription}}</h4>
+								</div>
 
 							</div>
 
@@ -72,7 +75,7 @@
 						<div class="" >
 							<div class="card-body" style="background-color:#f8fdf7;">
 								<div class="card">
-									<h4>{{review.comment}}</h4>
+									<h4>{{article.description}}</h4>
 								</div>
 							</div>
 							<br><br>
@@ -114,14 +117,14 @@
 												<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
 													<ol class="carousel-indicators">
 
-														{% for image in review.images %}
+														{% for image in article.images %}
 															<li data-target="#carouselExampleIndicators" data-slide-to="{{ loop.index0 }}" {% if loop.first %} class="active" {% endif %}></li>
 														{% endfor %}
 
 													</ol>
 													<div class="carousel-inner">
 
-														{% for image in review.images %}
+														{% for image in article.images %}
 															<div class="carousel-item {% if loop.first %}active{% endif %}">
 																<div class="card border-0 rounded-0 text-light overflow zoom">
 																	<div
@@ -129,7 +132,7 @@
 																		<!--thumbnail img-->
 																		<div class="ratio_left-cover-1 image-wrapper">
 																			<a href="#">
-																				<img class="img-fluid w-100" src="{{ asset('uploads/images/reviews/pictures/' ~ image) }}" style="width: 500px; height: 300px;">
+																				<img class="img-fluid w-100" src="{{ asset('uploads/images/article/pictures/' ~ image) }}" style="width: 700px; height: 500px;">
 																			</a>
 																		</div>
 																	</div>

@@ -40,15 +40,23 @@ href="{{asset("assets/css/colors.min.css")}}" rel="stylesheet" type="text/css">
 			<!-- Content area -->
 			<div
 				class="content d-flex justify-content-center align-items-center ">
-				<!-- Registration form -->
 
-				<div class="login-form">
+
+
+
+
+
+                 <div class="login-form wmin-sm-400" action="index.html">
 					<div class="card mb-0">
-						<div class="card-body">
+			
+
+						<div class="tab-content card-body">
+							<div class="tab-pane fade show active" id="login-tab1">
+							
 							<div class="text-center mb-3">
-								<i class="icon-plus3 icon-2x text-success border-success border-3 rounded-round p-3 mb-3 mt-1"></i>
+								<i class="icon-user-plus icon-2x text-success border-success border-3 rounded-round p-3 mb-3 mt-1"></i>
 								<h5 class="mb-0">Create account</h5>
-								<span class="d-block text-muted">As agent</span>
+								<span class="d-block text-muted">As super agent</span>
 							</div>
 
 							<div class="form-group text-center text-muted content-divider">
@@ -58,80 +66,67 @@ href="{{asset("assets/css/colors.min.css")}}" rel="stylesheet" type="text/css">
 
 							{{ form_start(registrationForm) }}
 				
-				<i class="fa fa-calendar"></i>
-				{{ form_label(registrationForm.email) }}
-				{{ form_widget(registrationForm.email) }}
+								<i class="fa fa-calendar"></i>
+								{{ form_label(registrationForm.email) }}
+								{{ form_widget(registrationForm.email) }}
 
 
-				<div class="form-error">
-					{{ form_errors(registrationForm.email) }}
-				</div>
-				<i class="fa fa-calendar"></i>
-				{{ form_label(registrationForm.password) }}
-				{{ form_widget(registrationForm.password) }}
+								<div class="form-error">
+									{{ form_errors(registrationForm.email) }}
+								</div>
+								<i class="fa fa-calendar"></i>
+								{{ form_label(registrationForm.password) }}
+								{{ form_widget(registrationForm.password) }}
 
 
-				<div class="form-error">
-					{{ form_errors(registrationForm.password) }}
-				</div>
+								<div class="form-error">
+									{{ form_errors(registrationForm.password) }}
+								</div>
 
-				<i class="fa fa-calendar"></i>
-				{{ form_label(registrationForm.lastname) }}
-				{{ form_widget(registrationForm.lastname) }}
-
-
-				<div class="form-error">
-					{{ form_errors(registrationForm.lastname) }}
-				</div>
-				<i class="fa fa-calendar"></i>
-				{{ form_label(registrationForm.phoneNumber) }}
-				{{ form_widget(registrationForm.phoneNumber) }}
+								<i class="fa fa-calendar"></i>
+								{{ form_label(registrationForm.lastname) }}
+								{{ form_widget(registrationForm.lastname) }}
 
 
-				<div class="form-error">
-					{{ form_errors(registrationForm.phoneNumber) }}
-				</div>
-				<i class="fa fa-calendar"></i>
-				{{ form_label(registrationForm.adress) }}
-				{{ form_widget(registrationForm.adress) }}
+								<div class="form-error">
+									{{ form_errors(registrationForm.lastname) }}
+								</div>
+								<i class="fa fa-calendar"></i>
+								{{ form_label(registrationForm.phoneNumber) }}
+								{{ form_widget(registrationForm.phoneNumber) }}
 
 
-				<div class="form-error">
-					{{ form_errors(registrationForm.adress) }}
-				</div>
-				<i class="fa fa-calendar"></i>
-				{{ form_label(registrationForm.avatar) }}
-				{{ form_widget(registrationForm.avatar) }}
+								<div class="form-error">
+									{{ form_errors(registrationForm.phoneNumber) }}
+								</div>
+								<i class="fa fa-calendar"></i>
+								{{ form_label(registrationForm.adress) }}
+								{{ form_widget(registrationForm.adress) }}
 
 
-				<div class="form-error">
-					{{ form_errors(registrationForm.avatar) }}
-				</div>
+								<div class="form-error">
+									{{ form_errors(registrationForm.adress) }}
+								</div>
+								<i class="fa fa-calendar"></i>
+								{{ form_label(registrationForm.avatar) }}
+								{{ form_widget(registrationForm.avatar) }}
+
+
+								<div class="form-error">
+									{{ form_errors(registrationForm.avatar) }}
+								</div>
+								
+								
 			
-			</div>
-					</div>
-				</div>
-				<!-- /registration form -->
-			</div>
-			</div>
-		
-	
-			
+			            </div>
 
-
-		<!-- Main content -->
-	<div
-			 class="content-wrapper" >
-
-			<!-- Content area -->
-			<div
-				class="content d-flex justify-content-center align-items-center">
-				<!-- Registration form -->
-
-				<div class="login-form">
-					<div class="card mb-0">
-						<div class="card-body">
-							<br>
+					<div class="tab-pane fade" id="login-tab2">
+				
+					        <div class="text-center mb-3">
+								<i class="icon-plus3 icon-2x text-success border-success border-3 rounded-round p-3 mb-3 mt-1"></i>
+								<h5 class="mb-0">Create agency</h5>
+								{# <span class="d-block text-muted">As agent</span> #}
+							</div>
 
 							<div class="form-group text-center text-muted content-divider">
 								<span class="px-2">Your agency</span>
@@ -159,12 +154,18 @@ href="{{asset("assets/css/colors.min.css")}}" rel="stylesheet" type="text/css">
 							{{ form_end(registrationForm) }}
 
 
-						</div>
 					</div>
+					</div>
+					<ul class="nav nav-tabs nav-justified alpha-grey mb-0">
+							<li class="nav-item"><a href="#login-tab1" class="nav-link border-y-0 border-left-0 active" data-toggle="tab"><h6 class="my-1"> <i class="icon-arrow-left22 mr-3 icon-2x"></i></h6></a></li>
+							<li class="nav-item"><a href="#login-tab2" class="nav-link border-y-0 border-right-0" data-toggle="tab"><h6 class="my-1">Following</h6></a></li>
+						</ul>
 				</div>
-				<!-- /registration form -->
+		
 			</div>
 		</div>
 	</div>
+
+	
 
 {% endblock %}

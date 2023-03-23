@@ -30,14 +30,15 @@ class Article
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $picture = null;
 
-/*     #[ORM\OneToMany(mappedBy: 'article', targetEntity: Pictures::class , cascade: ['persist','remove'])]
+    #[ORM\OneToMany(mappedBy: 'article', targetEntity: Pictures::class , cascade: ['persist','remove'])]
     private Collection $images;
- */
+
 
 
     public function __construct()
     {
         $this->reviews = new ArrayCollection();
+        $this->images = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -124,7 +125,7 @@ class Article
     }
 
     
- /*    // Getter et setter pour le champ `images`
+    // Getter et setter pour le champ `images`
     public function getImages(): Collection
     {
         return $this->images;
@@ -150,7 +151,7 @@ class Article
         }
 
         return $this;
-    } */
+    }
 
  
 }

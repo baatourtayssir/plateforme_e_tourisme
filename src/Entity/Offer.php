@@ -49,11 +49,15 @@ class Offer
     #[ORM\OneToMany(mappedBy: 'offer', targetEntity: Reviews::class)]
     public Collection $reviews;
 
+    #[ORM\OneToMany(mappedBy: 'offer', targetEntity: Pictures::class , cascade: ['persist','remove'])]
+    private Collection $images;
+
     public function __construct()
     {
         $this->country = new ArrayCollection();
         $this->goodAddress = new ArrayCollection();
         $this->reviews = new ArrayCollection();
+        $this->images = new ArrayCollection(); 
     }
 
     public function getId(): ?int
@@ -191,4 +195,32 @@ class Offer
 
         return $this;
     }
+
+        // Getter et setter pour le champ `images`
+        public function getImages(): Collection
+        {
+            return $this->images;
+        }
+    
+        public function addImage(Pictures $image): self
+        {
+            if (!$this->images->contains($image)) {
+                $this->images[] = $image;
+                $image->setOffer($this);
+            }
+    
+            return $this;
+        }
+    
+        public function removeImage(Pictures $image): self
+        {
+            if ($this->images->contains($image)) {
+                $this->images->removeElement($image);
+                if ($image->getOffer() === $this) {
+                    $image->setOffer(null);
+                }
+            }
+    
+            return $this;
+        }
 }

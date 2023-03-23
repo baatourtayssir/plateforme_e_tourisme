@@ -1,5 +1,9 @@
 {% extends 'base.html.twig' %}
-
+{% block javascripts %}
+	<script src="{{asset("global_assets/js/plugins/editors/summernote/summernote.min.js")}}"></script>
+	<script src="{{asset("global_assets/js/plugins/forms/styling/uniform.min.js")}}"></script>
+	<script src="{{asset("global_assets/js/demo_pages/editor_summernote.js")}}"></script>
+{% endblock %}
 {% block title %}
 	Agence
 
@@ -23,314 +27,416 @@
 
 {% block content %}
 
+	{% if  is_granted ('ROLE_ADMIN') %}
 
-	<div class="content">
+		<div class="card">
+			<div class="card-header header-elements-inline">
+				<h5 class="card-title">{{ agence.name }}</h5>
+				<div class="header-elements">
+					<div class="list-icons">
+						<a class="list-icons-item" data-action="collapse"></a>
+						<a class="list-icons-item" data-action="reload"></a>
+						<a class="list-icons-item" data-action="remove"></a>
+					</div>
+				</div>
+			</div>
 
-		<div class="profile-cover">
-			<div class="profile-cover-img" style="background-image: url(../../../../global_assets/images/placeholders/avion.jpg)"></div>
-			<div class="media align-items-center text-center text-md-left flex-column flex-md-row m-0">
-				<div class="mr-md-3 mb-2 mb-md-0">
-					<a href="#" class="profile-thumb">
-						<img src="{{ asset('uploads/images/agences/logo/' ~ agence.brochurefilename) }}" class="border-white rounded-circle" width="48" height="48" alt="">
+			<div class="content justify-content-center align-items-center">
+
+				{{ form_start(form) }}
+
+
+				<div {# class="form-control" #}>
+					<i class="fa fa-calendar"></i>
+					{{ form_label(form.name) }}
+					{{ form_widget(form.name) }}
+					<div class="form-error">
+						{{ form_errors(form.name) }}
+					</div>
+				</div>
+				<br>
+				<div {# class="form-control" #}>
+					<i class="fa fa-calendar"></i>
+					{{ form_label(form.email) }}
+					{{ form_widget(form.email) }}
+					<div class="form-error">
+						{{ form_errors(form.email) }}
+					</div>
+				</div>
+				<br>
+
+				<div {# class="form-control" #}>
+					<i class="fa fa-calendar"></i>
+					{{ form_label(form.description) }}
+					{{ form_widget(form.description, { 'attr': {'class': 'summernote'} }) }}
+					<div class="form-error">
+						{{ form_errors(form.description) }}
+					</div>
+				</div>
+				<br>
+				<div {# class="form-control" #}>
+					<i class="fa fa-calendar"></i>
+					{{ form_label(form.phoneNumber) }}
+					{{ form_widget(form.phoneNumber) }}
+					<div class="form-error">
+						{{ form_errors(form.phoneNumber) }}
+					</div>
+				</div>
+				<br>
+				<div {# class="form-control" #}>
+					<i class="fa fa-calendar"></i>
+					{{ form_label(form.adress) }}
+					{{ form_widget(form.adress) }}
+					<div class="form-error">
+						{{ form_errors(form.adress) }}
+					</div>
+				</div>
+				<br>
+				<i class="fa fa-calendar"></i>
+				{{ form_label(form.brochurefilename) }}
+				<div class="form-control">
+					{{ form_widget(form.brochurefilename) }}
+
+
+					<div class="form-error">
+						{{ form_errors(form.brochurefilename) }}
+					</div>
+				</div>
+				<br>
+				<div class="fc-left modal-footer">
+					<a href="{{ path("app_agence_index")}}">
+						<button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
 					</a>
+
+					<button type="submit" class="btn bg-success">
+						{{ button_label|default('Save') }}
+						<i class="icon-paperplane ml-2"></i>
+					</button>
 				</div>
 
-				<div class="media-body text-white">
 
-					<h1 class="mb-0">{{agence.name}}</h1>
-					<span class="d-block">{{agence.adress}}</span>
-				</div>
+				{{ form_end(form) }}
+
 
 			</div>
 		</div>
 
 
-		<div class="d-flex align-items-start flex-column flex-md-row">
+	{% elseif not is_granted ('ROLE_ADMIN') %}
+		<div class="content">
+
+			<div class="profile-cover">
+				<div class="profile-cover-img" style="background-image: url(../../../../global_assets/images/placeholders/avion.jpg)"></div>
+				<div class="media align-items-center text-center text-md-left flex-column flex-md-row m-0">
+					<div class="mr-md-3 mb-2 mb-md-0">
+						<a href="#" class="profile-thumb">
+							<img src="{{ asset('uploads/images/agences/logo/' ~ agence.brochurefilename) }}" class="border-white rounded-circle" width="48" height="48" alt="">
+						</a>
+					</div>
+
+					<div class="media-body text-white">
+
+						<h1 class="mb-0">{{agence.name}}</h1>
+						<span class="d-block">{{agence.adress}}</span>
+					</div>
+
+				</div>
+			</div>
 
 
-			<div class="tab-content w-100 order-2 order-md-1">
-				<div
-					class="tab-pane fade active show" id="activity">
+			<div class="d-flex align-items-start flex-column flex-md-row">
 
-					<!-- Sales stats -->
-					<div class="card">
-						<div class="card-header header-elements-sm-inline">
-							<h1 class="card-title">{{agence.name}}</h1>
 
-							<div
-								class="header-elements">
-								{# <span><i class="icon-history mr-2 text-success"></i> Updated 3 hours ago</span> #}
+				<div class="tab-content w-100 order-2 order-md-1">
+					<div
+						class="tab-pane fade active show" id="activity">
 
-								<div class="list-icons ml-3">
-									<a class="list-icons-item" data-action="reload"></a>
+						<!-- Sales stats -->
+						<div class="card">
+							<div class="card-header header-elements-sm-inline">
+								<h1 class="card-title">{{agence.name}}</h1>
+
+								<div
+									class="header-elements">
+									{# <span><i class="icon-history mr-2 text-success"></i> Updated 3 hours ago</span> #}
+
+									<div class="list-icons ml-3">
+										<a class="list-icons-item" data-action="reload"></a>
+									</div>
 								</div>
 							</div>
-						</div>
 
-						<div class="card-body">
-							<div class="chart-container">
-								<div class="chart has-fixed-height" id="weekly_statistics">
+							<div class="card-body">
+								<div class="chart-container">
+									<div class="chart has-fixed-height" id="weekly_statistics">
 
-									<h6>
-										<i class="icon-mail5 text-muted"></i>
-										{{agence.email}}</h6>
-									<h6>
-										<i class="icon-phone2"></i>
-										{{agence.phoneNumber}}</h6>
+										<h6>
+											<i class="icon-mail5 text-muted"></i>
+											{{agence.email}}</h6>
+										<h6>
+											<i class="icon-phone2"></i>
+											{{agence.phoneNumber}}</h6>
 
-									<br><br><br><br>
-									<div class="card-body" style="background-color:#f8fdf7;">
-										<div class="card">
-											<h4>{{agence.description}}</h4>
+										<br><br><br><br>
+										<div class="card-body" style="background-color:#f8fdf7;">
+											<div class="card">
+												<h4>{{agence.description|raw}}</h4>
+											</div>
 										</div>
 									</div>
 								</div>
-							</div>
-							<div class="text-right ">
-								<a class="btn btn-primary text-white" data-toggle="modal" data-target="#modal_theme_primary{{agence.id}}">
-									<i class="icon-pencil3 mr-2 "></i>
-									Edit
-
-
-								</a>
-							</div>
-
-
-						</div>
-						<!-- /sales stats -->
-					</div>
-				</div>
-			</div>
-		</div>
-
-
-		<!-- Primary modal -->
-		<div id="modal_theme_primary{{agence.id}}" class="modal fade" tabindex="-1">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header bg-primary">
-						<h6 class="modal-title">Primary header</h6>
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-					</div>
-
-					<div class="modal-body">
-						{{ form_start(form) }}
-
-
-						<div {# class="form-control" #}>
-							<i class="fa fa-calendar"></i>
-							{{ form_label(form.name) }}
-							{{ form_widget(form.name) }}
-							<div class="form-error">
-								{{ form_errors(form.name) }}
-							</div>
-						</div>
-						<br>
-						<div {# class="form-control" #}>
-							<i class="fa fa-calendar"></i>
-							{{ form_label(form.email) }}
-							{{ form_widget(form.email) }}
-							<div class="form-error">
-								{{ form_errors(form.email) }}
-							</div>
-						</div>
-						<br>
-
-						<div {# class="form-control" #}>
-							<i class="fa fa-calendar"></i>
-							{{ form_label(form.description) }}
-							{{ form_widget(form.description, { 'attr': {'class': 'summernote'} }) }}
-							<div class="form-error">
-								{{ form_errors(form.description) }}
-							</div>
-						</div>
-						<br>
-						<div {# class="form-control" #}>
-							<i class="fa fa-calendar"></i>
-							{{ form_label(form.phoneNumber) }}
-							{{ form_widget(form.phoneNumber) }}
-							<div class="form-error">
-								{{ form_errors(form.phoneNumber) }}
-							</div>
-						</div>
-						<br>
-						<div {# class="form-control" #}>
-							<i class="fa fa-calendar"></i>
-							{{ form_label(form.adress) }}
-							{{ form_widget(form.adress) }}
-							<div class="form-error">
-								{{ form_errors(form.adress) }}
-							</div>
-						</div>
-						<br>
-						<i class="fa fa-calendar"></i>
-						{{ form_label(form.brochurefilename) }}
-						<div class="form-control">
-							{{ form_widget(form.brochurefilename) }}
-
-
-							<div class="form-error">
-								{{ form_errors(form.brochurefilename) }}
-							</div>
-						</div>
-						<div class="fc-left modal-footer">
-							<button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
-
-							<button type="submit" class="btn bg-primary">
-								{{ button_label|default('Save changes') }}
-								<i class="icon-paperplane ml-2"></i>
-							</button>
-						</div>
-						<br>
-
-
-					</fieldset>
-					{{ form_end(form) }}
-
-				</div>
-
-
-			</div>
-		</div>
-	</div>
-	<!-- /primary modal -->
-
-	<!-- /horizontal form modal -->
-
-
-</div>
-{% if  is_granted ('ROLE_SUPER_AGENT') %}
-	<div
-		class="content">
-		<!-- Basic datatable -->
-		<div class="card">
-			<div class="card-header header-elements-inline">
-				<h5 class="card-title">Agent list</h5>
-				<div class="header-elements">
-					<div
-						class="list-icons">
-
-
-						{# {% if is_granted ('ROLE_ADMIN') %} #}
-						<a href="{{path('app_agent_new')}}" class="nav-link">
-
-							<button type="submit" class="btn btn-primary">
-								<b>
-									<i class="icon-plus3"></i>
-								</b>
-								Add agent</button>
-						</a>
-
-					</div>
-
-				</div>
-			</div>
-
-			<table class="table datatable-basic">
-				<thead>
-					<tr>
-						<th>Id</th>
-						<th>Email</th>
-						<th>Password</th>
-						<th>Lastname</th>
-						<th>Phone number</th>
-						<th>Adress</th>
-						<th>Profile picture</th>
-						{# {% if is_granted ('ROLE_ADMIN') %}
-																																																																																																																																								<th>Name Agency</th>
-																																																																																																																																							{% endif %} #}
-						<th>Roles</th>
-						<th class="text-center">Actions</th>
-
-					</tr>
-				</thead>
-				<tbody>
-					{% for agent in agence.agents %}
-						<tr>
-							<td>{{ agent.id }}</td>
-							<td>{{ agent.email }}</td>
-							<td>{{agent.password}}</td>
-							<td>{{ agent.lastname}}</td>
-							<td>{{ agent.phoneNumber}}</td>
-							<td>{{ agent.adress}}</td>
-							<td>
-								{% if agent.avatar == true %}
-
-									<img src="{{ asset('uploads/images/user/images/' ~ agent.avatar) }}" width="45" height="45" class="rounded-circle">
-
-
-								{% elseif agent.avatar == false %}
-									<img src="../../../../global_assets/images/placeholders/profile.png" width="45" height="45" class="rounded-circle">
-
-
-								{% endif %}
-							</td>
-							{# {% if is_granted ('ROLE_ADMIN') %}
-																																																																																																																																																														<td>{{ agent.Agence.name}}</td>
-																																																																																																																																																													{% endif %} #}
-							<td>
-								{% for role in agent.roles %}
-									{% if role == "ROLE_USER" %}
-										User
-									{% elseif role == "ROLE_AGENT" %}
-										Agent
-									{% elseif role == "ROLE_SUPER_AGENT" %}
-										Super agent
-									{% endif %}
-								{% endfor %}
-							</td>
-
-							<td>
-								<div class="row ">
-
-
-									<a class="btn btn-primary btn-sm mr-1" href="{{ path('app_agent_edit', {'id': agent.id}) }}">
+								<div class="text-right ">
+									<a class="btn btn-primary text-white" data-toggle="modal" data-target="#modal_theme_primary{{agence.id}}">
+										<i class="icon-pencil3 mr-2 "></i>
 										Edit
+
+
 									</a>
-
-
-									<a class="btn btn-danger btn-sm texte-white" data-toggle="modal" data-target="#modal_Delete{{agent.id}}">
-										Delete</a>
 								</div>
-							</td>
-						</tr>
 
 
-						<!-- Delete modal -->
-						<div id="modal_Delete{{agent.id}}" class="modal fade" tabindex="-1">
-							<div class="modal-dialog">
-								<div class="modal-content">
-									<div class="modal-header bg-danger">
-										<h5 class="modal-title">Deletion</h5>
-										<button type="button" class="close" data-dismiss="modal">&times;</button>
-									</div>
+							</div>
+							<!-- /sales stats -->
+						</div>
+					</div>
+				</div>
+			</div>
 
-									<div
-										class="modal-body">
-										{# <h6 class="font-weight-semibold">Text in a modal</h6> #}
-										<p>Are you sure to delete this agent.</p>
 
-									</div>
+			<!-- Primary modal -->
+			<div id="modal_theme_primary{{agence.id}}" class="modal fade" tabindex="-1">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header bg-primary">
+							<h6 class="modal-title">Primary header</h6>
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+						</div>
 
-									<div class="modal-footer">
-										<button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
-										<a href="{{ path('app_agent_delete',{'id': agent.id})}}">
-											<button type="button" class="btn bg-danger">Delete</button>
-										</a>
-									</div>
+						<div class="modal-body">
+							{{ form_start(form) }}
+
+
+							<div {# class="form-control" #}>
+								<i class="fa fa-calendar"></i>
+								{{ form_label(form.name) }}
+								{{ form_widget(form.name) }}
+								<div class="form-error">
+									{{ form_errors(form.name) }}
 								</div>
 							</div>
+							<br>
+							<div {# class="form-control" #}>
+								<i class="fa fa-calendar"></i>
+								{{ form_label(form.email) }}
+								{{ form_widget(form.email) }}
+								<div class="form-error">
+									{{ form_errors(form.email) }}
+								</div>
+							</div>
+							<br>
+
+							<div {# class="form-control" #}>
+								<i class="fa fa-calendar"></i>
+								{{ form_label(form.description) }}
+								{{ form_widget(form.description, { 'attr': {'class': 'summernote'} }) }}
+								<div class="form-error">
+									{{ form_errors(form.description) }}
+								</div>
+							</div>
+							<br>
+							<div {# class="form-control" #}>
+								<i class="fa fa-calendar"></i>
+								{{ form_label(form.phoneNumber) }}
+								{{ form_widget(form.phoneNumber) }}
+								<div class="form-error">
+									{{ form_errors(form.phoneNumber) }}
+								</div>
+							</div>
+							<br>
+							<div {# class="form-control" #}>
+								<i class="fa fa-calendar"></i>
+								{{ form_label(form.adress) }}
+								{{ form_widget(form.adress) }}
+								<div class="form-error">
+									{{ form_errors(form.adress) }}
+								</div>
+							</div>
+							<br>
+							<i class="fa fa-calendar"></i>
+							{{ form_label(form.brochurefilename) }}
+							<div class="form-control">
+								{{ form_widget(form.brochurefilename) }}
+
+
+								<div class="form-error">
+									{{ form_errors(form.brochurefilename) }}
+								</div>
+							</div>
+							<br>
+							<div class="fc-left modal-footer">
+								<button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+
+								<button type="submit" class="btn bg-primary">
+									{{ button_label|default('Save changes') }}
+									<i class="icon-paperplane ml-2"></i>
+								</button>
+							</div>
+
+
+							{{ form_end(form) }}
+
 						</div>
-						<!-- /Delete modal -->
-					{% else %}
-						<tr>
-							<td colspan="5">no records found</td>
-						</tr>
-					{% endfor %}
 
 
-				</tbody>
-			</table>
+					</div>
+				</div>
+			</div>
+			<!-- /primary modal -->
+
+			<!-- /horizontal form modal -->
+
+
 		</div>
-	</div><br><br>
-{% endif %}{% endblock %}
+		{% if  is_granted ('ROLE_SUPER_AGENT') %}
+			<div
+				class="content">
+				<!-- Basic datatable -->
+				<div class="card">
+					<div class="card-header header-elements-inline">
+						<h5 class="card-title">Agent list</h5>
+						<div class="header-elements">
+							<div
+								class="list-icons">
+
+
+								{# {% if is_granted ('ROLE_ADMIN') %} #}
+								<a href="{{path('app_agent_new_agent')}}" class="nav-link">
+
+									<button type="submit" class="btn btn-success">
+										<b>
+											<i class="icon-plus3 mr-1"></i>
+										</b>
+										<big>Add agent</big>
+									</button>
+								</a>
+
+							</div>
+
+						</div>
+					</div>
+
+					<table class="table datatable-basic">
+						<thead>
+							<tr>
+								<th>Id</th>
+								<th>Lastname</th>
+								<th>Profile picture</th>
+								<th>Email</th>
+								<th>Adress</th>
+								<th>Phone number</th>
+								<th>Roles</th>
+								<th class="text-center">Actions</th>
+
+							</tr>
+						</thead>
+						<tbody>
+							{% for agent in agence.agents %}
+								<tr>
+									<td>{{ agent.id }}</td>
+									<td>{{ agent.lastname}}</td>
+									<td>
+										{% if agent.avatar == true %}
+
+											<img src="{{ asset('uploads/images/user/images/' ~ agent.avatar) }}" width="45" height="45" class="rounded-circle">
+
+
+										{% elseif agent.avatar == false %}
+											<img src="../../../../global_assets/images/placeholders/profile.png" width="45" height="45" class="rounded-circle">
+
+
+										{% endif %}
+									</td>
+									<td>{{ agent.email }}</td>
+									<td>{{ agent.adress}}</td>
+									<td>{{ agent.phoneNumber}}</td>
+									<td>
+										{% set super_agent = false %}
+										{% set _agent = false %}
+
+										{% for role in agent.roles %}
+											{% if role == "ROLE_SUPER_AGENT" %}
+												{% set super_agent = true %}
+											{% endif %}
+
+											{% if role == "ROLE_AGENT" %}
+												{% set _agent = true %}
+											{% endif %}
+										{% endfor %}
+
+										{% if super_agent %}
+											<p>Super_agent</p>
+
+
+										{% elseif _agent %}
+											<p>Agent</p>
+										{% endif %}
+									</td>
+
+									<td>
+										<div class="row ">
+
+
+											<a class="btn btn-primary btn-sm mr-1" href="{{ path('app_agent_edit', {'id': agent.id}) }}">
+												<i class="icon-pencil7 mr-1"></i>
+												Edit
+											</a>
+
+
+											<a class="btn btn-danger btn-sm text-white" data-toggle="modal" data-target="#modal_Delete{{agent.id}}">
+												<i class="icon-bin mr-1 "></i>
+												Delete</a>
+										</div>
+									</td>
+								</tr>
+
+
+								<!-- Delete modal -->
+								<div id="modal_Delete{{agent.id}}" class="modal fade" tabindex="-1">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header bg-danger">
+												<h5 class="modal-title">Deletion</h5>
+												<button type="button" class="close" data-dismiss="modal">&times;</button>
+											</div>
+
+											<div
+												class="modal-body">
+												{# <h6 class="font-weight-semibold">Text in a modal</h6> #}
+												<p>Are you sure to delete this agent.</p>
+
+											</div>
+
+											<div class="modal-footer">
+												<button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+												<a href="{{ path('app_agent_delete',{'id': agent.id})}}">
+													<button type="button" class="btn bg-danger">Delete</button>
+												</a>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- /Delete modal -->
+							{% else %}
+								<tr>
+									<td colspan="5">no records found</td>
+								</tr>
+							{% endfor %}
+
+
+						</tbody>
+					</table>
+				</div>
+			</div><br><br>
+		{% endif %}
+	{% endif %}
+{% endblock %}

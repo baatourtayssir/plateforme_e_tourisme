@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Agence;
+use App\Entity\Agent;
 use App\Entity\Agents;
 use App\Form\AgenceType;
 use App\Form\AgentsType;
+use App\Form\AgentType;
 use App\Repository\AgenceRepository;
 use App\Service\KernelService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -36,13 +38,14 @@ class AgenceController extends AbstractController
     }
 
 
-    /*    #[Route('/espace/agence/show/{id}', name: 'show_agency_')]
+    #[Route('/espace/agence/show/{id}', name: 'show_agency_')]
     public function show($id)
     {
         $agence = $this->getDoctrine()->getRepository(Agence::class)
             ->find($id);
-        return $this->render('admin/agence/show_agency.html.twig', array('agence' => $agence));
-    } */
+       
+        return $this->render('admin/agence/form.html.twig', array('agence' => $agence));
+    }
 
     #[Route('/', name: 'app_agence_index', methods: ['GET'])]
     public function index(AgenceRepository $agenceRepository): Response
@@ -67,6 +70,8 @@ class AgenceController extends AbstractController
         $agence = new Agence();
         $form = $this->createForm(AgenceType::class, $agence);
         $form->handleRequest($request);
+        /*  $agent = $this->getUser();
+        $role[] = $agent->getRoles(); */
         if ($form->isSubmitted() && $form->isValid()) {
             $myFile = $form['brochurefilename']->getData();
 
@@ -109,8 +114,7 @@ class AgenceController extends AbstractController
 
             if ($role == 'ROLE_ADMIN') {
                 return $this->redirectToRoute('app_agence_index', [], Response::HTTP_SEE_OTHER);
-            }
-            elseif ($role == 'ROLE_AGENT') {
+            } elseif ($role == 'ROLE_AGENT') {
                 return $this->redirectToRoute('app_agence_form', [], Response::HTTP_SEE_OTHER);
             }
 
@@ -137,7 +141,7 @@ class AgenceController extends AbstractController
         $agence = $entityManager->getRepository(Agence::class)->find($id);
         $forma = $this->createForm(AgenceType::class, $agence);
         $forma->handleRequest($request);
-        
+
         if ($forma->isSubmitted() && $forma->isValid()) {
 
 
@@ -157,6 +161,63 @@ class AgenceController extends AbstractController
 
         ]);
     }
+
+    /*  #[Route('/new', name: 'app_agence_agent_new', methods: ['GET', 'POST'])]
+    public function newAgenceAgent(Request $request, AgenceRepository $agenceRepository, UserPasswordHasherInterface $userPasswordHasher, KernelService $kernelService): Response
+    {
+        $agence = new Agence();
+        $agent = new Agent();
+
+        $form = $this->createForm(AgenceType::class, $agence);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $myFile = $form['brochurefilename']->getData();
+
+            $fileName = $kernelService->upload($myFile);
+            $agence->setBrochurefilename($fileName);
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($agence);
+            $entityManager->flush();
+
+
+            return $this->redirectToRoute('app_agence_index', [], Response::HTTP_SEE_OTHER);
+        }
+        if ($agent) {
+            $form = $this->createForm(AgentType::class, $agent);
+            $form->handleRequest($request);
+            $agent->setRoles(['ROLE_AGENT']);
+
+
+            if ($form->isSubmitted() && $form->isValid()) {
+
+                $myFile = $form['avatar']->getData();
+                if ($myFile) {
+                    $fileName = $kernelService->loadProfile($myFile);
+                    $agent->setAvatar($fileName);
+                }
+
+
+                $agent->setPassword(
+                    $userPasswordHasher->hashPassword(
+                        $agent,
+                        $form->get('password')->getData()
+                    )
+                );
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($agent);
+                $entityManager->flush();
+
+                return $this->redirectToRoute('app_agence_index', [], Response::HTTP_SEE_OTHER);
+            }
+        }
+        return $this->renderForm('admin/agence/form.html.twig', [
+            'agence' => $agence,
+            'form' => $form,
+        ]);
+    }
+ */
+
 
     #[Route('/delete/{id}', name: 'app_agence_delete')]
     public function delete(Request $request, $id): Response

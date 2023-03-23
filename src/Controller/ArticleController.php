@@ -38,7 +38,7 @@ class ArticleController extends AbstractController
                 $article->setPicture($fileName);
             }
 
-        /*     $images = $form->get('images')->getData();
+            $images = $form->get('images')->getData();
 
             // On boucle sur les images
             foreach ($images as $image) {
@@ -55,7 +55,7 @@ class ArticleController extends AbstractController
                 $img = new Pictures();
                 $img->setName($fichier);
                 $article->addImage($img);
-            } */
+            }
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($article);
@@ -70,14 +70,14 @@ class ArticleController extends AbstractController
         ]);
     }
 
-/*     #[Route('/show/{id}', name: 'app_article_show', methods: ['GET'])]
+    #[Route('/show/{id}', name: 'app_article_show', methods: ['GET'])]
     public function show(Article $article): Response
     {
-        return $this->render('article/show.html.twig', [
+        return $this->render('admin/article/show_article.html.twig', [
             'article' => $article,
         ]);
     }
- */
+
     #[Route('/{id}/edit', name: 'app_article_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Article $article, ArticleRepository $articleRepository, KernelService $kernelService): Response
     {
@@ -92,7 +92,7 @@ class ArticleController extends AbstractController
                 $article->setPicture($fileName);
             }
 
-           /*  $images = $form->get('images')->getData();
+            $images = $form->get('images')->getData();
 
             // On boucle sur les images
             foreach ($images as $image) {
@@ -109,7 +109,7 @@ class ArticleController extends AbstractController
                 $img = new Pictures();
                 $img->setName($fichier);
                 $article->addImage($img);
-            } */
+            }
 
 
             $entityManager = $this->getDoctrine()->getManager();

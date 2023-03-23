@@ -2,10 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Admin;
 use App\Entity\Agence;
 use App\Entity\Agent;
 use App\Entity\User;
-use App\Form\AgenceType;
+use App\Form\AdminType;
 use App\Form\RegisterAgentType;
 use App\Form\UserType as FormUserType;
 use App\Service\KernelService;
@@ -27,8 +28,8 @@ class RegistrationController extends AbstractController
     #[Route('/register', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, KernelService $kernelService, UserAuthenticatorInterface $userAuthenticator, UsersAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
     {
-        $user = new User();
-        $form = $this->createForm(FormUserType::class, $user);
+        $user = new Admin();
+        $form = $this->createForm(AdminType::class, $user);
         $form->handleRequest($request);
 
 

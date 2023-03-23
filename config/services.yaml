@@ -9,6 +9,7 @@ parameters:
     pictures_directory: '%kernel.project_dir%/public/uploads/images/reviews/pictures/' 
     Article_directory: '%kernel.project_dir%/public/uploads/images/article/picture/'
     ArticlePictures_directory: '%kernel.project_dir%/public/uploads/images/article/pictures/'
+    pictures_Excursion_directory: '%kernel.project_dir%/public/uploads/images/offer/excursion/pictures/' 
     
 
     
@@ -27,6 +28,7 @@ services:
             targetPicturesDirectory: '%pictures_directory%'
             targetArticlePicturesDirectory: '%ArticlePictures_directory%'
             targetGoodAdressePictureDirectory: '%goodAddressPicture_directory%'
+            targetpicturesExcursiondirectory:  '%pictures_Excursion_directory%'
 
     # default configuration for services in *this* file
     _defaults:

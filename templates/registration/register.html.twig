@@ -41,8 +41,8 @@ href="{{asset("assets/css/colors.min.css")}}" rel="stylesheet" type="text/css">
 			<div
 				class="content d-flex justify-content-center align-items-center">
 				<!-- Registration form -->
-
-				<div class="login-form">
+<div class="login-form wmin-sm-400" action="index.html">
+				
 					<div class="card mb-0">
 						<div class="card-body">
 							<div class="text-center mb-3">
@@ -62,8 +62,8 @@ href="{{asset("assets/css/colors.min.css")}}" rel="stylesheet" type="text/css">
 							{{ form_row(registrationForm.plainPassword, {label: 'Password'}) }}
 							{{ form_row(registrationForm.lastname) }}
 							{{ form_row(registrationForm.avatar) }}
-							<br>
-							{{ form_row(registrationForm.agreeTerms) }}
+							<br><br>
+							{# {{ form_row(registrationForm.agreeTerms) }} #}
 
 							<button type="submit" class="btn bg-teal-400 btn-block">Register
 								 <i class="icon-circle-right2 ml-2"></i> 

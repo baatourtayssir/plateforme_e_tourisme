@@ -17,12 +17,16 @@ class Pictures
     private ?string $name = null;
 
     #[ORM\ManyToOne(inversedBy: 'images')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Reviews $reviews = null;
 
-/*     #[ORM\ManyToOne(inversedBy: 'images')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Article $article = null; */
+    #[ORM\ManyToOne(inversedBy: 'images')]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?Article $article = null;
+
+    #[ORM\ManyToOne(inversedBy: 'images')]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?Offer $offer = null;
 
     public function getId(): ?int
     {
@@ -53,7 +57,7 @@ class Pictures
         return $this;
     }
 
-/*     public function getArticle(): ?Article
+    public function getArticle(): ?Article
     {
         return $this->article;
     }
@@ -63,7 +67,19 @@ class Pictures
         $this->article = $article;
 
         return $this;
-    } */
+    }
+
+    public function getOffer(): ?Offer
+    {
+        return $this->offer;
+    }
+
+    public function setOffer(?Offer $offer): self
+    {
+        $this->offer = $offer;
+
+        return $this;
+    }
 
     public function __toString(): string
     {

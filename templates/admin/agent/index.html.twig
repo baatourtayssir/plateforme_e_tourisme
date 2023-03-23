@@ -41,7 +41,8 @@
 							<b>
 								<i class="icon-plus3 mr-1"></i>
 							</b>
-							<big>Add agent</big> </button>
+							<big>Add agent</big>
+						</button>
 					</a>
 				</div>
 
@@ -55,7 +56,7 @@
 					<th>Lastname</th>
 					<th>Profile picture</th>
 					<th>Email</th>
-				    <th>Adress</th>
+					<th>Adress</th>
 					<th>Phone number</th>
 					<th>Name Agency</th>
 					<th>Roles</th>
@@ -82,32 +83,64 @@
 						</td>
 						<td>{{ agent.email }}</td>
 						<td>{{ agent.adress}}</td>
-						<td>{{ agent.phoneNumber}}</td>					
+						<td>{{ agent.phoneNumber}}</td>
 						<td>{{ agent.Agence.name}}</td>
+
 						<td>
+							{% set super_agent = false %}
+							{% set _agent = false %}
+
 							{% for role in agent.roles %}
-								{% if role == "ROLE_USER" %}
-									User
-								{% elseif role == "ROLE_AGENT" %}
-									Agent
-								{% elseif role == "ROLE_SUPER_AGENT" %}
-									Super-agent
+								{% if role == "ROLE_SUPER_AGENT" %}
+									{% set super_agent = true %}
+								{% endif %}
+
+								{% if role == "ROLE_AGENT" %}
+									{% set _agent = true %}
 								{% endif %}
 							{% endfor %}
+
+							{% if super_agent %}
+								<p>Super_agent</p>
+							
+
+							{% elseif _agent %}
+								<p>Agent</p>
+							{% endif %}
 						</td>
+
+
+						{# 	<td>
+													{% for role in agent.roles %}
 						
+						
+														{% if role == "ROLE_SUPER_AGENT" %}
+															<p>Super_agent</p> 
+						
+						
+															{% break %}
+						
+														{% elseif role == "ROLE_AGENT" %}
+															Agent
+														{% endif %}
+						
+													{% endfor %}
+												</td> #}
+
+
 						<td>
 							<div class="row ">
 								<a class="btn btn-primary btn-sm mr-1" href="{{ path('app_agent_edit', {'id': agent.id}) }}">
-								<i class="icon-pencil7 mr-1"></i>
+									<i class="icon-pencil7 mr-1"></i>
 									Edit
 								</a>
 
 								<a class="btn btn-danger btn-sm text-white" data-toggle="modal" data-target="#modal_Delete{{agent.id}}">
-								<i class="icon-bin mr-1 "></i>
-								Delete</a>
+									<i class="icon-bin mr-1 "></i>
+									Delete</a>
 							</div>
 						</td>
+
 					</tr>
 					<!-- Delete modal -->
 					<div id="modal_Delete{{agent.id}}" class="modal fade" tabindex="-1">
@@ -143,7 +176,4 @@
 			</tbody>
 		</table>
 	</div>
-
-
-
 {% endblock %}

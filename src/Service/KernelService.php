@@ -49,6 +49,18 @@ class KernelService extends AbstractController
     }
 
 
+    public function loadPicturesExcursion(UploadedFile $file)
+    {
+        $files_directory = $this->getParameter('pictures_Excursion_directory');
+        $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+        $file->move($files_directory, $fileName);
+        
+
+        return $fileName;
+    }
+
+    
+
     public function loadOfferPicture(UploadedFile $file)
     {
         $files_directory = $this->getParameter('OfferPicture_directory');

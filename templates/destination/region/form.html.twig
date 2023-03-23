@@ -21,52 +21,63 @@
 {% endblock %}
 
 {% block content %}
-	<div class="content justify-content-center align-items-center">
-		{{ form_start(form) }}
 
-
-		<div {# class="form-control" #}>
-			<i class="fa fa-calendar"></i>
-			{{ form_label(form.intitule) }}
-			{{ form_widget(form.intitule) }}
-			<div class="form-error">
-				{{ form_errors(form.intitule) }}
+	<div class="card">
+		<div class="card-header header-elements-inline">
+			<h6 class="card-title">{{ region.intitule }}</h6>
+			<div class="header-elements">
+				<div class="list-icons">
+					<a class="list-icons-item" data-action="collapse"></a>
+					<a class="list-icons-item" data-action="reload"></a>
+					<a class="list-icons-item" data-action="remove"></a>
+				</div>
 			</div>
 		</div>
-		<br>
-		<div {# class="form-control" #}>
-			<i class="fa fa-calendar"></i>
-			{{ form_label(form.category) }}
-			{{ form_widget(form.category) }}
-			<div class="form-error">
-				{{ form_errors(form.category) }}
+		<div class="content justify-content-center align-items-center">
+			{{ form_start(form) }}
+
+
+			<div {# class="form-control" #}>
+				<i class="fa fa-calendar"></i>
+				{{ form_label(form.intitule) }}
+				{{ form_widget(form.intitule) }}
+				<div class="form-error">
+					{{ form_errors(form.intitule) }}
+				</div>
 			</div>
-		</div>
-		<br>
-		<div {# class="form-control" #}>
-			<i class="fa fa-calendar"></i>
-			{{ form_label(form.Country) }}
-			{{ form_widget(form.Country) }}
-			<div class="form-error">
-				{{ form_errors(form.Country) }}
+			<br>
+			<div {# class="form-control" #}>
+				<i class="fa fa-calendar"></i>
+				{{ form_label(form.category) }}
+				{{ form_widget(form.category) }}
+				<div class="form-error">
+					{{ form_errors(form.category) }}
+				</div>
 			</div>
+			<br>
+			<div {# class="form-control" #}>
+				<i class="fa fa-calendar"></i>
+				{{ form_label(form.Country) }}
+				{{ form_widget(form.Country) }}
+				<div class="form-error">
+					{{ form_errors(form.Country) }}
+				</div>
+			</div>
+
+
+			<br><br>
+
+		<div class="fc-left modal-footer">
+				<a href="{{ path("app_region_index")}}">
+					<button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+				</a>
+
+				<button type="submit" class="btn btn-success">{{ button_label|default('Save') }}
+					<i class="icon-paperplane ml-2"></i>
+				</button>
+			</div>
+
+			{{ form_end(form) }}
 		</div>
-
-
-		<br><br>
-
-		<div class="fc-left">
-			<button type="submit" class="btn btn-success">{{ button_label|default('Save') }}</button>
-		</div>
-		<br>
-
-
-	
-	{{ form_end(form) }}
-
-	<a href="{{ path("app_region_index")}}">
-		<button class="btn btn-light">
-			Close
-		</button>
-	</a>
-</div></div>{% endblock %}
+	</div>
+{% endblock %}

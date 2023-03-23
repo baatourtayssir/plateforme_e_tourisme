@@ -32,10 +32,10 @@ class ExcursionType extends AbstractType
                 'choice_label' => 'intitule',
                 'group_by'  => 'country.intitule',
                 'multiple'  => true,
-                'attr' => ['class' => 'form-control select'],
+                'attr' => ['class' => 'form-control select-search'],
             ))
           /*   ->add('country', EntityType::class, array(
-                'class'     => Country::class,
+                'class'     => Country::class,s
                 'choice_label' => 'entitled',
                 'multiple'  => true,
                 'attr' => ['class' => 'form-control'],

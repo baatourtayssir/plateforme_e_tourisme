@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Excursion;
+use App\Entity\Pictures;
 use App\Form\ExcursionType;
 use App\Repository\ExcursionRepository;
 use App\Repository\OfferRepository;
@@ -43,19 +44,28 @@ class ExcursionController extends AbstractController
             $fileName = $kernelService->loadExcursionPicture($myFile);
             $excursion->setPicture($fileName);
 
-            $entityManager = $this->getDoctrine()->getManager();
 
+            $images = $form->get('images')->getData();
 
-           /*  $selectedCountries = $form->get('country')->getData();
-            foreach ($selectedCountries as $country) {
-                $excursion->addCountry($country);
+            // On boucle sur les images
+            foreach ($images as $image) {
+                // On génère un nouveau nom de fichier
+                $fichier = md5(uniqid()) . '.' . $image->guessExtension();
+
+                // On copie le fichier dans le dossier uploads
+                $image->move(
+                    $this->getParameter('pictures_Excursion_directory'),
+                    $fichier
+                );
+
+                // On crée l'image dans la base de données
+                $img = new Pictures();
+                $img->setName($fichier);
+                $excursion->addImage($img);
             }
 
 
-            $regions = $form->get('regions')->getData();
-            foreach ($regions as $region) {
-                $excursion->addRegion($regions);
-            } */
+            $entityManager = $this->getDoctrine()->getManager();
 
             $entityManager->persist($excursion);
             $entityManager->flush();
@@ -88,6 +98,25 @@ class ExcursionController extends AbstractController
 
             $fileName = $kernelService->loadExcursionPicture($myFile);
             $excursion->setPicture($fileName);
+
+            $images = $form->get('images')->getData();
+
+            // On boucle sur les images
+            foreach ($images as $image) {
+                // On génère un nouveau nom de fichier
+                $fichier = md5(uniqid()) . '.' . $image->guessExtension();
+
+                // On copie le fichier dans le dossier uploads
+                $image->move(
+                    $this->getParameter('pictures_Excursion_directory'),
+                    $fichier
+                );
+
+                // On crée l'image dans la base de données
+                $img = new Pictures();
+                $img->setName($fichier);
+                $excursion->addImage($img);
+            }
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($excursion);

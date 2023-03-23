@@ -23,10 +23,9 @@
 {% block content %}
 
 
-	<!-- Left and right buttons -->
 	<div class="card">
 		<div class="card-header header-elements-inline">
-			<h6 class="card-title">Left/right buttons</h6>
+			<h6 class="card-title">{{ admin.lastname}}</h6>
 			<div class="header-elements">
 				<div class="list-icons">
 					<a class="list-icons-item" data-action="collapse"></a>
@@ -36,8 +35,7 @@
 			</div>
 		</div>
 
-		<div
-			class="card-body">
+		<div class="card-body">
 
 			{{ form_start(form) }}
 
@@ -90,28 +88,21 @@
 
 			<br>
 			<br>
-			
-			{{ form_widget(form) }}
-			<br>
-			<br>
 
-			<div class="row">
-
+			<div class="fc-left modal-footer">
+				<a href="{{ path("app_admin_index")}}">
+					<button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+				</a>
 
 				<button type="submit" class="btn btn-success">{{ button_label|default('Save') }}
 					<i class="icon-paperplane ml-2"></i>
 				</button>
-				<br>
-				{{ form_end(form) }}
-
-				
 			</div>
-			<a href="{{ path("app_admin_index")}}">
-					<button class="btn btn-light">
-						Close
-					</button>
-				</a>
-		</div>
-	
 
-	{% endblock %}
+			{{ form_end(form) }}
+
+		</div>
+	</div>
+
+
+{% endblock %}

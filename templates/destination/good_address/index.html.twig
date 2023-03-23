@@ -42,7 +42,7 @@
 							<b>
 								<i class="icon-plus3 mr-1"></i>
 							</b>
-						<big>Add good address</big>	
+							<big>Add good address</big>
 						</button>
 					</a>
 				</div>
@@ -55,11 +55,12 @@
 				<tr>
 					<th>Id</th>
 					<th>Entitled</th>
-					<th>Region</th>
-					<th>Address</th>
-					<th>Description</th>
-					<th>Category</th>
 					<th>Picture</th>
+					<th>Address</th>
+					<th>Region</th>
+					<th colspan="2">Description</th>
+					<th>Category</th>
+
 					<th class="">Actions</th>
 				</tr>
 
@@ -70,12 +71,12 @@
 					<tr>
 						<td>{{ good_address.id }}</td>
 						<td>{{ good_address.intitule }}</td>
-						<td>{{ good_address.region.intitule }}</td>
+						<td><img src="{{ asset('uploads/images/goodAddress/picture/' ~ good_address.picture) }}" width="80" alt="No picture"></td>
 						<td>{{ good_address.address }}</td>
+						<td>{{ good_address.region.intitule }}</td>
 						<td>{{ good_address.description|raw}}</td>
+						<td></td>
 						<td>{{good_address.category}}</td>
-
-						<td><img src="{{ asset('uploads/images/goodAddress/picture/' ~ good_address.picture) }}" width="80"></td>
 
 
 						<td>

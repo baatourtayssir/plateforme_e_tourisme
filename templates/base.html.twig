@@ -21,8 +21,9 @@
 		<link href="{{asset("assets/css/bootstrap_limitless.min.css")}}" rel="stylesheet" type="text/css">
 		<link href="{{asset("assets/css/layout.min.css")}}" rel="stylesheet" type="text/css">
 		<link href="{{asset("assets/css/components.min.css")}}" rel="stylesheet" type="text/css">
+		<link href="{{asset("assets/css/colors.min.css")}}" rel="stylesheet" type="text/css">
 		<link
-		href="{{asset("assets/css/colors.min.css")}}" rel="stylesheet" type="text/css">
+		href="{{asset("global_assets/css/icons/material/icons.css")}}" rel="stylesheet" type="text/css">
 		<!-- /global stylesheets -->
 		{% block stylesheets %}{% endblock %}
 
@@ -84,20 +85,22 @@
 
 						<a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown">
 
-                            {% if app.user.avatar == true %}
-							
+							{% if app.user.avatar == true %}
 
-                            <img src="{{ asset('uploads/images/user/images/' ~ app.user.avatar) }}" width="36" height="36" class="rounded-circle ">
 
-                             {% elseif app.user.avatar == false %}
-							 
-							<img src="../../../../global_assets/images/placeholders/profile.png" width="36" height="36" class="rounded-circle" >
+								<img src="{{ asset('uploads/images/user/images/' ~ app.user.avatar) }}" width="36" height="36" class="rounded-circle ">
+
+							{% elseif app.user.avatar == false %}
+
+								<img
+								src="../../../../global_assets/images/placeholders/profile.png" width="36" height="36" class="rounded-circle">
 							{# <img src="https://api.dicebear.com/5.x/lorelei-neutral/svg" alt="avatar" class="rounded-circle " alt=""> #}
 							{% endif %}
-							
-							
+
+
 							{% block email %}
-								<span> &nbsp{{app.user.email}}</span>
+								<span>
+									&nbsp{{app.user.email}}</span>
 							{% endblock %}
 						</a>
 
@@ -178,7 +181,7 @@
 									</div>
 
 									<div class="sidebar-user-material-footer">
-										<a href="{{ path('app_agence_edit', {'id': app.user.agence.id}) }}"class=" d-flex justify-content-between">
+										<a href="{{ path('app_agence_edit', {'id': app.user.agence.id}) }}" class=" d-flex justify-content-between">
 											<span>
 												<i class="icon-pencil3 nav-link"></i>
 											</span>
@@ -278,7 +281,7 @@
 
 										<li class="nav-item nav-item-submenu">
 											<a href="#" class="nav-link">
-												<i class="icon-people"></i>
+												<i class="icon-man-woman mr-3 "></i>
 												<span>Agent</span>
 											</a>
 											<ul class="nav nav-group-sub" data-submenu-title="Agence">
@@ -299,7 +302,7 @@
 
 										<li class="nav-item nav-item-submenu">
 											<a href="#" class="nav-link">
-												<i class="icon-people"></i>
+												<i class="icon-stack"></i>
 												<span>Article</span>
 											</a>
 											<ul class="nav nav-group-sub" data-submenu-title="Agence">
@@ -317,7 +320,7 @@
 
 										<li class="nav-item nav-item-submenu">
 											<a href="#" class="nav-link">
-												<i class="icon-people"></i>
+												<i class="icon-copy"></i>
 												<span>Reviews</span>
 											</a>
 											<ul class="nav nav-group-sub" data-submenu-title="Agence">
@@ -386,7 +389,7 @@
 
 										<li class="nav-item nav-item-submenu">
 											<a href="#" class="nav-link">
-												<i class="icon-cube3"></i>
+												<i class="icon-map5"></i>
 												<span>Good address</span>
 											</a>
 											<ul class="nav nav-group-sub" data-submenu-title="Agence">
@@ -404,17 +407,17 @@
 
 										<li class="nav-item nav-item-submenu">
 											<a href="#" class="nav-link">
-												<i class="icon-cube3"></i>
+												<i class="mi-local-hotel mr-3 "></i>
 												<span>Hotel</span>
 											</a>
 											<ul class="nav nav-group-sub" data-submenu-title="Agence">
 												<li class="nav-item">
-													<a href="{{path('app_hotel_index')}}"  class="nav-link">Hotel list</a>
+													<a href="{{path('app_hotel_index')}}" class="nav-link">Hotel list</a>
 												</li>
 											</ul>
 											<ul class="nav nav-group-sub" data-submenu-title="Agence">
 												<li class="nav-item">
-													<a href="{{path('app_hotel_new')}}"  class="nav-link">Add hotel</a>
+													<a href="{{path('app_hotel_new')}}" class="nav-link">Add hotel</a>
 												</li>
 											</ul>
 
@@ -432,7 +435,7 @@
 
 										<li class="nav-item nav-item-submenu">
 											<a href="#" class="nav-link">
-												<i class="icon-puzzle4"></i>
+												<i class="icon-airplane3 mr-3"></i>
 												<span>Travel</span>
 											</a>
 											<ul class="nav nav-group-sub" data-submenu-title="Agence">
@@ -454,7 +457,7 @@
 
 										<li class="nav-item nav-item-submenu">
 											<a href="#" class="nav-link">
-												<i class="icon-puzzle4"></i>
+												<i class="icon-ship mr-3 "></i>
 												<span>Cruise</span>
 											</a>
 											<ul class="nav nav-group-sub" data-submenu-title="Agence">
@@ -474,7 +477,7 @@
 
 										<li class="nav-item nav-item-submenu">
 											<a href="#" class="nav-link">
-												<i class="icon-puzzle4"></i>
+												<i class="mi-brightness-3 mr-3"></i>
 												<span>Omra</span>
 											</a>
 											<ul class="nav nav-group-sub" data-submenu-title="Agence">
@@ -494,7 +497,7 @@
 
 										<li class="nav-item nav-item-submenu">
 											<a href="#" class="nav-link">
-												<i class="icon-puzzle4"></i>
+												<i class="mi-nature-people mr-3 "></i>
 												<span>Hiking</span>
 											</a>
 											<ul class="nav nav-group-sub" data-submenu-title="Agence">
@@ -515,12 +518,12 @@
 
 										<li class="nav-item nav-item-submenu">
 											<a href="#" class="nav-link">
-												<i class="icon-puzzle4"></i>
+												<i class="icon-bike mr-3 "></i>
 												<span>Excursion</span>
 											</a>
 											<ul class="nav nav-group-sub" data-submenu-title="Agence">
 												<li class="nav-item">
-													<a href="{{path('app_excursion_index')}}"  class="nav-link">
+													<a href="{{path('app_excursion_index')}}" class="nav-link">
 														Excursion list</a>
 												</li>
 											</ul>
@@ -622,32 +625,30 @@ class="content-wrapper">
 	<!-- Basic modals -->
 	<div class="card">
 		{% block content %}
-			<div
-				class="card" style="background-color:#d2d2c2;">
-				<!-- Schedule -->
-				<div class="timeline-row">
-					<div class="timeline-icon">
-						<img src="{{asset('global_assets/images/placeholders/placeholder.jpg')}}" alt="">
-					</div>
 
-					<div class="card">
-						<div class="card-header header-elements-inline">
-							<h6 class="card-title font-weight-semibold">Administrator space</h6>
-							<div class="header-elements">
-								<div class="list-icons">
-									<div class="list-icons-item dropdown"></div>
-								</div>
+			<!-- Schedule -->
+			<div class="timeline-row">
+				<div class="timeline-icon">
+					<img src="{{asset('global_assets/images/placeholders/placeholder.jpg')}}" alt="">
+				</div>
+
+				<div class="card">
+					<div class="card-header header-elements-inline">
+						<h6 class="card-title font-weight-semibold">Administrator space</h6>
+						<div class="header-elements">
+							<div class="list-icons">
+								<div class="list-icons-item dropdown"></div>
 							</div>
 						</div>
+					</div>
 
-						<div class="card-body">
-							<div class="my-schedule"></div>
-						</div>
+					<div class="card-body">
+						<div class="my-schedule"></div>
 					</div>
 				</div>
-				<!-- /schedule -->
-
 			</div>
+			<!-- /schedule -->
+
 
 		{% endblock %}
 	</div>
@@ -682,4 +683,4 @@ class="content-wrapper">
 				Purchase</span>
 		</a>
 	</li>
-</ul></div></div><!-- /footer --></body></html> #}
+</ul></div></div><!-- /footer --> #}</body></html>

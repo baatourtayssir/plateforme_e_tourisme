@@ -81,19 +81,27 @@
 						<td>{{ admin.email }}</td>
 
 
-						<td>
+							<td>
+							{% set super_admin = false %}
+							{% set _admin = false %}
+
 							{% for role in admin.roles %}
+								{% if role == "ROLE_SUPER_ADMIN" %}
+									{% set super_admin = true %}
+								{% endif %}
 
 								{% if role == "ROLE_ADMIN" %}
-									Admin
-
-
-								{% elseif role == "ROLE_SUPER_ADMIN" %}
-
-									Super-admin
-
+									{% set _admin = true %}
 								{% endif %}
 							{% endfor %}
+
+							{% if super_admin %}
+								<p>Super_admin</p>
+							
+
+							{% elseif _admin %}
+								<p>Admin<p>
+							{% endif %}
 						</td>
 
 						<td>

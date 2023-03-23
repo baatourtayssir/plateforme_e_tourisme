@@ -64,8 +64,8 @@
 				{% for article in articles %}
 					<tr>
 						<td>{{ article.id }}</td>
-						<td>{{ article.title }}</td>
-						<td><img src="{{ asset('uploads/images/article/picture/' ~ article.picture) }}" width="70" height="70"></td>
+						<td><a href="{{ path('app_article_show', {'id': article.id}) }}">{{ article.title }}</td>
+						<td><img src="{{ asset('uploads/images/article/picture/' ~ article.picture) }}" width="70" height="70" alt="No picture" ></td>
 
 						<td>{{article.shortDescription|raw}}</td>
 						<td>{{article.description|raw}}</td>

@@ -19,33 +19,30 @@
 	</div>
 {% endblock %}
 
-	{% block content %}
+{% block content %}
 
-	
-		<div
-				class="card" style="background-color:#d2d2c2;">
-				<!-- Schedule -->
-				<div class="timeline-row">
-					<div class="timeline-icon">
-						<img src="{{asset('global_assets/images/placeholders/placeholder.jpg')}}" alt="">
-					</div>
 
-					<div class="card">
-						<div class="card-header header-elements-inline">
-							<h6 class="card-title font-weight-semibold">Espace agence</h6>
-							<div class="header-elements">
-								<div class="list-icons">
-									<div class="list-icons-item dropdown"></div>
-								</div>
-							</div>
-						</div>
+	<!-- Schedule -->
+	<div class="timeline-row">
+		<div class="timeline-icon">
+			<img src="{{asset('global_assets/images/placeholders/placeholder.jpg')}}" alt="">
+		</div>
 
-						<div class="card-body">
-							<div class="my-schedule"></div>
-						</div>
+		<div class="card">
+			<div class="card-header header-elements-inline">
+				<h6 class="card-title font-weight-semibold">Espace agence</h6>
+				<div class="header-elements">
+					<div class="list-icons">
+						<div class="list-icons-item dropdown"></div>
 					</div>
 				</div>
-				<!-- /schedule -->
+			</div>
 
-			</div>{% endblock %}
+			<div class="card-body">
+				<div class="my-schedule"></div>
+			</div>
+		</div>
+	</div>
+	<!-- /schedule -->
 
+{% endblock %}

@@ -22,6 +22,18 @@
 
 {% block content %}
 
+<div class="card">
+		<div class="card-header header-elements-inline">
+			<h6 class="card-title">{{ review.comment }}</h6>
+			<div class="header-elements">
+				<div class="list-icons">
+					<a class="list-icons-item" data-action="collapse"></a>
+					<a class="list-icons-item" data-action="reload"></a>
+					<a class="list-icons-item" data-action="remove"></a>
+				</div>
+			</div>
+		</div>
+
 	<div class="content justify-content-center align-items-center">
 		{{ form_start(form) }}
 
@@ -66,20 +78,17 @@
 		<br>
 		<br>
 
-		<div class="fc-left">
-			<button type="submit" class="btn btn-success">{{ button_label|default('Save') }}</button>
-		</div>
+		<div class="fc-left modal-footer">
+				<a href="{{ path("app_reviews_index")}}">
+					<button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+				</a>
 
+				<button type="submit" class="btn btn-success">{{ button_label|default('Save') }}
+					<i class="icon-paperplane ml-2"></i>
+				</button>
+			</div>
 
-		<br>
-
-		{{ form_end(form) }}
-
-		<a href="{{ path("app_reviews_index")}}">
-			<button class="btn btn-light">
-				Close
-			</button>
-		</a>
+			{{ form_end(form) }}
 	</div>
-
+</div>
 {% endblock %}

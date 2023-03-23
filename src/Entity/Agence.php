@@ -14,10 +14,11 @@ use PHPUnit\TextUI\XmlConfiguration\File;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 
-#[UniqueEntity(fields: ['name'], message: 'There is already an agency with this name')]
+/* #[UniqueEntity(fields: ['name'], message: 'There is already an agency with this name')] */
 #[ORM\Entity(repositoryClass: AgenceRepository::class)]
 class Agence 
 {
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -49,9 +50,12 @@ class Agence
     #[ORM\OneToMany(mappedBy: 'agence', targetEntity: Offer::class)]
     private Collection $offers;
 
+
+
     public function __construct()
     {
         $this->offers = new ArrayCollection();
+        $this->agents = new ArrayCollection();
     }
 
    

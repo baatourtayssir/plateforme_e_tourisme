@@ -69,7 +69,7 @@
 							<a href="{{ path('show_review_', {'id': review.id}) }}">{{ review.comment }}</td>
 						</td>
 						<td></td>
-						<td><img src="{{ asset('uploads/images/reviews/picture/' ~ review.picture) }}" width="70" height="70"></td>
+						<td><img src="{{ asset('uploads/images/reviews/picture/' ~ review.picture) }}" width="70" height="70" alt="No picture"></td>
 						{# <td>
 																										{% for image in review.images %}
 																											<img src="{{ asset('/public/uploads/images/reviews/pictures/' ~ image) }}" alt="">
