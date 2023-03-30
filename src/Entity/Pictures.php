@@ -28,6 +28,14 @@ class Pictures
     #[ORM\JoinColumn(nullable: true)]
     private ?Offer $offer = null;
 
+    #[ORM\ManyToOne(inversedBy: 'images')]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?Hotel $hotel = null;
+
+    #[ORM\ManyToOne(inversedBy: 'images')]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?GoodAddress $goodAddress = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -77,6 +85,32 @@ class Pictures
     public function setOffer(?Offer $offer): self
     {
         $this->offer = $offer;
+
+        return $this;
+    }
+
+
+
+    public function getHotel(): ?Hotel
+    {
+        return $this->hotel;
+    }
+
+    public function setHotel(?Hotel $hotel): self
+    {
+        $this->hotel = $hotel;
+
+        return $this;
+    }
+
+    public function getGoodAddress(): ?GoodAddress
+    {
+        return $this->goodAddress;
+    }
+
+    public function setGoodAddress(?GoodAddress $goodAddress): self
+    {
+        $this->goodAddress = $goodAddress;
 
         return $this;
     }

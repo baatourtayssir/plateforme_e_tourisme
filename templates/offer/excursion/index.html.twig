@@ -56,7 +56,9 @@
 					<th>Id</th>
 					<th>Title</th>
 					<th>Picture</th>
-					<th colspan="2">Description</th>
+					<th>Description</th>
+					<th>Inclus</th>
+					<th>Non Inclus</th>
 					{# <th>Country</th> #}
 					<th>Region</th>
 					<th>Good Address</th>
@@ -78,7 +80,9 @@
 						<td><img src="{{ asset('uploads/images/offer/excursion/picture/' ~ excursion.picture) }}" width="80" alt="No picture"></td>
 
 						<td>{{ excursion.description |raw}}</td>
-						<td></td>
+						<td>{{ excursion.inclus |raw}}</td>
+						<td>{{ excursion.nonInclus |raw}}</td>
+						
 						{# <td>
 																												{% for countr in excursion.country %}
 																													{{ countr.entitled }}
@@ -155,3 +159,5 @@
 	</div>
 
 {% endblock %}
+{# 		{% render(controller('App\\Controller\\ReservationController::showReservations', { 'offerId': excursion.id })) %}
+ #}

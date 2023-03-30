@@ -1,0 +1,141 @@
+{% extends 'base.html.twig' %}
+
+{% block javascripts %}
+	<!-- Theme JS files -->
+	<script src="{{ asset("global_assets/js/plugins/tables/datatables/datatables.min.js")}}"></script>
+	<script src="{{ asset("global_assets/js/plugins/forms/selects/select2.min.js")}}"></script>
+	<script src="{{asset("global_assets/js/demo_pages/datatables_basic.js")}}"></script>
+	<!-- /theme JS files -->
+{% endblock %}
+{% block title %}Price list
+{% endblock %}
+{% block menu %}
+	<h4>
+		<i class="icon-arrow-left52 mr-2"></i>
+		<span class="font-weight-semibold">Home</span>
+		- Price List
+	</h4>
+{% endblock %}
+{% block menu_petit %}
+	<div class="breadcrumb">
+		<a href="index.html" class="breadcrumb-item">
+			<i class="icon-home2 mr-2"></i>
+			Home</a>
+		<span class="breadcrumb-item active">Price list  - Price list management
+		</span>
+	</div>
+{% endblock %}
+
+
+{% block content %}
+
+
+	<!-- Basic datatable -->
+	<div class="card">
+		<div class="card-header header-elements-inline">
+			<h5 class="card-title">Price list</h5>
+			<div class="header-elements">
+				<div class="list-icons">
+					<a href="{{path('app_price_list_new')}}" class="nav-link">
+
+						<button type="submit" class="btn btn-success">
+							<b>
+								<i class="icon-plus3 mr-1"></i>
+							</b>
+							<big>Add Price list</big>
+						</button>
+					</a>
+				</div>
+
+			</div>
+		</div>
+
+		<table class="table datatable-basic">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Title</th>
+					<th>Date Debut</th>
+					<th>Date Fin</th>
+					<th>Prix</th>
+					<th>Hotels</th>
+				    <th>Excursion Inclus</th>
+					<th>offer</th>
+					
+		     		<th class="text-center">Actions</th>
+				</tr>
+
+
+			</thead>
+			<tbody>
+				{% for price_list in price_lists %}
+					<tr>
+						<td>{{ price_list.id }}</td>
+						<td>{{price_list.title}}</td>
+						<td>{{price_list.datedebut|date("d/m/Y")}}</td>
+						<td>{{price_list.dateFin|date("d/m/Y")}}</td>
+						<td>{{ price_list.prix }}</td>
+						
+						<td>
+							{% for hotel in price_list.hotels %}
+								{{ hotel.intitule }}
+							{% endfor %}
+						</td>
+						
+						<td>
+							{% for excursion in price_list.excursions %}
+								{{ excursion.title }}
+							{% endfor %}
+						</td>
+						<td>{{price_list.offer}}</td>
+					
+						<td>
+							<div class="row ">
+								<a href="{{ path('app_price_list_edit', {'id': price_list.id}) }}" class="btn btn-primary btn-sm mr-1">
+									<i class="icon-pencil7 mr-1"></i>
+
+									Edit
+								</a>
+								<a class="btn btn-danger btn-sm text-white " data-toggle="modal" data-target="#modal_Delete{{price_list.id}}">
+									<i class="icon-bin mr-1"></i>
+
+									Delete</a>
+							</div>
+						</td>
+					</tr>
+					<!-- Delete modal -->
+					<div id="modal_Delete{{price_list.id}}" class="modal fade" tabindex="-1">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header bg-danger">
+									<h5 class="modal-title">Deletion</h5>
+									<button type="button" class="close" data-dismiss="modal">&times;</button>
+								</div>
+
+								<div
+									class="modal-body">
+									{# <h6 class="font-weight-semibold">Text in a modal</h6> #}
+									<p>Are you sure to delete this price_list.</p>
+
+								</div>
+
+								<div class="modal-footer">
+									<button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+									<a href="{{ path('app_price_list_delete',{'id': price_list.id})}}">
+										<button type="button" class="btn bg-danger">Delete</button>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- /Delete modal -->
+				{% else %}
+					<tr>
+						<td colspan="5">no records found</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+
+{% endblock %}

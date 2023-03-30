@@ -89,7 +89,7 @@
 				<br>
 				{{ form_label(form.images) }}
 				<div class="form-control">
-				<i class="fa fa-calendar"></i>
+					<i class="fa fa-calendar"></i>
 					{{ form_widget(form.images) }}
 					<div class="form-error">
 						{{ form_errors(form.images) }}
@@ -100,17 +100,17 @@
 				<br><br>
 
 
-			<div class="fc-left modal-footer">
-				<a href="{{ path("app_article_index")}}">
-					<button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-				</a>
+				<div class="fc-left modal-footer">
+					<a href="{{ path("app_article_index")}}">
+						<button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+					</a>
 
-				<button type="submit" class="btn btn-success">{{ button_label|default('Save') }}
-					<i class="icon-paperplane ml-2"></i>
-				</button>
-			</div>
+					<button type="submit" class="btn btn-success">{{ button_label|default('Save') }}
+						<i class="icon-paperplane ml-2"></i>
+					</button>
+				</div>
 
-			{{ form_end(form) }}
+				{{ form_end(form) }}
 
 
 			</div>

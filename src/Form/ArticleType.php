@@ -22,7 +22,7 @@ class ArticleType extends AbstractType
             ->add('description', TextareaType::class, ['attr' => ['class' => 'form-control']])
             ->add('picture', FileType::class,  array('data_class' => null,'required' => false ,'label' => 'Picture'))
             ->add('images', FileType::class,[
-                'label' => false,
+                'label' => 'Pictures',
                 'multiple' => true,
                 'mapped' => false,
                 'required' => false

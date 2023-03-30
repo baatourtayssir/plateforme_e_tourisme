@@ -44,13 +44,7 @@ class OfferController extends AbstractController
             // Association des pays à l'offre
             $offer->addCountry($countries);
 
-
-            /*   $countrys = $form->get('country')->getData();
-            foreach ($countrys as $country) {
-                $offer->addCountry($country);
-            } */
-
-
+            $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($offer);
             $entityManager->flush();
 

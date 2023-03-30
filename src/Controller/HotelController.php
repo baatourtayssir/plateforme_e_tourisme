@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Hotel;
+use App\Entity\Pictures;
 use App\Form\HotelType;
 use App\Repository\HotelRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -34,6 +35,25 @@ class HotelController extends AbstractController
 
             $fileName = $kernelService->loadHotelPicture($myFile);
             $hotel->setPicture($fileName);
+
+            $images = $form->get('images')->getData();
+
+            // On boucle sur les images
+            foreach ($images as $image) {
+                // On génère un nouveau nom de fichier
+                $fichier = md5(uniqid()) . '.' . $image->guessExtension();
+
+                // On copie le fichier dans le dossier uploads
+                $image->move(
+                    $this->getParameter('HotelPictures_directory'),
+                    $fichier
+                );
+
+                // On crée l'image dans la base de données
+                $img = new Pictures();
+                $img->setName($fichier);
+                $hotel->addImage($img);
+            }
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($hotel);
@@ -67,6 +87,28 @@ class HotelController extends AbstractController
 
             $fileName = $kernelService->loadHotelPicture($myFile);
             $hotel->setPicture($fileName);
+
+
+            
+            $images = $form->get('images')->getData();
+
+            // On boucle sur les images
+            foreach ($images as $image) {
+                // On génère un nouveau nom de fichier
+                $fichier = md5(uniqid()) . '.' . $image->guessExtension();
+
+                // On copie le fichier dans le dossier uploads
+                $image->move(
+                    $this->getParameter('HotelPictures_directory'),
+                    $fichier
+                );
+
+                // On crée l'image dans la base de données
+                $img = new Pictures();
+                $img->setName($fichier);
+                $hotel->addImage($img);
+            }
+
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($hotel);

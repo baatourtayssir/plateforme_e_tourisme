@@ -22,7 +22,9 @@ class OfferType extends AbstractType
         $builder
             ->add('title', TypeTextType::class, ['attr' => ['class' => 'form-control']])
             ->add('description', TextareaType::class, ['attr' => ['class' => 'form-control']])
-           
+            ->add('inclus', TextareaType::class, ['attr' => ['class' => 'form-control']])
+            ->add('nonInclus', TextareaType::class, ['attr' => ['class' => 'form-control']])
+
             ->add('country', EntityType::class, array(
                 'class'     => Country::class,
                 'choice_label' => 'entitled',
@@ -42,6 +44,12 @@ class OfferType extends AbstractType
             ->add('picture', FileType::class,  array('data_class' => null, 'required' => false, 'label' => 'Picture'))
             /* ->add('reviews', EntityType::class, ['class' => Reviews::class, 'choice_label' => 'comment', 'attr' => ['class' => 'form-control']])
             */ 
+            ->add('images', FileType::class,[
+                'label' => 'Pictures',
+                'multiple' => true,
+                'mapped' => false,
+                'required' => false
+            ])
             ;
     }
 

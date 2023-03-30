@@ -20,7 +20,6 @@ class AgentController extends AbstractController
 {
 
 
-
     #[Route('/', name: 'app_agent_index', methods: ['GET'])]
     public function index(AgentRepository $agentRepository): Response
     {
@@ -28,6 +27,17 @@ class AgentController extends AbstractController
             'agents' => $agentRepository->findAll(),
         ]);
     }
+
+
+/*     #[Route('/agent/show/{id}', name: 'show_agent_')]
+    public function show($id)
+    {
+        $agent = $this->getDoctrine()->getRepository(Agent::class)
+            ->find($id);
+       
+        return $this->render('admin/agent/form.html.twig', array('agent' => $agent));
+    } */
+
 
     /*     #[Route('/show/agency', name: 'app_agent_sans_agence_index', methods: ['GET'])]
     public function index_sans_agence(AgentRepository $agentRepository): Response

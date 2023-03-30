@@ -59,7 +59,37 @@ class KernelService extends AbstractController
         return $fileName;
     }
 
+    public function loadCruisePicture(UploadedFile $file)
+    {
+        $files_directory = $this->getParameter('Cruise_Picture_directory');
+        $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+        $file->move($files_directory, $fileName);
+        
+
+        return $fileName;
+    }
+
+    public function loadTravelPicture(UploadedFile $file)
+    {
+        $files_directory = $this->getParameter('Travel_Picture_directory');
+        $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+        $file->move($files_directory, $fileName);
+        
+
+        return $fileName;
+    }
     
+
+    public function loadHikingPicture(UploadedFile $file)
+    {
+        $files_directory = $this->getParameter('Hiking_Picture_directory');
+        $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+        $file->move($files_directory, $fileName);
+        
+
+        return $fileName;
+    }
+
 
     public function loadOfferPicture(UploadedFile $file)
     {
@@ -115,6 +145,17 @@ class KernelService extends AbstractController
         return $fileName;
     }
 
+    public function loadPictureOmra(UploadedFile $file)
+    {
+        $files_directory = $this->getParameter('Omra_Picture_directory');
+        $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+        $file->move($files_directory, $fileName);
+        
+
+        return $fileName;
+    }
+    
+    
     public function loadPicturesArticle(UploadedFile $file)
     {
         $files_directory = $this->getParameter('ArticlePictures_directory');

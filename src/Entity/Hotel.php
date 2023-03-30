@@ -4,6 +4,9 @@ namespace App\Entity;
 
 use App\Repository\HotelRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 
 #[ORM\Entity(repositoryClass: HotelRepository::class)]
 class Hotel
@@ -19,14 +22,28 @@ class Hotel
     #[ORM\Column(length: 255)]
     private ?string $address = null;
 
-    #[ORM\ManyToOne(inversedBy: 'hotels')]
-    private ?Country $country = null;
+    #[ORM\ManyToOne(inversedBy: 'hotel')]
+    private ?Region $region = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: Types::TEXT)]
     private ?string $characteristic = null;
 
     #[ORM\Column(length: 255)]
     private ?string $picture = null;
+
+    #[ORM\OneToMany(mappedBy: 'hotel', targetEntity: Pictures::class , cascade: ['persist','remove'])]
+    private Collection $images;
+
+    #[ORM\ManyToMany(targetEntity: PriceList::class, mappedBy: 'hotels')]
+    private Collection $priceLists;
+
+
+
+    public function __construct()
+    {
+        $this->images = new ArrayCollection();
+        $this->priceLists = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -57,14 +74,14 @@ class Hotel
         return $this;
     }
 
-    public function getCountry(): ?Country
+    public function getRegion(): ?Region
     {
-        return $this->country;
+        return $this->region;
     }
 
-    public function setCountry(?Country $country): self
+    public function setRegion(?Region $region): self
     {
-        $this->country = $country;
+        $this->region = $region;
 
         return $this;
     }
@@ -92,4 +109,61 @@ class Hotel
 
         return $this;
     }
+
+      // Getter et setter pour le champ `images`
+      public function getImages(): Collection
+      {
+          return $this->images;
+      }
+  
+      public function addImage(Pictures $image): self
+      {
+          if (!$this->images->contains($image)) {
+              $this->images[] = $image;
+              $image->setHotel($this);
+          }
+  
+          return $this;
+      }
+  
+      public function removeImage(Pictures $image): self
+      {
+          if ($this->images->contains($image)) {
+              $this->images->removeElement($image);
+              if ($image->getHotel() === $this) {
+                  $image->setHotel(null);
+              }
+          }
+  
+          return $this;
+      }
+
+      /**
+       * @return Collection<int, PriceList>
+       */
+      public function getPriceLists(): Collection
+      {
+          return $this->priceLists;
+      }
+
+      public function addPriceList(PriceList $priceList): self
+      {
+          if (!$this->priceLists->contains($priceList)) {
+              $this->priceLists->add($priceList);
+              $priceList->addHotel($this);
+          }
+
+          return $this;
+      }
+
+      public function removePriceList(PriceList $priceList): self
+      {
+          if ($this->priceLists->removeElement($priceList)) {
+              $priceList->removeHotel($this);
+          }
+
+          return $this;
+      }
+
+
 }

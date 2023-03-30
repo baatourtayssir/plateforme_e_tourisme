@@ -19,11 +19,21 @@ class Excursion extends Offer
     #[ORM\JoinTable(name: "excursion_region")]
     private Collection $regions;
 
+    #[ORM\ManyToMany(targetEntity: PriceList::class, mappedBy: 'excursions')]
+    private Collection $priceLists;
+
+    #[ORM\OneToMany(mappedBy: 'excursion', targetEntity: OfferExcursion::class)]
+    private Collection $offerExcursions;
     
 
     public function __construct()
     {
         $this->regions = new ArrayCollection();
+       /*  $this->images = new ArrayCollection();  */
+       $this->priceLists = new ArrayCollection();
+       $this->offerExcursions = new ArrayCollection();
+      
+        
     
     }
 
@@ -55,4 +65,66 @@ class Excursion extends Offer
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, PriceList>
+     */
+    public function getPriceLists(): Collection
+    {
+        return $this->priceLists;
+    }
+
+    public function addPriceList(PriceList $priceList): self
+    {
+        if (!$this->priceLists->contains($priceList)) {
+            $this->priceLists->add($priceList);
+            $priceList->addExcursion($this);
+        }
+
+        return $this;
+    }
+
+    public function removePriceList(PriceList $priceList): self
+    {
+        if ($this->priceLists->removeElement($priceList)) {
+            $priceList->removeExcursion($this);
+        }
+
+        return $this;
+    }
+
+    public function __toString() {
+        return $this->title;
+    }
+
+    /**
+     * @return Collection<int, OfferExcursion>
+     */
+    public function getOfferExcursions(): Collection
+    {
+        return $this->offerExcursions;
+    }
+
+    public function addOfferExcursion(OfferExcursion $offerExcursion): self
+    {
+        if (!$this->offerExcursions->contains($offerExcursion)) {
+            $this->offerExcursions->add($offerExcursion);
+            $offerExcursion->setExcursion($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOfferExcursion(OfferExcursion $offerExcursion): self
+    {
+        if ($this->offerExcursions->removeElement($offerExcursion)) {
+            // set the owning side to null (unless already changed)
+            if ($offerExcursion->getExcursion() === $this) {
+                $offerExcursion->setExcursion(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

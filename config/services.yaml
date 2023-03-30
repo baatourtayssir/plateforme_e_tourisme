@@ -10,12 +10,19 @@ parameters:
     Article_directory: '%kernel.project_dir%/public/uploads/images/article/picture/'
     ArticlePictures_directory: '%kernel.project_dir%/public/uploads/images/article/pictures/'
     pictures_Excursion_directory: '%kernel.project_dir%/public/uploads/images/offer/excursion/pictures/' 
-    
-
-    
+    Hiking_Picture_directory: '%kernel.project_dir%/public/uploads/images/offer/hiking/picture/'
+    pictures_Hiking_directory: '%kernel.project_dir%/public/uploads/images/offer/hiking/pictures/' 
+    Cruise_Picture_directory: '%kernel.project_dir%/public/uploads/images/offer/cruise/picture/'
+    Cruise_Pictures_directory: '%kernel.project_dir%/public/uploads/images/offer/cruise/pictures/'
+    Omra_Picture_directory: '%kernel.project_dir%/public/uploads/images/offer/omra/picture/'
+    Omra_Pictures_directory: '%kernel.project_dir%/public/uploads/images/offer/omra/pictures/'
+    Travel_Picture_directory: '%kernel.project_dir%/public/uploads/images/offer/travel/picture/'
+    Travel_Pictures_directory: '%kernel.project_dir%/public/uploads/images/offer/travel/pictures/'
+    pictures_GoodAdress_directory: '%kernel.project_dir%/public/uploads/images/goodAddress/pictures/' 
     goodAddressPicture_directory: '%kernel.project_dir%/public/uploads/images/goodAddress/picture/' 
     profile_directory:  '%kernel.project_dir%/public/uploads/images/user/images/' 
     HotelPicture_directory: '%kernel.project_dir%/public/uploads/images/hotel/picture/' 
+    HotelPictures_directory: '%kernel.project_dir%/public/uploads/images/hotel/pictures/' 
     OfferPicture_directory: '%kernel.project_dir%/public/uploads/images/offer/picture/'
     ExcursionPicture_directory: '%kernel.project_dir%/public/uploads/images/offer/excursion/picture/'
 
@@ -29,6 +36,15 @@ services:
             targetArticlePicturesDirectory: '%ArticlePictures_directory%'
             targetGoodAdressePictureDirectory: '%goodAddressPicture_directory%'
             targetpicturesExcursiondirectory:  '%pictures_Excursion_directory%'
+            targetHiking_Picture_directory:  '%Hiking_Picture_directory%'
+            targetHiking_Pictures_directory:  '%pictures_Hiking_directory%'
+            targetCruise_Picture_directory:  '%Cruise_Picture_directory%'
+            targetCruise_Pictures_directory:  '%Cruise_Pictures_directory%'
+            targetOmra_Picture_directory:  '%Omra_Picture_directory%'
+            targetOmra_Pictures_directory:  '%Omra_Pictures_directory%'
+            targetTravel_Picture_directory:  '%Travel_Picture_directory%'
+            targetTravel_Pictures_directory:  '%Travel_Pictures_directory%'
+            
 
     # default configuration for services in *this* file
     _defaults:

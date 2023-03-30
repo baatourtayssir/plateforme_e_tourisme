@@ -25,16 +25,22 @@ class Country
     #[ORM\OneToMany(mappedBy: 'Country', targetEntity: Region::class)]
     private Collection $regions;
 
-    #[ORM\OneToMany(mappedBy: 'country', targetEntity: Hotel::class)]
-    private Collection $hotels;
 
     #[ORM\ManyToMany(targetEntity: Offer::class, mappedBy: 'country')]
   
     private Collection $offers;
 
+    #[ORM\ManyToMany(targetEntity: Cruise::class, mappedBy: 'countries')]
+    private Collection $cruises;
+
+    #[ORM\ManyToMany(targetEntity: Travel::class, mappedBy: 'countries')]
+    private Collection $travel;
+
     public function __construct()
     {
         $this->offers = new ArrayCollection();
+        $this->cruises = new ArrayCollection();
+        $this->travel = new ArrayCollection();
     }
 
 
@@ -101,37 +107,7 @@ class Country
     //     return (string) $this->intitule;
     // }
 
-  
 
-    /**
-     * @return Collection<int, Hotel>
-     */
-    public function getHotels(): Collection
-    {
-        return $this->hotels;
-    }
-
-    public function addHotel(Hotel $hotel): self
-    {
-        if (!$this->hotels->contains($hotel)) {
-            $this->hotels->add($hotel);
-            $hotel->setCountry($this);
-        }
-
-        return $this;
-    }
-
-    public function removeHotel(Hotel $hotel): self
-    {
-        if ($this->hotels->removeElement($hotel)) {
-            // set the owning side to null (unless already changed)
-            if ($hotel->getCountry() === $this) {
-                $hotel->setCountry(null);
-            }
-        }
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, Offer>
@@ -155,6 +131,60 @@ class Country
     {
         if ($this->offers->removeElement($offer)) {
             $offer->removeCountry($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Cruise>
+     */
+    public function getCruises(): Collection
+    {
+        return $this->cruises;
+    }
+
+    public function addCruise(Cruise $cruise): self
+    {
+        if (!$this->cruises->contains($cruise)) {
+            $this->cruises->add($cruise);
+            $cruise->addCountry($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCruise(Cruise $cruise): self
+    {
+        if ($this->cruises->removeElement($cruise)) {
+            $cruise->removeCountry($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Travel>
+     */
+    public function getTravel(): Collection
+    {
+        return $this->travel;
+    }
+
+    public function addTravel(Travel $travel): self
+    {
+        if (!$this->travel->contains($travel)) {
+            $this->travel->add($travel);
+            $travel->addCountry($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTravel(Travel $travel): self
+    {
+        if ($this->travel->removeElement($travel)) {
+            $travel->removeCountry($this);
         }
 
         return $this;

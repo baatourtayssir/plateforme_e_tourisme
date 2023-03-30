@@ -440,14 +440,14 @@
 											</a>
 											<ul class="nav nav-group-sub" data-submenu-title="Agence">
 												<li class="nav-item">
-													<a href="#" class="nav-link">
+													<a href="{{path('app_travel_index')}}" class="nav-link">
 
 														Travel list</a>
 												</li>
 											</ul>
 											<ul class="nav nav-group-sub" data-submenu-title="Agence">
 												<li class="nav-item">
-													<a href="#" class="nav-link">
+													<a href="{{path('app_travel_new')}}" class="nav-link">
 														Add travel</a>
 												</li>
 											</ul>
@@ -462,13 +462,13 @@
 											</a>
 											<ul class="nav nav-group-sub" data-submenu-title="Agence">
 												<li class="nav-item">
-													<a href="#" class="nav-link">
+													<a href="{{path('app_cruise_index')}}" class="nav-link">
 														Cruise list</a>
 												</li>
 											</ul>
 											<ul class="nav nav-group-sub" data-submenu-title="Agence">
 												<li class="nav-item">
-													<a href="#" class="nav-link">
+													<a href="{{path('app_cruise_new')}}" class="nav-link">
 														Add cruise</a>
 												</li>
 											</ul>
@@ -482,13 +482,13 @@
 											</a>
 											<ul class="nav nav-group-sub" data-submenu-title="Agence">
 												<li class="nav-item">
-													<a href="#" class="nav-link">
+													<a href="{{path('app_omra_index')}}" class="nav-link">
 														Omra list</a>
 												</li>
 											</ul>
 											<ul class="nav nav-group-sub" data-submenu-title="Agence">
 												<li class="nav-item">
-													<a href="#" class="nav-link">
+													<a href="{{path('app_omra_new')}}" class="nav-link">
 														Add omra</a>
 												</li>
 											</ul>
@@ -502,13 +502,13 @@
 											</a>
 											<ul class="nav nav-group-sub" data-submenu-title="Agence">
 												<li class="nav-item">
-													<a href="#" class="nav-link">
+													<a href="{{path('app_hiking_index')}}" class="nav-link">
 														Hiking list</a>
 												</li>
 											</ul>
 											<ul class="nav nav-group-sub" data-submenu-title="Agence">
 												<li class="nav-item">
-													<a href="#" class="nav-link">
+													<a href="{{path('app_hiking_new')}}" class="nav-link">
 														Add hiking</a>
 												</li>
 											</ul>
@@ -536,6 +536,67 @@
 
 										</li>
 
+										<li class="nav-item nav-item-submenu">
+											<a href="#" class="nav-link">
+												<i class="icon-bike mr-3 "></i>
+												<span>Reservation</span>
+											</a>
+											<ul class="nav nav-group-sub" data-submenu-title="Agence">
+												<li class="nav-item">
+													<a href="{{path('app_reservation_index')}}" class="nav-link">
+														Reservation list</a>
+												</li>
+											</ul>
+											<ul class="nav nav-group-sub" data-submenu-title="Agence">
+												<li class="nav-item">
+													<a href="{{path('app_reservation_new')}}" class="nav-link">
+														Add Reservation</a>
+												</li>
+											</ul>
+
+										</li>
+
+										<li class="nav-item nav-item-submenu">
+											<a href="#" class="nav-link">
+												<i class="icon-bike mr-3 "></i>
+												<span>Price list</span>
+											</a>
+											<ul class="nav nav-group-sub" data-submenu-title="Agence">
+												<li class="nav-item">
+													<a href="{{path('app_price_list_index')}}" class="nav-link">
+														Price list</a>
+												</li>
+											</ul>
+											<ul class="nav nav-group-sub" data-submenu-title="Agence">
+												<li class="nav-item">
+													<a href="{{path('app_price_list_new')}}" class="nav-link">
+														Add Price list</a>
+												</li>
+											</ul>
+
+										</li>
+
+										<li class="nav-item nav-item-submenu">
+											<a href="#" class="nav-link">
+												<i class="icon-bike mr-3 "></i>
+												<span>Offer_Excursion list</span>
+											</a>
+											<ul class="nav nav-group-sub" data-submenu-title="Agence">
+												<li class="nav-item">
+													<a href="{{path('app_offer_excursion_index')}}" class="nav-link">
+														Offer_Excursion list</a>
+												</li>
+											</ul>
+											<ul class="nav nav-group-sub" data-submenu-title="Agence">
+												<li class="nav-item">
+													<a href="{{path('app_offer_excursion_new')}}" class="nav-link">
+														Add Offer_Excursion
+													</a>
+												</li>
+											</ul>
+
+										</li>
+
 									{% endif %}
 
 
@@ -547,6 +608,8 @@
 
 				</div>
 				<!-- /sidebar content -->
+
+
 			</body>
 		</html>
 	</body>
@@ -619,12 +682,14 @@ class="content-wrapper">
 
 
 <!-- Content area -->
-<div
-	class="content">
 
-	<!-- Basic modals -->
-	<div class="card">
-		{% block content %}
+{% block content %}
+	<div
+		class="content">
+
+		<!-- Basic modals -->
+		<div
+			class="card">
 
 			<!-- Schedule -->
 			<div class="timeline-row">
@@ -649,11 +714,9 @@ class="content-wrapper">
 			</div>
 			<!-- /schedule -->
 
-
-		{% endblock %}
+		</div>
 	</div>
-</div>
-{# </div><!-- /main content --></div><!-- /page content --><!-- Footer --><div class="navbar navbar-expand-lg navbar-light"><div class="text-center d-lg-none w-100">
+{% endblock %}</div><!-- /main content --></div><!-- /page content --><!-- Footer --><div class="navbar navbar-expand-lg navbar-light"><div class="text-center d-lg-none w-100">
 <button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse" data-target="#navbar-footer">
 	<i class="icon-unfold mr-2"></i>
 	Footer
@@ -683,4 +746,4 @@ class="content-wrapper">
 				Purchase</span>
 		</a>
 	</li>
-</ul></div></div><!-- /footer --> #}</body></html>
+</ul></div></div><!-- /footer --></body></html>

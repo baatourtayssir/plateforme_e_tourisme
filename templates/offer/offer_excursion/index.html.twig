@@ -1,0 +1,129 @@
+{% extends 'base.html.twig' %}
+
+{% block javascripts %}
+	<!-- Theme JS files -->
+	<script src="{{ asset("global_assets/js/plugins/tables/datatables/datatables.min.js")}}"></script>
+	<script src="{{ asset("global_assets/js/plugins/forms/selects/select2.min.js")}}"></script>
+	<script src="{{asset("global_assets/js/demo_pages/datatables_basic.js")}}"></script>
+	<!-- /theme JS files -->
+{% endblock %}
+{% block title %}Offer_Excursion list
+{% endblock %}
+{% block menu %}
+	<h4>
+		<i class="icon-arrow-left52 mr-2"></i>
+		<span class="font-weight-semibold">Home</span>
+		- Offer_Excursion
+	</h4>
+{% endblock %}
+{% block menu_petit %}
+	<div class="breadcrumb">
+		<a href="index.html" class="breadcrumb-item">
+			<i class="icon-home2 mr-2"></i>
+			Home</a>
+		<span class="breadcrumb-item active">Offer_Excursion  - Offer_Excursion management
+		</span>
+	</div>
+{% endblock %}
+
+
+{% block content %}
+ 
+ 
+
+	<!-- Basic datatable -->
+	<div class="card">
+		<div class="card-header header-elements-inline">
+			<h5 class="card-title">Offer_Excursion list</h5>
+			<div class="header-elements">
+				<div class="list-icons">
+					<a href="{{path('app_offer_excursion_new')}}" class="nav-link">
+
+						<button type="submit" class="btn btn-success">
+							<b>
+								<i class="icon-plus3 mr-1"></i>
+							</b>
+							<big>Add Offer_Excursion</big>
+						</button>
+					</a>
+				</div>
+
+			</div>
+		</div>
+
+		<table class="table datatable-basic">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>excursion</th>
+					<th>Offer</th>
+					<th>Prix</th>
+					
+					
+					<th class="text-center">Actions</th>
+				</tr>
+
+
+			</thead>
+			<tbody>
+				{% for offer_excursion in offer_excursions %}
+					<tr>
+						<td>{{ offer_excursion.id }}</td>
+						<td>{{ offer_excursion.excursion }}</td>
+						<td>
+							{% for offere in offer_excursion.offer %}
+								{{ offere.title }}
+							{% endfor %}
+						</td>
+						<td>{{ offer_excursion.prix }}</td>
+
+						<td>
+							<div class="row ">
+								<a href="{{ path('app_offer_excursion_edit', {'id': offer_excursion.id}) }}" class="btn btn-primary btn-sm mr-1">
+									<i class="icon-pencil7 mr-1"></i>
+
+									Edit
+								</a>
+								<a class="btn btn-danger btn-sm text-white " data-toggle="modal" data-target="#modal_Delete{{offer_excursion.id}}">
+									<i class="icon-bin mr-1"></i>
+
+									Delete</a>
+							</div>
+						</td>
+					</tr>
+					<!-- Delete modal -->
+					<div id="modal_Delete{{offer_excursion.id}}" class="modal fade" tabindex="-1">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header bg-danger">
+									<h5 class="modal-title">Deletion</h5>
+									<button type="button" class="close" data-dismiss="modal">&times;</button>
+								</div>
+
+								<div
+									class="modal-body">
+									{# <h6 class="font-weight-semibold">Text in a modal</h6> #}
+									<p>Are you sure to delete this offer_excursion.</p>
+
+								</div>
+
+								<div class="modal-footer">
+									<button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+									<a href="{{ path('app_offer_excursion_delete',{'id': offer_excursion.id})}}">
+										<button type="button" class="btn bg-danger">Delete</button>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- /Delete modal -->
+				{% else %}
+					<tr>
+						<td colspan="5">no records found</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+
+{% endblock %}

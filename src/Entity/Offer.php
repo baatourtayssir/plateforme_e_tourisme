@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\OfferRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\DiscriminatorColumn;
 use Doctrine\ORM\Mapping\DiscriminatorMap;
@@ -16,7 +17,8 @@ use Doctrine\ORM\Mapping\InheritanceType;
 #[Table(name: "offer")]
 #[InheritanceType("JOINED")]
 #[DiscriminatorColumn(name: "type", type: "string")]
-#[DiscriminatorMap(['offer' => Offer::class, 'excursion' => Excursion::class])]
+#[DiscriminatorMap(['offer' => Offer::class, 'excursion' => Excursion::class, 'hiking' => Hiking::class ,
+ 'cruise' => Cruise::class,'omra' => Omra::class,'travel' => Travel::class])]
 #[ORM\Entity(repositoryClass: OfferRepository::class)]
 class Offer
 {
@@ -28,7 +30,7 @@ class Offer
     #[ORM\Column(length: 255)]
     public ?string $title = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: Types::TEXT)]
     public ?string $description = null;
  
     #[ORM\ManyToMany(targetEntity: Country::class, inversedBy: 'offers')]
@@ -52,12 +54,36 @@ class Offer
     #[ORM\OneToMany(mappedBy: 'offer', targetEntity: Pictures::class , cascade: ['persist','remove'])]
     private Collection $images;
 
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $inclus = null;
+
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $nonInclus = null;
+
+    #[ORM\OneToMany(mappedBy: 'offer', targetEntity: Reservation::class)]
+    private Collection $reservations;
+
+    #[ORM\OneToMany(mappedBy: 'offer', targetEntity: PriceList::class)]
+    private Collection $priceLists;
+
+    #[ORM\ManyToMany(targetEntity: OfferExcursion::class, mappedBy: 'offer')]
+    private Collection $offerExcursions;
+
+
+
+
+    
+
     public function __construct()
     {
         $this->country = new ArrayCollection();
         $this->goodAddress = new ArrayCollection();
         $this->reviews = new ArrayCollection();
-        $this->images = new ArrayCollection(); 
+        $this->images = new ArrayCollection();
+        $this->reservations = new ArrayCollection();
+        $this->priceLists = new ArrayCollection();
+        $this->offerExcursions = new ArrayCollection();
+    
     }
 
     public function getId(): ?int
@@ -204,6 +230,7 @@ class Offer
     
         public function addImage(Pictures $image): self
         {
+             /*  $this->images = new ArrayCollection(); */
             if (!$this->images->contains($image)) {
                 $this->images[] = $image;
                 $image->setOffer($this);
@@ -223,4 +250,119 @@ class Offer
     
             return $this;
         }
+
+        public function getInclus(): ?string
+        {
+            return $this->inclus;
+        }
+
+        public function setInclus(string $inclus): self
+        {
+            $this->inclus = $inclus;
+
+            return $this;
+        }
+
+        public function getNonInclus(): ?string
+        {
+            return $this->nonInclus;
+        }
+
+        public function setNonInclus(string $nonInclus): self
+        {
+            $this->nonInclus = $nonInclus;
+
+            return $this;
+        }
+
+        /**
+         * @return Collection<int, Reservation>
+         */
+        public function getReservations(): Collection
+        {
+            return $this->reservations;
+        }
+
+        public function addReservation(Reservation $reservation): self
+        {
+            if (!$this->reservations->contains($reservation)) {
+                $this->reservations->add($reservation);
+                $reservation->setOffer($this);
+            }
+
+            return $this;
+        }
+
+        public function removeReservation(Reservation $reservation): self
+        {
+            if ($this->reservations->removeElement($reservation)) {
+                // set the owning side to null (unless already changed)
+                if ($reservation->getOffer() === $this) {
+                    $reservation->setOffer(null);
+                }
+            }
+
+            return $this;
+        }
+
+        /**
+         * @return Collection<int, PriceList>
+         */
+        public function getPriceLists(): Collection
+        {
+            return $this->priceLists;
+        }
+
+        public function addPriceList(PriceList $priceList): self
+        {
+            if (!$this->priceLists->contains($priceList)) {
+                $this->priceLists->add($priceList);
+                $priceList->setOffer($this);
+            }
+
+            return $this;
+        }
+
+        public function removePriceList(PriceList $priceList): self
+        {
+            if ($this->priceLists->removeElement($priceList)) {
+                // set the owning side to null (unless already changed)
+                if ($priceList->getOffer() === $this) {
+                    $priceList->setOffer(null);
+                }
+            }
+
+            return $this;
+        }
+
+        /**
+         * @return Collection<int, OfferExcursion>
+         */
+        public function getOfferExcursions(): Collection
+        {
+            return $this->offerExcursions;
+        }
+
+        public function addOfferExcursion(OfferExcursion $offerExcursion): self
+        {
+            if (!$this->offerExcursions->contains($offerExcursion)) {
+                $this->offerExcursions->add($offerExcursion);
+                $offerExcursion->addOffer($this);
+            }
+
+            return $this;
+        }
+
+        public function removeOfferExcursion(OfferExcursion $offerExcursion): self
+        {
+            if ($this->offerExcursions->removeElement($offerExcursion)) {
+                $offerExcursion->removeOffer($this);
+            }
+
+            return $this;
+        }
+
+
+
+
 }

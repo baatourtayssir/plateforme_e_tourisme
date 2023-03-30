@@ -6,6 +6,8 @@ use App\Repository\GoodAddressRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\DBAL\Types\Types;
+
 
 
 #[ORM\Entity(repositoryClass: GoodAddressRepository::class)]
@@ -23,7 +25,7 @@ class GoodAddress
     private ?string $address = null;
 
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
@@ -38,13 +40,14 @@ class GoodAddress
     #[ORM\ManyToOne(inversedBy: 'goodAddresses')]
     private ?Region $region = null;
 
+    #[ORM\OneToMany(mappedBy: 'goodAddress', targetEntity: Pictures::class , cascade: ['persist','remove'])]
+    private Collection $images;
+
     public function __construct()
     {
         $this->offers = new ArrayCollection();
+        $this->images = new ArrayCollection();
     }
-
-
-
 
 
     public function getId(): ?int
@@ -151,6 +154,36 @@ class GoodAddress
 
         return $this;
     }
+
+
+
+        // Getter et setter pour le champ `images`
+        public function getImages(): Collection
+        {
+            return $this->images;
+        }
+    
+        public function addImage(Pictures $image): self
+        {
+            if (!$this->images->contains($image)) {
+                $this->images[] = $image;
+                $image->setGoodAddress($this);
+            }
+    
+            return $this;
+        }
+    
+        public function removeImage(Pictures $image): self
+        {
+            if ($this->images->contains($image)) {
+                $this->images->removeElement($image);
+                if ($image->getGoodAddress() === $this) {
+                    $image->setGoodAddress(null);
+                }
+            }
+    
+            return $this;
+        }
 
 
 

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\GoodAddress;
+use App\Entity\Pictures;
 use App\Form\GoodAddressType;
 use App\Repository\GoodAddressRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,6 +23,15 @@ class GoodAddressController extends AbstractController
         ]);
     }
 
+    public function maMethode()
+    {
+        // Récupérez les données nécessaires depuis la base de données, un service, etc.
+
+        return $this->render('destination/good_address/index.html.twig'
+            // Autres variables à transmettre à la vue
+        );
+    }
+
     #[Route('/new', name: 'app_good_address_new', methods: ['GET', 'POST'])]
     public function new(Request $request, GoodAddressRepository $goodAddressRepository , KernelService $kernelService): Response
     {
@@ -34,6 +44,25 @@ class GoodAddressController extends AbstractController
 
             $fileName = $kernelService->loadGoodAdressePicture($myFile);
             $goodAddress->setPicture($fileName);
+
+            $images = $form->get('images')->getData();
+
+            // On boucle sur les images
+            foreach ($images as $image) {
+                // On génère un nouveau nom de fichier
+                $fichier = md5(uniqid()) . '.' . $image->guessExtension();
+
+                // On copie le fichier dans le dossier uploads
+                $image->move(
+                    $this->getParameter('pictures_GoodAdress_directory'),
+                    $fichier
+                );
+
+                // On crée l'image dans la base de données
+                $img = new Pictures();
+                $img->setName($fichier);
+                $goodAddress->addImage($img);
+            }
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($goodAddress);
@@ -67,6 +96,25 @@ class GoodAddressController extends AbstractController
 
             $fileName = $kernelService->loadGoodAdressePicture($myFile);
             $goodAddress->setPicture($fileName);
+
+            $images = $form->get('images')->getData();
+
+            // On boucle sur les images
+            foreach ($images as $image) {
+                // On génère un nouveau nom de fichier
+                $fichier = md5(uniqid()) . '.' . $image->guessExtension();
+
+                // On copie le fichier dans le dossier uploads
+                $image->move(
+                    $this->getParameter('pictures_GoodAdress_directory'),
+                    $fichier
+                );
+
+                // On crée l'image dans la base de données
+                $img = new Pictures();
+                $img->setName($fichier);
+                $goodAddress->addImage($img);
+            }
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($goodAddress);

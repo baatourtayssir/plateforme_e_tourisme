@@ -61,7 +61,7 @@ class AdminController extends AbstractController
             $admin->setPassword(
                 $userPasswordHasher->hashPassword(
                     $admin,
-                    $form->get('password')->getData()
+                    $form->get('plainPassword')->getData()
                 )
             );
             

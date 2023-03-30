@@ -66,6 +66,24 @@
 			<br>
 			<div {# class="form-control" #}>
 				<i class="fa fa-calendar"></i>
+				{{ form_label(form.inclus) }}
+				{{ form_widget(form.inclus, { 'attr': {'class': 'summernote'} }) }}
+				<div class="form-error">
+					{{ form_errors(form.inclus) }}
+				</div>
+			</div>
+			<br>
+			<div {# class="form-control" #}>
+				<i class="fa fa-calendar"></i>
+				{{ form_label(form.nonInclus) }}
+				{{ form_widget(form.nonInclus, { 'attr': {'class': 'summernote'} }) }}
+				<div class="form-error">
+					{{ form_errors(form.nonInclus) }}
+				</div>
+			</div>
+			<br>
+			<div {# class="form-control" #}>
+				<i class="fa fa-calendar"></i>
 				{{ form_label(form.regions) }}
 				{{ form_widget(form.regions, { 'attr': {'class': 'form-control select-search'} }) }}
 				<div class="form-error">
@@ -101,14 +119,14 @@
 				</div>
 			</div>
 			<br>
-			{# {{ form_label(form.images) }}
+			{{ form_label(form.images) }}
 			<div class="form-control">
 				<i class="fa fa-calendar"></i>
 				{{ form_widget(form.images) }}
 				<div class="form-error">
 					{{ form_errors(form.images) }}
 				</div>
-			</div> #}
+			</div>
 			<br>
 
 			<div class="fc-left modal-footer">
