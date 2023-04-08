@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Pictures;
 use App\Entity\Reviews;
 use App\Form\ReviewsType;
+use App\Repository\ExcursionRepository;
 use App\Repository\ReviewsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,6 +43,18 @@ class ReviewsController extends AbstractController
     }
 
 
+    #[Route('/', name: 'app_review_show_review_Excursion', methods: ['GET'])]
+    public function showReviewsExcursion($excursion): Response
+    {
+        $reviews = $excursion->getReviews();
+
+
+        return $this->render('admin/reviews/show.html.twig', [
+            'reviews' => $reviews,
+
+        ]);
+    }
+
 
     #[Route('/new', name: 'app_reviews_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ReviewsRepository $reviewsRepository, KernelService $kernelService): Response
@@ -76,7 +89,7 @@ class ReviewsController extends AbstractController
                 $img->setName($fichier);
                 $review->addImage($img);
             }
-            
+
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($review);
@@ -189,5 +202,56 @@ class ReviewsController extends AbstractController
         } else {
             return new JsonResponse(['error' => 'Token Invalide'], 400);
         }
+    }
+
+    #[Route('/{id}/new', name: 'app_reviews_new_reviews', methods: ['GET', 'POST'])]
+    public function newReview(Request $request, int $id, ExcursionRepository $excursionRepository, ReviewsRepository $reviewsRepository, KernelService $kernelService): Response
+    {
+        $review = new Reviews();
+        $form = $this->createForm(ReviewsType::class, $review);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $myFile = $form['picture']->getData();
+            if ($myFile) {
+                $fileName = $kernelService->loadpicture($myFile);
+                $review->setPicture($fileName);
+            }
+
+            $images = $form->get('images')->getData();
+
+            // On boucle sur les images
+            foreach ($images as $image) {
+                // On génère un nouveau nom de fichier
+                $fichier = md5(uniqid()) . '.' . $image->guessExtension();
+
+                // On copie le fichier dans le dossier uploads
+                $image->move(
+                    $this->getParameter('pictures_directory'),
+                    $fichier
+                );
+
+                // On crée l'image dans la base de données
+                $img = new Pictures();
+                $img->setName($fichier);
+                $review->addImage($img);
+            }
+
+
+            $excursion = $excursionRepository->find($id);
+            $review->setOffer($excursion);
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($review);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_excursion_show', ['id' => $id], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('admin/reviews/form.html.twig', [
+            'review' => $review,
+            'form' => $form,
+        ]);
     }
 }

@@ -16,7 +16,7 @@ class Travel extends Offer
     private ?int $id = null; */
 
     #[ORM\ManyToMany(targetEntity: Country::class, inversedBy: 'travel')]
-    private Collection $countries;
+    public Collection $countries;
 
     public function __construct()
     {
@@ -51,6 +51,9 @@ class Travel extends Offer
 
         return $this;
     }
-
+ 
+    public function __toString(){
+        return $this->title; 
+    }
   
 }

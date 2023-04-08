@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{# {% extends 'base.html.twig' %} #}
 
 {% block javascripts %}
 	<!-- Theme JS files -->
@@ -7,7 +7,7 @@
 	<script src="{{asset("global_assets/js/demo_pages/datatables_basic.js")}}"></script>
 	<!-- /theme JS files -->
 {% endblock %}
-{% block title %}Price list
+{# {% block title %}Price list
 {% endblock %}
 {% block menu %}
 	<h4>
@@ -24,10 +24,10 @@
 		<span class="breadcrumb-item active">Price list  - Price list management
 		</span>
 	</div>
-{% endblock %}
+{% endblock %} #}
 
 
-{% block content %}
+{# {% block content %} #}
 
 
 	<!-- Basic datatable -->
@@ -68,7 +68,7 @@
 
 			</thead>
 			<tbody>
-				{% for price_list in price_lists %}
+				{% for price_list in priceLists %}
 					<tr>
 						<td>{{ price_list.id }}</td>
 						<td>{{price_list.title}}</td>
@@ -138,4 +138,4 @@
 		</table>
 	</div>
 
-{% endblock %}
+{# {% endblock %} #}

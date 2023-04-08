@@ -181,7 +181,7 @@
 									</div>
 
 									<div class="sidebar-user-material-footer">
-										<a href="{{ path('app_agence_edit', {'id': app.user.agence.id}) }}" class=" d-flex justify-content-between">
+										<a href="{{ path('app_agence_show', {'id': app.user.agence.id}) }}" class=" d-flex justify-content-between">
 											<span>
 												<i class="icon-pencil3 nav-link"></i>
 											</span>
@@ -529,34 +529,44 @@
 											</ul>
 											<ul class="nav nav-group-sub" data-submenu-title="Agence">
 												<li class="nav-item">
-													<a href="{{path('app_excursion_new')}}" class="nav-link">
-														Add excursion</a>
+
+
+													{% if is_granted ('ROLE_ADMIN') %}
+														<a href="{{path('app_excursion_new')}}" class="nav-link">
+															Add excursion</a>
+
+													{% elseif is_granted ('ROLE_AGENT') %}
+
+														<a href="{{path('app_excursion_new_agence',{'id':app.user.agence.id})}}" class="nav-link">
+															Add excursion</a>
+													{% endif %}
 												</li>
 											</ul>
 
 										</li>
 
-										<li class="nav-item nav-item-submenu">
-											<a href="#" class="nav-link">
-												<i class="icon-bike mr-3 "></i>
-												<span>Reservation</span>
-											</a>
-											<ul class="nav nav-group-sub" data-submenu-title="Agence">
-												<li class="nav-item">
-													<a href="{{path('app_reservation_index')}}" class="nav-link">
-														Reservation list</a>
-												</li>
-											</ul>
-											<ul class="nav nav-group-sub" data-submenu-title="Agence">
-												<li class="nav-item">
-													<a href="{{path('app_reservation_new')}}" class="nav-link">
-														Add Reservation</a>
-												</li>
-											</ul>
 
-										</li>
+										{# 	<li class="nav-item nav-item-submenu">
+																																																			<a href="#" class="nav-link">
+																																																				<i class="icon-bike mr-3 "></i>
+																																																				<span>Reservation</span>
+																																																			</a>
+																																																			<ul class="nav nav-group-sub" data-submenu-title="Agence">
+																																																				<li class="nav-item">
+																																																					<a href="{{path('app_reservation_index')}}" class="nav-link">
+																																																						Reservation list</a>
+																																																				</li>
+																																																			</ul>
+																																																			<ul class="nav nav-group-sub" data-submenu-title="Agence">
+																																																				<li class="nav-item">
+																																																					<a href="{{path('app_reservation_new',{id: reservation.agence.id})}}" class="nav-link">
+																																																						Add Reservation</a>
+																																																				</li>
+																																																			</ul>
+																																								
+																																																		</li> #}
 
-										<li class="nav-item nav-item-submenu">
+							{# 			<li class="nav-item nav-item-submenu">
 											<a href="#" class="nav-link">
 												<i class="icon-bike mr-3 "></i>
 												<span>Price list</span>
@@ -574,7 +584,7 @@
 												</li>
 											</ul>
 
-										</li>
+										</li> #}
 
 										<li class="nav-item nav-item-submenu">
 											<a href="#" class="nav-link">
@@ -683,9 +693,9 @@ class="content-wrapper">
 
 <!-- Content area -->
 
-{% block content %}
-	<div
-		class="content">
+
+<div class="content">
+	{% block content %}
 
 		<!-- Basic modals -->
 		<div
@@ -715,8 +725,8 @@ class="content-wrapper">
 			<!-- /schedule -->
 
 		</div>
-	</div>
-{% endblock %}</div><!-- /main content --></div><!-- /page content --><!-- Footer --><div class="navbar navbar-expand-lg navbar-light"><div class="text-center d-lg-none w-100">
+	{% endblock %}
+</div></div><!-- /main content --></div><!-- /page content --><!-- Footer --><div class="navbar navbar-expand-lg navbar-light"><div class="text-center d-lg-none w-100">
 <button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse" data-target="#navbar-footer">
 	<i class="icon-unfold mr-2"></i>
 	Footer

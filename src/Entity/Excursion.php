@@ -19,9 +19,9 @@ class Excursion extends Offer
     #[ORM\JoinTable(name: "excursion_region")]
     private Collection $regions;
 
-    #[ORM\ManyToMany(targetEntity: PriceList::class, mappedBy: 'excursions')]
+ /*    #[ORM\ManyToMany(targetEntity: PriceList::class, mappedBy: 'excursions')]
     private Collection $priceLists;
-
+ */
     #[ORM\OneToMany(mappedBy: 'excursion', targetEntity: OfferExcursion::class)]
     private Collection $offerExcursions;
     
@@ -29,10 +29,9 @@ class Excursion extends Offer
     public function __construct()
     {
         $this->regions = new ArrayCollection();
-       /*  $this->images = new ArrayCollection();  */
-       $this->priceLists = new ArrayCollection();
+     /*   $this->priceLists = new ArrayCollection(); */
        $this->offerExcursions = new ArrayCollection();
-      
+       /*  $this->images = new ArrayCollection();  */
         
     
     }
@@ -66,10 +65,10 @@ class Excursion extends Offer
         return $this;
     }
 
-    /**
+   /**
      * @return Collection<int, PriceList>
      */
-    public function getPriceLists(): Collection
+  /*    public function getPriceLists(): Collection
     {
         return $this->priceLists;
     }
@@ -91,7 +90,27 @@ class Excursion extends Offer
         }
 
         return $this;
+    } */
+
+/*     public function getPriceListsForExcursion()
+{
+    $priceLists =[];
+    $priceLists = $this->getPriceLists();
+    $result = [];
+
+    foreach ($priceLists as $priceList) {
+        $result[] = [
+            'title' => $priceList->getTitle(),
+            'prix' => $priceList->getPrix(),
+            'dateDebut' =>$priceList->getDateDebut(),
+            'dateFin' =>$priceList->getDateFin(),
+            // ajouter d'autres propriétés de PriceList que vous voulez afficher
+        ];
     }
+
+    return $result;
+} */
+
 
     public function __toString() {
         return $this->title;
@@ -126,5 +145,7 @@ class Excursion extends Offer
 
         return $this;
     }
+
+
 
 }

@@ -76,7 +76,10 @@
 				{% for travel in travels %}
 					<tr>
 						<td>{{ travel.id }}</td>
-						<td>{{travel.title}}</td>
+						
+						<td>
+							<a href="{{ path('app_travel_show', {'id': travel.id}) }}" >{{travel.title}}</a>
+						</td>
 						<td><img src="{{ asset('uploads/images/offer/travel/picture/' ~ travel.picture) }}" width="80" alt="No picture"></td>
 
 						<td>{{ travel.description |raw}}</td>

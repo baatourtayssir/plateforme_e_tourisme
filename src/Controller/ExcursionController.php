@@ -4,7 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Excursion;
 use App\Entity\Pictures;
+use App\Entity\Agent;
+use App\Entity\GoodAddress;
+use App\Entity\User;
+use App\Entity\PriceList;
 use App\Form\ExcursionType;
+use App\Form\ExcursionAgenceType;
+use App\Repository\AgenceRepository;
 use App\Repository\ExcursionRepository;
 use App\Repository\OfferRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -12,6 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Service\KernelService;
+use Doctrine\ORM\EntityManagerInterface;
 
 #[Route('/excursion')]
 class ExcursionController extends AbstractController
@@ -24,8 +31,19 @@ class ExcursionController extends AbstractController
     #[Route('/', name: 'app_excursion_index', methods: ['GET'])]
     public function index(ExcursionRepository $excursionRepository): Response
     {
+
+        $user = $this->getUser();
+        $excursions = [];
+
+        if ($this->isGranted('ROLE_ADMIN')) {
+            $excursions = $this->getDoctrine()->getRepository(Excursion::class)->findAll();
+        } elseif ($this->isGranted('ROLE_AGENT')) {
+            $agent = $this->getDoctrine()->getRepository(Agent::class)->findOneBy(['email' => $user->getEmail()]);
+            $excursions = $this->getDoctrine()->getRepository(Excursion::class)->findBy(['agence' => $agent->getAgence()]);
+        }
+
         return $this->render('offer/excursion/index.html.twig', [
-            'excursions' => $excursionRepository->findAll(),
+            'excursions' => $excursions,
         ]);
     }
 
@@ -34,9 +52,9 @@ class ExcursionController extends AbstractController
     {
         $excursion = new Excursion();
         $form = $this->createForm(ExcursionType::class, $excursion);
-      
+
         $form->handleRequest($request);
-/* dd($excursion); */
+        /* dd($excursion); */
         if ($form->isSubmitted() && $form->isValid()) {
 
             $myFile = $form['picture']->getData();
@@ -79,13 +97,112 @@ class ExcursionController extends AbstractController
         ]);
     }
 
-    #[Route('{id}/show', name: 'app_excursion_show', methods: ['GET'])]
-    public function show(Excursion $excursion): Response
+    #[Route('{id}/new/reservation', name: 'app_excursion_new_agence', methods: ['GET', 'POST'])]
+    public function newExcursionAgence(Request $request, int $id, AgenceRepository $agenceRepository, ExcursionRepository $excursionRepository, KernelService $kernelService): Response
     {
-        return $this->render('excursion/show.html.twig', [
+
+        $agence = $agenceRepository->find($id);
+        $excursion = new Excursion();
+
+        $form = $this->createForm(ExcursionAgenceType::class, $excursion);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $myFile = $form['picture']->getData();
+
+            $fileName = $kernelService->loadExcursionPicture($myFile);
+            $excursion->setPicture($fileName);
+
+
+            $images = $form->get('images')->getData();
+
+            // On boucle sur les images
+            foreach ($images as $image) {
+                // On génère un nouveau nom de fichier
+                $fichier = md5(uniqid()) . '.' . $image->guessExtension();
+
+                // On copie le fichier dans le dossier uploads
+                $image->move(
+                    $this->getParameter('pictures_Excursion_directory'),
+                    $fichier
+                );
+
+                // On crée l'image dans la base de données
+                $img = new Pictures();
+                $img->setName($fichier);
+                $excursion->addImage($img);
+            }
+
+
+            $excursion->setAgence($agence);
+            $entityManager = $this->getDoctrine()->getManager();
+
+            $entityManager->persist($excursion);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_excursion_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('offer/excursion/formAgence.html.twig', [
             'excursion' => $excursion,
+            'form' => $form,
         ]);
     }
+
+    #[Route('/{id}/show', name: 'app_excursion_show', methods: ['GET'])]
+    public function show(Request $request, Excursion $excursion, ExcursionRepository $excursionRepository, KernelService $kernelService, int $id): Response
+    {
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $excursion = $entityManager->getRepository(Excursion::class)->find($id);
+        /*  $priceLists = $this->getDoctrine()->getRepository(PriceList::class)->findBy([
+            'excursions' => $excursion,
+        ]); */
+
+
+        $form = $this->createForm(ExcursionType::class, $excursion);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+
+            $myFile = $form['brochurefilename']->getData();
+            $fileName = $kernelService->upload($myFile);
+            $excursion->setBrochurefilename($fileName);
+            $entityManager->persist($excursion);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_excursion_form', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('offer/excursion/show.html.twig', [
+            'excursion' => $excursion,
+            /* 'priceLists' => $priceLists, */
+            'form' => $form,
+
+        ]);
+    }
+    /* 
+ public function show(Excursion $excursions, int $id ): Response
+ {
+
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $excursions = $entityManager->getRepository(Excursion::class)->find($id);
+        $price_List = $excursions->getPriceLists();
+        $price_List = $this->getDoctrine()->getRepository(PriceList::class)->findBy([
+            'excursions' => $excursions,
+        ]);
+        
+        
+        return $this->render('offer/excursion/show.html.twig', [
+            'excursions' => $excursions,
+            'price_List' => $price_List,
+        ]);
+    } */
+
+
 
     #[Route('{id}/edit', name: 'app_excursion_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Excursion $excursion, ExcursionRepository $excursionRepository, KernelService $kernelService): Response
@@ -146,5 +263,58 @@ class ExcursionController extends AbstractController
         $response->send();
 
         return $this->redirectToRoute('app_excursion_index');
+    }
+
+    /**
+     * @Route("/excursion/{id}/good-address/new", name="add_good_address_to_excursion")
+     */
+    public function addGoodAddressToExcursion(Request $request, EntityManagerInterface $em, int $id)
+    {
+        // Récupérer l'excursion en fonction de l'identifiant
+        $excursion = $em->getRepository(Excursion::class)->find($id);
+
+        // Créer un nouveau formulaire pour la bonne adresse
+        $goodAddress = new GoodAddress();
+        $form = $this->createForm(GoodAddressType::class, $goodAddress);
+
+        // Traiter le formulaire
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Ajouter la bonne adresse à l'excursion
+            $excursion->addGoodAddress($goodAddress);
+
+            // Enregistrer les modifications
+            $em->flush();
+
+            // Rediriger vers la page de l'excursion
+            return $this->redirectToRoute('app_excursion_show', ['id' => $excursion->getId()]);
+        }
+
+        // Afficher le formulaire pour ajouter une bonne adresse
+        return $this->render('destination/good_address/form.html.twig', [
+            'form' => $form->createView(),
+            'excursion' => $excursion,
+            'good_address' => $goodAddress,
+        ]);
+    }
+
+    /**
+     * @Route("/excursion/{id}", name="show_excursion")
+     */
+    public function showExcursion(Excursion $excursion)
+    {
+        // Appeler la méthode addGoodAddressToExcursion du contrôleur GoodAddress
+        $addGoodAddressForm = $this->forward(GoodAddressController::class . '::addGoodAddressToExcursion', [
+            'request' => $this->getRequest(),
+            'em' => $this->getDoctrine()->getManager(),
+            'id' => $excursion->getId(),
+        ])->getContent();
+
+        // Afficher la vue de l'excursion avec le formulaire pour ajouter une bonne adresse
+        return $this->render('offer/excursion/show.html.twig', [
+            'excursion' => $excursion,
+            'addGoodAddressForm' => $addGoodAddressForm,
+        ]);
     }
 }

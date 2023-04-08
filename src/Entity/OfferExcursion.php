@@ -23,12 +23,13 @@ class OfferExcursion
     private ?string $prix = null;
 
     #[ORM\ManyToMany(targetEntity: Offer::class, inversedBy: 'offerExcursions')]
-    private Collection $offer;
+    #[ORM\JoinTable(name: "offer_excursion_offer")]
+    private Collection $offers;
 
 
     public function __construct()
     {
-        $this->offer = new ArrayCollection();
+        $this->offers = new ArrayCollection();
     }
 
 
@@ -67,13 +68,13 @@ class OfferExcursion
      */
     public function getOffer(): Collection
     {
-        return $this->offer;
+        return $this->offers;
     }
 
     public function addOffer(Offer $offer): self
     {
-        if (!$this->offer->contains($offer)) {
-            $this->offer->add($offer);
+        if (!$this->offers->contains($offer)) {
+            $this->offers->add($offer);
         }
 
         return $this;
@@ -81,7 +82,7 @@ class OfferExcursion
 
     public function removeOffer(Offer $offer): self
     {
-        $this->offer->removeElement($offer);
+        $this->offers->removeElement($offer);
 
         return $this;
     }

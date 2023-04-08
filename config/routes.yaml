@@ -1,3 +1,28 @@
 # index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+
+# offer_index:
+#     path: '/offer/{agence}'
+#     controller: 'App\Controller\OfferController::index'
+
+# agency_reservations:
+#     path: /agency/{id}/reservations
+#     controller: App\Controller\AgenceController::showReservation
+
+# reservations_index:
+#     path: /agence/{agency}/reservations
+#     controller: App\Controller\ReservationController::index
+
+# app_price_list:
+#     path: /price-list
+#     controller: App\Controller\PriceListController::show
+
+# excursion_show:
+#     path: /excursion/{id}
+#     controller: App\Controller\ExcursionController::show
+#     requirements:
+#         id: '\d+'
+
+
+

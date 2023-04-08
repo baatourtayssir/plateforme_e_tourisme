@@ -23,17 +23,17 @@ class PriceList
     #[ORM\JoinTable(name: "price_list_hotel")]
     private Collection $hotels;
 
-    #[ORM\ManyToMany(targetEntity: Excursion::class, inversedBy: 'priceLists')]
+/*     #[ORM\ManyToMany(targetEntity: Excursion::class, inversedBy: 'priceLists')]
     #[ORM\JoinTable(name: "price_list_excursion")]
-    private Collection $excursions;
+    private Collection $excursions; */
 
     #[ORM\Column(length: 255)]
     private ?string $prix = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private ?\DateTimeInterface $dateDebut = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private ?\DateTimeInterface $dateFin = null;
 
     #[ORM\ManyToOne(inversedBy: 'priceLists')]
@@ -42,7 +42,7 @@ class PriceList
     public function __construct()
     {
         $this->hotels = new ArrayCollection();
-        $this->excursions = new ArrayCollection();
+        /* $this->excursions = new ArrayCollection(); */
     }
 
     public function getId(): ?int
@@ -89,7 +89,7 @@ class PriceList
     /**
      * @return Collection<int, Excursion>
      */
-    public function getExcursions(): Collection
+  /*   public function getExcursions(): Collection
     {
         return $this->excursions;
     }
@@ -108,7 +108,7 @@ class PriceList
         $this->excursions->removeElement($excursion);
 
         return $this;
-    }
+    } */
 
     public function getPrix(): ?string
     {
@@ -122,24 +122,25 @@ class PriceList
         return $this;
     }
 
-    public function getDateDebut(): ?\DateTimeInterface
+    public function getDateDebut(): ?\DateTimeImmutable
     {
         return $this->dateDebut;
     }
 
-    public function setDateDebut(\DateTimeInterface $dateDebut): self
+    public function setDateDebut(\DateTimeImmutable $dateDebut): self
     {
         $this->dateDebut = $dateDebut;
 
         return $this;
     }
 
-    public function getDateFin(): ?\DateTimeInterface
+
+    public function getDateFin(): ?\DateTimeImmutable
     {
         return $this->dateFin;
     }
 
-    public function setDateFin(\DateTimeInterface $dateFin): self
+    public function setDateFin(\DateTimeImmutable $dateFin): self
     {
         $this->dateFin = $dateFin;
 

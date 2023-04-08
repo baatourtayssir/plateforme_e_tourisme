@@ -35,16 +35,44 @@
 		<div class="card-header header-elements-inline">
 			<h5 class="card-title">Excursion list</h5>
 			<div class="header-elements">
-				<div class="list-icons">
-					<a href="{{path('app_excursion_new')}}" class="nav-link">
+				<div
+					class="list-icons">
+					{# <a href="{{path('app_excursion_new')}}" class="nav-link">
+																				
+																										<button type="submit" class="btn btn-success">
+																											<b>
+																												<i class="icon-plus3 mr-1"></i>
+																											</b>
+																											<big>Add excursion</big>
+																										</button>
+																									</a> #}
 
-						<button type="submit" class="btn btn-success">
-							<b>
-								<i class="icon-plus3 mr-1"></i>
-							</b>
-							<big>Add excursion</big>
-						</button>
-					</a>
+
+					{% if is_granted ('ROLE_ADMIN') %}
+						<a href="{{path('app_excursion_new')}}" class="nav-link">
+
+							<button type="submit" class="btn btn-success">
+								<b>
+									<i class="icon-plus3 mr-1"></i>
+								</b>
+								<big>Add excursion</big>
+							</button>
+						</a>
+					{% elseif is_granted ('ROLE_AGENT') %}
+
+
+						<a href="{{path('app_excursion_new_agence',{'id':app.user.agence.id})}}" class="nav-link">
+
+							<button type="submit" class="btn btn-success">
+								<b>
+									<i class="icon-plus3 mr-1"></i>
+								</b>
+								<big>Add excursion</big>
+							</button>
+						</a>
+					{% endif %}
+
+
 				</div>
 
 			</div>
@@ -57,11 +85,11 @@
 					<th>Title</th>
 					<th>Picture</th>
 					<th>Description</th>
-					<th>Inclus</th>
-					<th>Non Inclus</th>
+					{# <th>Inclus</th>
+					<th>Non Inclus</th> #}
 					{# <th>Country</th> #}
 					<th>Region</th>
-					<th>Good Address</th>
+					{# <th>Good Address</th> #}
 					<th>Agence</th>
 
 					{# <th>Reviews</th> #}
@@ -76,18 +104,20 @@
 				{% for excursion in excursions %}
 					<tr>
 						<td>{{ excursion.id }}</td>
-						<td>{{excursion.title}}</td>
+						<td>
+							<a href="{{ path('app_excursion_show', {'id': excursion.id}) }}">{{excursion.title}}</td>
+						</td>
 						<td><img src="{{ asset('uploads/images/offer/excursion/picture/' ~ excursion.picture) }}" width="80" alt="No picture"></td>
 
 						<td>{{ excursion.description |raw}}</td>
-						<td>{{ excursion.inclus |raw}}</td>
-						<td>{{ excursion.nonInclus |raw}}</td>
-						
+						{# <td>{{ excursion.inclus |raw}}</td>
+						<td>{{ excursion.nonInclus |raw}}</td> #}
+
 						{# <td>
-																												{% for countr in excursion.country %}
-																													{{ countr.entitled }}
-																												{% endfor %}
-																											</td> #}
+																																																										{% for countr in excursion.country %}
+																																																											{{ countr.entitled }}
+																																																										{% endfor %}
+																																																									</td> #}
 						{# <td>{{ excursion.country.entitled }}</td> #}
 						<td>
 							{% for region in excursion.regions %}
@@ -98,11 +128,11 @@
 
 						{# <td>{{ excursion.goodAddress }}</td> #}
 
-						<td>
+						{# <td>
 							{% for goodAddress in excursion.goodAddress %}
 								{{ goodAddress.intitule }}
 							{% endfor %}
-						</td>
+						</td> #}
 						<td>{{ excursion.agence.name }}</td>
 
 
@@ -122,6 +152,7 @@
 									Delete</a>
 							</div>
 						</td>
+						
 					</tr>
 					<!-- Delete modal -->
 					<div id="modal_Delete{{excursion.id}}" class="modal fade" tabindex="-1">

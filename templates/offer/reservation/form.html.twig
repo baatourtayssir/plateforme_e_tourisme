@@ -32,7 +32,7 @@
 {% block content %}
 	<div class="card">
 		<div class="card-header header-elements-inline">
-			<h6 class="card-title">{{reservation.status}}</h6>
+			<h6 class="card-title">{{reservation.status|raw}}</h6>
 			<div class="header-elements">
 				<div class="list-icons">
 					<a class="list-icons-item" data-action="collapse"></a>
@@ -92,6 +92,16 @@
 			</div>
 			
 			<br>
+			
+		{# 	<div >
+				<i class="fa fa-calendar"></i>
+				{{ form_label(form.agence) }}
+				{{ form_widget(form.agence) }}
+				<div class="form-error">
+					{{ form_errors(form.agence) }}
+				</div>
+			</div>
+			<br> #}
 			
 
 			<div class="fc-left modal-footer">

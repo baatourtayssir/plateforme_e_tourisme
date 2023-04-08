@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Agence;
 use App\Entity\Agent;
+use App\Form\AgentAgenceType;
 use App\Form\AgentType;
 use App\Form\AgentSansAgenceType;
 use App\Repository\AgentRepository;
+use App\Repository\AgenceRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,7 +31,7 @@ class AgentController extends AbstractController
     }
 
 
-/*     #[Route('/agent/show/{id}', name: 'show_agent_')]
+    /*     #[Route('/agent/show/{id}', name: 'show_agent_')]
     public function show($id)
     {
         $agent = $this->getDoctrine()->getRepository(Agent::class)
@@ -48,7 +50,7 @@ class AgentController extends AbstractController
     } */
 
 
-    #[Route('/new/agent', name: 'app_agent_new_agent', methods: ['GET', 'POST'])]
+    /*    #[Route('/new/agent', name: 'app_agent_new_agent', methods: ['GET', 'POST'])]
     public function newAgent(Request $request, AgentRepository $agentRepository, UserPasswordHasherInterface $userPasswordHasher, KernelService $kernelService): Response
     {
         $agent = new Agent();
@@ -84,20 +86,20 @@ class AgentController extends AbstractController
             
              /* 
             if (in_array('ROLE_ADMIN', $agent->getRoles())) { */
-            return $this->redirectToRoute('agence_', [], Response::HTTP_SEE_OTHER);
+    /*             return $this->redirectToRoute('agence_', [], Response::HTTP_SEE_OTHER);
            /*  }
             elseif (in_array('ROLE_SUPER_AGENT', $agent->getRoles())){
                 return $this->redirectToRoute('app_agence_new', [], Response::HTTP_SEE_OTHER);
             } */
-        }
-
+    /*         }
+ 
         return $this->renderForm('admin/agent/form.html.twig', [
             'agent' => $agent,
             'form' => $form,
         ]);
     }
 
-
+ */
 
     #[Route('/new', name: 'app_agent_new', methods: ['GET', 'POST'])]
     public function new(Request $request, AgentRepository $agentRepository, UserPasswordHasherInterface $userPasswordHasher, KernelService $kernelService): Response
@@ -132,10 +134,10 @@ class AgentController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($agent);
             $entityManager->flush();
-/* 
+            /* 
             if (in_array('ROLE_ADMIN', $agent->getRoles())) { */
             return $this->redirectToRoute('app_agent_index', [], Response::HTTP_SEE_OTHER);
-           /*  }
+            /*  }
             elseif (in_array('ROLE_SUPER_AGENT', $agent->getRoles())){
                 return $this->redirectToRoute('app_agence_new', [], Response::HTTP_SEE_OTHER);
             } */
@@ -169,7 +171,7 @@ class AgentController extends AbstractController
 
 
             $agent->setRoles(array_merge($agent->getRoles(), $form->get('roles')->getData()));
-            
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($agent);
             $entityManager->flush();
@@ -200,5 +202,100 @@ class AgentController extends AbstractController
         $response->send();
 
         return $this->redirectToRoute('app_agent_index');
+    }
+
+
+    #[Route('/{id}/new', name: 'app_agent_new_agent', methods: ['GET', 'POST'])]
+    public function newAgent(Request $request, int $id, AgenceRepository $agenceRepository, AgentRepository $agentRepository, UserPasswordHasherInterface $userPasswordHasher, KernelService $kernelService): Response
+    {
+        $agent = new Agent();
+
+        $form = $this->createForm(AgentAgenceType::class, $agent);
+        $form->handleRequest($request);
+        $agent->setRoles(['ROLE_AGENT']);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $myFile = $form['avatar']->getData();
+            if ($myFile) {
+                $fileName = $kernelService->loadProfile($myFile);
+                $agent->setAvatar($fileName);
+            }
+
+
+            $agent->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $agent,
+                    $form->get('password')->getData()
+                )
+            );
+
+
+            $agent->setRoles(array_merge($agent->getRoles(), $form->get('roles')->getData()));
+            $agence = $agenceRepository->find($id);
+            $agent->setAgence($agence);
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($agent);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_agence_show', ['id' => $id], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('admin/agent/formAgent.html.twig', [
+            'agent' => $agent,
+            'form' => $form,
+        ]);
+    }
+
+
+    #[Route('{agence}/edit/agent/{id}', name: 'app_agent_edit_agent', methods: ['GET', 'POST'])]
+    public function editAgent(Request $request, Agent $agent, Agence $agence, AgenceRepository $agenceRepository, KernelService $kernelService): Response
+    {
+        $form = $this->createForm(AgentAgenceType::class, $agent);
+        $form->handleRequest($request);
+        $agent->setRoles(['ROLE_AGENT']);
+
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $myFile = $form['avatar']->getData();
+            if ($myFile) {
+                $fileName = $kernelService->loadProfile($myFile);
+                $agent->setAvatar($fileName);
+            }
+
+
+            $agent->setRoles(array_merge($agent->getRoles(), $form->get('roles')->getData()));
+            
+            $agent->setAgence($agence);
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($agent);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_agence_show',['id' => $agence->getId()], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('admin/agent/formAgent.html.twig', [
+            'agent' => $agent,
+            'form' => $form,
+            'agence' => $agence,
+        ]);
+    }
+    #[Route('{agence}/delete/{id}', name: 'app_agent_delete_agent')]
+    public function deleteAgent(Request $request, $id,Agence $agence): Response
+    {
+        $agent = $this->getDoctrine()->getRepository(Agent::class)->find($id);
+
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $entityManager->remove($agent);
+        $entityManager->flush();
+
+        $response = new Response();
+        $response->send();
+        $agent->setAgence($agence);
+        return $this->redirectToRoute('app_agence_show',['id' => $agence->getId()]);
     }
 }

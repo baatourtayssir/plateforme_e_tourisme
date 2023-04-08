@@ -71,8 +71,8 @@
 						<td>{{ offer_excursion.id }}</td>
 						<td>{{ offer_excursion.excursion }}</td>
 						<td>
-							{% for offere in offer_excursion.offer %}
-								{{ offere.title }}
+							{% for offer_ in offer_excursion.offers %}
+								{{ offer_.title }}
 							{% endfor %}
 						</td>
 						<td>{{ offer_excursion.prix }}</td>

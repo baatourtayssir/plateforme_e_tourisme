@@ -27,11 +27,9 @@
 
 
 {% block content %}
-	{# <div
-					class="card" style="background-color:#d2d2c2;"> #}
 
-	<!-- Basic datatable -->
-		<div class="card"> <div class="card-header header-elements-inline">
+	<div class="card"> 
+		<div class="card-header header-elements-inline">
 			<h5 class="card-title">Reviews list</h5>
 			<div class="header-elements">
 				<div class="list-icons">
@@ -55,7 +53,8 @@
 					<th>Id</th>
 					<th colspan="2">Comment</th>
 					<th>Picture</th>
-					<th>Article</th>
+					{# <th>Article</th> #}
+					<th>Offer</th>
 
 					{# <th>Mutiple pictures</th> #}
 					<th class="text-center">Actions</th>
@@ -66,18 +65,20 @@
 					<tr>
 						<td>{{ review.id }}</td>
 						<td>
-							<a href="{{ path('show_review_', {'id': review.id}) }}">{{ review.comment }}</td>
+							{# <a href="{{ path('show_review_', {'id': review.id}) }}"> #}{{ review.comment|raw }}
 						</td>
 						<td></td>
 						<td><img src="{{ asset('uploads/images/reviews/picture/' ~ review.picture) }}" width="70" height="70" alt="No picture"></td>
 						{# <td>
-																										{% for image in review.images %}
-																											<img src="{{ asset('/public/uploads/images/reviews/pictures/' ~ image) }}" alt="">
-																										{% endfor %}
-																		
-																									</td> #}
-						
-						<td>{{review.article.title}}</td>
+																																						{% for image in review.images %}
+																																							<img src="{{ asset('/public/uploads/images/reviews/pictures/' ~ image) }}" alt="">
+																																						{% endfor %}
+																														
+																																					</td> #}
+
+						{# <td>{{review.article.title}}</td> #}
+						<td>{{ review.offer.title }}</td>
+
 						<td>
 							<div class="modal-footer ">
 
@@ -127,5 +128,4 @@
 		</table>
 	</div>
 
-	{# </div> #}
 {% endblock %}

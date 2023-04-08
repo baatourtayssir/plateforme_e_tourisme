@@ -1,0 +1,154 @@
+{% extends 'base.html.twig' %}
+{% block javascripts %}
+	<script src="{{asset("global_assets/js/plugins/editors/summernote/summernote.min.js")}}"></script>
+	<script src="{{asset("global_assets/js/plugins/forms/styling/uniform.min.js")}}"></script>
+	<script src="{{asset("global_assets/js/demo_pages/editor_summernote.js")}}"></script>
+	<!-- Theme JS files -->
+	<script src="{{ asset("global_assets/js/plugins/tables/datatables/datatables.min.js")}}"></script>
+	<script src="{{ asset("global_assets/js/plugins/forms/selects/select2.min.js")}}"></script>
+	<script src="{{asset("global_assets/js/demo_pages/datatables_basic.js")}}"></script>
+	<script src="{{asset("global_assets/js/demo_pages/timelines.js")}}"></script>
+
+
+	<!-- /theme JS files -->
+{% endblock %}
+{% block title %}
+	Travel
+
+{% endblock %}
+{% block menu %}
+	<h4>
+		<i class="icon-arrow-left52 mr-2"></i>
+		<span class="font-weight-semibold">Home</span>
+		- Travel
+	</h4>
+{% endblock %}
+{% block menu_petit %}
+	<div class="breadcrumb">
+		<a href="index.html" class="breadcrumb-item">
+			<i class="icon-home2 mr-2"></i>
+			Home</a>
+		<span class="breadcrumb-item active">Travel - Travel management
+		</span>
+	</div>
+{% endblock %}
+
+{% block content %}
+
+	<!-- Timeline -->
+	<div class="timeline timeline-left">
+		<div
+			class="timeline-container">
+
+			<!-- Sales stats -->
+			<div class="timeline-row">
+
+				<div class="timeline-icon">
+					<img src="../../../../global_assets/images/placeholders/placeholder.jpg" alt="">
+				</div>
+				<div class="content">
+					<h2 class="timeline-title">General Details</h2>
+
+
+					<!-- Line and border. Partial, filled -->
+					<div class="card card-body border-top-blue">
+						<div class="list-feed list-feed-solid">
+							<div class="list-feed-item border-warning-400">
+								<a href="#">David Linner</a>
+								requested refund for a double bank card charge
+							</div>
+
+							<div class="list-feed-item border-info-400">
+								User
+								<a href="#">Christopher Wallace</a>
+								from Google is awaiting for staff reply
+							</div>
+
+							<div class="list-feed-item border-pink-400">
+								Ticket
+								<strong>#43683</strong>
+								has been resolved by
+								<a href="#">Victoria Wilson</a>
+							</div>
+
+							<div class="list-feed-item border-slate-600">
+								<a href="#">Eugene Kopyov</a>
+								merged
+								<strong>Master</strong>,
+								<strong>Demo</strong>
+								and
+								<strong>Dev</strong>
+								branches
+							</div>
+
+							<div class="list-feed-item border-teal-400">
+								All sellers have received payouts for December, 2016!
+							</div>
+
+							<div class="list-feed-item border-danger-400">
+								<a href="#">Chris Arney</a>
+								created a new ticket
+								<strong>#43136</strong>
+								and assigned to
+								<a href="#">John Nod</a>
+							</div>
+						</div>
+					</div>
+					<!-- /line and border. Partial, filled -->
+
+
+				</div>
+
+
+				<div class="timeline-row">
+					<div class="timeline-icon">
+						<img src="../../../../global_assets/images/placeholders/placeholder.jpg" alt="">
+					</div>
+					<div class="content">
+						<h2 class="timeline-title">Price list</h2>
+
+						<!-- Thumbnail with feed -->
+						<div class="card">
+							<a href="#">
+								<img src="../../../../global_assets/images/placeholders/placeholder.jpg" class="img-fluid" alt="">
+							</a>
+
+							<div class="card-body">
+								<div class="list-feed">
+									<div class="list-feed-item border-warning-400">
+										<div class="text-muted font-size-sm mb-1">12 minutes ago</div>
+										<a href="#">David Linner</a>
+										requested refund for a double card charge
+									</div>
+
+									<div class="list-feed-item border-warning-400">
+										<div class="text-muted font-size-sm mb-1">12 minutes ago</div>
+										User
+										<a href="#">Christopher Wallace</a>
+										is awaiting for staff reply
+									</div>
+
+									<div class="list-feed-item border-warning-400">
+										<div class="text-muted font-size-sm mb-1">12 minutes ago</div>
+										Ticket
+										<strong>#43683</strong>
+										has been closed by
+										<a href="#">Victoria Wilson</a>
+									</div>
+
+									<div class="list-feed-item border-warning-400">
+										<div class="text-muted font-size-sm mb-1">12 minutes ago</div>
+										All sellers have received payouts for December!
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- /thumbnail with feed -->
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

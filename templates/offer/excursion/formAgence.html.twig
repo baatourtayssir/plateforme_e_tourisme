@@ -1,0 +1,136 @@
+{% extends 'base.html.twig' %}
+
+{% block javascripts %}
+	<script src="{{asset("global_assets/js/plugins/editors/summernote/summernote.min.js")}}"></script>
+	<script src="{{asset("global_assets/js/plugins/forms/styling/uniform.min.js")}}"></script>
+	<script src="{{asset("global_assets/js/demo_pages/editor_summernote.js")}}"></script>
+
+	<script src="{{asset("global_assets/js/plugins/extensions/jquery_ui/interactions.min.js")}}"></script>
+	<script src="{{asset("global_assets/js/plugins/forms/selects/select2.min.js")}}"></script>
+	<script src="{{asset("global_assets/js/demo_pages/form_select2.js")}}"></script>
+{% endblock %}
+{% block title %}
+	Excursion
+{% endblock %}
+{% block menu %}
+	<h4>
+		<i class="icon-arrow-left52 mr-2"></i>
+		<span class="font-weight-semibold">Home</span>
+		- Excursion
+	</h4>
+{% endblock %}
+{% block menu_petit %}
+	<div class="breadcrumb">
+		<a href="index.html" class="breadcrumb-item">
+			<i class="icon-home2 mr-2"></i>
+			Home</a>
+		<span class="breadcrumb-item active">Excursion - Excursion management
+		</span>
+	</div>
+{% endblock %}
+
+{% block content %}
+	<div class="card">
+		<div class="card-header header-elements-inline">
+			<h6 class="card-title">{{excursion.title}}</h6>
+			<div class="header-elements">
+				<div class="list-icons">
+					<a class="list-icons-item" data-action="collapse"></a>
+					<a class="list-icons-item" data-action="reload"></a>
+					<a class="list-icons-item" data-action="remove"></a>
+				</div>
+			</div>
+		</div>
+
+		<div class="content justify-content-center align-items-center">
+			{{ form_start(form) }}
+
+
+			<div {# class="form-control" #}>
+				<i class="fa fa-calendar"></i>
+				{{ form_label(form.title) }}
+				{{ form_widget(form.title) }}
+				<div class="form-error">
+					{{ form_errors(form.title) }}
+				</div>
+			</div>
+			<br>
+			<div {# class="form-control" #}>
+				<i class="fa fa-calendar"></i>
+				{{ form_label(form.description) }}
+				{{ form_widget(form.description, { 'attr': {'class': 'summernote'} }) }}
+				<div class="form-error">
+					{{ form_errors(form.description) }}
+				</div>
+			</div>
+			<br>
+			<div {# class="form-control" #}>
+				<i class="fa fa-calendar"></i>
+				{{ form_label(form.inclus) }}
+				{{ form_widget(form.inclus, { 'attr': {'class': 'summernote'} }) }}
+				<div class="form-error">
+					{{ form_errors(form.inclus) }}
+				</div>
+			</div>
+			<br>
+			<div {# class="form-control" #}>
+				<i class="fa fa-calendar"></i>
+				{{ form_label(form.nonInclus) }}
+				{{ form_widget(form.nonInclus, { 'attr': {'class': 'summernote'} }) }}
+				<div class="form-error">
+					{{ form_errors(form.nonInclus) }}
+				</div>
+			</div>
+			<br>
+			<div {# class="form-control" #}>
+				<i class="fa fa-calendar"></i>
+				{{ form_label(form.regions) }}
+				{{ form_widget(form.regions, { 'attr': {'class': 'form-control select-search'} }) }}
+				<div class="form-error">
+					{{ form_errors(form.regions) }}
+				</div>
+			</div>
+			<br>
+			<div {# class="form-control select" #}>
+				<i class="fa fa-calendar"></i>
+				{{ form_label(form.goodAddress) }}
+				{{ form_widget(form.goodAddress) }}
+				<div class="form-error">
+					{{ form_errors(form.goodAddress) }}
+				</div>
+			</div>
+			<br>
+		
+			{{ form_label(form.picture) }}
+			<div class="form-control">
+				<i class="fa fa-calendar"></i>
+				{{ form_widget(form.picture) }}
+				<div class="form-error">
+					{{ form_errors(form.picture) }}
+				</div>
+			</div>
+			<br>
+			{{ form_label(form.images) }}
+			<div class="form-control">
+				<i class="fa fa-calendar"></i>
+				{{ form_widget(form.images) }}
+				<div class="form-error">
+					{{ form_errors(form.images) }}
+				</div>
+			</div>
+			<br>
+
+			<div class="fc-left modal-footer">
+				<a href="{{ path("app_excursion_index")}}">
+					<button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+				</a>
+
+				<button type="submit" class="btn btn-success">{{ button_label|default('Save') }}
+					<i class="icon-paperplane ml-2"></i>
+				</button>
+			</div>
+
+			{{ form_end(form) }}
+		</div>
+	</div>
+{% endblock %}

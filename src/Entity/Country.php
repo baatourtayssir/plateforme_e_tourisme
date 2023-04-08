@@ -26,15 +26,14 @@ class Country
     private Collection $regions;
 
 
-    #[ORM\ManyToMany(targetEntity: Offer::class, mappedBy: 'country')]
-  
-    private Collection $offers;
+    #[ORM\ManyToMany(targetEntity: Offer::class, mappedBy: 'countries')]
+    public Collection $offers;
 
     #[ORM\ManyToMany(targetEntity: Cruise::class, mappedBy: 'countries')]
-    private Collection $cruises;
+    public Collection $cruises;
 
     #[ORM\ManyToMany(targetEntity: Travel::class, mappedBy: 'countries')]
-    private Collection $travel;
+    public Collection $travel;
 
     public function __construct()
     {

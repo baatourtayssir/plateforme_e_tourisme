@@ -29,17 +29,6 @@
 
 {% block content %}
 
-	{% if reservations is not empty %}
-		<h2>Réservations pour cette offre :</h2>
-		<ul>
-			{% for reservation in reservations %}
-				<li>{{ reservation.user }}
-					({{ reservation.date|date('d/m/Y') }})</li>
-			{% endfor %}
-		</ul>
-	{% else %}
-		<p>Aucune réservation pour cette offre pour le moment.</p>
-	{% endif %}
 
 
 	<!-- Basic datatable -->
@@ -71,7 +60,8 @@
 					<th>Massage</th>
 					<th>Note</th>
 					<th>Offer</th>
-					<th class="text-center">Actions</th>
+{# 					<th>Agence</th>
+ #}					<th class="text-center">Actions</th>
 				</tr>
 
 
@@ -85,7 +75,8 @@
 						<td>{{ reservation.message |raw}}</td>
 						<td>{{ reservation.note |raw}}</td>
 						<td>{{ reservation.offer.title }}</td>
-						<td>
+{# 						<td>{{ reservation.agence.name }}</td>
+ #}						<td>
 							<div class="row ">
 								<a href="{{ path('app_reservation_edit', {'id': reservation.id}) }}" class="btn btn-primary btn-sm mr-1">
 									<i class="icon-pencil7 mr-1"></i>

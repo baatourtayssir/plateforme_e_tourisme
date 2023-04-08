@@ -35,7 +35,7 @@ class Offer
  
     #[ORM\ManyToMany(targetEntity: Country::class, inversedBy: 'offers')]
     #[ORM\JoinTable(name: "offer_country")]
-    public Collection $country;
+    public Collection $countries;
     
 
     #[ORM\ManyToMany(targetEntity: GoodAddress::class, inversedBy: 'offers')]
@@ -66,17 +66,13 @@ class Offer
     #[ORM\OneToMany(mappedBy: 'offer', targetEntity: PriceList::class)]
     private Collection $priceLists;
 
-    #[ORM\ManyToMany(targetEntity: OfferExcursion::class, mappedBy: 'offer')]
+    #[ORM\ManyToMany(targetEntity: OfferExcursion::class, mappedBy: 'offers')]
     private Collection $offerExcursions;
-
-
-
-
     
 
     public function __construct()
     {
-        $this->country = new ArrayCollection();
+        $this->countries = new ArrayCollection();
         $this->goodAddress = new ArrayCollection();
         $this->reviews = new ArrayCollection();
         $this->images = new ArrayCollection();
@@ -120,7 +116,7 @@ class Offer
      */
     public function getCountry(): Collection
     {
-        return $this->country;
+        return $this->countries;
        /*  return $this->country ?? new ArrayCollection(); */
     }
 
@@ -130,8 +126,8 @@ class Offer
             $this->country->add($country);
         } */
 
-        if (!$this->country->contains($country)) {
-            $this->country[] = $country;
+        if (!$this->countries->contains($country)) {
+            $this->countries[] = $country;
         }
 
         return $this;
@@ -139,7 +135,7 @@ class Offer
 
     public function removeCountry(Country $country): self
     {
-        $this->country->removeElement($country);
+        $this->countries->removeElement($country);
 
         return $this;
     }

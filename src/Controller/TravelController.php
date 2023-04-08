@@ -71,13 +71,13 @@ class TravelController extends AbstractController
         ]);
     }
 
-/*     #[Route('/{id}', name: 'app_travel_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'app_travel_show', methods: ['GET'])]
     public function show(Travel $travel): Response
     {
-        return $this->render('travel/show.html.twig', [
+        return $this->render('offer/travel/show.html.twig', [
             'travel' => $travel,
         ]);
-    } */
+    }
 
     #[Route('/{id}/edit', name: 'app_travel_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Travel $travel, KernelService $kernelService, TravelRepository $travelRepository): Response

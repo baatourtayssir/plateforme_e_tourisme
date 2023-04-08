@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType as TypeTextType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
+
 class OfferType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -24,33 +25,31 @@ class OfferType extends AbstractType
             ->add('description', TextareaType::class, ['attr' => ['class' => 'form-control']])
             ->add('inclus', TextareaType::class, ['attr' => ['class' => 'form-control']])
             ->add('nonInclus', TextareaType::class, ['attr' => ['class' => 'form-control']])
-
-            ->add('country', EntityType::class, array(
+            ->add('countries', EntityType::class, array(
                 'class'     => Country::class,
-                'choice_label' => 'entitled',
-                'expanded'  => true,
+                'choice_label' => 'intitule',
                 'multiple'  => true,
-                'attr' => ['class' => 'form-control'],
+                'attr' => ['class' => 'form-control select'],
             ))
 
-/*             ->add('country', EntityType::class, ['class' => Country::class, 'choice_label' => 'entitled' , 'attr' => ['class' => 'form-control']])
- */            ->add('goodAddress', EntityType::class, array(
+            /*             ->add('country', EntityType::class, ['class' => Country::class, 'choice_label' => 'entitled' , 'attr' => ['class' => 'form-control']])
+*/
+            ->add('goodAddress', EntityType::class, array(
                 'class'     => GoodAddress::class,
-                'expanded'  => true,
+                'choice_label' => 'intitule',
                 'multiple'  => true,
-                'attr' => ['class' => 'form-control'],
+                'attr' => ['class' => 'form-control select'],
             ))
-            ->add('Agence', EntityType::class, ['class' => Agence::class, 'choice_label' => 'name', 'attr' => ['class' => 'form-control']])
+            ->add('agence', EntityType::class, ['class' => Agence::class, 'choice_label' => 'name', 'attr' => ['class' => 'form-control']])
             ->add('picture', FileType::class,  array('data_class' => null, 'required' => false, 'label' => 'Picture'))
-            /* ->add('reviews', EntityType::class, ['class' => Reviews::class, 'choice_label' => 'comment', 'attr' => ['class' => 'form-control']])
-            */ 
-            ->add('images', FileType::class,[
+            /*             ->add('reviews', EntityType::class, ['class' => Reviews::class, 'choice_label' => 'comment', 'attr' => ['class' => 'form-control']])
+*/
+            ->add('images', FileType::class, [
                 'label' => 'Pictures',
                 'multiple' => true,
                 'mapped' => false,
                 'required' => false
-            ])
-            ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

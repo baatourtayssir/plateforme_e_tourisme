@@ -50,12 +50,16 @@ class Agence
     #[ORM\OneToMany(mappedBy: 'agence', targetEntity: Offer::class)]
     private Collection $offers;
 
+    #[ORM\OneToMany(mappedBy: 'agence', targetEntity: Reservation::class)]
+    private Collection $reservations;
+
 
 
     public function __construct()
     {
         $this->offers = new ArrayCollection();
         $this->agents = new ArrayCollection();
+        $this->reservations = new ArrayCollection();
     }
 
    
@@ -199,7 +203,40 @@ class Agence
         return $this;
     }
 
+    /**
+     * @return Collection<int, Reservation>
+     */
+    public function getReservations(): Collection
+    {
+        return $this->reservations;
+    }
 
+    public function addReservation(Reservation $reservation): self
+    {
+        if (!$this->reservations->contains($reservation)) {
+            $this->reservations->add($reservation);
+            $reservation->setAgence($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReservation(Reservation $reservation): self
+    {
+        if ($this->reservations->removeElement($reservation)) {
+            // set the owning side to null (unless already changed)
+            if ($reservation->getAgence() === $this) {
+                $reservation->setAgence(null);
+            }
+        }
+
+        return $this;
+    }
+
+ public function __toString()
+    {
+        return (string) $this->name;
+    }
 
 
     

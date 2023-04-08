@@ -1,0 +1,199 @@
+{% block javascripts %}
+	<script src="{{asset("global_assets/js/plugins/editors/summernote/summernote.min.js")}}"></script>
+	<script src="{{asset("global_assets/js/plugins/forms/styling/uniform.min.js")}}"></script>
+	<script src="{{asset("global_assets/js/demo_pages/editor_summernote.js")}}"></script>
+	<!-- Theme JS files -->
+	<script src="{{ asset("global_assets/js/plugins/tables/datatables/datatables.min.js")}}"></script>
+	<script src="{{ asset("global_assets/js/plugins/forms/selects/select2.min.js")}}"></script>
+	<script src="{{asset("global_assets/js/demo_pages/datatables_basic.js")}}"></script>
+	<!-- /theme JS files -->
+{% endblock %}
+
+<div class="card">
+	<div class="card-header header-elements-inline">
+		<h5 class="card-title">Reservation list</h5>
+		<div class="header-elements">
+			<div class="list-icons">
+
+				{% if reservation.agence is not null %}
+					<a href="{{path('app_reservation_new_reservation',{'id': reservation.agence.id})}}" class="nav-link">
+
+						<button type="submit" class="btn btn-success">
+							<b>
+								<i class="icon-plus3 mr-1"></i>
+							</b>
+							<big>Add Reservation</big>
+						</button>
+					</a>
+				{% endif %}
+				{% if reservation.agence is null %}
+					<a href="{{path('app_reservation_new_reservation',{'id': reservation.agence.id})}}" class="nav-link">
+
+						<button type="submit" class="btn btn-success">
+							<b>
+								<i class="icon-plus3 mr-1"></i>
+							</b>
+							<big>Add Reservation</big>
+						</button>
+					</a>
+				{% endif %}
+			</div>
+
+		</div>
+	</div>
+
+	<table class="table datatable-basic">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Date</th>
+				<th>Status</th>
+				<th>Massage</th>
+				<th>Note</th>
+				<th>Offer</th>
+				<th class="text-center">Actions</th>
+			</tr>
+
+
+		</thead>
+		<tbody>
+			{% for reservation in reservations %}
+				<tr>
+					<td>{{ reservation.id }}</td>
+					<td>{{reservation.dateReservation|date("d/m/Y")}}</td>
+					<td>{{ reservation.status |raw}}</td>
+					<td>{{ reservation.message |raw}}</td>
+					<td>{{ reservation.note |raw}}</td>
+					<td>{{ reservation.offer.title }}</td>
+					<td>
+						<div class="row ">
+							<a href="{{ path('app_reservation_edit_reservation', { 'agence': reservation.agence.getId() ,'id': reservation.id}) }}" {# data-toggle="modal" data-target="#modal_edit_add{{reservation.id}}" #} class="btn btn-primary btn-sm mr-1 text-white">
+								<i class="icon-pencil7 mr-1"></i>
+
+								Edit
+							</a>
+							<a class="btn btn-danger btn-sm text-white " data-toggle="modal" data-target="#modal_Delete{{reservation.id}}">
+								<i class="icon-bin mr-1"></i>
+
+								Delete</a>
+						</div>
+					</td>
+				</tr>
+
+
+				<!-- Primary modal -->
+				{# 				<div id="modal_edit_add{{reservation.id}}" class="modal fade" tabindex="-1">
+																																<div class="modal-dialog">
+																																	<div class="modal-content">
+																																		<div class="modal-header bg-primary">
+																																			<h6 class="modal-title">Primary header</h6>
+																																			<button type="button" class="close" data-dismiss="modal">&times;</button>
+																																		</div>
+																											
+																																		<div class="modal-body">
+																											
+																											
+																																			{{ form_start(form) }}
+																											
+																											
+																																			<div >
+																																				<i class="fa fa-calendar"></i>
+																																				{{ form_label(form.dateReservation) }}
+																																				{{ form_widget(form.dateReservation, { 'attr': {'class': 'form-control'} }) }}
+																																				<div class="form-error">
+																																					{{ form_errors(form.dateReservation) }}
+																																				</div>
+																																			</div>
+																																			<br>
+																																			<div>
+																																				<i class="fa fa-calendar"></i>
+																																				{{ form_label(form.status) }}
+																																				{{ form_widget(form.status, { 'attr': {'class': 'summernote'} }) }}
+																																				<div class="form-error">
+																																					{{ form_errors(form.status) }}
+																																				</div>
+																																			</div>
+																																			<br>
+																																			<div >
+																																				<i class="fa fa-calendar"></i>
+																																				{{ form_label(form.message) }}
+																																				{{ form_widget(form.message, { 'attr': {'class': 'summernote'} }) }}
+																																				<div class="form-error">
+																																					{{ form_errors(form.message) }}
+																																				</div>
+																																			</div>
+																																			<br>
+																																			<div>
+																																				<i class="fa fa-calendar"></i>
+																																				{{ form_label(form.note) }}
+																																				{{ form_widget(form.note, { 'attr': {'class': 'summernote'} }) }}
+																																				<div class="form-error">
+																																					{{ form_errors(form.note) }}
+																																				</div>
+																																			</div>
+																																			<br>
+																																			<div>
+																																				<i class="fa fa-calendar"></i>
+																																				{{ form_label(form.offer) }}
+																																				{{ form_widget(form.offer, { 'attr': {'class': 'form-control select-search'} }) }}
+																																				<div class="form-error">
+																																					{{ form_errors(form.offer) }}
+																																				</div>
+																																			</div>
+																											
+																																			<br>
+																											
+																																			<div class="fc-left modal-footer">
+																																				<button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+																											
+																																				<button type="submit" class="btn bg-primary">
+																																					{{ button_label|default('Save changes') }}
+																																					<i class="icon-paperplane ml-2"></i>
+																																				</button>
+																																			</div>
+																											
+																											
+																																			{{ form_end(form) }}
+																											
+																																		</div>
+																											
+																											
+																																	</div>
+																																</div>
+																															</div> #}
+				<!-- /primary modal -->
+
+
+				<!-- Delete modal -->
+					<div id="modal_Delete{{reservation.id}}" class="modal fade" tabindex="-1"> <div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header bg-danger">
+								<h5 class="modal-title">Deletion</h5>
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+							</div>
+
+							<div
+								class="modal-body">
+								{# <h6 class="font-weight-semibold">Text in a modal</h6> #}
+								<p>Are you sure to delete this reservation.</p>
+
+							</div>
+
+							<div class="modal-footer">
+								<button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+								<a href="{{ path('app_reservation_delete_reservation',{'agence': reservation.agence.getId(),'id': reservation.id})}}">
+									<button type="button" class="btn bg-danger">Delete</button>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /Delete modal -->
+			{% else %}
+				<tr>
+					<td colspan="5">no records found</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>

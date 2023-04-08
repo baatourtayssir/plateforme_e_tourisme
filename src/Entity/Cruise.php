@@ -16,7 +16,8 @@ class Cruise extends Offer
     private ?int $id = null; */
 
     #[ORM\ManyToMany(targetEntity: Country::class, inversedBy: 'cruises')]
-    private Collection $countries;
+    #[ORM\JoinTable(name: "cruise_country")]
+    public Collection $countries;
 
     public function __construct()
     {

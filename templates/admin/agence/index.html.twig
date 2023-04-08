@@ -69,7 +69,7 @@
 					<tr>
 						<td>{{ agence.id }}</td>
 						<td>
-							<a href="{{ path('app_agence_edit', {'id': agence.id}) }}" >{{ agence.name }}</a>
+							<a href="{{ path('app_agence_show', {'id': agence.id}) }}" >{{ agence.name }}</a>
 						</td>
 						<td><img src="{{ asset('uploads/images/agences/logo/' ~ agence.brochureFilename) }}" width="80"></td>
 

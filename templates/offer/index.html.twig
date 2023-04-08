@@ -1,0 +1,133 @@
+{% block javascripts %}
+	<script src="{{asset("global_assets/js/plugins/editors/summernote/summernote.min.js")}}"></script>
+	<script src="{{asset("global_assets/js/plugins/forms/styling/uniform.min.js")}}"></script>
+	<script src="{{asset("global_assets/js/demo_pages/editor_summernote.js")}}"></script>
+
+	<script src="{{asset("global_assets/js/plugins/extensions/jquery_ui/interactions.min.js")}}"></script>
+	<script src="{{asset("global_assets/js/plugins/forms/selects/select2.min.js")}}"></script>
+	<script src="{{asset("global_assets/js/demo_pages/form_select2.js")}}"></script>
+
+{% endblock %}
+{# {% for Offer in offers %} #}
+
+<!-- Basic datatable -->
+<div class="card">
+	<div class="card-header header-elements-inline">
+		<h5 class="card-title">Offer list</h5>
+		<div class="header-elements">
+			<div class="list-icons">
+				<a href="{{path('app_offer_new', {'id': offer.agence.id})}}" {#  data-toggle="modal" data-target="#modal_edit_add{{Offer.id}}" #} class="nav-link">
+
+					<button type="submit" class="btn btn-success">
+						<b>
+							<i class="icon-plus3 mr-1"></i>
+						</b>
+						<big>Add Offer</big>
+					</button>
+				</a>
+			</div>
+
+		</div>
+	</div>
+
+	<table class="table datatable-basic">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Title</th>
+				<th>Picture</th>
+				<th>Description</th>
+				<th>Inclus</th>
+				<th>Non inclus</th>
+				{# <th>Country</th> #}
+				<th>Country</th>
+				<th>Good Address</th>
+				<th>Agence</th>
+
+				{# <th>Reviews</th> #}
+
+
+				<th class="text-center">Actions</th>
+			</tr>
+
+
+		</thead>
+		<tbody>
+			{% for Offer in offers %}
+				<tr>
+					<td>{{ Offer.id }}</td>
+					<td>{{Offer.title}}</td>
+					<td><img src="{{ asset('uploads/images/offer/excursion/picture/' ~ Offer.picture) }}" width="80" alt="No picture"></td>
+
+					<td>{{ Offer.description |raw}}</td>
+					<td>{{ Offer.inclus |raw}}</td>
+					<td>{{ Offer.nonInclus |raw}}</td>
+
+					<td>
+						{% for country in Offer.countries %}
+							{{ country.intitule }}
+						{% endfor %}
+					</td>
+
+					<td>
+						{% for goodAddress in Offer.goodAddress %}
+							{{ goodAddress.intitule }}
+						{% endfor %}
+					</td>
+					<td>{{ Offer.agence.name }}</td>
+					<td>
+						<div class="row ">
+							<a href="{{ path('app_offer_edit', {'id': Offer.agence.id}) }}"{#  data-toggle="modal" data-target="#modal_edit_add{{Offer.id}}" #} class="btn btn-primary btn-sm mr-1 text-white">
+								<i class="icon-pencil7 mr-1"></i>
+
+								Edit
+							</a>
+							<a class="btn btn-danger btn-sm text-white " data-toggle="modal" data-target="#modal_Delete{{Offer.id}}">
+								<i class="icon-bin mr-1"></i>
+
+								Delete</a>
+						</div>
+					</td>
+				</tr>
+
+
+			
+
+
+				<!-- Delete modal -->
+				<div id="modal_Delete{{Offer.id}}" class="modal fade" tabindex="-1">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header bg-danger">
+								<h5 class="modal-title">Deletion</h5>
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+							</div>
+
+							<div
+								class="modal-body">
+								{# <h6 class="font-weight-semibold">Text in a modal</h6> #}
+								<p>Are you sure to delete this Offer.</p>
+
+							</div>
+
+							<div class="modal-footer">
+								<button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+								<a href="{{ path('app_offer_delete',{'id': Offer.id})}}">
+									<button type="button" class="btn bg-danger">Delete</button>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /Delete modal -->
+
+
+			{% else %}
+				<tr>
+					<td colspan="5">no records found</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+{# {% endfor %} #}

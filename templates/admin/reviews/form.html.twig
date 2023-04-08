@@ -1,5 +1,13 @@
 {% extends 'base.html.twig' %}
+{% block javascripts %}
+	<script src="{{asset("global_assets/js/plugins/editors/summernote/summernote.min.js")}}"></script>
+	<script src="{{asset("global_assets/js/plugins/forms/styling/uniform.min.js")}}"></script>
+	<script src="{{asset("global_assets/js/demo_pages/editor_summernote.js")}}"></script>
 
+	<script src="{{asset("global_assets/js/plugins/extensions/jquery_ui/interactions.min.js")}}"></script>
+	<script src="{{asset("global_assets/js/plugins/forms/selects/select2.min.js")}}"></script>
+	<script src="{{asset("global_assets/js/demo_pages/form_select2.js")}}"></script>
+{% endblock %}
 {% block title %}
 	Review
 
@@ -22,9 +30,9 @@
 
 {% block content %}
 
-<div class="card">
+	<div class="card">
 		<div class="card-header header-elements-inline">
-			<h6 class="card-title">{{ review.comment }}</h6>
+			<h6 class="card-title">{{ review.comment|raw}}</h6>
 			<div class="header-elements">
 				<div class="list-icons">
 					<a class="list-icons-item" data-action="collapse"></a>
@@ -34,51 +42,60 @@
 			</div>
 		</div>
 
-	<div class="content justify-content-center align-items-center">
-		{{ form_start(form) }}
+		<div class="content justify-content-center align-items-center">
+			{{ form_start(form) }}
 
 
-		<div {# class="form-control" #}>
-			<i class="fa fa-calendar"></i>
-			{{ form_label(form.comment) }}
-			{{ form_widget(form.comment) }}
-			<div class="form-error">
-				{{ form_errors(form.comment) }}
+			<div {# class="form-control" #}>
+				<i class="fa fa-calendar"></i>
+				{{ form_label(form.comment) }}
+				{{ form_widget(form.comment, { 'attr': {'class': 'summernote'} }) }}
+				<div class="form-error">
+					{{ form_errors(form.comment) }}
+				</div>
 			</div>
-		</div>
-		<br>
-		<div {# class="form-control" #}>
-			<i class="fa fa-calendar"></i>
-			{{ form_label(form.Article) }}
-			{{ form_widget(form.Article) }}
-			<div class="form-error">
-				{{ form_errors(form.Article) }}
+			{# <br>
+			<div {# class="form-control" #} {#>
+				<i class="fa fa-calendar"></i>
+				{{ form_label(form.Article) }}
+				{{ form_widget(form.Article) }}
+				<div class="form-error">
+					{{ form_errors(form.Article) }}
+				</div>
+			</div> #}
+			<br>
+			{{ form_label(form.picture) }}
+			<div class="form-control">
+				<i class="fa fa-calendar"></i>
+				{{ form_widget(form.picture) }}
+				<div class="form-error">
+					{{ form_errors(form.picture) }}
+				</div>
 			</div>
-		</div>
-		<br>
-		{{ form_label(form.picture) }}
-		<div class="form-control">
-			<i class="fa fa-calendar"></i>
-			{{ form_widget(form.picture) }}
-			<div class="form-error">
-				{{ form_errors(form.picture) }}
+			<br>
+			{{ form_label(form.images) }}
+			<div class="form-control">
+				<i class="fa fa-calendar"></i>
+				{{ form_widget(form.images) }}
+				<div class="form-error">
+					{{ form_errors(form.images) }}
+				</div>
 			</div>
-		</div>
-		<br>
-		{{ form_label(form.images) }}
-		<div class="form-control">
-			<i class="fa fa-calendar"></i>
-			{{ form_widget(form.images) }}
-			<div class="form-error">
-				{{ form_errors(form.images) }}
+			<br>
+			<div {# class="form-control" #}>
+				<i class="fa fa-calendar"></i>
+				{{ form_label(form.offer) }}
+				{{ form_widget(form.offer, { 'attr': {'class': 'form-control select-search'} }) }}
+				<div class="form-error">
+					{{ form_errors(form.offer) }}
+				</div>
 			</div>
-		</div>
 
 
-		<br>
-		<br>
+			<br>
+			<br>
 
-		<div class="fc-left modal-footer">
+			<div class="fc-left modal-footer">
 				<a href="{{ path("app_reviews_index")}}">
 					<button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
 				</a>
@@ -89,6 +106,6 @@
 			</div>
 
 			{{ form_end(form) }}
+		</div>
 	</div>
-</div>
 {% endblock %}

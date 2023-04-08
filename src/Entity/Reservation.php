@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ReservationRepository;
+use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -14,7 +15,7 @@ class Reservation
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private ?\DateTimeInterface $dateReservation = null;
 
     #[ORM\Column(type: Types::TEXT)]
@@ -29,18 +30,33 @@ class Reservation
     #[ORM\ManyToOne(inversedBy: 'reservations')]
     private ?Offer $offer = null;
 
+    #[ORM\ManyToOne(inversedBy: 'reservations')]
+    private ?Agence $agence = null;
+
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getDateReservation(): ?\DateTimeInterface
+/*     public function getDateReservation(): ?\DateTimeInterface
     {
         return $this->dateReservation;
     }
 
     public function setDateReservation(\DateTimeInterface $dateReservation): self
+    {
+        $this->dateReservation = $dateReservation;
+
+        return $this;
+    } */
+
+    public function getDateReservation(): ?DateTimeImmutable
+    {
+        return $this->dateReservation;
+    }
+
+    public function setDateReservation(DateTimeImmutable $dateReservation): self
     {
         $this->dateReservation = $dateReservation;
 
@@ -91,6 +107,18 @@ class Reservation
     public function setOffer(?Offer $offer): self
     {
         $this->offer = $offer;
+
+        return $this;
+    }
+
+    public function getAgence(): ?Agence
+    {
+        return $this->agence;
+    }
+
+    public function setAgence(?Agence $agence): self
+    {
+        $this->agence = $agence;
 
         return $this;
     }

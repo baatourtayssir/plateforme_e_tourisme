@@ -1,0 +1,139 @@
+{% block javascripts %}
+	<script src="{{asset("global_assets/js/plugins/editors/summernote/summernote.min.js")}}"></script>
+	<script src="{{asset("global_assets/js/plugins/forms/styling/uniform.min.js")}}"></script>
+	<script src="{{asset("global_assets/js/demo_pages/editor_summernote.js")}}"></script>
+
+
+{% endblock %}
+
+<!-- Basic datatable -->
+<div class="card">
+	<div class="card-header header-elements-inline">
+		<h5 class="card-title">Good address list</h5>
+		<div class="header-elements">
+			<div class="list-icons">
+												<a href="{{ path('app_excursion_new_good_address', {'id': app.user.id}) }}" class="nav-link"><button type="submit" class="btn btn-success">
+								
+				{# 								<a href="{{path('app_excursion_new_good_address',{'id': good_address.excursion.id})}}" class="nav-link">
+								 #}
+				{# 				<a href="{{ path('app_new_good_address', {'id': app.user.id}) }}" class="nav-link">
+								 #}
+				{# 					<a href="{{ path('app_excursion_new_good_address', {'id': offer.getId()}) }}" class="nav-link"> <button type="submit" class="btn btn-success">
+				 #}
+{# 					<a href="{{ path('add_good_address_to_excursion', {'id': app.user.id}) }}" class="nav-link"> <button type="submit" class="btn btn-success">
+ #}
+						<b>
+							<i class="icon-plus3 mr-1"></i>
+						</b>
+						<big>Add good address</big>
+					</button>
+				</a>
+
+
+				{# 	{% if is_granted ('ROLE_ADMIN') %}
+																																	<a href="{{path('app_good_address_new')}}" class="nav-link">
+																												
+																																		<button type="submit" class="btn btn-success">
+																																			<b>
+																																				<i class="icon-plus3 mr-1"></i>
+																																			</b>
+																																			<big>Add good address</big>
+																																		</button>
+																																	</a>
+																																{% elseif is_granted ('ROLE_AGENT') %}
+																												
+																												
+																																	<a href="{{path('app_good_address_new_agence',{ 'id':app.user.agence.id})}}" class="nav-link">
+																												
+																																		<button type="submit" class="btn btn-success">
+																																			<b>
+																																				<i class="icon-plus3 mr-1"></i>
+																																			</b>
+																																			<big>Add good address</big>
+																																		</button>
+																																	</a>
+																																{% endif %} #}
+
+			</div>
+		</div>
+	</div>
+
+	<table class="table datatable-basic">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Entitled</th>
+				<th>Picture</th>
+				<th>Address</th>
+				<th>Region</th>
+				{# <th colspan="2">Description</th> #}
+				<th colspan="2">Category</th>
+
+				<th class="">Actions</th>
+			</tr>
+
+
+		</thead>
+		<tbody>
+			{% for good_address in good_addresses %}
+				<tr>
+					<td>{{ good_address.id }}</td>
+					<td>{{ good_address.intitule }}</td>
+					<td><img src="{{ asset('uploads/images/goodAddress/picture/' ~ good_address.picture) }}" width="70" height="70" alt="No picture"></td>
+					<td>{{ good_address.address }}</td>
+					<td>{{ good_address.region.intitule }}</td>
+					{# <td>{{ good_address.description|raw}}</td>
+																																																			<td></td> #}
+					<td>{{good_address.category}}</td>
+					<td></td>
+
+
+					<td>
+						<div
+							class="row">
+							{# <a href="{{ path('app_good_address_edit', {'id': good_address.id}) }}" class="btn btn-primary btn-sm mr-1 text-white">
+																																																																								<i class="icon-pencil7 mr-1"></i>
+																																																															
+																																																																								Edit
+																																																																							</a> #}
+							<a class="btn btn-danger btn-sm text-white" data-toggle="modal" data-target="#modal_Delete{{good_address.id}}">
+								<i class="icon-bin mr-1"></i>
+
+								Delete</a>
+						</div>
+					</td>
+				</tr>
+				<!-- Delete modal -->
+				<div id="modal_Delete{{good_address.id}}" class="modal fade" tabindex="-1">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header bg-danger">
+								<h5 class="modal-title">Deletion</h5>
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+							</div>
+
+							<div
+								class="modal-body">
+								{# <h6 class="font-weight-semibold">Text in a modal</h6> #}
+								<p>Are you sure to delete this good address.</p>
+
+							</div>
+
+							<div class="modal-footer">
+								<button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+								<a href="{{ path('app_good_address_delete',{'id': good_address.id})}}">
+									<button type="button" class="btn bg-danger">Delete</button>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /Delete modal -->
+			{% else %}
+				<tr>
+					<td colspan="5">no records found</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
