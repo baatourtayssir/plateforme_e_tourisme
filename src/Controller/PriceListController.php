@@ -6,6 +6,7 @@ use App\Entity\Excursion;
 use App\Entity\PriceList;
 use App\Form\PriceListType;
 use App\Repository\ExcursionRepository;
+use App\Repository\OfferRepository;
 use App\Repository\PriceListRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,15 +29,15 @@ class PriceListController extends AbstractController
     public function show($excursion): Response
     {
         $priceLists = $excursion->getPriceLists();
-     
+
         return $this->render('offer/price_list/index.html.twig', [
             'priceLists' => $priceLists,
-            'excursion' =>$excursion,
+            'excursion' => $excursion,
 
         ]);
     }
 
-    #[Route('/new', name: 'app_price_list_new', methods: ['GET', 'POST'])]
+    /*   #[Route('/new', name: 'app_price_list_new', methods: ['GET', 'POST'])]
     public function new(Request $request, int $id,PriceListRepository $priceListRepository,ExcursionRepository $excursionRepository): Response
     {
         $priceList = new PriceList();
@@ -46,8 +47,8 @@ class PriceListController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             /* $excursion = $excursionRepository->find($id); */
-           /*  $priceList->setOffer($excursion); */
-            $entityManager = $this->getDoctrine()->getManager();
+    /*  $priceList->setOffer($excursion); */
+    /*     $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($priceList);
             $entityManager->flush();
             return $this->redirectToRoute('app_price_list_index', [], Response::HTTP_SEE_OTHER);
@@ -57,7 +58,69 @@ class PriceListController extends AbstractController
             'price_list' => $priceList,
             'form' => $form,
         ]);
+    } */
+
+    #[Route('/new/{id}', name: 'app_price_list_new_price_list', methods: ['GET', 'POST'])]
+    public function new(Request $request, int $id, PriceListRepository $priceListRepository, ExcursionRepository $excursionRepository): Response
+    {
+        $priceList = new PriceList();
+        $form = $this->createForm(PriceListType::class, $priceList);
+        $form->handleRequest($request);
+
+        $excursion = $excursionRepository->findOneBy(['id' => $id]);
+        if (!$excursion) {
+            throw $this->createNotFoundException('Excursion not found');
+        }
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $excursion->addPriceList($priceList);
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($priceList);
+            $entityManager->flush();
+            return $this->redirectToRoute('app_excursion_show', ['id' => $excursion->getId()], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('offer/price_list/form.html.twig', [
+            'price_list' => $priceList,
+            'form' => $form,
+            'excursion' => $excursion,
+        ]);
     }
+
+
+
+    /*   #[Route('/{id}/new', name: 'app_price_list_new_price_list', methods: ['GET', 'POST'])]
+    public function newPriceList(Request $request, int $id,OfferRepository $offerRepository,PriceListRepository $priceListRepository,ExcursionRepository $excursionRepository): Response
+    {
+        $priceList = new PriceList();
+        $form = $this->createForm(PriceListType::class, $priceList);
+        $form->handleRequest($request);
+
+        $offer = $offerRepository->findOneBy(['id' => $id]);
+        if (!$offer) {
+            throw $this->createNotFoundException('L\'offre avec l\'id ' . $id . ' n\'existe pas');
+        }
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            /* $excursion = $excursionRepository->find($id); */
+    /*  $priceList->setOffer($excursion); */
+
+    /*   $offer->addPriceList($priceList);
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($offer);
+            $entityManager->persist($priceList);
+            $entityManager->flush();
+            return $this->redirectToRoute('app_excursion_index', ['id' => $offer->getId()], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('offer/price_list/form.html.twig', [
+            'price_list' => $priceList,
+            'form' => $form->createView(),
+            'offer' =>$offer,
+        ]);
+    } */
+
 
     /*     #[Route('/{id}', name: 'app_price_list_show', methods: ['GET'])]
     public function show(PriceList $priceList): Response
@@ -68,7 +131,7 @@ class PriceListController extends AbstractController
     } */
 
     /*  #[Route('/{id}', name: 'app_price_list_show', methods: ['GET'])] */
-/*     public function show($id)
+    /*     public function show($id)
     {
 
         $excursion = $this->getDoctrine()->getRepository(Excursion::class)->find($id);
@@ -84,16 +147,16 @@ class PriceListController extends AbstractController
         if ($excursion !== null) {
             $priceLists = $excursion->getPriceLists();
         } */
-       /*  $em = $this->getDoctrine()->getManager();
+    /*  $em = $this->getDoctrine()->getManager();
         $excursion = $em->getRepository(Excursion::class)->find($id);
 
         $priceLists = $excursion->getPriceLists(); */
 
-  /*       return $this->render('offer/price_list/index.html.twig', [
+    /*       return $this->render('offer/price_list/index.html.twig', [
             'priceLists' => $priceLists,
             'excursion' => $excursion,
         ]);
-    } */ 
+    } */
 
     #[Route('/{id}/edit', name: 'app_price_list_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, PriceList $priceList, PriceListRepository $priceListRepository): Response
@@ -115,7 +178,7 @@ class PriceListController extends AbstractController
     }
 
     #[Route('{id}/delete', name: 'app_price_list_delete')]
-    public function delete(Request $request,$id): Response
+    public function delete(Request $request, $id): Response
     {
         $priceList = $this->getDoctrine()->getRepository(PriceList::class)->find($id);
 
@@ -128,5 +191,52 @@ class PriceListController extends AbstractController
         $response->send();
 
         return $this->redirectToRoute('app_price_list_index');
+    }
+
+
+    #[Route('{excursion}/edit/{id}/', name: 'app_price_list_edit_price_list', methods: ['GET', 'POST'])]
+    public function editPriceList(Request $request, int $id, Excursion $excursion, PriceList $priceList, PriceListRepository $priceListRepository): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $priceList = $entityManager->getRepository(PriceList::class)->find($id);
+        $form = $this->createForm(PriceListType::class, $priceList);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            /*          $priceList->setExcursion($excursion); */
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($priceList);
+            $entityManager->flush();
+            $priceList->setOffer($excursion);
+            return $this->redirectToRoute('app_excursion_show', ['id' => $excursion->getId()], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('offer/price_list/form.html.twig', [
+            'price_list' => $priceList,
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('{excursion}/delete/{id}/', name: 'app_price_list_delete_price_list')]
+    public function deletePriceList(Request $request, $id, Excursion $excursion): Response
+    {
+        
+        $entityManager = $this->getDoctrine()->getManager();
+        $priceList = $entityManager->getRepository(PriceList::class)->find($id);
+
+        if (!$priceList) {
+            throw $this->createNotFoundException('PriceList not found');
+        }
+
+        $entityManager->remove($priceList);
+        $entityManager->flush();
+
+        $response = new Response();
+        $response->send();
+        
+        $priceList->setOffer($excursion);
+
+        return $this->redirectToRoute('app_excursion_show', ['id' => $excursion->getId()]);
     }
 }

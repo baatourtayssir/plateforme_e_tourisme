@@ -40,12 +40,12 @@ class PriceListType extends AbstractType
                 'multiple'  => true,
                 'attr' => ['class' => 'form-control select'],
             ))
-            ->add('excursions', EntityType::class, array(
+            /* ->add('excursions', EntityType::class, array(
                 'class'     => Excursion::class,
                 'choice_label' => 'title',
                 'multiple'  => true,
                 'attr' => ['class' => 'form-control select'],
-            ))
+            )) */
             ->add('offer', EntityType::class, ['class' => Offer::class, 'choice_label' => 'title', 'attr' => ['class' => 'form-control select-search']]);
     }
 

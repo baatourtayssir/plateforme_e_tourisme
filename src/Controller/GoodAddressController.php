@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\GoodAddress;
 use App\Entity\Pictures;
 use App\Entity\Excursion;
+use App\Entity\Offer;
 use App\Form\GoodAddressType;
 use App\Repository\AgenceRepository;
 use App\Repository\ExcursionRepository;
@@ -166,125 +167,29 @@ class GoodAddressController extends AbstractController
     }
 
 
-    /*   #[Route('/{id}/new', name: 'app_excursion_new_good_address', methods: ['GET', 'POST'])]
-    public function newGoodAddress(Request $request,Excursion $excursion,int $id, GoodAddressRepository $goodAddressRepository, KernelService $kernelService): Response
-    {
-        $entityManager = $this->getDoctrine()->getManager();
-        $form = $this->createForm(ExcursionType::class, $excursion);
-        $goodAddress = new GoodAddress();
-        $form = $this->createForm(GoodAddressType::class, $goodAddress);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $myFile = $form['picture']->getData();
-
-            $fileName = $kernelService->loadGoodAdressePicture($myFile);
-            $goodAddress->setPicture($fileName);
-
-            $images = $form->get('images')->getData();
-
-            // On boucle sur les images
-            foreach ($images as $image) {
-                // On génère un nouveau nom de fichier
-                $fichier = md5(uniqid()) . '.' . $image->guessExtension();
-
-                // On copie le fichier dans le dossier uploads
-                $image->move(
-                    $this->getParameter('pictures_GoodAdress_directory'),
-                    $fichier
-                );
-
-                // On crée l'image dans la base de données
-                $img = new Pictures();
-                $img->setName($fichier);
-                $goodAddress->addImage($img);
-            }
-
-            /*  $excursion = $excursionRepository->find($id);
-            $goodAddress->addOffer($excursion); */
-
-    /*    $excursion->addGoodAddress($goodAddress);
-            
-            $entityManager->persist($excursion);
-            $entityManager->persist($goodAddress);
-           
-
-            $entityManager->flush();
 
 
-            return $this->redirectToRoute('app_excursion_show', ['id' => $excursion->getId()], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('destination/good_address/form.html.twig', [
-            'good_address' => $goodAddress,
-            'form' => $form,
-        ]);
-    } */
-
-    /*   #[Route('/{excursion}/{id}/new-good-address', name: 'app_new_good_address')]
-    public function newGoodAddress(Request $request, int $id, Excursion $excursion,GoodAddressRepository $goodAddressRepository, KernelService $kernelService): Response
+    #[Route('{offer}/goodaddress/{id}/delete', name: 'app_good_address_delete_good_address')]
+    public function deleteGoodAddress(Offer $offer, int $id): Response
     {
 
-        // Récupération de l'excursion correspondant à l'ID
-        $excursion = $this->getDoctrine()->getRepository(Excursion::class)->find($id);
+        $goodAddress = $this->getDoctrine()->getRepository(GoodAddress::class)->find($id);
 
-        // Vérification que l'excursion existe bien
-        if (!$excursion) {
-            throw $this->createNotFoundException('Excursion not found');
-        }
+        // Supprime la bonne adresse de l'offre courante
+        $offer->removeGoodAddress($goodAddress);
 
         $entityManager = $this->getDoctrine()->getManager();
-        /*         $excursion = $entityManager->getRepository(Excursion::class)->find($id);
- */
-    /*    $goodAddress = new GoodAddress();
-        $form = $this->createForm(GoodAddressType::class, $goodAddress);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $myFile = $form['picture']->getData();
-
-            $fileName = $kernelService->loadGoodAdressePicture($myFile);
-            $goodAddress->setPicture($fileName);
-
-            $images = $form->get('images')->getData();
-
-            // On boucle sur les images
-            foreach ($images as $image) {
-                // On génère un nouveau nom de fichier
-                $fichier = md5(uniqid()) . '.' . $image->guessExtension();
-
-                // On copie le fichier dans le dossier uploads
-                $image->move(
-                    $this->getParameter('pictures_GoodAdress_directory'),
-                    $fichier
-                );
-
-                // On crée l'image dans la base de données
-                $img = new Pictures();
-                $img->setName($fichier);
-                $goodAddress->addImage($img);
-            }
-
-
-            $excursion->addGoodAddress($goodAddress);
-
-            // Enregistrer les modifications dans la base de données
-            $entityManager->persist($goodAddress);
-            $entityManager->persist($excursion);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_excursion_show', ['id' => $excursion->getId()]);
-        }
-
-        return $this->render('destination/good_address/form.html.twig', [
-            'good_address' => $goodAddress,
-            'form' => $form->createView(),
-            'excursion' => $excursion,
-        ]);
+        // Enregistre les changements dans la base de données
+        $entityManager->flush();
+        $response = new Response();
+        $response->send();
+        return $this->redirectToRoute('app_excursion_show', ['id' => $offer->getId()]);
     }
 
- */
+
+
+
 
 
     #[Route('/{id}/new', name: 'app_excursion_new_good_address', methods: ['GET', 'POST'])]
@@ -294,7 +199,11 @@ class GoodAddressController extends AbstractController
         $form = $this->createForm(GoodAddressType::class, $goodAddress);
         $form->handleRequest($request);
 
-        $offer = $offerRepository->find($id);
+        /* $offer = $offerRepository->find($id); */
+        $offer = $offerRepository->findOneBy(['id' => $id]);
+        if (!$offer) {
+            throw $this->createNotFoundException('L\'offre avec l\'id ' . $id . ' n\'existe pas');
+        }
 
         if ($form->isSubmitted() && $form->isValid()) {
             $myFile = $form['picture']->getData();
@@ -337,37 +246,6 @@ class GoodAddressController extends AbstractController
             'good_address' => $goodAddress,
             'offer' => $offer,
             'form' => $form->createView(),
-        ]);
-    }
-
-    #[Route('/excursion/{id}/good-address/new', name: 'add_good_address_to_excursion')]
-    public function addGoodAddressToExcursion(Request $request, EntityManagerInterface $em, int $id)
-    {
-        // Récupérer l'excursion en fonction de l'identifiant
-        $excursion = $em->getRepository(Excursion::class)->find($id);
-
-        // Créer un nouveau formulaire pour la bonne adresse
-        $goodAddress = new GoodAddress();
-        $form = $this->createForm(GoodAddressType::class, $goodAddress);
-
-        // Traiter le formulaire
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            // Ajouter la bonne adresse à l'excursion
-            $excursion->addGoodAddress($goodAddress);
-
-            // Enregistrer les modifications
-            $em->flush();
-
-            // Rediriger vers la page de l'excursion
-            return $this->redirectToRoute('app_excursion_show', ['id' => $excursion->getId()]);
-        }
-
-        // Afficher le formulaire pour ajouter une bonne adresse
-        return $this->render('destination/good_address/form.html.twig', [
-            'form' => $form->createView(),
-            'excursion' => $excursion,
         ]);
     }
 }

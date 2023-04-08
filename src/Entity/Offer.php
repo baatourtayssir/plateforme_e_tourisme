@@ -17,8 +17,10 @@ use Doctrine\ORM\Mapping\InheritanceType;
 #[Table(name: "offer")]
 #[InheritanceType("JOINED")]
 #[DiscriminatorColumn(name: "type", type: "string")]
-#[DiscriminatorMap(['offer' => Offer::class, 'excursion' => Excursion::class, 'hiking' => Hiking::class ,
- 'cruise' => Cruise::class,'omra' => Omra::class,'travel' => Travel::class])]
+#[DiscriminatorMap([
+    'offer' => Offer::class, 'excursion' => Excursion::class, 'hiking' => Hiking::class,
+    'cruise' => Cruise::class, 'omra' => Omra::class, 'travel' => Travel::class
+])]
 #[ORM\Entity(repositoryClass: OfferRepository::class)]
 class Offer
 {
@@ -32,14 +34,18 @@ class Offer
 
     #[ORM\Column(type: Types::TEXT)]
     public ?string $description = null;
- 
+
     #[ORM\ManyToMany(targetEntity: Country::class, inversedBy: 'offers')]
     #[ORM\JoinTable(name: "offer_country")]
     public Collection $countries;
-    
 
-    #[ORM\ManyToMany(targetEntity: GoodAddress::class, inversedBy: 'offers')]
+
+    /* #[ORM\ManyToMany(targetEntity: GoodAddress::class, inversedBy: 'offers')]
+    #[ORM\JoinTable(name: "offer_good_address")] */
+    #[ORM\ManyToMany(targetEntity: GoodAddress::class, cascade: ["persist"])]
     #[ORM\JoinTable(name: "offer_good_address")]
+    #[ORM\JoinColumn(name: "offer_id", referencedColumnName: "id")]
+    #[ORM\InverseJoinColumn(name: "good_address_id", referencedColumnName: "id")]
     public Collection $goodAddress;
 
     #[ORM\ManyToOne(inversedBy: 'offers')]
@@ -51,7 +57,7 @@ class Offer
     #[ORM\OneToMany(mappedBy: 'offer', targetEntity: Reviews::class)]
     public Collection $reviews;
 
-    #[ORM\OneToMany(mappedBy: 'offer', targetEntity: Pictures::class , cascade: ['persist','remove'])]
+    #[ORM\OneToMany(mappedBy: 'offer', targetEntity: Pictures::class, cascade: ['persist', 'remove'])]
     private Collection $images;
 
     #[ORM\Column(type: Types::TEXT)]
@@ -68,7 +74,7 @@ class Offer
 
     #[ORM\ManyToMany(targetEntity: OfferExcursion::class, mappedBy: 'offers')]
     private Collection $offerExcursions;
-    
+
 
     public function __construct()
     {
@@ -79,7 +85,6 @@ class Offer
         $this->reservations = new ArrayCollection();
         $this->priceLists = new ArrayCollection();
         $this->offerExcursions = new ArrayCollection();
-    
     }
 
     public function getId(): ?int
@@ -117,12 +122,12 @@ class Offer
     public function getCountry(): Collection
     {
         return $this->countries;
-       /*  return $this->country ?? new ArrayCollection(); */
+        /*  return $this->country ?? new ArrayCollection(); */
     }
 
     public function addCountry(Country $country): self
     {
-      /*   if (!$this->country->contains($country)) {
+        /*   if (!$this->country->contains($country)) {
             $this->country->add($country);
         } */
 
@@ -218,147 +223,143 @@ class Offer
         return $this;
     }
 
-        // Getter et setter pour le champ `images`
-        public function getImages(): Collection
-        {
-            return $this->images;
+    // Getter et setter pour le champ `images`
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(Pictures $image): self
+    {
+        /*  $this->images = new ArrayCollection(); */
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
+            $image->setOffer($this);
         }
-    
-        public function addImage(Pictures $image): self
-        {
-             /*  $this->images = new ArrayCollection(); */
-            if (!$this->images->contains($image)) {
-                $this->images[] = $image;
-                $image->setOffer($this);
+
+        return $this;
+    }
+
+    public function removeImage(Pictures $image): self
+    {
+        if ($this->images->contains($image)) {
+            $this->images->removeElement($image);
+            if ($image->getOffer() === $this) {
+                $image->setOffer(null);
             }
-    
-            return $this;
         }
-    
-        public function removeImage(Pictures $image): self
-        {
-            if ($this->images->contains($image)) {
-                $this->images->removeElement($image);
-                if ($image->getOffer() === $this) {
-                    $image->setOffer(null);
-                }
+
+        return $this;
+    }
+
+    public function getInclus(): ?string
+    {
+        return $this->inclus;
+    }
+
+    public function setInclus(string $inclus): self
+    {
+        $this->inclus = $inclus;
+
+        return $this;
+    }
+
+    public function getNonInclus(): ?string
+    {
+        return $this->nonInclus;
+    }
+
+    public function setNonInclus(string $nonInclus): self
+    {
+        $this->nonInclus = $nonInclus;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Reservation>
+     */
+    public function getReservations(): Collection
+    {
+        return $this->reservations;
+    }
+
+    public function addReservation(Reservation $reservation): self
+    {
+        if (!$this->reservations->contains($reservation)) {
+            $this->reservations->add($reservation);
+            $reservation->setOffer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReservation(Reservation $reservation): self
+    {
+        if ($this->reservations->removeElement($reservation)) {
+            // set the owning side to null (unless already changed)
+            if ($reservation->getOffer() === $this) {
+                $reservation->setOffer(null);
             }
-    
-            return $this;
         }
 
-        public function getInclus(): ?string
-        {
-            return $this->inclus;
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PriceList>
+     */
+    public function getPriceLists(): Collection
+    {
+        return $this->priceLists;
+    }
+
+    public function addPriceList(PriceList $priceList): self
+    {
+        if (!$this->priceLists->contains($priceList)) {
+            $this->priceLists->add($priceList);
+            $priceList->setOffer($this);
         }
 
-        public function setInclus(string $inclus): self
-        {
-            $this->inclus = $inclus;
+        return $this;
+    }
 
-            return $this;
-        }
-
-        public function getNonInclus(): ?string
-        {
-            return $this->nonInclus;
-        }
-
-        public function setNonInclus(string $nonInclus): self
-        {
-            $this->nonInclus = $nonInclus;
-
-            return $this;
-        }
-
-        /**
-         * @return Collection<int, Reservation>
-         */
-        public function getReservations(): Collection
-        {
-            return $this->reservations;
-        }
-
-        public function addReservation(Reservation $reservation): self
-        {
-            if (!$this->reservations->contains($reservation)) {
-                $this->reservations->add($reservation);
-                $reservation->setOffer($this);
+    public function removePriceList(PriceList $priceList): self
+    {
+        if ($this->priceLists->removeElement($priceList)) {
+            // set the owning side to null (unless already changed)
+            if ($priceList->getOffer() === $this) {
+                $priceList->setOffer(null);
             }
-
-            return $this;
         }
 
-        public function removeReservation(Reservation $reservation): self
-        {
-            if ($this->reservations->removeElement($reservation)) {
-                // set the owning side to null (unless already changed)
-                if ($reservation->getOffer() === $this) {
-                    $reservation->setOffer(null);
-                }
-            }
+        return $this;
+    }
 
-            return $this;
+    /**
+     * @return Collection<int, OfferExcursion>
+     */
+    public function getOfferExcursions(): Collection
+    {
+        return $this->offerExcursions;
+    }
+
+    public function addOfferExcursion(OfferExcursion $offerExcursion): self
+    {
+        if (!$this->offerExcursions->contains($offerExcursion)) {
+            $this->offerExcursions->add($offerExcursion);
+            $offerExcursion->addOffer($this);
         }
 
-        /**
-         * @return Collection<int, PriceList>
-         */
-        public function getPriceLists(): Collection
-        {
-            return $this->priceLists;
+        return $this;
+    }
+
+    public function removeOfferExcursion(OfferExcursion $offerExcursion): self
+    {
+        if ($this->offerExcursions->removeElement($offerExcursion)) {
+            $offerExcursion->removeOffer($this);
         }
 
-        public function addPriceList(PriceList $priceList): self
-        {
-            if (!$this->priceLists->contains($priceList)) {
-                $this->priceLists->add($priceList);
-                $priceList->setOffer($this);
-            }
-
-            return $this;
-        }
-
-        public function removePriceList(PriceList $priceList): self
-        {
-            if ($this->priceLists->removeElement($priceList)) {
-                // set the owning side to null (unless already changed)
-                if ($priceList->getOffer() === $this) {
-                    $priceList->setOffer(null);
-                }
-            }
-
-            return $this;
-        }
-
-        /**
-         * @return Collection<int, OfferExcursion>
-         */
-        public function getOfferExcursions(): Collection
-        {
-            return $this->offerExcursions;
-        }
-
-        public function addOfferExcursion(OfferExcursion $offerExcursion): self
-        {
-            if (!$this->offerExcursions->contains($offerExcursion)) {
-                $this->offerExcursions->add($offerExcursion);
-                $offerExcursion->addOffer($this);
-            }
-
-            return $this;
-        }
-
-        public function removeOfferExcursion(OfferExcursion $offerExcursion): self
-        {
-            if ($this->offerExcursions->removeElement($offerExcursion)) {
-                $offerExcursion->removeOffer($this);
-            }
-
-            return $this;
-        }
-
-
-
-
+        return $this;
+    }
 }
