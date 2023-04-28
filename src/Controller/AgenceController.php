@@ -158,12 +158,11 @@ class AgenceController extends AbstractController
 
             $entityManager->persist($agence);
             $entityManager->flush();
-            exit();
+         
 
             return $this->redirectToRoute('app_agence_index', [], Response::HTTP_SEE_OTHER);
 
 
-            /*   return $this->redirectToRoute('app_agence_index', [], Response::HTTP_SEE_OTHER); */
         }
 
         return $this->renderForm('admin/agence/form.html.twig', [

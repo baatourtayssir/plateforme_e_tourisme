@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Category
+{% endblock %}
+{% block menu %}
+	<h4>
+		<i class="icon-arrow-left52 mr-2"></i>
+		<span class="font-weight-semibold">Home</span>
+		- Category pages</h4>
+{% endblock %}
+{% block menu_petit %}
+	<div class="breadcrumb">
+		<a href="index.html" class="breadcrumb-item">
+			<i class="icon-home2 mr-2"></i>
+			Home</a>
+		<span class="breadcrumb-item active">Category Pages - Category management
+		</span>
+	</div>
+{% endblock %}
+
+{% block content %}
+
+	<div class="card">
+		<div class="card-header header-elements-inline">
+			<h6 class="card-title">{{ category.style }}</h6>
+			<div class="header-elements">
+				<div class="list-icons">
+					<a class="list-icons-item" data-action="collapse"></a>
+					<a class="list-icons-item" data-action="reload"></a>
+					<a class="list-icons-item" data-action="remove"></a>
+				</div>
+			</div>
+		</div>
+
+		<div class="content justify-content-center align-items-center">
+			{{ form_start(form) }}
+
+
+			<div {# class="form-control" #}>
+				<i class="fa fa-calendar"></i>
+				{{ form_label(form.style) }}
+				{{ form_widget(form.style) }}
+				<div class="form-error">
+					{{ form_errors(form.style) }}
+				</div>
+			</div>
+			
+			<br>
+
+			<div class="fc-left modal-footer">
+				<a href="{{ path("app_category_index")}}">
+					<button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+				</a>
+
+				<button type="submit" class="btn btn-success">{{ button_label|default('Save') }}
+					<i class="icon-paperplane ml-2"></i>
+				</button>
+			</div>
+
+			{{ form_end(form) }}
+		</div>
+	</div>
+{% endblock %}
+
+
+
+

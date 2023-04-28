@@ -72,8 +72,10 @@ class Offer
     #[ORM\OneToMany(mappedBy: 'offer', targetEntity: PriceList::class)]
     private Collection $priceLists;
 
-    #[ORM\ManyToMany(targetEntity: OfferExcursion::class, mappedBy: 'offers')]
-    private Collection $offerExcursions;
+
+
+    #[ORM\ManyToMany(targetEntity: Category::class, mappedBy: 'offers')]
+    private Collection $categories;
 
 
     public function __construct()
@@ -84,7 +86,7 @@ class Offer
         $this->images = new ArrayCollection();
         $this->reservations = new ArrayCollection();
         $this->priceLists = new ArrayCollection();
-        $this->offerExcursions = new ArrayCollection();
+        $this->categories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -336,30 +338,30 @@ class Offer
         return $this;
     }
 
+
+
     /**
-     * @return Collection<int, OfferExcursion>
+     * @return Collection<int, Category>
      */
-    public function getOfferExcursions(): Collection
+    public function getCategories(): Collection
     {
-        return $this->offerExcursions;
+        return $this->categories;
     }
 
-    public function addOfferExcursion(OfferExcursion $offerExcursion): self
+    public function addCategory(Category $category): self
     {
-        if (!$this->offerExcursions->contains($offerExcursion)) {
-            $this->offerExcursions->add($offerExcursion);
-            $offerExcursion->addOffer($this);
+        if (!$this->categories->contains($category)) {
+            $this->categories->add($category);
         }
 
         return $this;
     }
 
-    public function removeOfferExcursion(OfferExcursion $offerExcursion): self
+    public function removeCategory(Category $category): self
     {
-        if ($this->offerExcursions->removeElement($offerExcursion)) {
-            $offerExcursion->removeOffer($this);
-        }
+        $this->categories->removeElement($category);
 
         return $this;
     }
+
 }

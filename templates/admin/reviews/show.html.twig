@@ -23,7 +23,9 @@
 			<tr>
 				<th><input type="checkbox" class="form-input-styled"></th>
 				<th>Review</th>
+				<th>User last name</th>
 				<th>Comment</th>
+				<th>Date review</th>
 				<th>Pictures</th>
 				{#				                                <th>Date</th>
 																                                <th>File info</th>
@@ -39,9 +41,11 @@
 							<img src="{{ asset('uploads/images/reviews/picture/' ~ review.picture) }}" width="70" height="70" alt="No picture">
 						</a>
 					</td>
+					<td>{{review.user.lastname}}</td>
 					<td>
 						{{review.comment|raw}}
 					</td>
+					<td>{{review.date|date("d/m/Y")}}</td>
 					<td>
 						{% for image in review.images %}
 							<a href="#">

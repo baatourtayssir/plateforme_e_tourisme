@@ -109,6 +109,16 @@
 				</div>
 			</div>
 			<br>
+			
+			<div {# class="form-control" #}>
+				<i class="fa fa-calendar"></i>
+				{{ form_label(form.categories) }}
+				{{ form_widget(form.categories) }}
+				<div class="form-error">
+					{{ form_errors(form.categories) }}
+				</div>
+			</div>
+			<br>
 
 			{{ form_label(form.picture) }}
 			<div class="form-control">

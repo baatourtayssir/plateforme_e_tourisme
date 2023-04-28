@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Article;
+use App\Entity\Category;
 use App\Entity\Reviews;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -21,6 +22,12 @@ class ArticleType extends AbstractType
             ->add('shortDescription', TextareaType::class, ['attr' => ['class' => 'form-control']])
             ->add('description', TextareaType::class, ['attr' => ['class' => 'form-control']])
             ->add('picture', FileType::class,  array('data_class' => null,'required' => false ,'label' => 'Picture'))
+            ->add('categories', EntityType::class, array(
+                'class'     => Category::class,
+                'choice_label' => 'style',
+                'multiple'  => true,
+                'attr' => ['class' => 'form-control select-search'],
+            ))
             ->add('images', FileType::class,[
                 'label' => 'Pictures',
                 'multiple' => true,

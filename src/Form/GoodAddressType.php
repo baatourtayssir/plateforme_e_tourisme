@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Category;
 use App\Entity\GoodAddress;
 use App\Entity\Country;
 use App\Entity\Region;
@@ -19,17 +20,15 @@ class GoodAddressType extends AbstractType
     {
         $builder
             ->add('intitule', TypeTextType::class, ['attr' => ['class' => 'form-control']])
-            /*  ->add('region', EntityType::class, array(
-                'class'     => Region::class,
-                'choice_label' => 'intitule',
-                'group_by'  => 'country.intitule',
-                'multiple'  => true,
-                'attr' => ['class' => 'form-control select'],
-            )) */
             ->add('region', EntityType::class, ['class' => Region::class, 'choice_label' => 'intitule','group_by'  => 'country.intitule', 'attr' => ['class' => 'form-control select-search']])
             ->add('address', TypeTextType::class, ['attr' => ['class' => 'form-control']])
             ->add('description', TextareaType::class, ['attr' => ['class' => 'form-control']])
-            ->add('category', TypeTextType::class, ['attr' => ['class' => 'form-control']])
+/*             ->add('category', TypeTextType::class, ['attr' => ['class' => 'form-control']])
+ */            ->add('category', EntityType::class, array(
+                'class'     => Category::class,
+                'choice_label' => 'style',
+                'attr' => ['class' => 'form-control select-search'],
+            ))
             ->add('picture', FileType::class,  array('data_class' => null, 'required' => false, 'label' => 'Picture'))
             ->add('images', FileType::class,[
                 'label' => 'Pictures',

@@ -32,7 +32,7 @@
 		<!-- Basic datatable -->
 		<div class="card">
 			<div class="card-header header-elements-inline">
-				<h5 class="card-title">Users list</h5>
+				<h5 class="card-title">Country list</h5>
 				<div class="header-elements">
 					<div class="list-icons">
 						<a href="{{path('app_country_new')}}" class="nav-link">
@@ -53,7 +53,7 @@
 					<tr>
 						<th>Id</th>
 						<th>Name</th>
-						<th>Category</th>
+						<th>Geographical</th>
 						<th class="">Actions</th>
 					</tr>
 				</thead>
@@ -62,7 +62,7 @@
 						<tr>
 							<td>{{ country.id }}</td>
 							<td>{{ country.intitule }}</td>
-							<td>{{country.category}}</td>
+							<td>{{country.geographical.location}}</td>
 
 
 							<td>

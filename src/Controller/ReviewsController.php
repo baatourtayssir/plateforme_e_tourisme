@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Pictures;
 use App\Entity\Reviews;
+use App\Entity\User;
 use App\Form\ReviewsType;
 use App\Repository\ExcursionRepository;
 use App\Repository\ReviewsRepository;
@@ -28,9 +29,16 @@ class ReviewsController extends AbstractController
     #[Route('/show/review/article/{id}', name: 'show_review_')]
     public function show($id)
     {
+
         $review = $this->getDoctrine()->getRepository(Reviews::class)
             ->find($id);
-        return $this->render('admin/reviews/show_review.html.twig', array('review' => $review));
+
+        $user = $review->getUser();
+        $userName = $user->getLastname();
+        return $this->render('admin/reviews/show_review.html.twig', [
+            'review' => $review,
+            'user' => $userName
+        ]);
     }
 
 
@@ -55,6 +63,54 @@ class ReviewsController extends AbstractController
         ]);
     }
 
+    #[Route('/', name: 'app_review_show_review_Omra', methods: ['GET'])]
+    public function showReviewsToOmra($omra): Response
+    {
+        $reviews = $omra->getReviews();
+
+
+        return $this->render('admin/reviews/show.html.twig', [
+            'reviews' => $reviews,
+
+        ]);
+    }
+
+    #[Route('/', name: 'app_review_show_review_Cruise', methods: ['GET'])]
+    public function showReviewsToCruise($cruise): Response
+    {
+        $reviews = $cruise->getReviews();
+
+
+        return $this->render('admin/reviews/show.html.twig', [
+            'reviews' => $reviews,
+
+        ]);
+    }
+
+    #[Route('/hiking', name: 'app_review_show_review_Hiking', methods: ['GET'])]
+    public function showReviewsToHiking($hiking): Response
+    {
+        $reviews = $hiking->getReviews();
+
+
+        return $this->render('admin/reviews/show.html.twig', [
+            'reviews' => $reviews,
+
+        ]);
+    }
+
+    #[Route('/travel', name: 'app_review_show_review_travel', methods: ['GET'])]
+    public function showReviewsToTravel($travel): Response
+    {
+        $reviews = $travel->getReviews();
+
+
+        return $this->render('admin/reviews/show.html.twig', [
+            'reviews' => $reviews,
+
+        ]);
+    }
+
 
     #[Route('/new', name: 'app_reviews_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ReviewsRepository $reviewsRepository, KernelService $kernelService): Response
@@ -64,6 +120,13 @@ class ReviewsController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+
+            /*  if ($this->getUser() instanceof User) {
+                $review->setUser($this->getUser());
+            } */
+            $user = $form->get('user')->getData();
+            $review->setUser($user);
 
             $myFile = $form['picture']->getData();
             if ($myFile) {
@@ -115,6 +178,7 @@ class ReviewsController extends AbstractController
     #[Route('/{id}/edit', name: 'app_reviews_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Reviews $review, ReviewsRepository $reviewsRepository, KernelService $kernelService): Response
     {
+
         $form = $this->createForm(ReviewsType::class, $review);
         $form->handleRequest($request);
 
@@ -208,6 +272,8 @@ class ReviewsController extends AbstractController
     public function newReview(Request $request, int $id, ExcursionRepository $excursionRepository, ReviewsRepository $reviewsRepository, KernelService $kernelService): Response
     {
         $review = new Reviews();
+        /*         $review->setDate(new \DateTime());
+ */
         $form = $this->createForm(ReviewsType::class, $review);
         $form->handleRequest($request);
 

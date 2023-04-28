@@ -51,7 +51,9 @@
 			<thead>
 				<tr>
 					<th>Id</th>
+					<th>User Last Name</th>
 					<th colspan="2">Comment</th>
+					<th>Date</th>
 					<th>Picture</th>
 					{# <th>Article</th> #}
 					<th>Offer</th>
@@ -64,10 +66,13 @@
 				{% for review in reviews %}
 					<tr>
 						<td>{{ review.id }}</td>
+						<td>{{review.user.lastname}}</td>
 						<td>
+						
 							{# <a href="{{ path('show_review_', {'id': review.id}) }}"> #}{{ review.comment|raw }}
 						</td>
 						<td></td>
+						<td>{{review.date|date("d/m/Y")}}</td>
 						<td><img src="{{ asset('uploads/images/reviews/picture/' ~ review.picture) }}" width="70" height="70" alt="No picture"></td>
 						{# <td>
 																																						{% for image in review.images %}

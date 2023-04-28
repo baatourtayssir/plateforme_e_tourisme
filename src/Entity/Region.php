@@ -20,9 +20,6 @@ class Region
     #[ORM\Column(length: 255)]
     private ?string $intitule = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $category = null;
-
     #[ORM\ManyToOne(inversedBy: 'regions')]
     private ?Country $Country = null;
 
@@ -37,6 +34,9 @@ class Region
 
     #[ORM\OneToMany(mappedBy: 'region', targetEntity: Hiking::class)]
     private Collection $hikings;
+
+    #[ORM\ManyToOne(inversedBy: 'regions')]
+    private ?Geographical $geographical = null;
 
     public function __construct()
     {
@@ -65,17 +65,6 @@ class Region
         return $this;
     }
 
-    public function getCategory(): ?string
-    {
-        return $this->category;
-    }
-
-    public function setCategory(string $categry): self
-    {
-        $this->category = $categry;
-
-        return $this;
-    }
 
     public function getCountry(): ?Country
     {
@@ -202,6 +191,18 @@ class Region
                 $hiking->setRegion(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getGeographical(): ?Geographical
+    {
+        return $this->geographical;
+    }
+
+    public function setGeographical(?Geographical $geographical): self
+    {
+        $this->geographical = $geographical;
 
         return $this;
     }

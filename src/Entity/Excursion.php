@@ -19,19 +19,20 @@ class Excursion extends Offer
     #[ORM\JoinTable(name: "excursion_region")]
     private Collection $regions;
 
- /*    #[ORM\ManyToMany(targetEntity: PriceList::class, mappedBy: 'excursions')]
-    private Collection $priceLists;
- */
-    #[ORM\OneToMany(mappedBy: 'excursion', targetEntity: OfferExcursion::class)]
-    private Collection $offerExcursions;
-    
+    #[ORM\ManyToMany(targetEntity: PriceList::class, mappedBy: 'Included_excursions')]
+    private Collection $grille_tarifaires;
 
+    #[ORM\OneToMany(mappedBy: 'excursion', targetEntity: TravelExcursion::class)]
+    private Collection $travelExcursions;
+
+    
     public function __construct()
     {
         $this->regions = new ArrayCollection();
-     /*   $this->priceLists = new ArrayCollection(); */
-       $this->offerExcursions = new ArrayCollection();
+       $this->grille_tarifaires = new ArrayCollection();
+       $this->travelExcursions = new ArrayCollection();
        /*  $this->images = new ArrayCollection();  */
+      
         
     
     }
@@ -68,29 +69,29 @@ class Excursion extends Offer
    /**
      * @return Collection<int, PriceList>
      */
-  /*    public function getPriceLists(): Collection
+     public function getGrilleTarifaires(): Collection
     {
-        return $this->priceLists;
+        return $this->grille_tarifaires;
     }
 
-    public function addPriceList(PriceList $priceList): self
+    public function addGrilleTarifaire(PriceList $grille_tarifaire): self
     {
-        if (!$this->priceLists->contains($priceList)) {
-            $this->priceLists->add($priceList);
-            $priceList->addExcursion($this);
+        if (!$this->grille_tarifaires->contains($grille_tarifaire)) {
+            $this->grille_tarifaires->add($grille_tarifaire);
+            $grille_tarifaire->addIncluded_excursion($this);
         }
 
         return $this;
     }
 
-    public function removePriceList(PriceList $priceList): self
+    public function removeGrilleTarifaire(PriceList $grille_tarifaire): self
     {
-        if ($this->priceLists->removeElement($priceList)) {
-            $priceList->removeExcursion($this);
+        if ($this->grille_tarifaires->removeElement($grille_tarifaire)) {
+            $grille_tarifaire->removeIncluded_excursion($this);
         }
 
         return $this;
-    } */
+    }
 
 /*     public function getPriceListsForExcursion()
 {
@@ -119,32 +120,34 @@ class Excursion extends Offer
     /**
      * @return Collection<int, OfferExcursion>
      */
-    public function getOfferExcursions(): Collection
+    public function getTravelExcursions(): Collection
     {
-        return $this->offerExcursions;
+        return $this->travelExcursions;
     }
 
-    public function addOfferExcursion(OfferExcursion $offerExcursion): self
+    public function addTravelExcursion(TravelExcursion $travelExcursion): self
     {
-        if (!$this->offerExcursions->contains($offerExcursion)) {
-            $this->offerExcursions->add($offerExcursion);
-            $offerExcursion->setExcursion($this);
+        if (!$this->travelExcursions->contains($travelExcursion)) {
+            $this->travelExcursions->add($travelExcursion);
+            $travelExcursion->setExcursion($this);
         }
 
         return $this;
     }
 
-    public function removeOfferExcursion(OfferExcursion $offerExcursion): self
+    public function removeTravelExcursion(TravelExcursion $travelExcursion): self
     {
-        if ($this->offerExcursions->removeElement($offerExcursion)) {
+        if ($this->travelExcursions->removeElement($travelExcursion)) {
             // set the owning side to null (unless already changed)
-            if ($offerExcursion->getExcursion() === $this) {
-                $offerExcursion->setExcursion(null);
+            if ($travelExcursion->getExcursion() === $this) {
+                $travelExcursion->setExcursion(null);
             }
         }
 
         return $this;
     }
+
+
 
 
 

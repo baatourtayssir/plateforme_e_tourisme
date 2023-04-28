@@ -72,10 +72,10 @@
 				</div>
 			</div>
 			<br>
-			<div {# class="form-control" #}>
+			<div>
 				<i class="fa fa-calendar"></i>
 				{{ form_label(form.prix) }}
-				{{ form_widget(form.prix, { 'attr': {'class': 'form_control'} }) }}
+				{{ form_widget(form.prix) }}
 				<div class="form-error">
 					{{ form_errors(form.prix) }}
 				</div>
@@ -89,6 +89,7 @@
 					{{ form_errors(form.hotels) }}
 				</div>
 			</div>
+			
 			{# <br>
 			<div >
 				<i class="fa fa-calendar"></i>
@@ -98,21 +99,21 @@
 					{{ form_errors(form.excursions) }}
 				</div>
 			</div> #}
-			<br>
-			<div {# class="form-control" #}>
+			{# <br>
+			<div >
 				<i class="fa fa-calendar"></i>
 				{{ form_label(form.offer) }}
 				{{ form_widget(form.offer, { 'attr': {'class': 'form_control'} }) }}
 				<div class="form-error">
 					{{ form_errors(form.offer) }}
 				</div>
-			</div>
+			</div> #}
 
 			<br>
 
 
 			<div class="fc-left modal-footer">
-				<a href="{{ path("app_reservation_index")}}">
+				<a href="{{ path("app_excursion_index")}}">
 					<button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
 				</a>
 

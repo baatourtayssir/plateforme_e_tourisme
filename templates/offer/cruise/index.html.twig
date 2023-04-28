@@ -36,15 +36,30 @@
 			<h5 class="card-title">Cruise list</h5>
 			<div class="header-elements">
 				<div class="list-icons">
-					<a href="{{path('app_cruise_new')}}" class="nav-link">
 
-						<button type="submit" class="btn btn-success">
-							<b>
-								<i class="icon-plus3 mr-1"></i>
-							</b>
-							<big>Add cruise</big>
-						</button>
-					</a>
+					{% if is_granted ('ROLE_ADMIN') %}
+						<a href="{{path('app_cruise_new')}}" class="nav-link">
+
+							<button type="submit" class="btn btn-success">
+								<b>
+									<i class="icon-plus3 mr-1"></i>
+								</b>
+								<big>Add cruise</big>
+							</button>
+						</a>
+					{% elseif is_granted ('ROLE_AGENT') %}
+
+
+						<a href="{{path('app_cruise_new_agence',{'id':app.user.agence.id})}}" class="nav-link">
+
+							<button type="submit" class="btn btn-success">
+								<b>
+									<i class="icon-plus3 mr-1"></i>
+								</b>
+								<big>Add cruise</big>
+							</button>
+						</a>
+					{% endif %}
 				</div>
 
 			</div>
@@ -56,12 +71,13 @@
 					<th>Id</th>
 					<th>Title</th>
 					<th>Picture</th>
-					<th>Description</th>
-					<th>Inclus</th>
-					<th>nonInclus</th>
+					{# <th>Description</th>
+															<th>Inclus</th>
+															<th>nonInclus</th> #}
 					{# <th>Country</th> #}
-					<th>Region</th>
-					<th>Good Address</th>
+					<th>Countries</th>
+					{# <th>Good Address</th> #}
+					<th>Categories</th>
 					<th>Agence</th>
 
 					{# <th>Reviews</th> #}
@@ -76,46 +92,64 @@
 				{% for cruise in cruises %}
 					<tr>
 						<td>{{ cruise.id }}</td>
-						<td>{{cruise.title}}</td>
+						<td>
+							<a href="{{ path('app_cruise_show', {'id': cruise.id}) }}">{{cruise.title}}
+							</a>
+						</td>
 						<td><img src="{{ asset('uploads/images/offer/cruise/picture/' ~ cruise.picture) }}" width="80" alt="No picture"></td>
 
-						<td>{{ cruise.description |raw}}</td>
-						<td>{{ cruise.inclus |raw}}</td>
-						<td>{{ cruise.nonInclus |raw}}</td>
-						
+						{# <td>{{ cruise.description |raw}}</td>
+																		<td>{{ cruise.inclus |raw}}</td>
+																		<td>{{ cruise.nonInclus |raw}}</td> #}
+
 						{# <td>
-																												{% for countr in excursion.country %}
-																													{{ countr.entitled }}
-																												{% endfor %}
-																											</td> #}
+																																								{% for countr in excursion.country %}
+																																									{{ countr.entitled }}
+																																								{% endfor %}
+																																							</td> #}
 						{# <td>{{ excursion.country.entitled }}</td> #}
-						<td>
-							{% for country in cruise.countries %}
-								{{ country.intitule }}
-							{% endfor %}
+							<td>
+								{% for country in cruise.countries %}
+							{{ country.intitule }}
+						{% endfor %}
 						</td>
 						{# <td>{{ excursion.region.entitled }}</td> #}
 
 						{# <td>{{ excursion.goodAddress }}</td> #}
 
-						<td>
-							{% for goodAddress in cruise.goodAddress %}
-								{{ goodAddress.intitule }}
-							{% endfor %}
+						{# <td>
+																			{% for goodAddress in cruise.goodAddress %}
+																				{{ goodAddress.intitule }}
+																			{% endfor %}
+																		</td> #}
+							<td>
+								{% for category in cruise.categories %}
+							{{ category.style }}
+						{% endfor %}
+						</td><td>
+						{{ cruise.agence.name }}
 						</td>
-						<td>{{ cruise.agence.name }}</td>
 
 
 						{# <td>{{ agent.reviews.comment}}</td> #}
 
 
-						<td>
-							<div class="row ">
-								<a href="{{ path('app_cruise_edit', {'id': cruise.id}) }}" class="btn btn-primary btn-sm mr-1">
-									<i class="icon-pencil7 mr-1"></i>
+							<td>
+								<div class="row "> {% if is_granted ('ROLE_ADMIN') %}
+									<a href="{{ path('app_cruise_edit', {'id': cruise.id}) }}" class="btn btn-primary btn-sm mr-1">
+										<i class="icon-pencil7 mr-1"></i>
 
-									Edit
-								</a>
+										Edit
+									</a>
+								{% elseif is_granted ('ROLE_AGENT') %}
+
+									<a href="{{ path('app_cruise_edit_agence', {'cruise': cruise.id,'id':app.user.agence.id}) }}" class="btn btn-primary btn-sm mr-1">
+										<i class="icon-pencil7 mr-1"></i>
+
+										Edit
+									</a>
+
+								{% endif %}
 								<a class="btn btn-danger btn-sm text-white " data-toggle="modal" data-target="#modal_Delete{{cruise.id}}">
 									<i class="icon-bin mr-1"></i>
 

@@ -36,15 +36,30 @@
 			<h5 class="card-title">Hiking list</h5>
 			<div class="header-elements">
 				<div class="list-icons">
-					<a href="{{path('app_hiking_new')}}" class="nav-link">
+					
+					{% if is_granted ('ROLE_ADMIN') %}
+						<a href="{{path('app_hiking_new')}}" class="nav-link">
 
-						<button type="submit" class="btn btn-success">
-							<b>
-								<i class="icon-plus3 mr-1"></i>
-							</b>
-							<big>Add Hiking</big>
-						</button>
-					</a>
+							<button type="submit" class="btn btn-success">
+								<b>
+									<i class="icon-plus3 mr-1"></i>
+								</b>
+								<big>Add hiking</big>
+							</button>
+						</a>
+					{% elseif is_granted ('ROLE_AGENT') %}
+
+
+						<a href="{{path('app_hiking_new_agence',{'id':app.user.agence.id})}}" class="nav-link">
+
+							<button type="submit" class="btn btn-success">
+								<b>
+									<i class="icon-plus3 mr-1"></i>
+								</b>
+								<big>Add hiking</big>
+							</button>
+						</a>
+					{% endif %}
 				</div>
 
 			</div>
@@ -56,12 +71,13 @@
 					<th>Id</th>
 					<th>Title</th>
 					<th>Picture</th>
-					<th>Description</th>
+					{# <th>Description</th>
 					<th>inclus</th>
-					<th>Non Inclus</th>
+					<th>Non Inclus</th> #}
 					{# <th>Country</th> #}
 					<th>Region</th>
-					<th>Good Address</th>
+					{# <th>Good Address</th> #}
+					<th>Categories</th>
 					<th>Agence</th>
 
 					{# <th>Reviews</th> #}
@@ -76,35 +92,49 @@
 				{% for hiking in hikings %}
 					<tr>
 						<td>{{ hiking.id }}</td>
-						<td>{{hiking.title}}</td>
+						<td><a href="{{ path('app_hiking_show', {'id': hiking.id}) }}">{{hiking.title}} </a></td>
 						<td><img src="{{ asset('uploads/images/offer/hiking/picture/' ~ hiking.picture) }}" width="80" alt="No picture"></td>
 
-						<td>{{ hiking.description |raw}}</td>
+						{# <td>{{ hiking.description |raw}}</td>
 						<td>{{ hiking.inclus |raw}}</td>
-						<td>{{ hiking.nonInclus |raw}}</td>
+						<td>{{ hiking.nonInclus |raw}}</td> #}
 						<td>{{ hiking.region.intitule }}</td>
 						
 
 						
-
+{# 
 						<td>
 							{% for goodAddress in hiking.goodAddress %}
 								{{ goodAddress.intitule }}
 							{% endfor %}
+						</td> #}
+
+						<td>
+							{% for category in hiking.categories %}
+								{{ category.style }}
+							{% endfor %}
 						</td>
 						<td>{{ hiking.agence.name }}</td>
 
-
-						
-
-
 						<td>
 							<div class="row ">
-								<a href="{{ path('app_hiking_edit', {'id': hiking.id}) }}" class="btn btn-primary btn-sm mr-1">
-									<i class="icon-pencil7 mr-1"></i>
+							
+								{% if is_granted ('ROLE_ADMIN') %}
+									<a href="{{ path('app_hiking_edit', {'id': hiking.id}) }}" class="btn btn-primary btn-sm mr-1">
+										<i class="icon-pencil7 mr-1"></i>
 
-									Edit
-								</a>
+										Edit
+									</a>
+								{% elseif is_granted ('ROLE_AGENT') %}
+
+									<a href="{{ path('app_hiking_edit_agence', {'hiking': hiking.id,'id':app.user.agence.id}) }}" class="btn btn-primary btn-sm mr-1">
+										<i class="icon-pencil7 mr-1"></i>
+
+										Edit
+									</a>
+
+								{% endif %}
+
 								<a class="btn btn-danger btn-sm text-white " data-toggle="modal" data-target="#modal_Delete{{hiking.id}}">
 									<i class="icon-bin mr-1"></i>
 

@@ -2,15 +2,23 @@
 
 namespace App\Controller;
 
+use App\Entity\Cruise;
 use App\Entity\GoodAddress;
 use App\Entity\Pictures;
 use App\Entity\Excursion;
+use App\Entity\Hiking;
 use App\Entity\Offer;
+use App\Entity\Omra;
+use App\Entity\Travel;
 use App\Form\GoodAddressType;
 use App\Repository\AgenceRepository;
+use App\Repository\CruiseRepository;
 use App\Repository\ExcursionRepository;
 use App\Repository\GoodAddressRepository;
+use App\Repository\HikingRepository;
 use App\Repository\OfferRepository;
+use App\Repository\OmraRepository;
+use App\Repository\TravelRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,18 +38,64 @@ class GoodAddressController extends AbstractController
         ]);
     }
 
-    #[Route('/show', name: 'app_good_address_show', methods: ['GET'])]
-    public function show($excursion): Response
+
+
+
+     #[Route('/show', name: 'app_good_address_show', methods: ['GET'])]
+    public function show($offer): Response
     {
-        $good_addresses = $excursion->getGoodAddress();
-        /*         $form = $this->createForm(GoodAddressType::class, $goodAddress);
- */
+        $good_addresses = $offer->getGoodAddress();
+
+      /*   $good_addresses = $this->getDoctrine()->getRepository(GoodAddress::class)->findByRegions($regions); */
 
         return $this->render('destination/good_address/show.html.twig', [
             'good_addresses' => $good_addresses,
+            'offer' => $offer,
 
         ]);
     }
+
+ /*    #[Route('/show', name: 'app_good_address_show', methods: ['GET'])]
+    public function show(Offer $offer, int $id, GoodAddressRepository $goodAddressRepository): Response
+    {
+        if ($offer instanceof Excursion) {
+            $excursion = $this->getDoctrine()->getRepository(Excursion::class)->findOneBy(['id' => $id]);
+            $regions = $excursion->getRegions();
+        } elseif ($offer instanceof Hiking) {
+            $hiking = $this->getDoctrine()->getRepository(Hiking::class)->findOneBy(['id' => $id]);
+            $regions = [$hiking->getRegion()];
+        } elseif ($offer instanceof Cruise) {
+            $cruise = $this->getDoctrine()->getRepository(Cruise::class)->findOneBy(['id' => $id]);
+            $countries = $cruise->getCountries();
+            $regions = [];
+            foreach ($countries as $country) {
+                $regions = array_merge($regions, $country->getRegions());
+            }
+        } elseif ($offer instanceof Travel) {
+            $travel = $this->getDoctrine()->getRepository(Travel::class)->findOneBy(['id' => $id]);
+            $countries = $travel->getCountries();
+            $regions = [];
+            foreach ($countries as $country) {
+                $regions = array_merge($regions, $country->getRegions());
+            }
+        } else {
+            throw new \InvalidArgumentException("Invalid offer type");
+        }
+    
+        $regions = array_unique(array_map(function ($region) {
+            return $region->getIntitule();
+        }, $regions->toArray()));
+    
+        $goodAddresses = $goodAddressRepository->findByRegions($regions);
+    
+        return $this->render('destination/good_address/show.html.twig', [
+            'good_addresses' => $goodAddresses,
+            'offer' => $offer,
+        ]);
+    }
+     */
+
+
 
 
     public function maMethode()
@@ -107,6 +161,17 @@ class GoodAddressController extends AbstractController
         ]);
     } */
 
+
+    #[Route('/{id}', name: 'show_good_address_')]
+    public function showGoodAddress($id)
+    {
+        $good_address = $this->getDoctrine()->getRepository(GoodAddress::class)
+            ->find($id);
+        return $this->render('destination/good_address/showDetails.html.twig', array('good_address' => $good_address));
+    }
+
+
+
     #[Route('/{id}/edit', name: 'app_good_address_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, GoodAddress $goodAddress, GoodAddressRepository $goodAddressRepository, KernelService $kernelService): Response
     {
@@ -167,24 +232,40 @@ class GoodAddressController extends AbstractController
     }
 
 
-
-
     #[Route('{offer}/goodaddress/{id}/delete', name: 'app_good_address_delete_good_address')]
-    public function deleteGoodAddress(Offer $offer, int $id): Response
+    public function deleteGoodAddress(Offer $offer, int $id, OfferRepository $offerRepository): Response
     {
-
         $goodAddress = $this->getDoctrine()->getRepository(GoodAddress::class)->find($id);
+
+        // Vérifie que l'adresse est bien associée à l'offre
+        if (!$offer->getGoodAddress()->contains($goodAddress)) {
+            throw $this->createNotFoundException('Good address not found');
+        }
 
         // Supprime la bonne adresse de l'offre courante
         $offer->removeGoodAddress($goodAddress);
 
-        $entityManager = $this->getDoctrine()->getManager();
-
         // Enregistre les changements dans la base de données
+        $entityManager = $this->getDoctrine()->getManager();
         $entityManager->flush();
-        $response = new Response();
-        $response->send();
-        return $this->redirectToRoute('app_excursion_show', ['id' => $offer->getId()]);
+
+        // Redirige l'utilisateur vers la page d'affichage de l'offre
+        $template = '';
+        if ($offer instanceof Excursion) {
+            $template = 'app_excursion_show';
+        } elseif ($offer instanceof Omra) {
+            $template = 'app_omra_show';
+        } elseif ($offer instanceof Hiking) {
+            $template = 'app_hiking_show';
+        } elseif ($offer instanceof Cruise) {
+            $template = 'app_cruise_show';
+        } elseif ($offer instanceof Travel) {
+            $template = 'app_travel_show';
+        } else {
+            throw $this->createNotFoundException('Unsupported offer type');
+        }
+
+        return $this->redirectToRoute($template, ['id' => $offer->getId()]);
     }
 
 
@@ -192,8 +273,9 @@ class GoodAddressController extends AbstractController
 
 
 
+
     #[Route('/{id}/new', name: 'app_excursion_new_good_address', methods: ['GET', 'POST'])]
-    public function newGoodAddress(Request $request, OfferRepository $offerRepository, int $id, GoodAddressRepository $goodAddressRepository, KernelService $kernelService): Response
+    public function newGoodAddress(Request $request, TravelRepository $travelRepository, CruiseRepository $cruiseRepository, OfferRepository $offerRepository, HikingRepository $hikingRepository, ExcursionRepository $excursionRepository, OmraRepository $omraRepository, int $id, GoodAddressRepository $goodAddressRepository, KernelService $kernelService): Response
     {
         $goodAddress = new GoodAddress();
         $form = $this->createForm(GoodAddressType::class, $goodAddress);
@@ -203,6 +285,40 @@ class GoodAddressController extends AbstractController
         $offer = $offerRepository->findOneBy(['id' => $id]);
         if (!$offer) {
             throw $this->createNotFoundException('L\'offre avec l\'id ' . $id . ' n\'existe pas');
+        }
+
+        if ($offer instanceof Excursion) {
+            $excursion = $excursionRepository->findOneBy(['id' => $id]);
+            if (!$excursion) {
+                throw $this->createNotFoundException('Excursion not found');
+            }
+            $template = 'app_excursion_show';
+        } elseif ($offer instanceof Omra) {
+            $omra = $omraRepository->findOneBy(['id' => $id]);
+            if (!$omra) {
+                throw $this->createNotFoundException('Omra not found');
+            }
+            $template = 'app_omra_show';
+        } elseif ($offer instanceof Hiking) {
+            $hiking = $hikingRepository->findOneBy(['id' => $id]);
+            if (!$hiking) {
+                throw $this->createNotFoundException('Hiking not found');
+            }
+            $template = 'app_hiking_show';
+        } elseif ($offer instanceof Cruise) {
+            $cruise = $cruiseRepository->findOneBy(['id' => $id]);
+            if (!$cruise) {
+                throw $this->createNotFoundException('Cruise not found');
+            }
+            $template = 'app_cruise_show';
+        } elseif ($offer instanceof Travel) {
+            $travel = $travelRepository->findOneBy(['id' => $id]);
+            if (!$travel) {
+                throw $this->createNotFoundException('Travel not found');
+            }
+            $template = 'app_travel_show';
+        } else {
+            throw $this->createNotFoundException('Unsupported offer type');
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -239,7 +355,7 @@ class GoodAddressController extends AbstractController
             $entityManager->persist($goodAddress);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_excursion_show', ['id' => $offer->getId()]);
+            return $this->redirectToRoute($template, ['id' => $offer->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('destination/good_address/form.html.twig', [
@@ -247,5 +363,37 @@ class GoodAddressController extends AbstractController
             'offer' => $offer,
             'form' => $form->createView(),
         ]);
+    }
+
+
+    #[Route('{offer}/goodaddress/{id}/add', name: 'app_good_address_add_good_address')]
+    public function AddGoodAddress(Offer $offer, int $id, OfferRepository $offerRepository): Response
+    {
+        $goodAddress = $this->getDoctrine()->getRepository(GoodAddress::class)->find($id);
+
+
+        $offer->addGoodAddress($goodAddress);
+
+        // Enregistre les changements dans la base de données
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->flush();
+
+        // Redirige l'utilisateur vers la page d'affichage de l'offre
+        $template = '';
+        if ($offer instanceof Excursion) {
+            $template = 'app_excursion_show';
+        } elseif ($offer instanceof Omra) {
+            $template = 'app_omra_show';
+        } elseif ($offer instanceof Hiking) {
+            $template = 'app_hiking_show';
+        } elseif ($offer instanceof Cruise) {
+            $template = 'app_cruise_show';
+        } elseif ($offer instanceof Travel) {
+            $template = 'app_travel_show';
+        } else {
+            throw $this->createNotFoundException('Unsupported offer type');
+        }
+
+        return $this->redirectToRoute($template, ['id' => $offer->getId()]);
     }
 }

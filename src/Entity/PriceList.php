@@ -23,10 +23,6 @@ class PriceList
     #[ORM\JoinTable(name: "price_list_hotel")]
     private Collection $hotels;
 
-/*     #[ORM\ManyToMany(targetEntity: Excursion::class, inversedBy: 'priceLists')]
-    #[ORM\JoinTable(name: "price_list_excursion")]
-    private Collection $excursions; */
-
     #[ORM\Column(length: 255)]
     private ?string $prix = null;
 
@@ -39,10 +35,14 @@ class PriceList
     #[ORM\ManyToOne(inversedBy: 'priceLists')]
     private ?Offer $offer = null;
 
+    #[ORM\ManyToMany(targetEntity: Excursion::class, inversedBy: 'grille_tarifaires')]
+    #[ORM\JoinTable(name: "price_list_excursion")]
+    private Collection $Included_excursions;
+
     public function __construct()
     {
         $this->hotels = new ArrayCollection();
-        /* $this->excursions = new ArrayCollection(); */
+        $this->Included_excursions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -86,29 +86,6 @@ class PriceList
         return $this;
     }
 
-    /**
-     * @return Collection<int, Excursion>
-     */
-  /*   public function getExcursions(): Collection
-    {
-        return $this->excursions;
-    }
-
-    public function addExcursion(Excursion $excursion): self
-    {
-        if (!$this->excursions->contains($excursion)) {
-            $this->excursions->add($excursion);
-        }
-
-        return $this;
-    }
-
-    public function removeExcursion(Excursion $excursion): self
-    {
-        $this->excursions->removeElement($excursion);
-
-        return $this;
-    } */
 
     public function getPrix(): ?string
     {
@@ -155,6 +132,33 @@ class PriceList
     public function setOffer(?Offer $offer): self
     {
         $this->offer = $offer;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Excursion>
+     */
+    public function getIncluded_excursions(): Collection
+    {
+        return $this->Included_excursions;
+    }
+
+    public function addIncluded_excursion(Excursion $Included_excursion): self
+    {
+        if (!$this->Included_excursions->contains($Included_excursion)) {
+            $this->Included_excursions->add($Included_excursion);
+            $Included_excursion->addGrilleTarifaire($this);
+        }
+
+        return $this;
+    }
+
+    public function removeIncluded_excursion(Excursion $Included_excursion): self
+    {
+        if ($this->Included_excursions->removeElement($Included_excursion)) {
+            $Included_excursion->removeGrilleTarifaire($this);
+        }
 
         return $this;
     }

@@ -7,7 +7,7 @@ use App\Entity\GoodAddress;
 use App\Entity\Region;
 use App\Entity\Reviews;
 use App\Entity\Agence;
-use App\Entity\Country;
+use App\Entity\Category;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -45,6 +45,12 @@ class ExcursionAgenceType extends AbstractType
             ->add('goodAddress', EntityType::class, array(
                 'class'     => GoodAddress::class,
                 'choice_label' => 'intitule',
+                'multiple'  => true,
+                'attr' => ['class' => 'form-control select'],
+            ))
+            ->add('categories', EntityType::class, array(
+                'class'     => Category::class,
+                'choice_label' => 'style',
                 'multiple'  => true,
                 'attr' => ['class' => 'form-control select'],
             ))

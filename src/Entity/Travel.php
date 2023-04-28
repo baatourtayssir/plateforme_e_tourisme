@@ -18,9 +18,14 @@ class Travel extends Offer
     #[ORM\ManyToMany(targetEntity: Country::class, inversedBy: 'travel')]
     public Collection $countries;
 
+    #[ORM\ManyToMany(targetEntity: TravelExcursion::class, mappedBy: 'travels')]
+    private Collection $travelExcursions;
+
     public function __construct()
     {
         $this->countries = new ArrayCollection();
+        $this->travelExcursions = new ArrayCollection();
+
     }
 
   /*   public function getId(): ?int
@@ -54,6 +59,33 @@ class Travel extends Offer
  
     public function __toString(){
         return $this->title; 
+    }
+
+        /**
+     * @return Collection<int, OfferExcursion>
+     */
+    public function getTravelExcursions(): Collection
+    {
+        return $this->travelExcursions;
+    }
+
+    public function addTravelExcursion(TravelExcursion $travelExcursion): self
+    {
+        if (!$this->travelExcursions->contains($travelExcursion)) {
+            $this->travelExcursions->add($travelExcursion);
+            $travelExcursion->addTravel($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOfferExcursion(TravelExcursion $travelExcursion): self
+    {
+        if ($this->travelExcursions->removeElement($travelExcursion)) {
+            $travelExcursion->removeTravel($this);
+        }
+
+        return $this;
     }
   
 }

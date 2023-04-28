@@ -6,9 +6,11 @@ use App\Entity\Excursion;
 use App\Entity\Pictures;
 use App\Entity\Agent;
 use App\Entity\GoodAddress;
+use App\Entity\Offer;
 use App\Entity\User;
 use App\Entity\PriceList;
 use App\Form\ExcursionType;
+use App\Form\PriceListType;
 use App\Form\ExcursionAgenceType;
 use App\Repository\AgenceRepository;
 use App\Repository\ExcursionRepository;
@@ -19,6 +21,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Service\KernelService;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 #[Route('/excursion')]
 class ExcursionController extends AbstractController
@@ -50,11 +53,12 @@ class ExcursionController extends AbstractController
     #[Route('/new', name: 'app_excursion_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ExcursionRepository $excursionRepository, KernelService $kernelService): Response
     {
+        $entityManager = $this->getDoctrine()->getManager();
         $excursion = new Excursion();
         $form = $this->createForm(ExcursionType::class, $excursion);
 
         $form->handleRequest($request);
-        /* dd($excursion); */
+        /*  dd($excursion); */
         if ($form->isSubmitted() && $form->isValid()) {
 
             $myFile = $form['picture']->getData();
@@ -82,9 +86,6 @@ class ExcursionController extends AbstractController
                 $excursion->addImage($img);
             }
 
-
-            $entityManager = $this->getDoctrine()->getManager();
-
             $entityManager->persist($excursion);
             $entityManager->flush();
 
@@ -97,7 +98,7 @@ class ExcursionController extends AbstractController
         ]);
     }
 
-    #[Route('{id}/new/reservation', name: 'app_excursion_new_agence', methods: ['GET', 'POST'])]
+    #[Route('{id}/new/excursion', name: 'app_excursion_new_agence', methods: ['GET', 'POST'])]
     public function newExcursionAgence(Request $request, int $id, AgenceRepository $agenceRepository, ExcursionRepository $excursionRepository, KernelService $kernelService): Response
     {
 
@@ -151,14 +152,20 @@ class ExcursionController extends AbstractController
     }
 
     #[Route('/{id}/show', name: 'app_excursion_show', methods: ['GET'])]
-    public function show(Request $request, Excursion $excursion, ExcursionRepository $excursionRepository, KernelService $kernelService, int $id): Response
+    public function show(Request $request, Excursion $excursion, Offer $offer, PriceList $priceList, KernelService $kernelService, int $id): Response
     {
 
         $entityManager = $this->getDoctrine()->getManager();
         $excursion = $entityManager->getRepository(Excursion::class)->find($id);
-        /*  $priceLists = $this->getDoctrine()->getRepository(PriceList::class)->findBy([
-            'excursions' => $excursion,
+
+
+        $offer = $entityManager->getRepository(Offer::class)->find($id);
+
+       
+       /*  $priceList = $entityManager->getRepository(PriceList::class)->findBy([
+            'offer' => $offer,
         ]); */
+
 
 
         $form = $this->createForm(ExcursionType::class, $excursion);
@@ -178,29 +185,14 @@ class ExcursionController extends AbstractController
 
         return $this->renderForm('offer/excursion/show.html.twig', [
             'excursion' => $excursion,
-            /* 'priceLists' => $priceLists, */
+            'offer' => $offer,
             'form' => $form,
+            /* 'price_list' => $priceList, */
+
 
         ]);
     }
-    /* 
- public function show(Excursion $excursions, int $id ): Response
- {
 
-        $entityManager = $this->getDoctrine()->getManager();
-
-        $excursions = $entityManager->getRepository(Excursion::class)->find($id);
-        $price_List = $excursions->getPriceLists();
-        $price_List = $this->getDoctrine()->getRepository(PriceList::class)->findBy([
-            'excursions' => $excursions,
-        ]);
-        
-        
-        return $this->render('offer/excursion/show.html.twig', [
-            'excursions' => $excursions,
-            'price_List' => $price_List,
-        ]);
-    } */
 
 
 
@@ -248,8 +240,8 @@ class ExcursionController extends AbstractController
         ]);
     }
 
-    #[Route('{id}/delete', name: 'app_excursion_delete')]
-    public function delete(Request $request, $id): Response
+    /*  #[Route('{id}/delete', name: 'app_excursion_delete')] */
+    /*   public function delete(Request $request, $id): Response
     {
 
         $excursion = $this->getDoctrine()->getRepository(Excursion::class)->find($id);
@@ -263,6 +255,71 @@ class ExcursionController extends AbstractController
         $response->send();
 
         return $this->redirectToRoute('app_excursion_index');
+    } */
+
+    #[Route('{id}/delete', name: 'app_excursion_delete')]
+    public function delete(Offer $offer): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        // Supprime toutes les lignes enfants de la table price_list qui font référence à l'offre
+        $priceListRepository = $this->getDoctrine()->getRepository(PriceList::class);
+        $priceLists = $priceListRepository->findBy(['offer' => $offer]);
+        foreach ($priceLists as $priceList) {
+            $entityManager->remove($priceList);
+        }
+
+        // Supprime l'offre
+        $entityManager->remove($offer);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_excursion_index');
     }
 
+
+    #[Route('/{excursion}/{id}/edit/excursion', name: 'app_excursion_edit_agence', methods: ['GET', 'POST'])]
+    public function editExcursionAgence(Request $request, int $id, AgenceRepository $agenceRepository, Excursion $excursion, ExcursionRepository $excursionRepository, KernelService $kernelService): Response
+    {
+        $agence = $agenceRepository->find($id);
+        $form = $this->createForm(ExcursionAgenceType::class, $excursion);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $myFile = $form['picture']->getData();
+
+            $fileName = $kernelService->loadExcursionPicture($myFile);
+            $excursion->setPicture($fileName);
+
+            $images = $form->get('images')->getData();
+
+            // On boucle sur les images
+            foreach ($images as $image) {
+                // On génère un nouveau nom de fichier
+                $fichier = md5(uniqid()) . '.' . $image->guessExtension();
+
+                // On copie le fichier dans le dossier uploads
+                $image->move(
+                    $this->getParameter('pictures_Excursion_directory'),
+                    $fichier
+                );
+
+                // On crée l'image dans la base de données
+                $img = new Pictures();
+                $img->setName($fichier);
+                $excursion->addImage($img);
+            }
+
+            $excursion->setAgence($agence);
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($excursion);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_excursion_index', ['id' => $excursion->getId()], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('offer/excursion/formAgence.html.twig', [
+            'excursion' => $excursion,
+            'form' => $form,
+        ]);
+    }
 }

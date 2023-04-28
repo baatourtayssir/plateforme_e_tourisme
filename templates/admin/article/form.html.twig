@@ -4,6 +4,10 @@
 	<script src="{{asset("global_assets/js/plugins/editors/summernote/summernote.min.js")}}"></script>
 	<script src="{{asset("global_assets/js/plugins/forms/styling/uniform.min.js")}}"></script>
 	<script src="{{asset("global_assets/js/demo_pages/editor_summernote.js")}}"></script>
+
+	<script src="{{asset("global_assets/js/plugins/extensions/jquery_ui/interactions.min.js")}}"></script>
+	<script src="{{asset("global_assets/js/plugins/forms/selects/select2.min.js")}}"></script>
+	<script src="{{asset("global_assets/js/demo_pages/form_select2.js")}}"></script>
 {% endblock %}
 {% block title %}
 	Article
@@ -76,6 +80,15 @@
 					</div>
 				</div>
 				<br>
+				<div>
+					<i class="fa fa-calendar"></i>
+					{{ form_label(form.categories) }}
+					{{ form_widget(form.categories, { 'attr': {'class': 'form-control select-search'} }) }}
+					<div class="form-error">
+						{{ form_errors(form.categories) }}
+					</div>
+				</div>
+				<br>
 				<i class="fa fa-calendar"></i>
 				{{ form_label(form.picture) }}
 				<div class="form-control">
@@ -86,6 +99,7 @@
 						{{ form_errors(form.picture) }}
 					</div>
 				</div>
+				
 				<br>
 				{{ form_label(form.images) }}
 				<div class="form-control">

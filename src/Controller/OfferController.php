@@ -147,13 +147,17 @@ class OfferController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_offer_show', methods: ['GET'])]
+
+
+    #[Route('/{id}/show', name: 'app_offer_show', methods: ['GET'])]
     public function show(Offer $offer): Response
     {
         return $this->render('offer/show.html.twig', [
             'offer' => $offer,
         ]);
     }
+
+
 
     #[Route('/{id}/edit', name: 'app_offer_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Offer $offer, OfferRepository $offerRepository, KernelService $kernelService): Response
@@ -215,4 +219,6 @@ class OfferController extends AbstractController
 
         return $this->redirectToRoute('app_offer_index');
     }
+
+    
 }

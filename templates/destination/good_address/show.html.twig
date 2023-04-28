@@ -11,8 +11,23 @@
 	<div class="card-header header-elements-inline">
 		<h5 class="card-title">Good address list</h5>
 		<div class="header-elements">
+
 			<div class="list-icons">
-				<a href="{{ path('app_excursion_new_good_address', {'id': app.user.id}) }}" class="nav-link">
+				<a href="{{ path('app_excursion_new_good_address', {'id': offer.id}) }}" class="nav-link">
+				
+					<button type="submit" class="btn btn-success">
+
+						<b>
+							<i class="icon-plus3 mr-1"></i>
+						</b>
+						<big>New good address</big>
+					</button>
+				</a>
+
+				{# 				<a  href="{{ path('app_offer_good_addresses', {'offer': offer.id, 'id': good_addresses.id}) }}" ></a>
+																																																																															 #}
+				<a data-toggle="modal" data-target="#modal_add{{offer.id}}">
+
 					<button type="submit" class="btn btn-success">
 
 						<b>
@@ -22,31 +37,82 @@
 					</button>
 				</a>
 
+				<!-- Primary modal -->
+				<div id="modal_add{{offer.id}}" class="modal fade" tabindex="-1">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header bg-success">
+								<h6 class="modal-title">Add good Address to
+									{{offer.title}}</h6>
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+							</div>
 
-				{# 	{% if is_granted ('ROLE_ADMIN') %}
-																																									<a href="{{path('app_good_address_new')}}" class="nav-link">
-																																				
-																																										<button type="submit" class="btn btn-success">
-																																											<b>
-																																												<i class="icon-plus3 mr-1"></i>
-																																											</b>
-																																											<big>Add good address</big>
-																																										</button>
-																																									</a>
-																																								{% elseif is_granted ('ROLE_AGENT') %}
-																																				
-																																				
-																																									<a href="{{path('app_good_address_new_agence',{ 'id':app.user.agence.id})}}" class="nav-link">
-																																				
-																																										<button type="submit" class="btn btn-success">
-																																											<b>
-																																												<i class="icon-plus3 mr-1"></i>
-																																											</b>
-																																											<big>Add good address</big>
-																																										</button>
-																																									</a>
-																																								{% endif %} #}
+							<div class="modal-body">
 
+								<table class="table datatable-basic">
+
+
+									<thead>
+										<tr>
+
+											<th>Entitled</th>
+											<th>Picture</th>
+											<th>Address</th>
+											<th>Region</th>
+											{% if is_granted ('ROLE_ADMIN') %}
+												<th>Actions</th>
+											{% endif %}
+										</tr>
+
+
+									</thead>
+									<tbody>
+										{% for country in offer.countries %}
+											{% for region in country.regions %}
+
+												{% for good_address in region.goodAddresses %}
+
+													<tr>
+
+														<td>
+															<a href="{{ path('show_good_address_', {'id': good_address.id}) }}">
+																{{ good_address.intitule }}
+															</a>
+														</td>
+														<td><img src="{{ asset('uploads/images/goodAddress/picture/' ~ good_address.picture) }}" width="80" alt="No picture"></td>
+														<td>{{ good_address.address }}</td>
+														<td>{{ good_address.region.intitule }}</td>
+
+														<td>
+															{% if is_granted ('ROLE_ADMIN') %}
+
+																<div class="row">
+																	<a href="{{ path('app_good_address_add_good_address', {'offer': offer.id, 'id': good_address.id}) }}" class="btn btn-success btn-sm mr-1 text-white">
+																		<i class="icon-plus3 mr-1"></i>
+
+																		Add
+																	</a>
+
+																{% endif %}
+															</td>
+														</td>
+													</tr>
+
+
+												{% endfor %}
+											{% endfor %}
+										{% endfor %}
+									</tbody>
+
+								</table>
+
+							</div>
+
+
+						</div>
+					</div>
+				</div>
+				<!-- /primary modal -->
 			</div>
 		</div>
 	</div>
@@ -71,12 +137,16 @@
 			{% for good_address in good_addresses %}
 				<tr>
 					<td>{{ good_address.id }}</td>
-					<td>{{ good_address.intitule }}</td>
+					<td>
+						<a href="{{ path('show_good_address_', {'id': good_address.id}) }}">
+							{{ good_address.intitule }}
+						</a>
+					</td>
 					<td><img src="{{ asset('uploads/images/goodAddress/picture/' ~ good_address.picture) }}" width="70" height="70" alt="No picture"></td>
 					<td>{{ good_address.address }}</td>
 					<td>{{ good_address.region.intitule }}</td>
 					{# <td>{{ good_address.description|raw}}</td>
-																																																													<td></td> #}
+																																																																																																																																																				<td></td> #}
 					<td>{{good_address.category}}</td>
 					<td></td>
 
@@ -85,10 +155,10 @@
 						<div
 							class="row">
 							{# <a href="{{ path('app_good_address_edit', {'id': good_address.id}) }}" class="btn btn-primary btn-sm mr-1 text-white">
-																																																																																						<i class="icon-pencil7 mr-1"></i>
-																																																																													
-																																																																																						Edit
-																																																																																					</a> #}
+																																																																																																																																																																																																																	<i class="icon-pencil7 mr-1"></i>
+																																																																																																																																																																																																								
+																																																																																																																																																																																																																	Edit
+																																																																																																																																																																																																																</a> #}
 							<a class="btn btn-danger btn-sm text-white" data-toggle="modal" data-target="#modal_Delete{{good_address.id}}">
 								<i class="icon-bin mr-1"></i>
 
@@ -114,7 +184,7 @@
 
 							<div class="modal-footer">
 								<button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
-								<a {# href="{{ path('app_good_address_delete',{'id': good_address.id})}}" #} href="{{ path('app_good_address_delete_good_address', {'offer': app.user.id, 'id': good_address.id}) }}">
+								<a {# href="{{ path('app_good_address_delete',{'id': good_address.id})}}" #} href="{{ path('app_good_address_delete_good_address', {'offer': offer.id, 'id': good_address.id}) }}">
 									<button type="button" class="btn bg-danger">Delete</button>
 								</a>
 							</div>

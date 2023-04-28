@@ -76,6 +76,14 @@ class HotelController extends AbstractController
         ]);
     } */
 
+    #[Route('/{id}', name: 'app_hotel_show')]
+    public function show($id)
+    {
+        $hotel = $this->getDoctrine()->getRepository(Hotel::class)
+            ->find($id);
+        return $this->render('destination/hotel/show.html.twig', array('hotel' => $hotel));
+    }
+
     #[Route('/{id}/edit', name: 'app_hotel_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Hotel $hotel, HotelRepository $hotelRepository, KernelService $kernelService): Response
     {

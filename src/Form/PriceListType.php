@@ -23,7 +23,7 @@ class PriceListType extends AbstractType
         $builder
             ->add('title', TypeTextType::class, ['attr' => ['class' => 'form-control']])
 
-            ->add('prix', TypeTextType::class, ['attr' => ['class' => 'form-control']])
+            ->add('prix', TypeTextType::class, ['attr' => ['class' => 'form-control'],'label' => 'Price'])
             ->add('dateDebut', DateType::class, [
                 'widget' => 'choice',
                 'input'  => 'datetime_immutable'
@@ -33,21 +33,16 @@ class PriceListType extends AbstractType
                 'input'  => 'datetime_immutable'
 
             ])
-
+            
             ->add('hotels', EntityType::class, array(
                 'class'     => Hotel::class,
                 'choice_label' => 'intitule',
                 'multiple'  => true,
                 'attr' => ['class' => 'form-control select'],
             ))
-            /* ->add('excursions', EntityType::class, array(
-                'class'     => Excursion::class,
-                'choice_label' => 'title',
-                'multiple'  => true,
-                'attr' => ['class' => 'form-control select'],
-            )) */
-            ->add('offer', EntityType::class, ['class' => Offer::class, 'choice_label' => 'title', 'attr' => ['class' => 'form-control select-search']]);
-    }
+           
+/*             ->add('offer', EntityType::class, ['class' => Offer::class, 'choice_label' => 'title', 'attr' => ['class' => 'form-control select-search']]);
+ */   ; }
 
     public function configureOptions(OptionsResolver $resolver): void
     {

@@ -1,0 +1,209 @@
+{% extends 'base.html.twig' %}
+{% block javascripts %}
+	<!-- Theme JS files -->
+	<script src="{{ asset("global_assets/js/plugins/tables/datatables/datatables.min.js")}}"></script>
+	<script src="{{ asset("global_assets/js/plugins/forms/selects/select2.min.js")}}"></script>
+	<script src="{{asset("global_assets/js/demo_pages/datatables_basic.js")}}"></script>
+	<!-- /theme JS files -->
+{% endblock %}
+{% block title %}
+	Hiking
+
+{% endblock %}
+{% block menu %}
+	<h4>
+		<i class="icon-arrow-left52 mr-2"></i>
+		<span class="font-weight-semibold">Home</span>
+		- Hiking
+	</h4>
+{% endblock %}
+{% block menu_petit %}
+	<div class="breadcrumb">
+		<a href="index.html" class="breadcrumb-item">
+			<i class="icon-home2 mr-2"></i>
+			Home</a>
+		<span class="breadcrumb-item active">Hiking - Hiking management
+		</span>
+	</div>
+{% endblock %}
+
+{% block content %}
+
+	<!-- Timeline -->
+	<div class="timeline timeline-left">
+		<div class="timeline-container">
+
+			<!-- Sales stats -->
+
+
+			<!-- /post -->
+				<div class="timeline-row"> <div class="timeline-icon">
+					<div class="bg-danger">
+						<i class=" mi-sentiment-very-satisfied mi-2x"></i>
+
+					</div>
+				</div>
+
+				<div class="content">
+					<div class="timeline-heading">
+						<h2 class="timeline-title">General Details</h2>
+					</div>
+
+					<div class="card blog-horizontal">
+						<div class="card-body">
+							<div class="card-img-actions mr-3">
+								<img class="card-img img-fluid" src="{{ asset('uploads/images/offer/hiking/picture/' ~ hiking.picture) }}" alt="">
+								<br><br>
+
+								<div {# class="card-footer" #}>
+									{% for image in hiking.images %}
+										<a href="#">
+											<img src="{{ asset('uploads/images/offer/hiking/pictures/' ~ image) }}" class="rounded" width="60" height="60" alt="">
+										</a>
+									{% endfor %}
+									<a href="{{ path('app_hiking_edit', {'id': hiking.id}) }}" class="btn btn-icon bg-transparent border-slate-300 text-slate rounded border-dashed">
+										<i class="icon-plus22"></i>
+									</a>
+								</div>
+							</div>
+
+
+							<div class="media-body">
+								<h2 class="media-title font-weight-semibold">
+									<a href="#" class="text-default">{{hiking.title}}</a>
+								</h2>
+								<span class="d-block">
+									<h6>
+										<i class="icon-location4 mr-1"></i>
+										{{ hiking.region.intitule }}
+									</h6>
+								</span>
+							</div>
+							<br>
+							<div class="mb-4">
+								<h6 class="font-weight-semibold">Description</h6>
+								{{ hiking.description |raw}}
+							</div>
+
+							<div class="row">
+								{% if hiking.inclus is not empty %}
+									<div class="col-sm-6">
+										<div class="mb-4">
+											<dl>
+												<dt class="font-size-sm font-weight-bold text-uppercase">
+													<i class="icon-checkmark3 icon-2x text-success mr-2"></i>
+													<big>Included</big>
+												</dt>
+												<dd>{{ hiking.inclus |raw}}</dd>
+											</dl>
+										</div>
+									</div>
+								{% endif %}
+								{% if hiking.nonInclus is not empty %}
+									<div class="col-sm-6">
+										<div class="mb-4">
+											<dl>
+												<dt class="font-size-sm font-weight-bold text-uppercase">
+													<i class="icon-cross2 mr-2 icon-2x text-danger"></i>
+													<big>Not Included</big>
+												</dt>
+												<dd>{{ hiking.nonInclus |raw}}</dd>
+											</dl>
+										</div>
+									</div>
+								{% endif %}
+							</div>
+						</div>
+						<div class="text-right mr-3">
+							<a href="{{ path('app_hiking_edit', {'id': hiking.id}) }}" class="btn btn-primary text-white">
+								<i class="icon-pencil3 mr-2 "></i>
+								Edit
+							</a>
+						</div>
+						<br>
+
+
+					</div>
+					<!-- /blog layout #2 with image -->
+
+
+				</div>
+			</div>
+
+
+			<div class="timeline-row">
+				<div class="timeline-icon">
+					<div class="bg-danger">
+						<i class="icon-coins icon-2x"></i>
+
+					</div>
+				</div>
+
+				<div class="content">
+
+					<div>
+						<h2 class="timeline-title">Price list</h2>
+
+
+						{{ render(controller('App\\Controller\\PriceListController::showPriceListToHiking', { 'hiking': hiking })) }}
+
+
+					</div>
+
+				</div>
+
+
+			</div>
+
+
+			<div class="timeline-row">
+				<div class="timeline-icon">
+					<div class="bg-danger">
+						<i class="mi-room mi-2x"></i>
+
+					</div>
+				</div>
+
+				<div class="content">
+
+					<div>
+						<h2 class="timeline-title">Good Address list</h2>
+
+
+						{{ render(controller('App\\Controller\\GoodAddressController::show', { 'offer': offer })) }}
+
+
+					</div>
+
+				</div>
+
+
+			</div>
+
+
+			<div class="timeline-row">
+				<div class="timeline-icon">
+					<div class="bg-danger">
+						<i class="icon-comment-discussion icon-2x"></i>
+
+					</div>
+				</div>
+
+				<div class="content">
+
+					<div>
+						<h2 class="timeline-title">Reviews list</h2>
+
+						{# {% if goodAddress is not empty %} #}
+						{{ render(controller('App\\Controller\\ReviewsController::showReviewsToHiking', { 'hiking': hiking })) }}
+						{# {% endif %} #}
+
+					</div>
+
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+{% endblock %}

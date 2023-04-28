@@ -52,6 +52,7 @@
 
 		<table class="table datatable-basic">
 			<thead>
+				
 				<tr>
 					<th>Id</th>
 					<th>Intitule</th>
@@ -59,7 +60,9 @@
 					<th>Address</th>
 					<th>Country</th>
 					<th colspan="2">characteristic</th>
-					<th class="">Actions</th>
+					{% if is_granted ('ROLE_ADMIN') %}
+						<th class="">Actions</th>
+					{% endif %}
 				</tr>
 
 
@@ -68,25 +71,36 @@
 				{% for hotel in hotels %}
 					<tr>
 						<td>{{ hotel.id }}</td>
-						<td>{{ hotel.intitule }}</td>
+						<td>
+							<a href="{{ path('app_hotel_show', {'id': hotel.id}) }}">
+								{{ hotel.intitule }}
+							</a>
+						</td>
 						<td><img src="{{ asset('uploads/images/hotel/picture/' ~ hotel.picture) }}" width="80" height="80" alt="No picture"></td>
 						<td>{{ hotel.address }}</td>
 						<td>{{ hotel.region.intitule }}</td>
 						<td>{{ hotel.characteristic|raw}}</td>
-					    <td></td>
-						
+						<td></td>
+
 						<td>
-							<div class="row">
-								<a href="{{ path('app_hotel_edit', {'id': hotel.id}) }}" class="btn btn-primary btn-sm mr-1">
-									<i class="icon-pencil7 mr-1"></i>
-									Edit
-								</a>
-								<a class="btn btn-danger btn-sm text-white" data-toggle="modal" data-target="#modal_Delete{{hotel.id}}">
-									<i class="icon-bin mr-1"></i>
-									Delete
-								</a>
-							</div>
+
+
+							{% if is_granted ('ROLE_ADMIN') %}
+
+								<div class="row">
+									<a href="{{ path('app_hotel_edit', {'id': hotel.id}) }}" class="btn btn-primary btn-sm mr-1">
+										<i class="icon-pencil7 mr-1"></i>
+										Edit
+									</a>
+									<a class="btn btn-danger btn-sm text-white" data-toggle="modal" data-target="#modal_Delete{{hotel.id}}">
+										<i class="icon-bin mr-1"></i>
+										Delete
+									</a>
+								</div>
+							{% endif %}
 						</td>
+
+
 					</tr>
 					<!-- Delete modal -->
 					<div id="modal_Delete{{hotel.id}}" class="modal fade" tabindex="-1">
@@ -122,5 +136,4 @@
 			</tbody>
 		</table>
 	</div>
-
 {% endblock %}

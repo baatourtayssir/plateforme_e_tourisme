@@ -84,13 +84,16 @@
 					<th>Id</th>
 					<th>Title</th>
 					<th>Picture</th>
-					<th>Description</th>
+					{# <th>Description</th> #}
 					{# <th>Inclus</th>
 					<th>Non Inclus</th> #}
 					{# <th>Country</th> #}
 					<th>Region</th>
 					{# <th>Good Address</th> #}
+					<th>Categories</th>
 					<th>Agence</th>
+					
+
 
 					{# <th>Reviews</th> #}
 
@@ -109,7 +112,7 @@
 						</td>
 						<td><img src="{{ asset('uploads/images/offer/excursion/picture/' ~ excursion.picture) }}" width="80" alt="No picture"></td>
 
-						<td>{{ excursion.description |raw}}</td>
+						{# <td>{{ excursion.description |raw}}</td> #}
 						{# <td>{{ excursion.inclus |raw}}</td>
 						<td>{{ excursion.nonInclus |raw}}</td> #}
 
@@ -133,6 +136,12 @@
 								{{ goodAddress.intitule }}
 							{% endfor %}
 						</td> #}
+
+						<td>
+							{% for category in excursion.categories %}
+								{{ category.style }}
+							{% endfor %}
+						</td>
 						<td>{{ excursion.agence.name }}</td>
 
 
@@ -140,13 +149,24 @@
 
 
 						<td>
-							<div class="row ">
-								<a href="{{ path('app_excursion_edit', {'id': excursion.id}) }}" class="btn btn-primary btn-sm mr-1">
-									<i class="icon-pencil7 mr-1"></i>
+					
 
-									Edit
-								</a>
-								<a class="btn btn-danger btn-sm text-white " data-toggle="modal" data-target="#modal_Delete{{excursion.id}}">
+								{% if is_granted ('ROLE_ADMIN') %}
+									<a href="{{ path('app_excursion_edit', {'id': excursion.id}) }}" class="btn btn-primary btn-sm mr-1">
+										<i class="icon-pencil7 mr-1"></i>
+
+										Edit
+									</a>
+								{% elseif is_granted ('ROLE_AGENT') %}
+
+									<a href="{{ path('app_excursion_edit_agence', {'excursion': excursion.id,'id':app.user.agence.id}) }}" class="btn btn-primary btn-sm mr-1">
+										<i class="icon-pencil7 mr-1"></i>
+
+										Edit
+									</a>
+
+								{% endif %}
+								<a class="btn btn-danger btn-sm text-white" data-toggle="modal" data-target="#modal_Delete{{excursion.id}}">
 									<i class="icon-bin mr-1"></i>
 
 									Delete</a>

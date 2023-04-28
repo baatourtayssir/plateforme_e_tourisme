@@ -38,8 +38,12 @@
 
 			<!-- /post -->
 				<div class="timeline-row"> <div class="timeline-icon">
-					<img src="../../../../global_assets/images/placeholders/placeholder.jpg" alt="">
+					<div class="bg-danger">
+						<i class="{# icon-heart5 icon-2x #} mi-sentiment-very-satisfied mi-2x"></i>
+
+					</div>
 				</div>
+
 				<div class="content">
 					<div class="timeline-heading">
 						<h2 class="timeline-title">General Details</h2>
@@ -51,16 +55,16 @@
 								<img
 								class="card-img img-fluid" src="{{ asset('uploads/images/offer/excursion/picture/' ~ excursion.picture) }}" alt="">
 								{# <div class="card-img-actions-overlay card-img">
-																																																	<a href="blog_single.html" class="btn btn-outline bg-white text-white border-white border-2 btn-icon rounded-round">
-																																																		<i class="icon-link"></i>
-																																																	</a>
-																																																</div> #}
+																																																																	<a href="blog_single.html" class="btn btn-outline bg-white text-white border-white border-2 btn-icon rounded-round">
+																																																																		<i class="icon-link"></i>
+																																																																	</a>
+																																																																</div> #}
 								<br><br>
 
 								<div {# class="card-footer" #}>
 									{% for image in excursion.images %}
 										<a href="#">
-											<img src="{{ asset('uploads/images/excursion/pictures/' ~ image) }}" class="rounded" width="36" height="36" alt="">
+											<img src="{{ asset('uploads/images/offer/excursion/pictures/' ~ image) }}" class="rounded" width="60" height="60" alt="">
 										</a>
 									{% endfor %}
 									<a href="{{ path('app_excursion_edit', {'id': excursion.id}) }}" class="btn btn-icon bg-transparent border-slate-300 text-slate rounded border-dashed">
@@ -95,8 +99,8 @@
 										<div class="mb-4">
 											<dl>
 												<dt class="font-size-sm font-weight-bold text-uppercase">
-													<i class="icon-checkmark3 text-blue mr-2"></i>
-													Included
+													<i class="icon-checkmark3 icon-2x text-success mr-2"></i>
+													<big>Included</big>
 												</dt>
 												<dd>{{ excursion.inclus |raw}}</dd>
 											</dl>
@@ -108,8 +112,8 @@
 										<div class="mb-4">
 											<dl>
 												<dt class="font-size-sm font-weight-bold text-uppercase">
-													<i class="icon-cross2 text-blue mr-2"></i>
-													Not Included
+													<i class="icon-cross2 mr-2 icon-2x text-danger"></i>
+													<big>Not Included</big>
 												</dt>
 												<dd>{{ excursion.nonInclus |raw}}</dd>
 											</dl>
@@ -117,9 +121,14 @@
 									</div>
 								{% endif %}
 							</div>
-
-
 						</div>
+						<div class="text-right mr-3">
+							<a href="{{ path('app_excursion_edit', {'id': excursion.id}) }}" class="btn btn-primary text-white">
+								<i class="icon-pencil3 mr-2 "></i>
+								Edit
+							</a>
+						</div>
+						<br>
 
 
 					</div>
@@ -130,40 +139,21 @@
 			</div>
 
 
-					<div class="timeline-row">
-										<div class="timeline-icon">
-											<img src="../../../../global_assets/images/placeholders/placeholder.jpg" alt="">
-										</div>
-						
-										<div class="content">
-						
-											<div>
-												<h2 class="timeline-title">Price list</h2>
-						
-						
-												{{ render(controller('App\\Controller\\PriceListController::show', { 'excursion': excursion })) }}
-						
-						
-											</div>
-						
-										</div>
-						
-						
-									</div>
-
-
 			<div class="timeline-row">
 				<div class="timeline-icon">
-					<img src="../../../../global_assets/images/placeholders/placeholder.jpg" alt="">
+					<div class="bg-danger">
+						<i class="icon-coins icon-2x"></i>
+						
+					</div>
 				</div>
 
 				<div class="content">
 
 					<div>
-						<h2 class="timeline-title">Good Address list</h2>
+						<h2 class="timeline-title">Price list</h2>
 
 
-						{{ render(controller('App\\Controller\\GoodAddressController::show', { 'excursion': excursion })) }}
+						{{ render(controller('App\\Controller\\PriceListController::showPriceListToExcursion', { 'excursion': excursion })) }}
 
 
 					</div>
@@ -176,8 +166,34 @@
 
 			<div class="timeline-row">
 				<div class="timeline-icon">
-					<div class="bg-info-400">
-						<i class="icon-comment-discussion"></i>
+				<div class="bg-danger">
+						<i class="mi-room mi-2x"></i>
+						
+					</div>
+			</div>
+
+				<div class="content">
+
+					<div>
+						<h2 class="timeline-title">Good Address list</h2>
+
+
+						{{ render(controller('App\\Controller\\GoodAddressController::show', { 'offer': offer })) }}
+
+
+					</div>
+
+				</div>
+
+
+			</div>
+
+
+			<div class="timeline-row">
+				<div class="timeline-icon">
+					<div class="bg-danger">
+						<i class="icon-comment-discussion icon-2x"></i>
+
 					</div>
 				</div>
 

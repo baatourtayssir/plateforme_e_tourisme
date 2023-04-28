@@ -36,15 +36,29 @@
 			<h5 class="card-title">Omra list</h5>
 			<div class="header-elements">
 				<div class="list-icons">
-					<a href="{{path('app_omra_new')}}" class="nav-link">
+					{% if is_granted ('ROLE_ADMIN') %}
+						<a href="{{path('app_omra_new')}}" class="nav-link">
 
-						<button type="submit" class="btn btn-success">
-							<b>
-								<i class="icon-plus3 mr-1"></i>
-							</b>
-							<big>Add omra</big>
-						</button>
-					</a>
+							<button type="submit" class="btn btn-success">
+								<b>
+									<i class="icon-plus3 mr-1"></i>
+								</b>
+								<big>Add omra</big>
+							</button>
+						</a>
+					{% elseif is_granted ('ROLE_AGENT') %}
+
+
+						<a href="{{path('app_omra_new_agence',{'id':app.user.agence.id})}}" class="nav-link">
+
+							<button type="submit" class="btn btn-success">
+								<b>
+									<i class="icon-plus3 mr-1"></i>
+								</b>
+								<big>Add omra</big>
+							</button>
+						</a>
+					{% endif %}
 				</div>
 
 			</div>
@@ -56,12 +70,13 @@
 					<th>Id</th>
 					<th>Title</th>
 					<th>Picture</th>
-					<th>Description</th>
+					{# <th>Description</th>
 					<th>Inclus</th>
-					<th>Non inclus</th>
+					<th>Non inclus</th> #}
 					{# <th>Country</th> #}
-					<th>Region</th>
-					<th>Good Address</th>
+					<th>Country</th>
+					{# <th>Good Address</th> #}
+					<th>Categories</th>
 					<th>Agence</th>
 
 					{# <th>Reviews</th> #}
@@ -76,12 +91,12 @@
 				{% for omra in omras %}
 					<tr>
 						<td>{{ omra.id }}</td>
-						<td>{{omra.title}}</td>
+						<td><a href="{{ path('app_omra_show', {'id': omra.id}) }}"> {{omra.title}} </a> </td>
 						<td><img src="{{ asset('uploads/images/offer/omra/picture/' ~ omra.picture) }}" width="80" alt="No picture"></td>
 
-						<td>{{ omra.description |raw}}</td>
+						{# <td>{{ omra.description |raw}}</td>
 						<td>{{ omra.inclus |raw}}</td>
-						<td>{{ omra.nonInclus |raw}}</td>
+						<td>{{ omra.nonInclus |raw}}</td> #}
 						
 						<td>
 							{% for country in omra.country %}
@@ -89,19 +104,41 @@
 							{% endfor %}
 						</td>
 						
-						<td>
+						{# <td>
 							{% for goodAddress in omra.goodAddress %}
 								{{ goodAddress.intitule }}
+							{% endfor %}
+						</td> #}
+						<td>
+							{% for category in omra.categories %}
+								{{ category.style }}
 							{% endfor %}
 						</td>
 						<td>{{ omra.agence.name }}</td>
 						<td>
 							<div class="row ">
-								<a href="{{ path('app_omra_edit', {'id': omra.id}) }}" class="btn btn-primary btn-sm mr-1">
+								{# <a href="{{ path('app_omra_edit', {'id': omra.id}) }}" class="btn btn-primary btn-sm mr-1">
 									<i class="icon-pencil7 mr-1"></i>
 
 									Edit
-								</a>
+								</a> #}
+
+								{% if is_granted ('ROLE_ADMIN') %}
+									<a href="{{ path('app_omra_edit', {'id': omra.id}) }}" class="btn btn-primary btn-sm mr-1">
+										<i class="icon-pencil7 mr-1"></i>
+
+										Edit
+									</a>
+								{% elseif is_granted ('ROLE_AGENT') %}
+
+									<a href="{{ path('app_omra_edit_agence', {'omra': omra.id,'id':app.user.agence.id}) }}" class="btn btn-primary btn-sm mr-1">
+										<i class="icon-pencil7 mr-1"></i>
+
+										Edit
+									</a>
+
+								{% endif %}
+
 								<a class="btn btn-danger btn-sm text-white " data-toggle="modal" data-target="#modal_Delete{{omra.id}}">
 									<i class="icon-bin mr-1"></i>
 

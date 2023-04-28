@@ -28,8 +28,6 @@ class GoodAddress
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $category = null;
 
     #[ORM\Column(length: 255)]
     private ?string $picture = null;
@@ -42,6 +40,10 @@ class GoodAddress
 
     #[ORM\OneToMany(mappedBy: 'goodAddress', targetEntity: Pictures::class , cascade: ['persist','remove'])]
     private Collection $images;
+
+    #[ORM\ManyToOne(inversedBy: 'goodAddresses')]
+    private ?Category $category = null;
+
 
     public function __construct()
     {
@@ -92,17 +94,6 @@ class GoodAddress
         return $this;
     }
 
-    public function getCategory(): ?string
-    {
-        return $this->category;
-    }
-
-    public function setCategory(string $category): self
-    {
-        $this->category = $category;
-
-        return $this;
-    }
 
     public function getPicture(): ?string
     {
@@ -184,6 +175,20 @@ class GoodAddress
     
             return $this;
         }
+
+        public function getCategory(): ?Category
+        {
+            return $this->category;
+        }
+
+        public function setCategory(?Category $category): self
+        {
+            $this->category = $category;
+
+            return $this;
+        }
+
+
 
 
 

@@ -2,11 +2,15 @@
 
 namespace App\Form;
 
+use App\Entity\Category;
 use App\Entity\Country;
+use App\Entity\Geographical;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType as TypeTextType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+
 
 class CountryType extends AbstractType
 {
@@ -14,7 +18,9 @@ class CountryType extends AbstractType
     {
         $builder
             ->add('intitule', TypeTextType::class,[ 'attr'=>['class'=>'form-control']])
-            ->add('category', TypeTextType::class,[ 'attr'=>['class'=>'form-control']])
+/*             ->add('category', TypeTextType::class,[ 'attr'=>['class'=>'form-control']])
+ */            ->add('geographical', EntityType::class, ['class' => Geographical::class, 'choice_label' => 'location', 'attr' => ['class' => 'form-control select-search']])
+
         ;
     }
 

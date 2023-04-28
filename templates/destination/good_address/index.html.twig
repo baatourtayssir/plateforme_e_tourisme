@@ -58,10 +58,13 @@
 					<th>Picture</th>
 					<th>Address</th>
 					<th>Region</th>
-					<th colspan="2" >Description</th>
+					{# <th colspan="2">Description</th> #}
 					<th>Category</th>
+					<th colspan="2">Pictures</th>
 
-					<th >Actions</th>
+					{% if is_granted ('ROLE_ADMIN') %}
+						<th>Actions</th>
+					{% endif %}
 				</tr>
 
 
@@ -70,29 +73,44 @@
 				{% for good_address in good_addresses %}
 					<tr>
 						<td>{{ good_address.id }}</td>
-						<td>{{ good_address.intitule }}</td>
+						<td>
+							<a href="{{ path('show_good_address_', {'id': good_address.id}) }}">
+								{{ good_address.intitule }}
+							</a>
+						</td>
 						<td><img src="{{ asset('uploads/images/goodAddress/picture/' ~ good_address.picture) }}" width="80" alt="No picture"></td>
 						<td>{{ good_address.address }}</td>
 						<td>{{ good_address.region.intitule }}</td>
-						<td>{{ good_address.description|raw}}</td>
-						<td></td>
+						{# <td>{{ good_address.description|raw}}</td>
+																		<td></td> #}
 						<td>{{good_address.category}}</td>
+						<td>
+							{% for image in good_address.images %}
+								<a href="#">
+									<img src="{{ asset('uploads/images/goodAddress/pictures/' ~ image) }}" class="rounded mr-2" width="60" height="60" alt="">
+								</a>
+							{% endfor %}
+						</td>
+						<td></td>
 
 
 						<td>
-							<div class="row">
-								<a href="{{ path('app_good_address_edit', {'id': good_address.id}) }}" class="btn btn-primary btn-sm mr-1 text-white">
-									<i class="icon-pencil7 mr-1"></i>
+							{% if is_granted ('ROLE_ADMIN') %}
 
-									Edit
-								</a>
-								<a class="btn btn-danger btn-sm text-white" data-toggle="modal" data-target="#modal_Delete{{good_address.id}}">
-									<i class="icon-bin mr-1"></i>
+								<div class="row">
+									<a href="{{ path('app_good_address_edit', {'id': good_address.id}) }}" class="btn btn-primary btn-sm mr-1 text-white">
+										<i class="icon-pencil7 mr-1"></i>
 
-									Delete</a>
-							</div>
+										Edit
+									</a>
+									<a class="btn btn-danger btn-sm text-white" data-toggle="modal" data-target="#modal_Delete{{good_address.id}}">
+										<i class="icon-bin mr-1"></i>
+
+										Delete</a>
+								</div>
+							{% endif %}
 						</td>
-						
+
 					</tr>
 					<!-- Delete modal -->
 					<div id="modal_Delete{{good_address.id}}" class="modal fade" tabindex="-1">

@@ -43,6 +43,7 @@
 		<script src="{{asset("global_assets/js/plugins/pickers/daterangepicker.js")}}"></script>
 		<script src="{{asset("assets/js/app.js")}}"></script>
 		<script src="{{asset("global_assets/js/demo_pages/dashboard.js")}}"></script>
+
 		<!-- /theme JS files -->
 
 		{% block javascripts %}{% endblock %}
@@ -172,27 +173,52 @@
 							<div class="sidebar-user-material">
 								<div class="sidebar-user-material-body">
 									<div class="card-body text-center">
+									
+										<div class="ml-3 align-self-center text-right">
+											<a href="{{ path('app_agence_show', {'id': app.user.agence.id}) }}" class="text-white">
+												<i class="icon-cog3"></i>
+											</a>
+										</div>
 										<a href="#">
 
-											<img src="{{ asset('uploads/images/agences/logo/' ~ app.user.agence.brochureFilename) }}" class="img-fluid rounded-circle shadow-1 mb-3" width="80" height="80" alt="logo">
+											<img src="{{ asset('uploads/images/agences/logo/' ~ app.user.agence.brochureFilename) }}" class="img-fluid rounded-circle shadow-1 mb-3" width="100" height="100" alt="logo">
 										</a>
 										<h6 class="mb-0 text-white text-shadow-dark">{{app.user.agence.name}}</h6>
 										<span class="font-size-sm text-white text-shadow-dark">{{app.user.agence.adress}}</span>
+										<br><br><br><br>
+										<div class="sidebar-user-material-footer">
+											<a href="#user-nav" class="d-flex justify-content-between align-items-center text-white dropdown-toggle" data-toggle="collapse">
+												<span>My account</span>
+											</a>
+										</div>
+									
 									</div>
 
-									<div class="sidebar-user-material-footer">
-										<a href="{{ path('app_agence_show', {'id': app.user.agence.id}) }}" class=" d-flex justify-content-between">
-											<span>
-												<i class="icon-pencil3 nav-link"></i>
-											</span>
+								</div>
 
-										</a>
-
-									</div>
+								<div class="collapse" id="user-nav">
+									<ul
+										class="nav nav-sidebar">
+									
+										<li class="nav-item">
+											<a href="{{ path('app_agence_show', {'id': app.user.agence.id}) }}" class="nav-link">
+												<i class="icon-cog5"></i>
+												<span>Account settings</span>
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href="{{ path('app_logout') }}" class="nav-link">
+												<i class="icon-switch2"></i>
+												<span>Logout</span>
+											</a>
+										</li>
+									</ul>
 								</div>
 
 
 							</div>
+
+
 						{% endif %}
 					{% endblock %}
 
@@ -335,6 +361,45 @@
 											</ul>
 
 										</li>
+
+												<li class="nav-item nav-item-submenu">
+											<a href="#" class="nav-link">
+												<i class="icon-folder-open mr-3"></i>
+												<span>Category</span>
+											</a>
+											<ul class="nav nav-group-sub" data-submenu-title="Agence">
+												<li class="nav-item">
+													<a href="{{path('app_category_index')}}" class="nav-link">Category list</a>
+												</li>
+											</ul>
+											<ul class="nav nav-group-sub" data-submenu-title="Agence">
+												<li class="nav-item">
+													<a href="{{path('app_category_new')}}" class="nav-link">Add category</a>
+												</li>
+											</ul>
+
+										</li>
+
+										</li>
+
+												<li class="nav-item nav-item-submenu">
+											<a href="#" class="nav-link">
+												<i class="icon-earth mr-3"></i>
+												<span>Geographical</span>
+											</a>
+											<ul class="nav nav-group-sub" data-submenu-title="Agence">
+												<li class="nav-item">
+													<a href="{{path('app_geographical_index')}}" class="nav-link">Geographical list</a>
+												</li>
+											</ul>
+											<ul class="nav nav-group-sub" data-submenu-title="Agence">
+												<li class="nav-item">
+													<a href="{{path('app_geographical_new')}}" class="nav-link">Add geographical</a>
+												</li>
+											</ul>
+
+										</li>
+
 									{% endif %}
 
 
@@ -447,8 +512,16 @@
 											</ul>
 											<ul class="nav nav-group-sub" data-submenu-title="Agence">
 												<li class="nav-item">
-													<a href="{{path('app_travel_new')}}" class="nav-link">
-														Add travel</a>
+
+													{% if is_granted ('ROLE_ADMIN') %}
+														<a href="{{path('app_travel_new')}}" class="nav-link">
+															Add travel</a>
+
+													{% elseif is_granted ('ROLE_AGENT') %}
+
+														<a href="{{path('app_travel_new_agence',{'id':app.user.agence.id})}}" class="nav-link">
+															Add travel</a>
+													{% endif %}
 												</li>
 											</ul>
 
@@ -467,13 +540,23 @@
 												</li>
 											</ul>
 											<ul class="nav nav-group-sub" data-submenu-title="Agence">
-												<li class="nav-item">
-													<a href="{{path('app_cruise_new')}}" class="nav-link">
-														Add cruise</a>
+													<li class="nav-item">
+
+
+													{% if is_granted ('ROLE_ADMIN') %}
+														<a href="{{path('app_cruise_new')}}" class="nav-link">
+															Add cruise</a>
+
+													{% elseif is_granted ('ROLE_AGENT') %}
+
+														<a href="{{path('app_cruise_new_agence',{'id':app.user.agence.id})}}" class="nav-link">
+															Add cruise</a>
+													{% endif %}
 												</li>
 											</ul>
 
 										</li>
+
 
 										<li class="nav-item nav-item-submenu">
 											<a href="#" class="nav-link">
@@ -488,8 +571,16 @@
 											</ul>
 											<ul class="nav nav-group-sub" data-submenu-title="Agence">
 												<li class="nav-item">
-													<a href="{{path('app_omra_new')}}" class="nav-link">
-														Add omra</a>
+
+													{% if is_granted ('ROLE_ADMIN') %}
+														<a href="{{path('app_omra_new')}}" class="nav-link">
+															Add omra</a>
+
+													{% elseif is_granted ('ROLE_AGENT') %}
+
+														<a href="{{path('app_omra_new_agence',{'id':app.user.agence.id})}}" class="nav-link">
+															Add omra</a>
+													{% endif %}
 												</li>
 											</ul>
 
@@ -508,8 +599,16 @@
 											</ul>
 											<ul class="nav nav-group-sub" data-submenu-title="Agence">
 												<li class="nav-item">
-													<a href="{{path('app_hiking_new')}}" class="nav-link">
-														Add hiking</a>
+
+													{% if is_granted ('ROLE_ADMIN') %}
+														<a href="{{path('app_hiking_new')}}" class="nav-link">
+															Add hiking</a>
+
+													{% elseif is_granted ('ROLE_AGENT') %}
+
+														<a href="{{path('app_hiking_new_agence',{'id':app.user.agence.id})}}" class="nav-link">
+															Add hiking</a>
+													{% endif %}
 												</li>
 											</ul>
 
@@ -547,60 +646,60 @@
 
 
 										{# 	<li class="nav-item nav-item-submenu">
-																																																			<a href="#" class="nav-link">
-																																																				<i class="icon-bike mr-3 "></i>
-																																																				<span>Reservation</span>
-																																																			</a>
-																																																			<ul class="nav nav-group-sub" data-submenu-title="Agence">
-																																																				<li class="nav-item">
-																																																					<a href="{{path('app_reservation_index')}}" class="nav-link">
-																																																						Reservation list</a>
-																																																				</li>
-																																																			</ul>
-																																																			<ul class="nav nav-group-sub" data-submenu-title="Agence">
-																																																				<li class="nav-item">
-																																																					<a href="{{path('app_reservation_new',{id: reservation.agence.id})}}" class="nav-link">
-																																																						Add Reservation</a>
-																																																				</li>
-																																																			</ul>
-																																								
-																																																		</li> #}
+																																																																							<a href="#" class="nav-link">
+																																																																								<i class="icon-bike mr-3 "></i>
+																																																																								<span>Reservation</span>
+																																																																							</a>
+																																																																							<ul class="nav nav-group-sub" data-submenu-title="Agence">
+																																																																								<li class="nav-item">
+																																																																									<a href="{{path('app_reservation_index')}}" class="nav-link">
+																																																																										Reservation list</a>
+																																																																								</li>
+																																																																							</ul>
+																																																																							<ul class="nav nav-group-sub" data-submenu-title="Agence">
+																																																																								<li class="nav-item">
+																																																																									<a href="{{path('app_reservation_new',{id: reservation.agence.id})}}" class="nav-link">
+																																																																										Add Reservation</a>
+																																																																								</li>
+																																																																							</ul>
+																																																												
+																																																																						</li> #}
 
-							{# 			<li class="nav-item nav-item-submenu">
-											<a href="#" class="nav-link">
-												<i class="icon-bike mr-3 "></i>
-												<span>Price list</span>
-											</a>
-											<ul class="nav nav-group-sub" data-submenu-title="Agence">
-												<li class="nav-item">
-													<a href="{{path('app_price_list_index')}}" class="nav-link">
-														Price list</a>
-												</li>
-											</ul>
-											<ul class="nav nav-group-sub" data-submenu-title="Agence">
-												<li class="nav-item">
-													<a href="{{path('app_price_list_new')}}" class="nav-link">
-														Add Price list</a>
-												</li>
-											</ul>
-
-										</li> #}
+										{# 			<li class="nav-item nav-item-submenu">
+																															<a href="#" class="nav-link">
+																																<i class="icon-bike mr-3 "></i>
+																																<span>Price list</span>
+																															</a>
+																															<ul class="nav nav-group-sub" data-submenu-title="Agence">
+																																<li class="nav-item">
+																																	<a href="{{path('app_price_list_index')}}" class="nav-link">
+																																		Price list</a>
+																																</li>
+																															</ul>
+																															<ul class="nav nav-group-sub" data-submenu-title="Agence">
+																																<li class="nav-item">
+																																	<a href="{{path('app_price_list_new')}}" class="nav-link">
+																																		Add Price list</a>
+																																</li>
+																															</ul>
+																				
+																														</li> #}
 
 										<li class="nav-item nav-item-submenu">
 											<a href="#" class="nav-link">
 												<i class="icon-bike mr-3 "></i>
-												<span>Offer_Excursion list</span>
+												<span>Travel_Excursion list</span>
 											</a>
 											<ul class="nav nav-group-sub" data-submenu-title="Agence">
 												<li class="nav-item">
-													<a href="{{path('app_offer_excursion_index')}}" class="nav-link">
-														Offer_Excursion list</a>
+													<a href="{{path('app_travel_excursion_index')}}" class="nav-link">
+														Travel_Excursion list</a>
 												</li>
 											</ul>
 											<ul class="nav nav-group-sub" data-submenu-title="Agence">
 												<li class="nav-item">
-													<a href="{{path('app_offer_excursion_new')}}" class="nav-link">
-														Add Offer_Excursion
+													<a href="{{path('app_travel_excursion_new')}}" class="nav-link">
+														Add travel_Excursion
 													</a>
 												</li>
 											</ul>

@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Add Good Address{% endblock %}
+
+{% block body %}
+    <h1>Add Good Address</h1>
+
+    <p>Select a Good Address to add to the Excursion:</p>
+
+    <ul>
+        {% for goodAddress in goodAddresses %}
+            <li>{{ goodAddress.name }}
+                <form action="{{ path('app_excursion_add_good_address', {'offer': offer.getId(), 'id': good_addresses.getId()}) }}" method="post">
+                    <button type="submit">Add to Excursion</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <a href="{{ path('app_excursion_show', {'id': offer.getId()}) }}">Back to Excursion</a>
+{% endblock %}

@@ -39,28 +39,45 @@ class GoodAddressRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return GoodAddress[] Returns an array of GoodAddress objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('g')
-//            ->andWhere('g.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('g.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * @return GoodAddress[] Returns an array of GoodAddress objects
+     */
+    /*    public function findByExampleField($value): array
+   {
+       return $this->createQueryBuilder('g')
+           ->andWhere('g.exampleField = :val')
+           ->setParameter('val', $value)
+           ->orderBy('g.id', 'ASC')
+           ->setMaxResults(10)
+           ->getQuery()
+           ->getResult()
+       ;
+   } */
 
-//    public function findOneBySomeField($value): ?GoodAddress
-//    {
-//        return $this->createQueryBuilder('g')
-//            ->andWhere('g.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    /**
+     * Finds GoodAddress entities by regions.
+     *
+     * @param array $regions An array of region names
+     *
+     * @return GoodAddress[] An array of GoodAddress entities that have one of the specified regions
+     */
+    public function findByRegions(array $regions): array
+    {
+        return $this->createQueryBuilder('g')
+            ->innerJoin('g.region', 'r')
+            ->andWhere('r.name IN (:regions)')
+            ->setParameter('regions', $regions)
+            ->orderBy('g.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+    //    public function findOneBySomeField($value): ?GoodAddress
+    //    {
+    //        return $this->createQueryBuilder('g')
+    //            ->andWhere('g.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
 }

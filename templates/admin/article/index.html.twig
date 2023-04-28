@@ -56,8 +56,9 @@
 					<th>Title</th>
 					<th>Picture</th>
 					<th>Short description</th>
-					<th>Description</th>
-					<th class="">Actions</th>
+					{# <th>Description</th> #}
+					<th>Category</th>
+					<th>Actions</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -68,7 +69,12 @@
 						<td><img src="{{ asset('uploads/images/article/picture/' ~ article.picture) }}" width="70" height="70" alt="No picture" ></td>
 
 						<td>{{article.shortDescription|raw}}</td>
-						<td>{{article.description|raw}}</td>
+						{# <td>{{article.description|raw}}</td> #}
+						<td>
+							{% for category in article.categories %}
+								{{ category.style }}
+							{% endfor %}
+						</td>
 
 
 						<td>

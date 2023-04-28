@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use DateTimeInterface;
 
 #[ORM\Entity(repositoryClass: ReviewsRepository::class)]
 class Reviews
@@ -30,7 +31,12 @@ class Reviews
 
     #[ORM\ManyToOne(inversedBy: 'reviews')]
     private ?Offer $offer = null;
-  
+
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE , nullable: true)]
+    private ?\DateTimeInterface $date = null;
+
+    #[ORM\ManyToOne(inversedBy: 'reviews')]
+    private ?User $user = null;
     
     public function getId(): ?int
     {
@@ -76,6 +82,7 @@ class Reviews
     public function __construct()
     {
         $this->images = new ArrayCollection();
+        $this->date = new \DateTimeImmutable();
     }
 
     // Getter et setter pour le champ `images`
@@ -117,5 +124,30 @@ class Reviews
 
         return $this;
     }
+
+    public function getDate(): ?\DateTimeImmutable
+    {
+        return $this->date;
+    }
+
+    public function setDate(\DateTimeImmutable $date): self
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
 
 }

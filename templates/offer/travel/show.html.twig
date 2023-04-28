@@ -37,117 +37,210 @@
 
 	<!-- Timeline -->
 	<div class="timeline timeline-left">
-		<div
-			class="timeline-container">
+		<div class="timeline-container">
 
 			<!-- Sales stats -->
-			<div class="timeline-row">
 
-				<div class="timeline-icon">
-					<img src="../../../../global_assets/images/placeholders/placeholder.jpg" alt="">
+
+			<!-- /post -->
+				<div class="timeline-row"> <div class="timeline-icon">
+					<div class="bg-danger">
+						<i class="{# icon-heart5 icon-2x #} mi-sentiment-very-satisfied mi-2x"></i>
+
+					</div>
 				</div>
+
 				<div class="content">
-					<h2 class="timeline-title">General Details</h2>
-
-
-					<!-- Line and border. Partial, filled -->
-					<div class="card card-body border-top-blue">
-						<div class="list-feed list-feed-solid">
-							<div class="list-feed-item border-warning-400">
-								<a href="#">David Linner</a>
-								requested refund for a double bank card charge
-							</div>
-
-							<div class="list-feed-item border-info-400">
-								User
-								<a href="#">Christopher Wallace</a>
-								from Google is awaiting for staff reply
-							</div>
-
-							<div class="list-feed-item border-pink-400">
-								Ticket
-								<strong>#43683</strong>
-								has been resolved by
-								<a href="#">Victoria Wilson</a>
-							</div>
-
-							<div class="list-feed-item border-slate-600">
-								<a href="#">Eugene Kopyov</a>
-								merged
-								<strong>Master</strong>,
-								<strong>Demo</strong>
-								and
-								<strong>Dev</strong>
-								branches
-							</div>
-
-							<div class="list-feed-item border-teal-400">
-								All sellers have received payouts for December, 2016!
-							</div>
-
-							<div class="list-feed-item border-danger-400">
-								<a href="#">Chris Arney</a>
-								created a new ticket
-								<strong>#43136</strong>
-								and assigned to
-								<a href="#">John Nod</a>
-							</div>
-						</div>
+					<div class="timeline-heading">
+						<h2 class="timeline-title">General Details</h2>
 					</div>
-					<!-- /line and border. Partial, filled -->
 
+					<div class="card blog-horizontal">
+						<div class="card-body">
+							<div class="card-img-actions mr-3">
+								<img
+								class="card-img img-fluid" src="{{ asset('uploads/images/offer/travel/picture/' ~ travel.picture) }}" alt="">
+								{# <div class="card-img-actions-overlay card-img">
+																																																																	<a href="blog_single.html" class="btn btn-outline bg-white text-white border-white border-2 btn-icon rounded-round">
+																																																																		<i class="icon-link"></i>
+																																																																	</a>
+																																																																</div> #}
+								<br><br>
 
-				</div>
-
-
-				<div class="timeline-row">
-					<div class="timeline-icon">
-						<img src="../../../../global_assets/images/placeholders/placeholder.jpg" alt="">
-					</div>
-					<div class="content">
-						<h2 class="timeline-title">Price list</h2>
-
-						<!-- Thumbnail with feed -->
-						<div class="card">
-							<a href="#">
-								<img src="../../../../global_assets/images/placeholders/placeholder.jpg" class="img-fluid" alt="">
-							</a>
-
-							<div class="card-body">
-								<div class="list-feed">
-									<div class="list-feed-item border-warning-400">
-										<div class="text-muted font-size-sm mb-1">12 minutes ago</div>
-										<a href="#">David Linner</a>
-										requested refund for a double card charge
-									</div>
-
-									<div class="list-feed-item border-warning-400">
-										<div class="text-muted font-size-sm mb-1">12 minutes ago</div>
-										User
-										<a href="#">Christopher Wallace</a>
-										is awaiting for staff reply
-									</div>
-
-									<div class="list-feed-item border-warning-400">
-										<div class="text-muted font-size-sm mb-1">12 minutes ago</div>
-										Ticket
-										<strong>#43683</strong>
-										has been closed by
-										<a href="#">Victoria Wilson</a>
-									</div>
-
-									<div class="list-feed-item border-warning-400">
-										<div class="text-muted font-size-sm mb-1">12 minutes ago</div>
-										All sellers have received payouts for December!
-									</div>
+								<div {# class="card-footer" #}>
+									{% for image in travel.images %}
+										<a href="#">
+											<img src="{{ asset('uploads/images/offer/travel/pictures/' ~ image) }}" class="rounded" width="60" height="60" alt="">
+										</a>
+									{% endfor %}
+									<a href="{{ path('app_travel_edit', {'id': travel.id}) }}" class="btn btn-icon bg-transparent border-slate-300 text-slate rounded border-dashed">
+										<i class="icon-plus22"></i>
+									</a>
 								</div>
 							</div>
+
+
+							<div class="media-body">
+								<h2 class="media-title font-weight-semibold">
+									<a href="#" class="text-default">{{travel.title}}</a>
+								</h2>
+								<span class="d-block">
+									<h6>
+										<i class="icon-location4 mr-1"></i>
+										{% for country in travel.countries %}
+											{{ country.intitule }}
+										{% endfor %}
+									</h6>
+								</span>
+							</div>
+							<br>
+							<div class="mb-4">
+								<h6 class="font-weight-semibold">Description</h6>
+								{{ travel.description |raw}}
+							</div>
+
+							<div class="row">
+								{% if travel.inclus is not empty %}
+									<div class="col-sm-6">
+										<div class="mb-4">
+											<dl>
+												<dt class="font-size-sm font-weight-bold text-uppercase">
+													<i class="icon-checkmark3 icon-2x text-success mr-2"></i>
+													<big>Included</big>
+												</dt>
+												<dd>{{ travel.inclus |raw}}</dd>
+											</dl>
+										</div>
+									</div>
+								{% endif %}
+								{% if travel.nonInclus is not empty %}
+									<div class="col-sm-6">
+										<div class="mb-4">
+											<dl>
+												<dt class="font-size-sm font-weight-bold text-uppercase">
+													<i class="icon-cross2 mr-2 icon-2x text-danger"></i>
+													<big>Not Included</big>
+												</dt>
+												<dd>{{ travel.nonInclus |raw}}</dd>
+											</dl>
+										</div>
+									</div>
+								{% endif %}
+							</div>
 						</div>
-						<!-- /thumbnail with feed -->
+						<div class="text-right mr-3">
+							<a href="{{ path('app_travel_edit', {'id': travel.id}) }}" class="btn btn-primary text-white">
+								<i class="icon-pencil3 mr-2 "></i>
+								Edit
+							</a>
+						</div>
+						<br>
 
 
 					</div>
+					<!-- /blog layout #2 with image -->
+
+
 				</div>
+			</div>
+
+
+			<div class="timeline-row">
+				<div class="timeline-icon">
+					<div class="bg-danger">
+						<i class="icon-coins icon-2x"></i>
+						
+					</div>
+				</div>
+
+				<div class="content">
+
+					<div>
+						<h2 class="timeline-title">Price list</h2>
+
+
+						{{ render(controller('App\\Controller\\PriceListController::showPriceListToTravel', { 'travel': travel })) }}
+
+
+					</div>
+
+				</div>
+
+
+			</div>
+
+
+	<div class="timeline-row">
+				<div class="timeline-icon">
+					<div class="bg-danger">
+						<i class="icon-coins icon-2x"></i>
+						
+					</div>
+				</div>
+
+				<div class="content">
+
+					<div>
+						<h2 class="timeline-title">Excursion not included </h2>
+
+
+						{{ render(controller('App\\Controller\\TravelExcursionController::show', { 'travel': travel })) }}
+
+
+					</div>
+
+				</div>
+
+
+			</div>
+
+			<div class="timeline-row">
+				<div class="timeline-icon">
+				<div class="bg-danger">
+						<i class="mi-room mi-2x"></i>
+						
+					</div>
+			</div>
+
+				<div class="content">
+
+					<div>
+						<h2 class="timeline-title">Good Address list</h2>
+
+
+						{{ render(controller('App\\Controller\\GoodAddressController::show', { 'offer': offer })) }}
+
+
+					</div>
+
+				</div>
+
+
+			</div>
+
+
+			<div class="timeline-row">
+				<div class="timeline-icon">
+					<div class="bg-danger">
+						<i class="icon-comment-discussion icon-2x"></i>
+
+					</div>
+				</div>
+
+				<div class="content">
+
+					<div>
+						<h2 class="timeline-title">Reviews list</h2>
+
+						
+						{{ render(controller('App\\Controller\\ReviewsController::showReviewsToTravel', { 'travel': travel })) }}
+						
+
+					</div>
+
+				</div>
+
+
 			</div>
 		</div>
 	</div>

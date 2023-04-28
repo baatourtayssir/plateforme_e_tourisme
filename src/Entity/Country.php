@@ -19,8 +19,6 @@ class Country
     #[ORM\Column(length: 255)]
     private ?string $intitule = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $category = null;
 
     #[ORM\OneToMany(mappedBy: 'Country', targetEntity: Region::class)]
     private Collection $regions;
@@ -34,6 +32,9 @@ class Country
 
     #[ORM\ManyToMany(targetEntity: Travel::class, mappedBy: 'countries')]
     public Collection $travel;
+
+    #[ORM\ManyToOne(inversedBy: 'countries')]
+    private ?Geographical $geographical = null;
 
     public function __construct()
     {
@@ -60,17 +61,6 @@ class Country
         return $this;
     }
 
-    public function getCategory(): ?string
-    {
-        return $this->category;
-    }
-
-    public function setCategory(string $category): self
-    {
-        $this->category = $category;
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, Region>
@@ -185,6 +175,18 @@ class Country
         if ($this->travel->removeElement($travel)) {
             $travel->removeCountry($this);
         }
+
+        return $this;
+    }
+
+    public function getGeographical(): ?Geographical
+    {
+        return $this->geographical;
+    }
+
+    public function setGeographical(?Geographical $geographical): self
+    {
+        $this->geographical = $geographical;
 
         return $this;
     }

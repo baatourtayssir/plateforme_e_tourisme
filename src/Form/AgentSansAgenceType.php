@@ -41,8 +41,17 @@ class AgentSansAgenceType extends AbstractType
                 ],
             ])
             ->add('lastname', TypeTextType::class, ['attr' => ['class' => 'form-control']])
-
-            ->add('phoneNumber', NumberType::class, ['attr' => ['class' => 'form-control']])
+            ->add('phoneNumber', NumberType::class, [
+                'attr' => ['class' => 'form-control'],
+                'constraints' => [
+                    new Length([
+                        'min' => 8,
+                        'max' => 8,
+                        'exactMessage' => 'Le numéro de téléphone doit contenir exactement {{ limit }} chiffres',
+                    ]),
+                ],
+            ])
+            
             ->add('adress', TypeTextType::class, ['attr' => ['class' => 'form-control']])
         
                 
