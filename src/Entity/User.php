@@ -49,12 +49,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255 , nullable: true)]
     private ?string $avatar = null;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Reviews::class)]
-    private Collection $reviews;
+  
 
     public function __construct()
     {
-        $this->reviews = new ArrayCollection();
     }
 
 
@@ -172,35 +170,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, Reviews>
-     */
-    public function getReviews(): Collection
-    {
-        return $this->reviews;
-    }
-
-    public function addReview(Reviews $review): self
-    {
-        if (!$this->reviews->contains($review)) {
-            $this->reviews->add($review);
-            $review->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeReview(Reviews $review): self
-    {
-        if ($this->reviews->removeElement($review)) {
-            // set the owning side to null (unless already changed)
-            if ($review->getUser() === $this) {
-                $review->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
+  
 
 }

@@ -1,0 +1,485 @@
+{% extends 'front/home.html.twig' %}
+{% block avion %}{% endblock %}
+
+{% block top_menu %}
+
+	<!--page title start-->
+	<div class="page_title" data-stellar-background-ratio="0" data-stellar-vertical-offset="0" style="background-image:url(assets/images/bg/page_title_bg.jpg);">
+		<ul>
+			<li><a href="javascript:;">Travel &nbsp Details &nbsp for &nbsp{{cruise.title}}</a></li>
+		</ul>
+	</div>
+	<!--page title end-->
+	<div class="clearfix"></div>
+
+
+{% endblock %}
+
+{% block content %}
+
+	<div class="full_width destinaion_sorting_section">
+		<div class="container">
+			<div
+				class="row space_100">
+
+				<!-- left sidebar start -->
+				<div class="col-lg-3 col-md-3 col-sm-12">
+					<div class="travelite_left_sidebar">
+
+						<aside class="widget destination_widget">
+							<h4 class="widget-title">chosse geographocal</h4>
+							<div class="travel_checkbox_round">
+								{% for geographocal in geographicals %}
+									<input type="checkbox" id="singapore">
+									<label for="singapore">{{geographocal.location}}</label>
+								{% endfor %}
+
+							</div>
+
+						</aside>
+
+
+						<aside class="widget destination_widget">
+							<h4 class="widget-title">chosse country</h4>
+							<div class="travel_checkbox_round">
+								{% for country in countries %}
+									<input type="checkbox" id="Default">
+									<label for="Default">{{country.intitule}}</label>
+								{% endfor %}
+
+
+							</div>
+
+						</aside>
+
+						<aside class="widget category_widget">
+							<h4 class="widget-title">Accomodation</h4>
+							<div class="travel_checkbox_round">
+								{% for category in categories %}
+									<input type="checkbox" id="default_1">
+									<label for="default_1">{{category.style}}</label>
+								{% endfor %}
+							</div>
+
+						</aside>
+
+
+					</div>
+				</div>
+				<!-- left sidebar end -->
+				<!-- right main start -->
+				<div class="col-lg-9 col-md-9 col-sm-12">
+					<div class="tour_packages_right_section left_space_40">
+						<div class="tour_packages_details_top hotel_details_package">
+
+
+							<div class="bottom_desc">
+
+								<h5 class="includes_text">{{cruise.agence.name}}
+									:</h5>
+								<!-- desc icons Start-->
+								<br>
+								<div class="row">
+									<div class="col-lg-2 top_icons_part">
+
+										<ul class="">
+											<li>
+												<div><img src="{{asset('uploads/images/agences/logo/' ~ cruise.agence.brochureFilename) }}"></div>
+
+											</li>
+
+										</ul>
+									</div>
+									<div class="col-lg-9 top_icons_part">
+
+										<ul class="">
+											<li>
+												{{cruise.agence.description|raw}}
+
+											</li>
+
+
+										</ul>
+										<!-- desc icons End-->
+
+
+									</div>
+								</div>
+								<br><br>
+								<div class="top_head_bar">
+									<h4>{{cruise.title}}</h4>
+									{% for country in cruise.countries %}
+										<span class="sub_city">{{country.intitule}}</span>
+									{% endfor %}
+								</div>
+								<br><br><br>
+								<!-- slider start -->
+								<div class="hotel_thumbnail_slider">
+									<ul class="thumbnail_hotel_slider">
+										{% for image in cruise.images %}
+											<li><img src="{{ asset('uploads/images/offer/pictures/' ~ image) }}" alt="slide"></li>
+										{% endfor %}
+									</ul>
+
+									<div id="bx-pager" class="hotel_thumbnail_crousel">
+										{% for image in cruise.images %}
+											<a data-slide-index="{{ loop.index0 }}" href=""><img src="{{ asset('uploads/images/offer/pictures/' ~ image) }}" alt="slide"></a>
+										{% endfor %}
+									</div>
+								</div>
+
+								<!-- slider end -->
+
+								<!-- package tabs start -->
+								<div class="full_width hotel_details_mdl_tab" id="travelite_middle_tabs">
+									<div class="pcg_tabs_panel">
+										<ul>
+											<li>
+												<a href="#tab_search_1">Infomation</a>
+											</li>
+											<li>
+												<a href="#tab_search_2" class="">Price list</a>
+											</li>
+											{# <li><a href="#tab_search_4" class="">Excursion not included</a></li> #}
+											<li>
+												<a href="#tab_search_5" class="">Good address</a>
+											</li>
+											<li>
+												<a href="#tab_search_3" class="">Review</a>
+											</li>
+										</ul>
+									</div>
+									<!--  tab content start -->
+									<div id="tab_search_1" class="tab_details_part hotel_details_tab">
+
+										<p>{{cruise.description|raw}}</p>
+
+
+										<div class="inner_content">
+											<div class="inner_title">
+												<i class="fa fa-check-square-o"></i>
+												Included</div>
+											<p>{{cruise.inclus|raw}}</p>
+
+										</div>
+
+
+										<div class="inner_content">
+											<div class="inner_title">
+												<i class="fa fa-square-o"></i>
+												Not included</div>
+											<p>{{cruise.nonInclus|raw}}</p>
+										</div>
+
+									</div>
+									<!--  tab content End -->
+
+
+									<!-- booking_details Start -->
+									<div id="tab_search_2" class="main_content_area tab_details_part hotel_details_tab">
+										<div
+											class="inner_container">
+											<!--  tab inner section Start -->
+											{% for price in priceLists %}
+												<div class="tab_inner_section">
+													<div class="heading_tab_inner">
+														<h5>{{price.title}}</h5>
+														<span>{{price.datedebut|date("d/m/Y")}}
+															&nbsp
+															{{price.dateFin|date("d/m/Y")}}</span>
+													</div>
+													<div
+														class="tab_inner_body full_width">
+														<!--  review area start -->
+														<div class="tab_review_area">
+															{% for hotel in price.hotels %}
+																<img src="{{ asset('uploads/images/hotel/picture/' ~ hotel.picture) }}" alt="hotel image">
+															{% endfor %}
+
+															<div class="review_content">
+																<div class="top_head_bar">
+																	{% for hotel in price.hotels %}
+																		<h4>{{hotel.intitule}}</h4>
+																	{% endfor %}
+																	{% for hotel in price.hotels %}
+																		<span class="country_span">
+																			{{ hotel.region.intitule }}
+																		</span>
+																	{% endfor %}
+
+																</div>
+																<div class="review_star_cover">
+																	<div class="bottom_star_rating">
+																		<i class="fa fa-star"></i>
+																		<i class="fa fa-star"></i>
+																		<i class="fa fa-star"></i>
+																		<i class="fa fa-star"></i>
+																		<i class="fa fa-star"></i>
+																	</div>
+																	{# <span>345 Reviews</span> #}
+																</div>
+																<br>
+																<h5 class="starting_text">
+																	<span>{{price.prix}}
+																		DT/</span>per person</h5>
+															</div>
+														</div>
+														<!--  review area start -->
+														<!-- tab include area Start -->
+														<div class="inludes_section">
+															<div class="left_lists col-lg-4 col-md-4">
+																<h5 class="includes_text">
+																	Excursion included:</h5>
+																<table>
+																	{% for excursion in price.ExcursionsIncluded %}
+																		<tr>
+																			<td class="label_list">{{excursion.title}}</td>
+																		</tr>
+																	{% endfor %}
+																</table>
+															</div>
+															<div class="right_includes col-lg-8 col-md-8">
+																<h5 class="includes_text">includes:</h5>
+																<ul class="sort_place_icons">
+																	<li>
+																		<i class="fa fa-car"></i>
+																		transports</li>
+																	<li>
+																		<i class="fa fa-plane"></i>
+																		flights</li>
+																	<li>
+																		<i class="fa fa-binoculars"></i>
+																		sight seeing</li>
+																	<li>
+																		<i class="fa fa-cutlery"></i>
+																		food</li>
+																	<li>
+																		<i class="fa fa-building-o"></i>
+																		hotels</li>
+																</ul>
+															</div>
+														</div>
+														<!-- tab include area End -->
+													</div>
+												</div>
+											{% endfor %}
+											<!--  tab inner section End -->
+
+										</div>
+										<!-- proceed button -->
+
+										<!-- proceed button -->
+									</div>
+									<!-- booking_details End -->
+
+
+									<!--  tab content start -->
+									<div
+										id="tab_search_3" class="tab_details_part hotel_details_tab">
+
+										<!--Customer Says start-->
+										<div class="row">
+											{% for review in Reviews %}
+												<div class="customer_says_wrapper">
+
+
+													<div class="col-lg-12">
+														<div class="customer_says_text mt-120">
+															<div class="cst" id="cst_1">
+																<p>{{review.comment|raw}}</p>
+															</div>
+
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-3">
+															<div class="customer_says_detail">
+																<div class="csd" id="csd_1">
+																	<h3>{{review.client.lastname}}</h3>
+																	<span>
+																		Notice written on
+
+																		<i class="country">{{review.date|date("d/m/Y")}}</i>
+																	</span>
+																</div>
+
+															</div>
+														</div>
+														<div class="col-md-9">
+															<div class="customer_says_slider">
+																<div class="owl-carousel owl-theme">
+																	<div class="item active"><img id="css_1" src="{{ asset('uploads/images/reviews/picture/' ~ review.picture) }}" width="100%" alt=""/></div>
+
+																	{% for image in review.images %}
+																		<div class="item active"><img id="css_1" src="{{ asset('uploads/images/reviews/pictures/' ~ image) }}" alt=""/></div>
+																	{% endfor %}
+
+
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											{% endfor %}
+										</div>
+										<!--Customer Says end-->
+
+									</div>
+									<!--  tab content End -->
+									<!--  tab content start -->
+									<div id="tab_search_5" class="tab_details_part hotel_details_tab">
+										<div
+											class="inner_content">
+
+											<!-- Event posts start -->
+											<div class="full_width event_posts_section">
+												<div class="row">
+
+													{% for goodAddress in GoodAddresses %}
+														<div class="col-lg-12">
+															<div class="full_width event_recent_posts">
+																<h4 class="rec_cat_title">
+																	<a href="#">{{goodAddress.intitule}}</a>
+																</h4>
+																<ul>
+																	<li>
+																		<i class="icon-location4 mr-1"></i>
+																		{{goodAddress.region.intitule}}</li>
+
+																</ul>
+																<div class="full_width main_recent_wrap">
+																	<div class="left_thumb">
+																		<img src="{{ asset('uploads/images/goodAddress/picture/' ~ goodAddress.picture) }}" alt="blogimg" class="img-responsive">
+																	</div>
+
+																	<div class="right_content">
+																		<p>{{goodAddress.description|raw}}</p>
+																		<a href="#">Read more..</a>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<!-- recent_post_end -->
+
+													{% endfor %}
+
+												</div>
+											</div>
+											<!-- Event posts End -->
+										</div>
+
+
+									</div>
+									<!--  tab content End -->
+
+								</div>
+								<!-- package tabs End -->
+
+							</div>
+							<!-- right main start -->
+						</div>
+						<!-- col-lg-9-end -->
+
+						<br><br>
+						<div class="full_width hotel_details_mdl_tab ui-tabs ui-corner-all ui-widget ui-widget-content">
+							<aside class="widget modify_search_widget">
+								<br><br>
+								<div class="tab_details_part hotel_details_tab ui-tabs-panel ui-corner-bottom ui-widget-content">
+									<h4 class="widget-title">Reservation submission</h4>
+									<div class="sidebar_form">
+										{{ form_start(form, { 'action': path('app_front_cruise_reservation', {'cruise': cruise.id}), 'method': 'POST' }) }}
+										
+										
+										<br>
+										<div class="destination_field">
+											<label>Price list</label>
+											{{ form_widget(form.note) }}
+											<div class="form-error">
+												{{ form_errors(form.note) }}
+											</div>
+										</div>
+										<br>
+										<div class="destination_field">
+											<label>Message</label>
+											{{ form_widget(form.message) }}
+											<div class="form-error">
+												{{ form_errors(form.message) }}
+											</div>
+										</div>
+										
+										<br>
+										<button type="submit" class="btn-travel btn-yellow">{{ button_label|default('Save') }}</button>
+										{{ form_end(form) }}
+										<br>
+										{% for flashMessage in app.flashes('success') %}
+											<div class="alert alert-success">
+												{{ flashMessage }}
+											</div>
+										{% endfor %}
+
+										{% for flashMessage in app.flashes('error') %}
+											<div class="alert alert-danger">
+												{{ flashMessage }}
+											</div>
+										{% endfor %}
+									</div>
+								</div>
+							</aside>
+						</div>
+					</div>
+					<!--  row main -->
+				</div>
+				<!-- container -->
+
+			</div>
+			<!-- main wrapper -->
+			<!--content body end-->
+
+		</div>
+	</div>
+{% endblock %}
+{% block javascripts %}
+
+
+	<!--main js file start-->
+	<script type="text/javascript" src="{{asset("front/assets/js/jquery.min.js")}}"></script>
+	<script type="text/javascript" src="{{asset("front/assets/js/bootstrap.min.js")}}"></script>
+	<script type="text/javascript" src="{{asset("front/assets/js/bootstrap-select.js")}}"></script>
+	<script type="text/javascript" src="{{asset("front/assets/js/plugin/datetimepicker/jquery.datetimepicker.js")}}"></script>
+	<script type="text/javascript" src="{{asset("front/assets/js/plugin/parallax/jquery.parallax-1.1.3.js")}}"></script>
+	<script type="text/javascript" src="{{asset("front/assets/js/plugin/owl/owl.carousel.js")}}"></script>
+	<script type="text/javascript" src="{{asset("front/assets/js/plugin/isotope/jquery.isotope.js")}}"></script>
+	<!-- <script type="text/javascript" src="{{asset("front/assets/js/plugin/bxslider/jquery-bxslider.js")}}"></script>  -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.15/jquery.bxslider.min.js" integrity="sha512-p55Bpm5gf7tvTsmkwyszUe4oVMwxJMoff7Jq3J/oHaBk+tNQvDKNz9/gLxn9vyCjgd6SAoqLnL13fnuZzCYAUA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<!-- pie chart js -->
+	<script type="text/javascript" src="{{asset("front/assets/js/plugin/pie-circle/circles.js")}}"></script>
+	<!-- pie chart js -->
+	<!--counter js-->
+	<script type="text/javascript" src="{{asset("front/assets/js/plugin/counter/jquery.countTo.js")}}"></script>
+	<!--counter js-->
+	<script type="text/javascript" src="{{asset("front/assets/js/plugin/counter/jquery.countdown.js")}}"></script>
+	<!-- REVOLUTION JS FILES -->
+	<script type="text/javascript" src="{{asset("front/assets/js/plugin/revolution/js/jquery.themepunch.tools.min.js")}}"></script>
+	<script type="text/javascript" src="{{asset("front/assets/js/plugin/revolution/js/jquery.themepunch.revolution.min.js")}}"></script>
+	<script type="text/javascript" src="{{asset("front/assets/js/plugin/revolution/js/revolution.extension.layeranimation.min.js")}}"></script>
+	<script type="text/javascript" src="{{asset("front/assets/js/plugin/revolution/js/revolution.extension.navigation.min.js")}}"></script>
+	<script type="text/javascript" src="{{asset("front/assets/js/plugin/revolution/js/revolution.extension.slideanims.min.js")}}"></script>
+	<script type="text/javascript" src="{{asset("front/assets/js/plugin/revolution/js/revolution.extension.actions.min.js")}}"></script>
+	<script type="text/javascript" src="{{asset("front/assets/js/plugin/revolution/js/revolution.extension.parallax.min.js")}}"></script>
+	<!-- REVOLUTION JS FiLES -->
+	<!-- video_popup -->
+	<script type="text/javascript" src="{{asset("front/assets/js/plugin/video-popup/jquery.magnific-popup.js")}}"></script>
+	<!-- video_popup -->
+	<!-- slick slider -->
+	<script type="text/javascript" src="{{asset("front/assets/js/plugin/slick/jquery-migrate-1.2.1.min.js")}}"></script>
+	<script type="text/javascript" src="{{asset("front/assets/js/plugin/slick/slick.min.js")}}"></script>
+	<!-- slick slider -->
+	<!-- video player js -->
+	<script src="{{asset("front/assets/js/plugin/video_player/mediaelement-and-player.min.js")}}"></script>
+	<!-- video player js -->
+	<!-- pricefilter -->
+	<script src="{{asset("front/assets/js/plugin/jquery-ui/jquery-ui.js")}}"></script>
+	<!-- pricefilter-->
+	<script type="text/javascript" src="{{asset("front/assets/js/custom.js")}}"></script>
+	<!--main js file end-->
+{% endblock %}

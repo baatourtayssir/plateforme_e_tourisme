@@ -52,13 +52,13 @@
 					<div class="card blog-horizontal">
 						<div class="card-body">
 							<div class="card-img-actions mr-3">
-								<img class="card-img img-fluid" src="{{ asset('uploads/images/offer/omra/picture/' ~ omra.picture) }}" alt="">
+								<img class="card-img img-fluid" src="{{ asset('uploads/images/offer/picture/' ~ omra.picture) }}" alt="">
 								<br><br>
 
 								<div {# class="card-footer" #}>
 									{% for image in omra.images %}
 										<a href="#">
-											<img src="{{ asset('uploads/images/offer/omra/pictures/' ~ image) }}" class="rounded" width="60" height="60" alt="">
+											<img src="{{ asset('uploads/images/offer/pictures/' ~ image) }}" class="rounded" width="60" height="60" alt="">
 										</a>
 									{% endfor %}
 									<a href="{{ path('app_omra_edit', {'id': omra.id}) }}" class="btn btn-icon bg-transparent border-slate-300 text-slate rounded border-dashed">

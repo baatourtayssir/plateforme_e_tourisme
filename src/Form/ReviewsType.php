@@ -3,9 +3,9 @@
 namespace App\Form;
 
 use App\Entity\Article;
+use App\Entity\Client;
 use App\Entity\Offer;
 use App\Entity\Reviews;
-use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -23,8 +23,8 @@ class ReviewsType extends AbstractType
     {
         $builder
 
-            ->add('user', EntityType::class, [
-                'class' => User::class,
+            ->add('client', EntityType::class, [
+                'class' => Client::class,
                 'choice_label' => 'lastname',
                 'label' => 'User Last Name',
             ])

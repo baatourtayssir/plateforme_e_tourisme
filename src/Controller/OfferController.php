@@ -8,6 +8,8 @@ use App\Entity\Pictures;
 use App\Entity\Country;
 use App\Form\OfferType;
 use App\Form\AgenceType;
+use App\Form\SearchFormType;
+use App\Model\SearchData;
 use App\Repository\AgenceRepository;
 use App\Repository\OfferRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Service\KernelService;
-
+use Symfony\Component\Form\Extension\Core\Type\SearchType;
 
 #[Route('/offer')]
 class OfferController extends AbstractController
@@ -83,9 +85,19 @@ class OfferController extends AbstractController
         ]);
     } */
 
-    /* public function index(OfferRepository $offerRepository): Response
+
+
+
+   /*  public function index(OfferRepository $offerRepository, Request $request): Response
     {
-        return $this->render('offer/index.html.twig', [
+        $searchData =new SearchData();
+        $form= $this->createForm(SearchType::class,$searchData);
+        $form->handleRequest($request);
+        if($form->isSubmitted()&& $form->isValid()){
+            dd($searchData->q);
+        }
+        return $this->render('front/home.html.twig', [
+            'form'=> $form->createView(),
             'offers' => $offerRepository->findAll(),
         ]);
      } */
@@ -131,6 +143,7 @@ class OfferController extends AbstractController
                 $img->setName($fichier);
                 $offer->addImage($img);
             }
+            
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($offer);
@@ -219,6 +232,52 @@ class OfferController extends AbstractController
 
         return $this->redirectToRoute('app_offer_index');
     }
+
+
+    public function offresByPays(OfferRepository $offerRepository, $pays)
+{
+    $offers = $offerRepository->findOffresByPays($pays);
+
+    return $this->render('offre/offres_by_pays.html.twig', [
+        'offers' => $offers,
+        'pays' => $pays,
+    ]);
+}
+
+public function offresRecherche(OfferRepository $offreRepository, Request $request)
+{
+    $pays = $request->query->get('pays');
+    $offers = $offreRepository->findOffresByCountries([$pays]);
+
+    return $this->render('offer/offer_by_country.html.twig', [
+        'offers' => $offers,
+        'pays' => $pays,
+        'paysList' => ['France', 'Espagne', 'Italie', 'Allemagne', 'Royaume-Uni'], // Remplacez avec la liste complète des pays disponibles
+    ]);
+}
+#[Route('/search', name: 'app_search_offer')]
+public function searchOffres(Request $request, OfferRepository $offreRepository)
+{
+    $form = $this->createForm(SearchFormType::class);
+
+    $form->handleRequest($request);
+
+    $results = [];
+
+    if ($form->isSubmitted() && $form->isValid()) {
+        $country = $form->getData()['country'];
+        $results = $offreRepository->findOffresByCountries($country);
+    }
+
+    return $this->render('offer/offer_by_country.html.twig', [
+        'form' => $form->createView(),
+        'results' => $results,
+    ]);
+}
+
+
+
+
 
     
 }

@@ -162,11 +162,7 @@ class ExcursionController extends AbstractController
         $offer = $entityManager->getRepository(Offer::class)->find($id);
 
        
-       /*  $priceList = $entityManager->getRepository(PriceList::class)->findBy([
-            'offer' => $offer,
-        ]); */
-
-
+      /*   $priceLists = $this->showPriceListToExcursion($excursion); */
 
         $form = $this->createForm(ExcursionType::class, $excursion);
         $form->handleRequest($request);
@@ -187,6 +183,7 @@ class ExcursionController extends AbstractController
             'excursion' => $excursion,
             'offer' => $offer,
             'form' => $form,
+            /* 'priceLists' => $priceLists  */
             /* 'price_list' => $priceList, */
 
 
@@ -257,7 +254,7 @@ class ExcursionController extends AbstractController
         return $this->redirectToRoute('app_excursion_index');
     } */
 
-    #[Route('{id}/delete', name: 'app_excursion_delete')]
+    #[Route('/{id}/delete', name: 'app_excursion_delete')]
     public function delete(Offer $offer): Response
     {
         $entityManager = $this->getDoctrine()->getManager();
@@ -275,6 +272,22 @@ class ExcursionController extends AbstractController
 
         return $this->redirectToRoute('app_excursion_index');
     }
+
+/*     #[Route('/{id}/delete', name: 'app_excursion_delete')]
+    public function delete(Request $request,$id): Response
+    {
+        $excursion = $this->getDoctrine()->getRepository(Excursion::class)->find($id);
+
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $entityManager->remove($excursion);
+        $entityManager->flush();
+
+        $response = new Response();
+        $response->send();
+
+        return $this->redirectToRoute('app_excursion_index');
+    } */
 
 
     #[Route('/{excursion}/{id}/edit/excursion', name: 'app_excursion_edit_agence', methods: ['GET', 'POST'])]

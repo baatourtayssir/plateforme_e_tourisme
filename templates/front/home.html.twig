@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<!-- 
+		Template Name: Travelite - Tours and Travels Online Booking HTML
+		Version: 1.0.0
+		-->
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+	<html lang="en"> <!--<![endif]-->
+	<!-- BEGIN HEAD -->
+		{% block top %}
+
+			<head>
+			<meta charset="utf-8"/> <title>TayssirTravel</title>
+			<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+			<meta name="description" content="Travelite - Tours and Travels Online Booking HTML"/>
+			<meta name="keywords" content="Travel, html template, Travelite template">
+			<meta name="author" content="Kamleshyadav"/>
+			<meta
+			name="MobileOptimized" content="320">
+			<!-- font aswesome link -->
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+			<link href="{{asset("global_assets/css/icons/material/icons.css")}}" rel="stylesheet" type="text/css">
+			<link
+			href="{{asset("global_assets/css/icons/icomoon/styles.css")}}" rel="stylesheet" type="text/css">
+
+			<!--srart theme style -->
+			<link href="{{asset("front/assets/css/main.css")}}" rel="stylesheet" type="text/css"/>
+			<!-- end theme style -->
+			<!-- favicon links -->
+			<link rel="shortcut icon" type="image/ico" href="favicon.ico"/> <link rel="icon" type="image/ico" href="favicon.ico"/>
+		</head>
+	{% endblock %}
+	{# 	{% block avion %}
+			<body
+				class="travel_home">
+				<!--Page loading start-->
+	
+				<div class="travel_page_loader">
+					<div class="travel_loading_bar_wrapper">
+						<div class="travel_loading_bar">
+							<span class="from">
+								<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="30px" height="49px" viewbox="0 0 30 49" enable-background="new 0 0 30 49" xml:space="preserve"><path fill="#86B940" d="M15.053,4.626c6.334,0,11.488,5.166,11.488,11.514c0,6.35-5.153,11.515-11.488,11.515c-6.335,0-11.489-5.166-11.489-11.515C3.564,9.792,8.718,4.626,15.053,4.626 M15.053,1.26c-8.201,0-14.849,6.661-14.849,14.881c0,8.22,14.849,32.359,14.849,32.359s14.849-24.14,14.849-32.359S23.255,1.26,15.053,1.26z M17.197,21.558v1.444h1.701V6.772h-7.69V7.7h6.876v1.186h-6.876v14.115h1.776v-1.443L17.197,21.558L17.197,21.558z M15.718,10.146h2.292v2.298h-2.292V10.146z M15.7,14.108h2.292v2.299H15.7V14.108z M15.7,18.037h2.292v2.295H15.7V18.037z M12.133,10.146h2.292v2.298h-2.292V10.146z M12.114,14.108h2.292v2.299h-2.292V14.108z M12.114,20.333v-2.295h2.292v2.295H12.114z M17.197,23.188v-0.186h-4.213v0.186H8.695v1.631h12.717v-1.631H17.197z"/></svg>
+							</span>
+							<span class="to">
+								<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="30px" height="49px" viewbox="0 0 30 49" enable-background="new 0 0 30 49" xml:space="preserve"><path fill="#86B940" d="M15.001,3.636c6.369,0,11.55,5.193,11.55,11.577c0,6.383-5.181,11.58-11.55,11.58c-6.372,0-11.551-5.197-11.551-11.58C3.45,8.829,8.629,3.636,15.001,3.636 M15.001,0.25C6.753,0.25,0.07,6.952,0.07,15.213c0,8.265,14.931,32.537,14.931,32.537s14.93-24.272,14.93-32.537C29.931,6.952,23.244,0.25,15.001,0.25z M13.871,20.894l1.182-0.003V20.88h-0.005l0.005-0.038V20.62c-0.013-0.187,0-1.001,0-1.001c-0.118-1.364-0.671-3.527-2.869-4.981c-0.042-0.025-1.077-0.676-1.439-2.202c-0.355-1.505,0.07-3.29,1.265-5.305c-1.594,1.002-2.658,2.775-2.658,4.803c0,1.745,0.795,3.307,2.034,4.343c0,0,0.39,0.301,0.506,0.378C14.083,18.362,13.871,20.894,13.871,20.894z M17.594,14.451c0.013-0.002,1.19-0.681,1.269-2.161c0.086-1.549-0.23-3.436-1.508-5.498C16.72,6.497,16.02,6.32,15.283,6.283v12.016C15.612,17.022,15.927,15.552,17.594,14.451z M11.364,12.256c0.082,1.476,1.257,2.156,1.27,2.161c1.666,1.102,1.983,2.571,2.312,3.847V6.248c-0.738,0.036-1.436,0.214-2.071,0.508C11.6,8.819,11.282,10.707,11.364,12.256z M17.354,6.787v0.004l0.031,0.012L17.354,6.787z M18.113,7.107c1.295,2.104,1.836,3.727,1.465,5.288c-0.357,1.523-1.395,2.176-1.438,2.201c-2.14,1.412-2.718,3.504-2.856,4.873v1.423h1.237c0,0-0.03-2.824,1.757-4.35c1.617-1.093,2.369-2.708,2.369-4.606C20.646,9.819,19.823,8.08,18.113,7.107z M15.252,20.911h0.032v-0.02h-0.031L15.252,20.911z M13.695,24.404h3.116v-3.116h-3.116V24.404z"/></svg>
+							</span>
+							<div class="travel_loading_bar_overlay" style="width:0%;">
+								<span class="pointer"><img src="assets/images/icon/loading_plane.svg" alt=""/></span>
+								<span class="pointer_val">0%</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			{% endblock %} #}
+	<!--Page loading end-->
+
+	<!--Page main section start-->
+		<div
+		id="travel_wrapper"> <!--Header start-->
+		<header id="header_wrapper">
+			<div class="header_top">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-6 col-sm-6">
+							<p>
+								<i class="fa fa-phone"></i>
+								For Support? Call Us:
+								<span>+216 54342111</span>
+							</p>
+						</div>
+						<div class="col-md-6 col-sm-6">
+							<div class="top_menu">
+								<ul>
+									{# <li><a href=""><i class="fa fa-globe"></i> Languages</a>
+																																																																																																																																																																																																							                  <ul class="sub-menu">
+																																																																																																																																																																																																							                    <li><a href="">English</a></li>
+																																																																																																																																																																																																							                    <li><a href="">France</a></li>
+																																																																																																																																																																																																							                    <li><a href="">German</a></li>
+																																																																																																																																																																																																							                  </ul> #}
+								</li>
+								{# <li>
+																																																																																																																														<a href="">My Account</a>
+																																																																																																																													</li> #}
+								<li class="travelite_login_alert">
+									<a href="{{path('app_login')}}">Login</a>
+								</li>
+								<li class="travelite_signup_alert">
+									<a href="{{path('app_register_client')}}">Signup as Client</a>
+								</li>
+								<li class="travelite_signup_alert">
+									<a href="{{path('app_agent_register')}}">Signup as Agent</a>
+								</li>
+								{# <li><a href="">USD</a>
+																																																																																																																																																																																			                  <ul class="sub-menu">
+																																																																																																																																																																																			                    <li><a href="">INR</a></li>
+																																																																																																																																																																																			                    <li><a href="">USD</a></li>
+																																																																																																																																																																																			                  </ul>
+																																																																																																																																																																																			                </li> #}
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- popup form Start -->
+
+		<!-- popup form  End -->
+		<div class="header_bottom">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-2 col-sm-2">
+						<div class="travel_logo">
+							<img src="{{asset("/front/assets/images/Home/tayTravel.png")}}" alt="logo"/>
+						</div>
+					</div>
+					<div class="col-md-10 col-sm-10">
+						<a href="javascript:;" class="menu-toggle"></a>
+						<div class="main_menu">
+							<ul>
+								<li class="active">
+									<a href="{{ path('app_front_home')}}">HOME</a>
+
+								</li>
+								<li>
+									<a href="{{path('app_front_travel')}}">TRAVELS</a>
+
+								</li>
+								<li>
+									<a href="{{path('app_front_cruise')}}">CRUISES</a>
+								</li>
+								<li>
+									<a href="">EXCURSIONS</a>
+
+								</li>
+								<li>
+									<a href="Flight-Home.html">HIKES</a>
+
+								</li>
+								<li>
+									<a href="Hotel-Home.html">HOTELS</a>
+								</li>
+								<li>
+									<a href="{{path('app_front_goodAddress')}}">GOOD ADDRESSES</a>
+								</li>
+								<li>
+									<a href="">ARTICLES</a>
+								</li>
+								<li>
+									<a href="Contact.html">CONTACT</a>
+								</li>
+
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+	<!--Header end-->
+	<!--content body start-->
+	<div id="content_wrapper">
+		<div class="clearfix"></div>
+		{% block top_menu %}
+			<div
+				class="slider_tab_main">
+				<!-- Home first slider start -->
+				<div class="full_width home_slider">
+					<div class="example">
+						<div class="content" style="width:100%; float:left;">
+							<div
+								id="rev_slider_116_1_wrapper" class="rev_slider_wrapper fullwidthbanner-container" data-alias="layer-animations" style="margin:0px auto;background-color:transparent;padding:0px;margin-top:0px;margin-bottom:0px;">
+								<!-- START REVOLUTION SLIDER 5.0.7 auto mode -->
+								<div id="rev_slider_116_1" class="rev_slider fullwidthabanner" style="display:none;" data-version="5.0.7">
+									<ul
+										style="width:100% !important;" class="homesix_slide">
+										<!-- SLIDE  -->
+										<li
+											data-index="rs-391" data-transition="parallaxhorizontal" data-slotamount="default" data-easein="default" data-easeout="default" data-masterspeed="default" data-rotate="0" data-saveperformance="off" data-title="Smooth Mask" data-description="">
+
+											<!-- MAIN IMAGE -->
+											<img src="{{asset("/front/assets/images/Home/home2.jpg")}}" alt="slide1" data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg" data-no-retina><!-- MAIN IMAGE -->
+											<!-- slider overlay --><div class="slide_overlay"> </div>
+											<!-- slider overlay -->
+
+											<!-- LAYERS -->
+											<!-- Layer wrapper start-->
+												<div
+												class="layer_wrapper_main"> <!-- LAYER NR. 1 -->
+												<div
+													class="tp-caption NotGeneric-Title   tp-resizeme" id="slide-391-layer-1" data-x="40" data-hoffset="" data-y="center" data-voffset="50" data-width="['auto','auto','auto','auto']" data-height="['auto','auto','auto','auto']" data-transform_idle="o:1;" data-transform_in="y:bottom;s:2000;e:Power4.easeInOut;" data-transform_out="s:1000;e:Power2.easeInOut;s:1000;e:Power2.easeInOut;" data-start="1000" data-splitin="none" data-splitout="none" data-responsive_offset="on">{# <div style="line-height:60px;">
+																																																																																																																																																																																																																																																																																																										<img src="assets/images/Home/Home6/layer-img.png" alt="layer img">
+																																																																																																																																																																																																																																																																																																									</div> #}
+												</div>
+												<!-- LAYER NR. End -->
+
+												<!-- LAYER NR. 2 -->
+												<div class="tp-caption NotGeneric-Title   tp-resizeme" id="slide-391-layer-2" data-x="577" data-hoffset="" data-y="center" data-voffset="-200" data-width="['auto','auto','auto','auto']" data-height="['auto','auto','auto','auto']" data-transform_idle="o:1;" data-transform_in="y:top;s:2000;e:Power4.easeInOut;" data-transform_out="s:1000;e:Power2.easeInOut;s:1000;e:Power2.easeInOut;" data-start="2000" data-splitin="none" data-splitout="none" data-responsive_offset="on">
+													<div style="line-height:60px;">
+														<div class="hnmn_text_slide" style="font-size:45px; line-height:24px;">FIND YOUR DESTINATION
+														</div>
+														<div class="hnmn_tag_text" style="font-size:30px; line-height:80px;">PLAN A PERFECT ADVENTURE</div>
+													</div>
+												</div>
+												<!-- LAYER NR. End -->
+
+
+											</div>
+											<!-- Layer wrapper End -->
+
+											<!-- LAYER end -->
+
+										</li>
+										<!-- slide -->
+
+										<li
+											data-index="rs-392" data-transition="parallaxhorizontal" data-slotamount="default" data-easein="default" data-easeout="default" data-masterspeed="default" data-rotate="0" data-saveperformance="off" data-title="Smooth Mask" data-description="">
+
+											<!-- MAIN IMAGE -->
+											<img src="{{asset("/front/assets/images/Home/home4.jpg")}}" alt="slide2" data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg" data-no-retina><!-- MAIN IMAGE -->
+											<!-- slider overlay --><div class="slide_overlay"> </div>
+											<!-- slider overlay -->
+											<!-- Layer wrapper start-->
+											<div
+												class="layer_wrapper_main">
+												<!-- LAYER NR. 1 -->
+												<div class="tp-caption NotGeneric-Title   tp-resizeme" id="slide-392-layer-1" data-x="40" data-hoffset="" data-y="center" data-voffset="50" data-width="['auto','auto','auto','auto']" data-height="['auto','auto','auto','auto']" data-transform_idle="o:1;" data-transform_in="y:bottom;s:2000;e:Power4.easeInOut;" data-transform_out="s:1000;e:Power2.easeInOut;s:1000;e:Power2.easeInOut;" data-start="1000" data-splitin="none" data-splitout="none" data-responsive_offset="on">
+													<div style="line-height:60px;">
+														<img src="{{asset("/front/assets/images/Home/home5-.jpg")}}" alt="layer img">
+													</div>
+												</div>
+
+												<!-- LAYER NR. End -->
+
+												<!-- LAYER NR. 2 -->
+												<div class="tp-caption NotGeneric-Title   tp-resizeme" id="slide-392-layer-2" data-x="577" data-hoffset="" data-y="center" data-voffset="-200" data-width="['auto','auto','auto','auto']" data-height="['auto','auto','auto','auto']" data-transform_idle="o:1;" data-transform_in="y:top;s:2000;e:Power4.easeInOut;" data-transform_out="s:1000;e:Power2.easeInOut;s:1000;e:Power2.easeInOut;" data-start="2000" data-splitin="none" data-splitout="none" data-responsive_offset="on">
+													<div style="line-height:60px;">
+														<div class="hnmn_text_slide" style="font-size:45px; line-height:24px;">FIND YOUR DESTINATION</div>
+														<div class="hnmn_tag_text" style="font-size:30px; line-height:80px;">PLAN A PERFECT ADVENTURE</div>
+													</div>
+												</div>
+												<!-- LAYER NR. End -->
+
+												<!-- LAYER NR. 3 -->
+
+
+											</div>
+											<!-- Layer wrapper End -->
+
+
+										</li>
+									</ul>
+								</div>
+							</div>
+							<!-- END REVOLUTION SLIDER -->
+						</div>
+					</div>
+					<!-- section end -->
+				</div>
+				<!-- Home first slider End -->
+				<!-- slider tab section start -->
+				<div class="home_tabs_search">
+					<div class="full_width slider_form_main">
+						<div class="container">
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="slider_tabs">
+										<div class="wsa_tab">
+											<ul>
+												{# <li> <a href="#building_search"><i class="fa fa-building-o"></i></a> </li> #}
+												<li>
+													<a href="#plane_search">
+														<i class="fa fa-plane"></i>
+													</a>
+												</li>
+												{# <li> <a href="#car_search"><i class="fa fa-car"></i></a> </li>
+																																																																																																																																																																																																																																																																							<li> <a href="#local_hospital_search"> <i class="fa fa-hospital-o"></i></a></li> #}
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="full_width slider_content_wrap">
+						<div class="container">
+							<!-- first content_start -->
+
+							<!-- first content_end -->
+								<div
+								id="plane_search" class="main_content_form"> <!-- tab_search form start -->
+								{{ form_start(form, {'attr': {'class': 'search-form'}}) }}
+								<div class="pull_left destination_field">
+
+									{{ form_row(form.country) }}
+								</div>
+
+								<div class="pull_left check_in_field">
+
+									{{ form_row(form.q) }}
+
+								</div>
+
+
+								{{ form_end(form) }}
+
+
+								<!-- tab_search form End -->
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<!-- slider tab section End -->
+			</div>
+			<!-- slider main wrapper end -->
+		{% endblock %}
+		{% block content %}
+			<!-- feature section start -->
+			<div class="full_width travelite_feature_section">
+				<div class="container">
+					<div class="row">
+						<div class="car_booking_section">
+							{% for offer in offers[:4] %}
+								<div class="col-lg-3 col-md-3 col-sm-6">
+									<div class="hotel_feature_box">
+										<img src="{{ asset('uploads/images/offer/picture/' ~ offer.picture) }}" class="img-responsive" alt="car">
+
+										<div class="feature_overlay_second">
+											<div class="bottom_first">
+												<a href="{{ path('app_front_offer_show', {'id': offer.id}) }}">{{ offer.title }}</a>
+											</div>
+
+										</div>
+
+									</div>
+								</div>
+							{% endfor %}
+
+							{# <div class="col-lg-4 col-md-4 col-sm-6">
+																																																																																																																<div class="end_box_fearure">
+																																																																																																																	<h3 class="travelite_heading_feature">popular cars</h3>
+																																																																																																																	<p>Create stunning pages with our powerful admin</p>
+																																																																																																																	<div>
+																																																																																																																		<a href="#" class="black_btn">view more</a>
+																																																																																																																	</div>
+																																																																																																																</div>
+																																																																																																															</div> #}
+						</div>
+					</div>
+				</div>
+
+
+			</div>
+			<!-- feature section end -->
+
+			<!-- icon_circle_secion -->
+			<div class="full_width icon_circle_secion">
+				<div class="icon_circle_overlay"></div>
+				<div class="container">
+					<div class="row row_top">
+
+						<div
+							class="col-md-3 col-sm-6">
+							<!-- wrapper main start -->
+							<div class="wrapper_main">
+								<div class="news_thumb_wrapper">
+									<div class="thumb_overlay_d"></div>
+									<img src="{{asset("/front/assets/images/Home/Trust.PNG")}}" alt="" class="img-responsive">
+
+									<div class="icon_circle_d">
+										<i class="fa fa-lock"></i>
+									</div>
+								</div>
+								<div class="desc_main">
+									<h4>Trust & Safety</h4>
+									<p>We have created a secure platform that combines travel offers from various agencies. Our admin panel allows for effortless page creation while ensuring data security. Enjoy unbeatable deals on hotels, packages, flights, and cruises, exclusively curated for travelers.
+									</p>
+									<br><br>
+								</div>
+							</div>
+							<!-- wrapper main End-->
+						</div>
+
+						<div
+							class="col-md-3 col-sm-6">
+							<!-- wrapper main start -->
+							<div class="wrapper_main">
+								<div class="news_thumb_wrapper">
+									<div class="thumb_overlay_d"></div>
+									<img src="{{asset("/front/assets/images/Home/tickets sale.jpg")}}" alt="" class="img-responsive">
+									<div class="icon_circle_d">
+										<i class="fa fa-dollar"></i>
+									</div>
+								</div>
+								<div class="desc_main">
+									<h4>Price Guarantee</h4>
+									<p>Our platform is dedicated to delivering excellent value through our Price Guarantee. Book with confidence, knowing we prioritize your satisfaction and offer unbeatable prices without compromising quality. Our Price Guarantee showcases our commitment to exceptional value.</p>
+									<br><br>
+								</div>
+							</div>
+							<!-- wrapper main End-->
+						</div>
+						<div
+							class="col-md-3 col-sm-6">
+							<!-- wrapper main start -->
+							<div class="wrapper_main">
+								<div class="news_thumb_wrapper">
+									<div class="thumb_overlay_d"></div>
+									<img src="{{asset("/front/assets/images/Home/best tour 2.PNG")}}" alt="" class="img-responsive">
+									<div class="icon_circle_d">
+										<i class="fa fa-plane"></i>
+									</div>
+								</div>
+								<div class="desc_main">
+									<h4>Best tour</h4>
+									<p>Experience extraordinary travel on our platform with our handpicked top-rated tours. Immerse yourself in the beauty, culture, and adventures of your destination. Our 'Best Tour' collection offers something for every traveler, with expert guides and personalized itineraries for an exceptional journey.</p>
+									<br>
+								</div>
+							</div>
+							<!-- wrapper main End-->
+						</div>
+						<div
+							class="col-md-3 col-sm-6">
+							<!-- wrapper main start -->
+							<div class="wrapper_main">
+								<div class="news_thumb_wrapper">
+									<div class="thumb_overlay_d"></div>
+									<img src="{{asset("/front/assets/images/Home/help.jpg")}}"alt="" class="img-responsive">
+									<div class="icon_circle_d">
+										<i class="fa fa-thumbs-o-up"></i>
+									</div>
+								</div>
+								<div class="desc_main">
+									<h4>Good Guidance</h4>
+									<p>Enhance your travel experiences with our expert guidance on our platform. Our knowledgeable travel advisors assist you every step of the way, from destination recommendations to itinerary planning and local insights. Trust in our 'Good Guidance' to unlock the full potential of your travels and create personalized, memorable experiences.</p>
+
+								</div>
+							</div>
+							<!-- wrapper main End-->
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+			<!-- icon_circle_secion End -->
+
+			<!-- top destination section start -->
+			<div class="full_width travelite_world_section">
+				<div class="container">
+					<div class="row">
+						<div class="travelite_destinaion_main">
+							<div class="heading_team">
+								<h3>The Most Visited Destinations</h3>
+								<p>Explore the finest deals for these destinations</p>
+							</div>
+						</div>
+
+						<div
+							class="row">
+							<!-- first ractangle start -->
+							{% for country in countries %}
+								<div class="col-lg-4 col-md-4 col-sm-6">
+									<div class=" full_width destination_box_wrapper">
+
+										<img src="{{ asset('uploads/images/country/picture/' ~ country.picture) }}" class="img-responsive" alt="destination">
+
+										<div class="full_width offer_inner_desc">
+											<div class="desc_left_inner">
+												<a href="#">
+													{{country.intitule}}
+												</a>
+											</div>
+											<div class="desc_right_inner">
+												<a href="">Details</a>
+
+											</div>
+										</div>
+									</div>
+								</div>
+							{% endfor %}
+							<!-- first ractangle End -->
+
+
+						</div>
+
+						<div class="full_width destination_button">
+							<a href="#" class="black_btn feature_more_btn">more destination</a>
+						</div>
+					</div>
+					<!-- travelite_destinaion_main end -->
+
+
+				</div>
+			</div>
+			<!-- top destination section End -->
+
+
+			<!-- our partners crousel section section start -->
+			<div class="full_width our_partners_crousel_section">
+				<div class="container">
+					<div class="row row_top_padding">
+						<div class="heading_team">
+							<h3>our partners</h3>
+							<p>We take pride in collaborating with prestigious partners.</p>
+						</div>
+						<div id="partner_crousel_slide">
+							{% for agence in agences %}
+								<div class="item"><img src="{{ asset('uploads/images/agences/logo/' ~ agence.brochurefilename) }}" alt="logo image"></div>
+							{% endfor %}
+
+						</div>
+
+
+					</div>
+				</div>
+			</div>
+			<!-- our partners crousel section section End -->
+
+		</div>
+		<!--content body end-->
+	{% endblock %}
+	<!--footer start-->
+	<footer id="footer_wrapper">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6">
+					<aside class="widget widget_text">
+						<img src="{{asset("/front/assets/images/Home/tayssirTravel1.png")}}" alt="footer logo"/>
+						<p>As a newcomer in the industry, our platform brings a fresh and innovative approach to travel. Despite being in the early stages of our journey, we have assembled a team of dedicated professionals who are committed to delivering exceptional experiences to our customers.
+							<br>
+							<br>
+							With a deep understanding of the evolving needs and preferences of modern travelers, we strive to curate unique and memorable trips that cater to a variety of interests and budgets. Our meticulous attention to detail ensures that every aspect of your journey is thoughtfully planned and executed.</p>
+						<a href="">Read More
+							<i class="fa fa-angle-right"></i>
+						</a>
+
+						{# <div>We prioritize building strong partnerships with reputable travel providers, enabling us to offer a diverse selection of accommodations, transportation options, and immersive activities. Our goal is to provide a seamless and enjoyable booking experience, supported by responsive customer service and reliable technology.
+																																																															
+																																																															While we may be beginners in the field, our ambition and passion drive us to continuously improve and innovate. We eagerly embrace feedback and actively seek to learn from our customers, as their satisfaction remains at the core of our mission.
+																																																															
+																																																															Join us on this exciting journey as we embark on a mission to redefine the travel experience and create lasting memories for all who choose to explore the world through our platform.
+																																																														</div> #}
+					</aside>
+					<aside class="widget widget_tag_cloud">
+						<h4 class="widget-title">PLAN A PERFECT ADVENTURE</h4>
+						<div class="tagcloud">
+							<a href="">EUROPE</a>
+							<a href="">ASIA</a>
+							<a href="">AFRICA</a>
+							<a href="">LATEN AMERICA</a>
+
+						</div>
+					</aside>
+				</div>
+				<div class="col-md-6">
+
+					<aside class="widget widget_links">
+						<h4 class="widget-title">Quick Access Links</h4>
+						<ul>
+							<li><a href="">Home</a></li>
+							<li><a href="">Travel</a></li>
+							<li><a href="">Cruises</a></li>
+							<li><a href="">Excursions</a></li>
+							<li><a href="">Hikes</a></li>
+							<li><a href="">Hotels</a></li>
+							<li><a href="">Articles</a></li>
+							<li><a href="">Good addresses</a></li>
+							<li><a href="">Contact</a></li>
+						</ul>
+					</aside>
+				</div>
+				{# <div class="col-md-4">
+																																																		<aside class="widget widget_search_availability">
+																																																			
+																																																			
+																																																		</aside>
+																																																		
+																																																	</div> #}
+			</div>
+		</div>
+	</footer>
+	<!--footer end-->
+	<div class="copyright">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6 col-sm-6 text-right">
+					<span>2023 Tayssir Travel | Powred by
+						{# <img src="/front/assets/images/Home/softsquare.png" alt=""> #}
+						<a href="https://www.softsquareit.com/">
+
+							SoftSquare IT</span>
+					</a>
+				</div>
+				<div class="col-md-6 col-sm-6">
+					<span>Stay Connected with Us -
+					</span>
+					<a href="">
+						<i class="fa fa-facebook"></i>
+					</a>
+					<a href="">
+						<i class="fa fa-twitter"></i>
+					</a>
+					<a href="">
+						<i class="fa fa-google-plus"></i>
+					</a>
+					<a href="">
+						<i class="fa fa-linkedin"></i>
+					</a>
+					<a href="">
+						<i class="fa fa-rss"></i>
+					</a>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<!--Page main section end-->
+	<!--main js file start-->
+	{% block javascripts %}
+		<script type="text/javascript" src="{{asset("front/assets/js/jquery.min.js")}}"></script>
+		<script type="text/javascript" src="{{asset("front/assets/js/bootstrap.min.js")}}"></script>
+		<script type="text/javascript" src="{{asset("front/assets/js/bootstrap-select.js")}}"></script>
+		<script type="text/javascript" src="{{asset("front/assets/js/plugin/datetimepicker/jquery.datetimepicker.js")}}"></script>
+		<script type="text/javascript" src="{{asset("front/assets/js/plugin/parallax/jquery.parallax-1.1.3.js")}}"></script>
+		<script type="text/javascript" src="{{asset("front/assets/js/plugin/owl/owl.carousel.js")}}"></script>
+		<script type="text/javascript" src="{{asset("front/assets/js/plugin/isotope/jquery.isotope.js")}}"></script>
+		<script type="text/javascript" src="{{asset("front/assets/js/plugin/bxslider/jquery-bxslider.js")}}"></script><!-- pie chart js -->
+		<script type="text/javascript" src="{{asset("front/assets/js/plugin/pie-circle/circles.js")}}"></script><!-- pie chart js --><!--counter js-->
+		<script type="text/javascript" src="{{asset("front/assets/js/plugin/counter/jquery.countTo.js")}}"></script><!--counter js-->
+		<script type="text/javascript" src="{{asset("front/assets/js/plugin/counter/jquery.countdown.js")}}"></script><!-- REVOLUTION JS FILES -->
+		<script type="text/javascript" src="{{asset("front/assets/js/plugin/revolution/js/jquery.themepunch.tools.min.js")}}"></script>
+		<script type="text/javascript" src="{{asset("front/assets/js/plugin/revolution/js/jquery.themepunch.revolution.min.js")}}"></script>
+		<script type="text/javascript" src="{{asset("front/assets/js/plugin/revolution/js/revolution.extension.layeranimation.min.js")}}"></script>
+		<script type="text/javascript" src="{{asset("front/assets/js/plugin/revolution/js/revolution.extension.navigation.min.js")}}"></script>
+		<script type="text/javascript" src="{{asset("front/assets/js/plugin/revolution/js/revolution.extension.slideanims.min.js")}}"></script>
+		<script type="text/javascript" src="{{asset("front/assets/js/plugin/revolution/js/revolution.extension.actions.min.js")}}"></script>
+		<script type="text/javascript" src="{{asset("front/assets/js/plugin/revolution/js/revolution.extension.parallax.min.js")}}"></script>
+		<!-- REVOLUTION JS FiLES --><!-- video_popup -->
+		<script type="text/javascript" src="{{asset("front/assets/js/plugin/video-popup/jquery.magnific-popup.js")}}"></script>
+		<!-- video_popup --><!-- slick slider -->
+		<script type="text/javascript" src="{{asset("front/assets/js/plugin/slick/jquery-migrate-1.2.1.min.js")}}"></script>
+		<script type="text/javascript" src="{{asset("front/assets/js/plugin/slick/slick.min.js")}}"></script>
+		<!-- slick slider -->
+		<!-- video player js -->
+		<script src="{{asset("front/assets/js/plugin/video_player/mediaelement-and-player.min.js")}}"></script>
+		<!-- video player js --><!-- pricefilter --><script src="{{asset("front/assets/js/plugin/jquery-ui/jquery-ui.js")}}"></script>
+		<!-- pricefilter-->
+		<script type="text/javascript" src="{{asset("front/assets/js/custom.js")}}"></script>
+
+		      <!-- slick slider -->
+     
+      <!-- slick slider -->
+	{% endblock %}
+	<!--main js file end-->
+</html></body></html>

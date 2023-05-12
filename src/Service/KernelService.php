@@ -123,6 +123,16 @@ class KernelService extends AbstractController
         return $fileName;
     }
 
+
+    public function loadProfileClient(UploadedFile $file)
+    {
+        $files_directory = $this->getParameter('profile_directory_Client');
+        $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+        $file->move($files_directory, $fileName);
+        
+
+        return $fileName;
+    }
     
 
     public function loadPictures(UploadedFile $file)
@@ -142,6 +152,17 @@ class KernelService extends AbstractController
         $file->move($files_directory, $fileName);
         
 
+        return $fileName;
+    }
+
+    
+
+    public function loadPictureCountry(UploadedFile $file)
+    {
+        $files_directory = $this->getParameter('Country_Picture_directory');
+        $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+        $file->move($files_directory, $fileName);
+    
         return $fileName;
     }
 

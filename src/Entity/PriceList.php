@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Excursion;
 
 #[ORM\Entity(repositoryClass: PriceListRepository::class)]
 class PriceList
@@ -35,14 +36,15 @@ class PriceList
     #[ORM\ManyToOne(inversedBy: 'priceLists')]
     private ?Offer $offer = null;
 
-    #[ORM\ManyToMany(targetEntity: Excursion::class, inversedBy: 'grille_tarifaires')]
+    #[ORM\ManyToMany(targetEntity: Excursion::class, inversedBy: 'prices')]
     #[ORM\JoinTable(name: "price_list_excursion")]
-    private Collection $Included_excursions;
+    private Collection $ExcursionsIncluded;
+
 
     public function __construct()
     {
         $this->hotels = new ArrayCollection();
-        $this->Included_excursions = new ArrayCollection();
+        $this->ExcursionsIncluded = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -139,27 +141,26 @@ class PriceList
     /**
      * @return Collection<int, Excursion>
      */
-    public function getIncluded_excursions(): Collection
+    public function getExcursionsIncluded(): Collection
     {
-        return $this->Included_excursions;
+        return $this->ExcursionsIncluded;
     }
 
-    public function addIncluded_excursion(Excursion $Included_excursion): self
+    public function addExcursionsIncluded(Excursion $excursionsIncluded): self
     {
-        if (!$this->Included_excursions->contains($Included_excursion)) {
-            $this->Included_excursions->add($Included_excursion);
-            $Included_excursion->addGrilleTarifaire($this);
+        if (!$this->ExcursionsIncluded->contains($excursionsIncluded)) {
+            $this->ExcursionsIncluded->add($excursionsIncluded);
         }
 
         return $this;
     }
 
-    public function removeIncluded_excursion(Excursion $Included_excursion): self
+    public function removeExcursionsIncluded(Excursion $excursionsIncluded): self
     {
-        if ($this->Included_excursions->removeElement($Included_excursion)) {
-            $Included_excursion->removeGrilleTarifaire($this);
-        }
+        $this->ExcursionsIncluded->removeElement($excursionsIncluded);
 
         return $this;
     }
+
+
 }

@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Pictures;
 use App\Entity\Reviews;
-use App\Entity\User;
+use App\Entity\Client;
 use App\Form\ReviewsType;
 use App\Repository\ExcursionRepository;
 use App\Repository\ReviewsRepository;
@@ -33,11 +33,11 @@ class ReviewsController extends AbstractController
         $review = $this->getDoctrine()->getRepository(Reviews::class)
             ->find($id);
 
-        $user = $review->getUser();
-        $userName = $user->getLastname();
+        $client = $review->getClient();
+        $clientName = $client->getLastname();
         return $this->render('admin/reviews/show_review.html.twig', [
             'review' => $review,
-            'user' => $userName
+            'client' => $clientName
         ]);
     }
 
@@ -121,12 +121,8 @@ class ReviewsController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-
-            /*  if ($this->getUser() instanceof User) {
-                $review->setUser($this->getUser());
-            } */
-            $user = $form->get('user')->getData();
-            $review->setUser($user);
+            $client = $form->get('client')->getData();
+            $review->setClient($client);
 
             $myFile = $form['picture']->getData();
             if ($myFile) {

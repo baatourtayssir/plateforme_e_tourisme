@@ -6,6 +6,7 @@ use App\Repository\ExcursionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\PriceList;
 
 #[ORM\Entity(repositoryClass: ExcursionRepository::class)]
 class Excursion extends Offer
@@ -19,19 +20,19 @@ class Excursion extends Offer
     #[ORM\JoinTable(name: "excursion_region")]
     private Collection $regions;
 
-    #[ORM\ManyToMany(targetEntity: PriceList::class, mappedBy: 'Included_excursions')]
-    private Collection $grille_tarifaires;
-
     #[ORM\OneToMany(mappedBy: 'excursion', targetEntity: TravelExcursion::class)]
     private Collection $travelExcursions;
+
+    #[ORM\ManyToMany(targetEntity: PriceList::class, mappedBy: 'ExcursionsIncluded')]
+    private Collection $prices;
 
     
     public function __construct()
     {
         $this->regions = new ArrayCollection();
-       $this->grille_tarifaires = new ArrayCollection();
        $this->travelExcursions = new ArrayCollection();
        /*  $this->images = new ArrayCollection();  */
+       $this->prices = new ArrayCollection();
       
         
     
@@ -66,32 +67,7 @@ class Excursion extends Offer
         return $this;
     }
 
-   /**
-     * @return Collection<int, PriceList>
-     */
-     public function getGrilleTarifaires(): Collection
-    {
-        return $this->grille_tarifaires;
-    }
-
-    public function addGrilleTarifaire(PriceList $grille_tarifaire): self
-    {
-        if (!$this->grille_tarifaires->contains($grille_tarifaire)) {
-            $this->grille_tarifaires->add($grille_tarifaire);
-            $grille_tarifaire->addIncluded_excursion($this);
-        }
-
-        return $this;
-    }
-
-    public function removeGrilleTarifaire(PriceList $grille_tarifaire): self
-    {
-        if ($this->grille_tarifaires->removeElement($grille_tarifaire)) {
-            $grille_tarifaire->removeIncluded_excursion($this);
-        }
-
-        return $this;
-    }
+  
 
 /*     public function getPriceListsForExcursion()
 {
@@ -142,6 +118,33 @@ class Excursion extends Offer
             if ($travelExcursion->getExcursion() === $this) {
                 $travelExcursion->setExcursion(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PriceList>
+     */
+    public function getPrices(): Collection
+    {
+        return $this->prices;
+    }
+
+    public function addPrice(PriceList $priceList): self
+    {
+        if (!$this->prices->contains($priceList)) {
+            $this->prices->add($priceList);
+            $priceList->addExcursionsIncluded($this);
+        }
+
+        return $this;
+    }
+
+    public function removePrice(PriceList $priceList): self
+    {
+        if ($this->prices->removeElement($priceList)) {
+            $priceList->removeExcursionsIncluded($this);
         }
 
         return $this;

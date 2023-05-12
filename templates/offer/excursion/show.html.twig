@@ -53,7 +53,7 @@
 						<div class="card-body">
 							<div class="card-img-actions mr-3">
 								<img
-								class="card-img img-fluid" src="{{ asset('uploads/images/offer/excursion/picture/' ~ excursion.picture) }}" alt="">
+								class="card-img img-fluid" src="{{ asset('uploads/images/offer/picture/' ~ excursion.picture) }}" alt="">
 								{# <div class="card-img-actions-overlay card-img">
 																																																																	<a href="blog_single.html" class="btn btn-outline bg-white text-white border-white border-2 btn-icon rounded-round">
 																																																																		<i class="icon-link"></i>
@@ -64,7 +64,7 @@
 								<div {# class="card-footer" #}>
 									{% for image in excursion.images %}
 										<a href="#">
-											<img src="{{ asset('uploads/images/offer/excursion/pictures/' ~ image) }}" class="rounded" width="60" height="60" alt="">
+											<img src="{{ asset('uploads/images/offer/pictures/' ~ image) }}" class="rounded" width="60" height="60" alt="">
 										</a>
 									{% endfor %}
 									<a href="{{ path('app_excursion_edit', {'id': excursion.id}) }}" class="btn btn-icon bg-transparent border-slate-300 text-slate rounded border-dashed">

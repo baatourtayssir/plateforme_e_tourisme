@@ -55,6 +55,7 @@
 			<thead>
 				<tr>
 					<th>Id</th>
+					<th>Client last name</th>
 					<th>Date</th>
 					<th>Status</th>
 					<th>Massage</th>
@@ -70,6 +71,7 @@
 				{% for reservation in reservations %}
 					<tr>
 						<td>{{ reservation.id }}</td>
+						<td>{{reservation.client.lastname}}</td>
 						<td>{{reservation.dateReservation|date("d/m/Y")}}</td>
 						<td>{{ reservation.status |raw}}</td>
 						<td>{{ reservation.message |raw}}</td>

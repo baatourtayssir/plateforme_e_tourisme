@@ -70,7 +70,7 @@ class TravelExcursion
     {
         return $this->travels;
     }
-
+/* 
     public function addTravel(Travel $travel): self
     {
         if (!$this->travels->contains($travel)) {
@@ -78,7 +78,17 @@ class TravelExcursion
         }
 
         return $this;
+    } */
+
+    public function addTravel(?Travel $travel): self
+{
+    if ($travel !== null) {
+        $this->travels[] = $travel;
+        $travel->addTravelExcursion($this);
     }
+
+    return $this;
+}
 
     public function removeTravel(Travel $travel): self
     {

@@ -546,7 +546,7 @@ class PriceListController extends AbstractController
             throw $this->createNotFoundException('L\'offre avec l\'id ' . $id . ' n\'existe pas');
         }
 
-        if ($offer instanceof Excursion) {
+       /*  if ($offer instanceof Excursion) {
             $excursion = $excursionRepository->findOneBy(['id' => $id]);
             if (!$excursion) {
                 throw $this->createNotFoundException('Excursion not found');
@@ -569,8 +569,8 @@ class PriceListController extends AbstractController
             if (!$cruise) {
                 throw $this->createNotFoundException('Cruise not found');
             }
-            $template = 'app_cruise_show';
-        } elseif ($offer instanceof Travel) {
+            $template = 'app_cruise_show'; } */
+        if ($offer instanceof Travel) {
             $travel = $travelRepository->findOneBy(['id' => $id]);
             if (!$travel) {
                 throw $this->createNotFoundException('Travel not found');

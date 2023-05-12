@@ -1,0 +1,88 @@
+{% extends 'front/home.html.twig' %}
+{% block avion %}{% endblock %}
+
+{% block top_menu %}
+
+	<!--page title start-->
+	<div class="page_title" data-stellar-background-ratio="0" data-stellar-vertical-offset="0" style="background-image:url(assets/images/bg/page_title_bg.jpg);">
+		<ul>
+			<li><a href="javascript:;">Good &nbsp address &nbsp Details &nbsp for &nbsp{{goodAddress.intitule}}</a></li>
+		</ul>
+	</div>
+	<!--page title end-->
+	<div class="clearfix"></div>
+
+
+{% endblock %}
+
+{% block content %}
+	<!-- traveller story section start -->
+	<section class="full_width ds_traveller_story">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-5 col-md-5 col-sm-8 col-xs-8">
+					<div class="left_side_slider">
+
+						<ul class="about_slider">
+							<li><img src="{{ asset('uploads/images/goodAddress/picture/' ~ goodAddress.picture) }}" alt=""></li>
+							{% for image in goodAddress.images %}
+								<li><img src="{{ asset('uploads/images/goodAddress/pictures/' ~ image) }}" alt=""></li>
+							{% endfor %}
+
+						</ul>
+
+					</div>
+				</div>
+				<div class="col-lg-7 col-md-7 col-sm-12 travelite_about_right_side">
+					<div class="right_side_details">
+						<h3>Good address :
+							<b class="traveller_text_b">{{goodAddress.intitule}}</b>
+						</h3>
+						<h5><i class="icon-location4 mr-1">&nbsp {{goodAddress.region.intitule}}</i></h5>
+						<p>
+							{{goodAddress.description|raw}}
+						</p>
+					</div>
+					<div class="full_width check_lists">
+						{# <ul>
+							<li>
+								<label>integrity</label>
+								<p>-Doing the right thing</p>
+							</li>
+							<li>
+								<label>Responsible</label>
+								<p>-think globel,act local</p>
+							</li>
+							<li>
+								<label>Growth</label>
+								<p>-Stakeholders in our own success</p>
+							</li>
+							<li>
+								<label>Innovation</label>
+								<p>-Thriving on new ideas and embracing change</p>
+							</li>
+							<li>
+								<label>Fun</label>
+								<p>-It’s engrained into who we are and what we do</p>
+							</li>
+							<li>
+								<label>Passion</label>
+								<p>-We are inspired by the work we do and the trips we offer</p>
+							</li>
+						</ul> #}
+
+					</div>
+					{# <div class="pull_left btn_left">
+						<a href="#" class="btn_green gallery_btn">view our gallery</a>
+					</div> #}
+
+				</div>
+			</div>
+
+		</div>
+
+	</section>
+	<!-- traveller story section End -->
+
+
+{% endblock %}

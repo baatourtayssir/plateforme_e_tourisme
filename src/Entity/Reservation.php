@@ -26,12 +26,15 @@ class Reservation
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $note = null;
-
+                                                                                       
     #[ORM\ManyToOne(inversedBy: 'reservations')]
     private ?Offer $offer = null;
 
     #[ORM\ManyToOne(inversedBy: 'reservations')]
     private ?Agence $agence = null;
+
+    #[ORM\ManyToOne(inversedBy: 'reservations')]
+    private ?Client $client = null;
 
 
     public function getId(): ?int
@@ -119,6 +122,18 @@ class Reservation
     public function setAgence(?Agence $agence): self
     {
         $this->agence = $agence;
+
+        return $this;
+    }
+
+    public function getClient(): ?Client
+    {
+        return $this->client;
+    }
+
+    public function setClient(?Client $client): self
+    {
+        $this->client = $client;
 
         return $this;
     }

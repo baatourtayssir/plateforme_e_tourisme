@@ -36,6 +36,9 @@ class Country
     #[ORM\ManyToOne(inversedBy: 'countries')]
     private ?Geographical $geographical = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $picture = null;
+
     public function __construct()
     {
         $this->offers = new ArrayCollection();
@@ -187,6 +190,18 @@ class Country
     public function setGeographical(?Geographical $geographical): self
     {
         $this->geographical = $geographical;
+
+        return $this;
+    }
+
+    public function getPicture(): ?string
+    {
+        return $this->picture;
+    }
+
+    public function setPicture(string $picture): self
+    {
+        $this->picture = $picture;
 
         return $this;
     }

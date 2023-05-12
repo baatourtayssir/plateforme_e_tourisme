@@ -93,7 +93,7 @@
 					<tr>
 						<td>{{ hiking.id }}</td>
 						<td><a href="{{ path('app_hiking_show', {'id': hiking.id}) }}">{{hiking.title}} </a></td>
-						<td><img src="{{ asset('uploads/images/offer/hiking/picture/' ~ hiking.picture) }}" width="80" alt="No picture"></td>
+						<td><img src="{{ asset('uploads/images/offer/picture/' ~ hiking.picture) }}" width="80" alt="No picture"></td>
 
 						{# <td>{{ hiking.description |raw}}</td>
 						<td>{{ hiking.inclus |raw}}</td>
@@ -109,11 +109,11 @@
 							{% endfor %}
 						</td> #}
 
-						<td>
+						{# <td>
 							{% for category in hiking.categories %}
 								{{ category.style }}
 							{% endfor %}
-						</td>
+						</td> #}
 						<td>{{ hiking.agence.name }}</td>
 
 						<td>

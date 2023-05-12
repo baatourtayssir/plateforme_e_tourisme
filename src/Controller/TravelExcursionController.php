@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Travel;
 use App\Entity\TravelExcursion;
+use App\Form\TravelExcursionTravelType;
 use App\Form\TravelExcursionType;
 use App\Repository\OfferRepository;
 use App\Repository\TravelExcursionRepository;
@@ -48,8 +49,9 @@ class TravelExcursionController extends AbstractController
     #[Route('/new/{id}', name: 'app_travel_excursion_new_travel', methods: ['GET', 'POST'])]
     public function newtravel(Request $request, int $id, OfferRepository $offerRepository, TravelRepository $travelRepository, TravelExcursionRepository $travelExcursionRepository): Response
     {
+        $travel=$travelRepository->find($id);
         $travelExcursion = new TravelExcursion();
-        $form = $this->createForm(TravelExcursionType::class, $travelExcursion);
+        $form = $this->createForm(TravelExcursionTravelType::class, $travelExcursion);
         $form->handleRequest($request);
 
         /*         $travel = $travelRepository->findOneBy(['id' => $id]);
@@ -69,13 +71,14 @@ class TravelExcursionController extends AbstractController
         }
         if ($form->isSubmitted() && $form->isValid()) {
             $travel->addTravelExcursion($travelExcursion);
+            $travelExcursion->addTravel($travel);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($travelExcursion);
             $entityManager->flush();
             return $this->redirectToRoute($template, ['id' => $travel->getId()], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('offer/travel_excursion/form.html.twig', [
+        return $this->renderForm('offer/travel_excursion/formTravel.html.twig', [
             'travel_excursion' => $travelExcursion,
             'form' => $form,
             'travel' => $travel,
@@ -123,20 +126,24 @@ class TravelExcursionController extends AbstractController
     }
 
     #[Route('{travel}/{id}/travel/edit', name: 'app_tarvel_excursion_edit_tarvel_excursion', methods: ['GET', 'POST'])]
-    public function editTravel(Request $request,int $id,Travel $travel, TravelExcursion $travelExcursion, TravelExcursionRepository $travelExcursionRepository): Response
+    public function editTravel(Request $request,int $id,Travel $travel, TravelExcursion $travelExcursion, TravelRepository $travelRepository): Response
     {
+        $travel=$travelRepository->find($id);
+
         $entityManager = $this->getDoctrine()->getManager();
         $travelExcursion = $entityManager->getRepository(TravelExcursion::class)->find($id);
-        $form = $this->createForm(TravelExcursionType::class, $travelExcursion);
+        $form = $this->createForm(TravelExcursionTravelType::class, $travelExcursion);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            
+            $travelExcursion->addTravel($travel);
             $entityManager->persist($travelExcursion);
             $entityManager->flush();
             return $this->redirectToRoute('app_travel_show', ['id' =>$travel->getId()], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('offer/travel_excursion/form.html.twig', [
+        return $this->renderForm('offer/travel_excursion/formTravel.html.twig', [
             'tarvel_excursion' => $travelExcursion,
             'travel' => $travel,
             'form' => $form,

@@ -4,7 +4,6 @@ namespace App\Entity;
 
 use App\Repository\OfferRepository;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\DiscriminatorColumn;
@@ -12,6 +11,8 @@ use Doctrine\ORM\Mapping\DiscriminatorMap;
 use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\InheritanceType;
+use Doctrine\Common\Collections\Collection;
+use App\Entity\Category;
 
 
 #[Table(name: "offer")]
@@ -74,19 +75,16 @@ class Offer
 
 
 
-    #[ORM\ManyToMany(targetEntity: Category::class, mappedBy: 'offers')]
-    private Collection $categories;
-
 
     public function __construct()
     {
         $this->countries = new ArrayCollection();
         $this->goodAddress = new ArrayCollection();
+
         $this->reviews = new ArrayCollection();
         $this->images = new ArrayCollection();
         $this->reservations = new ArrayCollection();
         $this->priceLists = new ArrayCollection();
-        $this->categories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -340,28 +338,6 @@ class Offer
 
 
 
-    /**
-     * @return Collection<int, Category>
-     */
-    public function getCategories(): Collection
-    {
-        return $this->categories;
-    }
 
-    public function addCategory(Category $category): self
-    {
-        if (!$this->categories->contains($category)) {
-            $this->categories->add($category);
-        }
-
-        return $this;
-    }
-
-    public function removeCategory(Category $category): self
-    {
-        $this->categories->removeElement($category);
-
-        return $this;
-    }
 
 }

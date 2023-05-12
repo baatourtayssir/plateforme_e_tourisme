@@ -7,7 +7,7 @@
 	<script src="{{asset("global_assets/js/demo_pages/datatables_basic.js")}}"></script>
 	<!-- /theme JS files -->
 {% endblock %}
-{% block title %}Article list
+{% block title %}Reviews list
 {% endblock %}
 {% block menu %}
 	<h4>
@@ -51,7 +51,7 @@
 			<thead>
 				<tr>
 					<th>Id</th>
-					<th>User Last Name</th>
+					<th>Client Last Name</th>
 					<th colspan="2">Comment</th>
 					<th>Date</th>
 					<th>Picture</th>
@@ -66,7 +66,7 @@
 				{% for review in reviews %}
 					<tr>
 						<td>{{ review.id }}</td>
-						<td>{{review.user.lastname}}</td>
+						<td>{{review.client.lastname}}</td>
 						<td>
 						
 							{# <a href="{{ path('show_review_', {'id': review.id}) }}"> #}{{ review.comment|raw }}

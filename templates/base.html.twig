@@ -173,7 +173,7 @@
 							<div class="sidebar-user-material">
 								<div class="sidebar-user-material-body">
 									<div class="card-body text-center">
-									
+
 										<div class="ml-3 align-self-center text-right">
 											<a href="{{ path('app_agence_show', {'id': app.user.agence.id}) }}" class="text-white">
 												<i class="icon-cog3"></i>
@@ -191,15 +191,14 @@
 												<span>My account</span>
 											</a>
 										</div>
-									
+
 									</div>
 
 								</div>
 
 								<div class="collapse" id="user-nav">
-									<ul
-										class="nav nav-sidebar">
-									
+									<ul class="nav nav-sidebar">
+
 										<li class="nav-item">
 											<a href="{{ path('app_agence_show', {'id': app.user.agence.id}) }}" class="nav-link">
 												<i class="icon-cog5"></i>
@@ -307,7 +306,7 @@
 
 										<li class="nav-item nav-item-submenu">
 											<a href="#" class="nav-link">
-												<i class="icon-man-woman mr-3 "></i>
+												<i class="icon-man-woman "></i>
 												<span>Agent</span>
 											</a>
 											<ul class="nav nav-group-sub" data-submenu-title="Agence">
@@ -318,6 +317,28 @@
 											<ul class="nav nav-group-sub" data-submenu-title="Agence">
 												<li class="nav-item">
 													<a href="{{path('app_agent_new')}}" class="nav-link">Add agent</a>
+												</li>
+											</ul>
+
+										</li>
+									{% endif %}
+
+
+									{% if is_granted ('ROLE_ADMIN') %}
+
+										<li class="nav-item nav-item-submenu">
+											<a href="#" class="nav-link">
+												<i class="icon-man-woman"></i>
+												<span>Client</span>
+											</a>
+											<ul class="nav nav-group-sub" data-submenu-title="Agence">
+												<li class="nav-item">
+													<a href="{{path('app_client_index')}}" class="nav-link">Client list</a>
+												</li>
+											</ul>
+											<ul class="nav nav-group-sub" data-submenu-title="Agence">
+												<li class="nav-item">
+													<a href="{{path('app_client_new')}}" class="nav-link">Add client</a>
 												</li>
 											</ul>
 
@@ -362,9 +383,9 @@
 
 										</li>
 
-												<li class="nav-item nav-item-submenu">
+										<li class="nav-item nav-item-submenu">
 											<a href="#" class="nav-link">
-												<i class="icon-folder-open mr-3"></i>
+												<i class="icon-folder-open"></i>
 												<span>Category</span>
 											</a>
 											<ul class="nav nav-group-sub" data-submenu-title="Agence">
@@ -380,479 +401,449 @@
 
 										</li>
 
-										</li>
+									</li>
 
-												<li class="nav-item nav-item-submenu">
-											<a href="#" class="nav-link">
-												<i class="icon-earth mr-3"></i>
-												<span>Geographical</span>
-											</a>
-											<ul class="nav nav-group-sub" data-submenu-title="Agence">
-												<li class="nav-item">
-													<a href="{{path('app_geographical_index')}}" class="nav-link">Geographical list</a>
-												</li>
-											</ul>
-											<ul class="nav nav-group-sub" data-submenu-title="Agence">
-												<li class="nav-item">
-													<a href="{{path('app_geographical_new')}}" class="nav-link">Add geographical</a>
-												</li>
-											</ul>
+									<li class="nav-item nav-item-submenu">
+										<a href="#" class="nav-link">
+											<i class="icon-earth"></i>
+											<span>Geographical</span>
+										</a>
+										<ul class="nav nav-group-sub" data-submenu-title="Agence">
+											<li class="nav-item">
+												<a href="{{path('app_geographical_index')}}" class="nav-link">Geographical list</a>
+											</li>
+										</ul>
+										<ul class="nav nav-group-sub" data-submenu-title="Agence">
+											<li class="nav-item">
+												<a href="{{path('app_geographical_new')}}" class="nav-link">Add geographical</a>
+											</li>
+										</ul>
 
-										</li>
+									</li>
 
-									{% endif %}
+								{% endif %}
 
 
+								<li class="nav-item-header">
+									<div class="text-uppercase font-size-xs line-height-xs">Destination</div>
+									<i class="icon-menu" title="Main"></i>
+								</li>
+
+
+								{% if is_granted ('ROLE_ADMIN') %}
+
+									<li class="nav-item nav-item-submenu">
+										<a href="#" class="nav-link">
+											<i class="icon-sphere"></i>
+											<span>Country</span>
+										</a>
+										<ul class="nav nav-group-sub" data-submenu-title="Agence">
+											<li class="nav-item">
+												<a href="{{path('app_country_index')}}" class="nav-link">Country list</a>
+											</li>
+										</ul>
+										<ul class="nav nav-group-sub" data-submenu-title="Agence">
+											<li class="nav-item">
+												<a href="{{path('app_country_new')}}" class="nav-link">Add country</a>
+											</li>
+										</ul>
+
+									</li>
+
+									<li class="nav-item nav-item-submenu">
+										<a href="#" class="nav-link">
+											<i class="icon-cube3"></i>
+											<span>Region</span>
+										</a>
+										<ul class="nav nav-group-sub" data-submenu-title="Agence">
+											<li class="nav-item">
+												<a href="{{path('app_region_index')}}" class="nav-link">Region list</a>
+											</li>
+										</ul>
+										<ul class="nav nav-group-sub" data-submenu-title="Agence">
+											<li class="nav-item">
+												<a href="{{path('app_region_new')}}" class="nav-link">Add region</a>
+											</li>
+										</ul>
+
+									</li>
+
+
+								{% endif %}
+
+								{% if is_granted ('ROLE_AGENT') %}
+
+									<li class="nav-item nav-item-submenu">
+										<a href="#" class="nav-link">
+											<i class="icon-map5"></i>
+											<span>Good address</span>
+										</a>
+										<ul class="nav nav-group-sub" data-submenu-title="Agence">
+											<li class="nav-item">
+												<a href="{{path('app_good_address_index')}}" class="nav-link">Good address list</a>
+											</li>
+										</ul>
+										<ul class="nav nav-group-sub" data-submenu-title="Agence">
+											<li class="nav-item">
+												<a href="{{path('app_good_address_new')}}" class="nav-link">Add good address</a>
+											</li>
+										</ul>
+
+									</li>
+
+									<li class="nav-item nav-item-submenu">
+										<a href="#" class="nav-link">
+											<i class="mi-local-hotel "></i>
+											<span>Hotel</span>
+										</a>
+										<ul class="nav nav-group-sub" data-submenu-title="Agence">
+											<li class="nav-item">
+												<a href="{{path('app_hotel_index')}}" class="nav-link">Hotel list</a>
+											</li>
+										</ul>
+										<ul class="nav nav-group-sub" data-submenu-title="Agence">
+											<li class="nav-item">
+												<a href="{{path('app_hotel_new')}}" class="nav-link">Add hotel</a>
+											</li>
+										</ul>
+
+									</li>
+
+								{% endif %}
+
+
+								{% if is_granted ('ROLE_AGENT') %}
 									<li class="nav-item-header">
-										<div class="text-uppercase font-size-xs line-height-xs">Destination</div>
+										<div class="text-uppercase font-size-xs line-height-xs">Offer</div>
 										<i class="icon-menu" title="Main"></i>
 									</li>
 
 
-									{% if is_granted ('ROLE_ADMIN') %}
+									<li class="nav-item nav-item-submenu">
+										<a href="#" class="nav-link">
+											<i class="icon-airplane3"></i>
+											<span>Travel</span>
+										</a>
+										<ul class="nav nav-group-sub" data-submenu-title="Agence">
+											<li class="nav-item">
+												<a href="{{path('app_travel_index')}}" class="nav-link">
 
-										<li class="nav-item nav-item-submenu">
-											<a href="#" class="nav-link">
-												<i class="icon-sphere"></i>
-												<span>Country</span>
-											</a>
-											<ul class="nav nav-group-sub" data-submenu-title="Agence">
-												<li class="nav-item">
-													<a href="{{path('app_country_index')}}" class="nav-link">Country list</a>
-												</li>
-											</ul>
-											<ul class="nav nav-group-sub" data-submenu-title="Agence">
-												<li class="nav-item">
-													<a href="{{path('app_country_new')}}" class="nav-link">Add country</a>
-												</li>
-											</ul>
+													Travel list</a>
+											</li>
+										</ul>
+										<ul class="nav nav-group-sub" data-submenu-title="Agence">
+											<li class="nav-item">
 
-										</li>
+												{% if is_granted ('ROLE_ADMIN') %}
+													<a href="{{path('app_travel_new')}}" class="nav-link">
+														Add travel</a>
 
-										<li class="nav-item nav-item-submenu">
-											<a href="#" class="nav-link">
-												<i class="icon-cube3"></i>
-												<span>Region</span>
-											</a>
-											<ul class="nav nav-group-sub" data-submenu-title="Agence">
-												<li class="nav-item">
-													<a href="{{path('app_region_index')}}" class="nav-link">Region list</a>
-												</li>
-											</ul>
-											<ul class="nav nav-group-sub" data-submenu-title="Agence">
-												<li class="nav-item">
-													<a href="{{path('app_region_new')}}" class="nav-link">Add region</a>
-												</li>
-											</ul>
+												{% elseif is_granted ('ROLE_AGENT') %}
 
-										</li>
+													<a href="{{path('app_travel_new_agence',{'id':app.user.agence.id})}}" class="nav-link">
+														Add travel</a>
+												{% endif %}
+											</li>
+										</ul>
+{# 
+									</li>
+									<li class="nav-item nav-item-submenu">
+										<a href="{{path('app_offer_search')}}" class="nav-link">
+											<i class="icon-airplane3"></i>
+											<span>Search offers</span>
+										</a>
+									</li>
 
+									<li class="nav-item nav-item-submenu">
+										<a href="{{path('app_front_agence')}}" class="nav-link">
+											<i class="icon-airplane3"></i>
+											<span>show agence</span>
+										</a>
+									</li> #}
 
-									{% endif %}
-
-									{% if is_granted ('ROLE_AGENT') %}
-
-										<li class="nav-item nav-item-submenu">
-											<a href="#" class="nav-link">
-												<i class="icon-map5"></i>
-												<span>Good address</span>
-											</a>
-											<ul class="nav nav-group-sub" data-submenu-title="Agence">
-												<li class="nav-item">
-													<a href="{{path('app_good_address_index')}}" class="nav-link">Good address list</a>
-												</li>
-											</ul>
-											<ul class="nav nav-group-sub" data-submenu-title="Agence">
-												<li class="nav-item">
-													<a href="{{path('app_good_address_new')}}" class="nav-link">Add good address</a>
-												</li>
-											</ul>
-
-										</li>
-
-										<li class="nav-item nav-item-submenu">
-											<a href="#" class="nav-link">
-												<i class="mi-local-hotel mr-3 "></i>
-												<span>Hotel</span>
-											</a>
-											<ul class="nav nav-group-sub" data-submenu-title="Agence">
-												<li class="nav-item">
-													<a href="{{path('app_hotel_index')}}" class="nav-link">Hotel list</a>
-												</li>
-											</ul>
-											<ul class="nav nav-group-sub" data-submenu-title="Agence">
-												<li class="nav-item">
-													<a href="{{path('app_hotel_new')}}" class="nav-link">Add hotel</a>
-												</li>
-											</ul>
-
-										</li>
-
-									{% endif %}
+									<li class="nav-item nav-item-submenu">
+										<a href="#" class="nav-link">
+											<i class="icon-ship"></i>
+											<span>Cruise</span>
+										</a>
+										<ul class="nav nav-group-sub" data-submenu-title="Agence">
+											<li class="nav-item">
+												<a href="{{path('app_cruise_index')}}" class="nav-link">
+													Cruise list</a>
+											</li>
+										</ul>
+										<ul class="nav nav-group-sub" data-submenu-title="Agence">
+											<li class="nav-item">
 
 
-									{% if is_granted ('ROLE_AGENT') %}
-										<li class="nav-item-header">
-											<div class="text-uppercase font-size-xs line-height-xs">Offer</div>
-											<i class="icon-menu" title="Main"></i>
-										</li>
+												{% if is_granted ('ROLE_ADMIN') %}
+													<a href="{{path('app_cruise_new')}}" class="nav-link">
+														Add cruise</a>
+
+												{% elseif is_granted ('ROLE_AGENT') %}
+
+													<a href="{{path('app_cruise_new_agence',{'id':app.user.agence.id})}}" class="nav-link">
+														Add cruise</a>
+												{% endif %}
+											</li>
+										</ul>
+
+									</li>
 
 
-										<li class="nav-item nav-item-submenu">
-											<a href="#" class="nav-link">
-												<i class="icon-airplane3 mr-3"></i>
-												<span>Travel</span>
-											</a>
-											<ul class="nav nav-group-sub" data-submenu-title="Agence">
-												<li class="nav-item">
-													<a href="{{path('app_travel_index')}}" class="nav-link">
+									<li class="nav-item nav-item-submenu">
+										<a href="#" class="nav-link">
+											<i class="mi-brightness-3"></i>
+											<span>Omra</span>
+										</a>
+										<ul class="nav nav-group-sub" data-submenu-title="Agence">
+											<li class="nav-item">
+												<a href="{{path('app_omra_index')}}" class="nav-link">
+													Omra list</a>
+											</li>
+										</ul>
+										<ul class="nav nav-group-sub" data-submenu-title="Agence">
+											<li class="nav-item">
 
-														Travel list</a>
-												</li>
-											</ul>
-											<ul class="nav nav-group-sub" data-submenu-title="Agence">
-												<li class="nav-item">
+												{% if is_granted ('ROLE_ADMIN') %}
+													<a href="{{path('app_omra_new')}}" class="nav-link">
+														Add omra</a>
 
-													{% if is_granted ('ROLE_ADMIN') %}
-														<a href="{{path('app_travel_new')}}" class="nav-link">
-															Add travel</a>
+												{% elseif is_granted ('ROLE_AGENT') %}
 
-													{% elseif is_granted ('ROLE_AGENT') %}
+													<a href="{{path('app_omra_new_agence',{'id':app.user.agence.id})}}" class="nav-link">
+														Add omra</a>
+												{% endif %}
+											</li>
+										</ul>
 
-														<a href="{{path('app_travel_new_agence',{'id':app.user.agence.id})}}" class="nav-link">
-															Add travel</a>
-													{% endif %}
-												</li>
-											</ul>
+									</li>
 
-										</li>
+									<li class="nav-item nav-item-submenu">
+										<a href="#" class="nav-link">
+											<i class="mi-nature-people "></i>
+											<span>Hiking</span>
+										</a>
+										<ul class="nav nav-group-sub" data-submenu-title="Agence">
+											<li class="nav-item">
+												<a href="{{path('app_hiking_index')}}" class="nav-link">
+													Hiking list</a>
+											</li>
+										</ul>
+										<ul class="nav nav-group-sub" data-submenu-title="Agence">
+											<li class="nav-item">
 
+												{% if is_granted ('ROLE_ADMIN') %}
+													<a href="{{path('app_hiking_new')}}" class="nav-link">
+														Add hiking</a>
 
-										<li class="nav-item nav-item-submenu">
-											<a href="#" class="nav-link">
-												<i class="icon-ship mr-3 "></i>
-												<span>Cruise</span>
-											</a>
-											<ul class="nav nav-group-sub" data-submenu-title="Agence">
-												<li class="nav-item">
-													<a href="{{path('app_cruise_index')}}" class="nav-link">
-														Cruise list</a>
-												</li>
-											</ul>
-											<ul class="nav nav-group-sub" data-submenu-title="Agence">
-													<li class="nav-item">
+												{% elseif is_granted ('ROLE_AGENT') %}
 
+													<a href="{{path('app_hiking_new_agence',{'id':app.user.agence.id})}}" class="nav-link">
+														Add hiking</a>
+												{% endif %}
+											</li>
+										</ul>
 
-													{% if is_granted ('ROLE_ADMIN') %}
-														<a href="{{path('app_cruise_new')}}" class="nav-link">
-															Add cruise</a>
-
-													{% elseif is_granted ('ROLE_AGENT') %}
-
-														<a href="{{path('app_cruise_new_agence',{'id':app.user.agence.id})}}" class="nav-link">
-															Add cruise</a>
-													{% endif %}
-												</li>
-											</ul>
-
-										</li>
+									</li>
 
 
-										<li class="nav-item nav-item-submenu">
-											<a href="#" class="nav-link">
-												<i class="mi-brightness-3 mr-3"></i>
-												<span>Omra</span>
-											</a>
-											<ul class="nav nav-group-sub" data-submenu-title="Agence">
-												<li class="nav-item">
-													<a href="{{path('app_omra_index')}}" class="nav-link">
-														Omra list</a>
-												</li>
-											</ul>
-											<ul class="nav nav-group-sub" data-submenu-title="Agence">
-												<li class="nav-item">
-
-													{% if is_granted ('ROLE_ADMIN') %}
-														<a href="{{path('app_omra_new')}}" class="nav-link">
-															Add omra</a>
-
-													{% elseif is_granted ('ROLE_AGENT') %}
-
-														<a href="{{path('app_omra_new_agence',{'id':app.user.agence.id})}}" class="nav-link">
-															Add omra</a>
-													{% endif %}
-												</li>
-											</ul>
-
-										</li>
-
-										<li class="nav-item nav-item-submenu">
-											<a href="#" class="nav-link">
-												<i class="mi-nature-people mr-3 "></i>
-												<span>Hiking</span>
-											</a>
-											<ul class="nav nav-group-sub" data-submenu-title="Agence">
-												<li class="nav-item">
-													<a href="{{path('app_hiking_index')}}" class="nav-link">
-														Hiking list</a>
-												</li>
-											</ul>
-											<ul class="nav nav-group-sub" data-submenu-title="Agence">
-												<li class="nav-item">
-
-													{% if is_granted ('ROLE_ADMIN') %}
-														<a href="{{path('app_hiking_new')}}" class="nav-link">
-															Add hiking</a>
-
-													{% elseif is_granted ('ROLE_AGENT') %}
-
-														<a href="{{path('app_hiking_new_agence',{'id':app.user.agence.id})}}" class="nav-link">
-															Add hiking</a>
-													{% endif %}
-												</li>
-											</ul>
-
-										</li>
+									<li class="nav-item nav-item-submenu">
+										<a href="#" class="nav-link">
+											<i class="icon-bike"></i>
+											<span>Excursion</span>
+										</a>
+										<ul class="nav nav-group-sub" data-submenu-title="Agence">
+											<li class="nav-item">
+												<a href="{{path('app_excursion_index')}}" class="nav-link">
+													Excursion list</a>
+											</li>
+										</ul>
+										<ul class="nav nav-group-sub" data-submenu-title="Agence">
+											<li class="nav-item">
 
 
-										<li class="nav-item nav-item-submenu">
-											<a href="#" class="nav-link">
-												<i class="icon-bike mr-3 "></i>
-												<span>Excursion</span>
-											</a>
-											<ul class="nav nav-group-sub" data-submenu-title="Agence">
-												<li class="nav-item">
-													<a href="{{path('app_excursion_index')}}" class="nav-link">
-														Excursion list</a>
-												</li>
-											</ul>
-											<ul class="nav nav-group-sub" data-submenu-title="Agence">
-												<li class="nav-item">
+												{% if is_granted ('ROLE_ADMIN') %}
+													<a href="{{path('app_excursion_new')}}" class="nav-link">
+														Add excursion</a>
+
+												{% elseif is_granted ('ROLE_AGENT') %}
+
+													<a href="{{path('app_excursion_new_agence',{'id':app.user.agence.id})}}" class="nav-link">
+														Add excursion</a>
+												{% endif %}
+											</li>
+										</ul>
+
+									</li>
 
 
-													{% if is_granted ('ROLE_ADMIN') %}
-														<a href="{{path('app_excursion_new')}}" class="nav-link">
-															Add excursion</a>
+									{# 	<li class="nav-item nav-item-submenu">
+																																																																																<a href="#" class="nav-link">
+																																																																																	<i class="icon-bike mr-3 "></i>
+																																																																																	<span>Reservation</span>
+																																																																																</a>
+																																																																																<ul class="nav nav-group-sub" data-submenu-title="Agence">
+																																																																																	<li class="nav-item">
+																																																																																		<a href="{{path('app_reservation_index')}}" class="nav-link">
+																																																																																			Reservation list</a>
+																																																																																	</li>
+																																																																																</ul>
+																																																																																<ul class="nav nav-group-sub" data-submenu-title="Agence">
+																																																																																	<li class="nav-item">
+																																																																																		<a href="{{path('app_reservation_new',{id: reservation.agence.id})}}" class="nav-link">
+																																																																																			Add Reservation</a>
+																																																																																	</li>
+																																																																																</ul>
+																																																																					
+																																																																															</li> #}
 
-													{% elseif is_granted ('ROLE_AGENT') %}
+									{# 			<li class="nav-item nav-item-submenu">
+																																								<a href="#" class="nav-link">
+																																									<i class="icon-bike mr-3 "></i>
+																																									<span>Price list</span>
+																																								</a>
+																																								<ul class="nav nav-group-sub" data-submenu-title="Agence">
+																																									<li class="nav-item">
+																																										<a href="{{path('app_price_list_index')}}" class="nav-link">
+																																											Price list</a>
+																																									</li>
+																																								</ul>
+																																								<ul class="nav nav-group-sub" data-submenu-title="Agence">
+																																									<li class="nav-item">
+																																										<a href="{{path('app_price_list_new')}}" class="nav-link">
+																																											Add Price list</a>
+																																									</li>
+																																								</ul>
+																													
+																																							</li> #}
 
-														<a href="{{path('app_excursion_new_agence',{'id':app.user.agence.id})}}" class="nav-link">
-															Add excursion</a>
-													{% endif %}
-												</li>
-											</ul>
+									{# <li class="nav-item nav-item-submenu">
+										<a href="#" class="nav-link">
+											<i class="icon-cart-add "></i>
+											<span>Excursion not included</span>
+										</a>
+										<ul class="nav nav-group-sub" data-submenu-title="Agence">
+											<li class="nav-item">
+												<a href="{{path('app_travel_excursion_index')}}" class="nav-link">
+													Excursion not included list</a>
+											</li>
+										</ul>
+										<ul class="nav nav-group-sub" data-submenu-title="Agence">
+											<li class="nav-item">
+												<a href="{{path('app_travel_excursion_new')}}" class="nav-link">
+													Add Excursion not included
+												</a>
+											</li>
+										</ul>
 
-										</li>
-
-
-										{# 	<li class="nav-item nav-item-submenu">
-																																																																							<a href="#" class="nav-link">
-																																																																								<i class="icon-bike mr-3 "></i>
-																																																																								<span>Reservation</span>
-																																																																							</a>
-																																																																							<ul class="nav nav-group-sub" data-submenu-title="Agence">
-																																																																								<li class="nav-item">
-																																																																									<a href="{{path('app_reservation_index')}}" class="nav-link">
-																																																																										Reservation list</a>
-																																																																								</li>
-																																																																							</ul>
-																																																																							<ul class="nav nav-group-sub" data-submenu-title="Agence">
-																																																																								<li class="nav-item">
-																																																																									<a href="{{path('app_reservation_new',{id: reservation.agence.id})}}" class="nav-link">
-																																																																										Add Reservation</a>
-																																																																								</li>
-																																																																							</ul>
-																																																												
-																																																																						</li> #}
-
-										{# 			<li class="nav-item nav-item-submenu">
-																															<a href="#" class="nav-link">
-																																<i class="icon-bike mr-3 "></i>
-																																<span>Price list</span>
-																															</a>
-																															<ul class="nav nav-group-sub" data-submenu-title="Agence">
-																																<li class="nav-item">
-																																	<a href="{{path('app_price_list_index')}}" class="nav-link">
-																																		Price list</a>
-																																</li>
-																															</ul>
-																															<ul class="nav nav-group-sub" data-submenu-title="Agence">
-																																<li class="nav-item">
-																																	<a href="{{path('app_price_list_new')}}" class="nav-link">
-																																		Add Price list</a>
-																																</li>
-																															</ul>
-																				
-																														</li> #}
-
-										<li class="nav-item nav-item-submenu">
-											<a href="#" class="nav-link">
-												<i class="icon-bike mr-3 "></i>
-												<span>Travel_Excursion list</span>
-											</a>
-											<ul class="nav nav-group-sub" data-submenu-title="Agence">
-												<li class="nav-item">
-													<a href="{{path('app_travel_excursion_index')}}" class="nav-link">
-														Travel_Excursion list</a>
-												</li>
-											</ul>
-											<ul class="nav nav-group-sub" data-submenu-title="Agence">
-												<li class="nav-item">
-													<a href="{{path('app_travel_excursion_new')}}" class="nav-link">
-														Add travel_Excursion
-													</a>
-												</li>
-											</ul>
-
-										</li>
-
-									{% endif %}
-
+									</li> #}
 
 								{% endif %}
-							</ul>
-						</div>
-						<!-- /main navigation -->
-					{% endblock %}
-
-				</div>
-				<!-- /sidebar content -->
 
 
-			</body>
-		</html>
+							{% endif %}
+						</ul>
+					</div>
+					<!-- /main navigation -->
+				{% endblock %}
+
+			</div>
+			<!-- /sidebar content -->
+		</body>
 	</body>
-</html></div><!-- /main sidebar --><!-- Main content --><div
-class="content-wrapper">
+</html></body></html></div><!-- /main sidebar --><!-- Main content --><div class="content-wrapper"><!-- Page header --><div class="page-header page-header-light"><div class="page-header-content header-elements-md-inline">
+<div class="page-title d-flex">
+	{% block menu %}
+		<h4>
+			<i class="icon-arrow-left52 mr-2"></i>
+			<span class="font-weight-semibold">Home</span>
+			- Dashboard</h4>
+	{% endblock %}
 
-<!-- Page header -->
-<div class="page-header page-header-light">
-	<div class="page-header-content header-elements-md-inline">
-		<div class="page-title d-flex">
-			{% block menu %}
-				<h4>
-					<i class="icon-arrow-left52 mr-2"></i>
-					<span class="font-weight-semibold">Home</span>
-					- Dashboard</h4>
-			{% endblock %}
-
-			<a href="#" class="header-elements-toggle text-default d-md-none">
-				<i class="icon-more"></i>
-			</a>
-		</div>
-
-		<div class="header-elements d-none"></div>
-	</div>
-
-	<div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
-		<div class="d-flex">
-			{% block menu_petit %}
-				<div class="breadcrumb">
-					<a href="index.html" class="breadcrumb-item">
-						<i class="icon-home2 mr-2"></i>
-						Home</a>
-					<span class="breadcrumb-item active">Dashboard</span>
-				</div>
-			{% endblock %}
-
-			<a href="#" class="header-elements-toggle text-default d-md-none">
-				<i class="icon-more"></i>
-			</a>
-		</div>
-
-		<div class="header-elements d-none">
-			<div class="breadcrumb justify-content-center">
-
-
-				<div class="breadcrumb-elements-item dropdown p-0">
-
-
-					<div class="dropdown-menu dropdown-menu-right">
-						<a href="#" class="dropdown-item">
-							<i class="icon-user-lock"></i>
-							Account security</a>
-						<a href="#" class="dropdown-item">
-							<i class="icon-statistics"></i>
-							Analytics</a>
-						<a href="#" class="dropdown-item">
-							<i class="icon-accessibility"></i>
-							Accessibility</a>
-						<div class="dropdown-divider"></div>
-						<a href="#" class="dropdown-item">
-							<i class="icon-gear"></i>
-							All settings</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+	<a href="#" class="header-elements-toggle text-default d-md-none">
+		<i class="icon-more"></i>
+	</a>
 </div>
-<!-- /page header -->
 
-
-<!-- Content area -->
-
-
-<div class="content">
-	{% block content %}
-
-		<!-- Basic modals -->
-		<div
-			class="card">
-
-			<!-- Schedule -->
-			<div class="timeline-row">
-				<div class="timeline-icon">
-					<img src="{{asset('global_assets/images/placeholders/placeholder.jpg')}}" alt="">
-				</div>
-
-				<div class="card">
-					<div class="card-header header-elements-inline">
-						<h6 class="card-title font-weight-semibold">Administrator space</h6>
-						<div class="header-elements">
-							<div class="list-icons">
-								<div class="list-icons-item dropdown"></div>
-							</div>
-						</div>
-					</div>
-
-					<div class="card-body">
-						<div class="my-schedule"></div>
-					</div>
-				</div>
-			</div>
-			<!-- /schedule -->
-
+<div class="header-elements d-none"></div></div><div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
+<div class="d-flex">
+	{% block menu_petit %}
+		<div class="breadcrumb">
+			<a href="index.html" class="breadcrumb-item">
+				<i class="icon-home2 mr-2"></i>
+				Home</a>
+			<span class="breadcrumb-item active">Dashboard</span>
 		</div>
 	{% endblock %}
-</div></div><!-- /main content --></div><!-- /page content --><!-- Footer --><div class="navbar navbar-expand-lg navbar-light"><div class="text-center d-lg-none w-100">
-<button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse" data-target="#navbar-footer">
-	<i class="icon-unfold mr-2"></i>
-	Footer
-</button></div><div class="navbar-collapse collapse" id="navbar-footer">
-<span class="navbar-text">
-	&copy; 2015 - 2018.
-	<a href="#">Limitless Web App Kit</a>
-	by
-	<a href="http://themeforest.net/user/Kopyov" target="_blank">Eugene Kopyov</a>
-</span>
 
-<ul class="navbar-nav ml-lg-auto">
-	<li class="nav-item">
-		<a href="https://kopyov.ticksy.com/" class="navbar-nav-link" target="_blank">
-			<i class="icon-lifebuoy mr-2"></i>
-			Support</a>
-	</li>
-	<li class="nav-item">
-		<a href="http://demo.interface.club/limitless/docs/" class="navbar-nav-link" target="_blank">
-			<i class="icon-file-text2 mr-2"></i>
-			Docs</a>
-	</li>
-	<li class="nav-item">
-		<a href="https://themeforest.net/item/limitless-responsive-web-application-kit/13080328?ref=kopyov" class="navbar-nav-link font-weight-semibold">
-			<span class="text-pink-400">
-				<i class="icon-cart2 mr-2"></i>
-				Purchase</span>
-		</a>
-	</li>
-</ul></div></div><!-- /footer --></body></html>
+	<a href="#" class="header-elements-toggle text-default d-md-none">
+		<i class="icon-more"></i>
+	</a>
+</div>
+
+<div class="header-elements d-none">
+	<div class="breadcrumb justify-content-center">
+
+
+		<div class="breadcrumb-elements-item dropdown p-0">
+
+
+			<div class="dropdown-menu dropdown-menu-right">
+				<a href="#" class="dropdown-item">
+					<i class="icon-user-lock"></i>
+					Account security</a>
+				<a href="#" class="dropdown-item">
+					<i class="icon-statistics"></i>
+					Analytics</a>
+				<a href="#" class="dropdown-item">
+					<i class="icon-accessibility"></i>
+					Accessibility</a>
+				<div class="dropdown-divider"></div>
+				<a href="#" class="dropdown-item">
+					<i class="icon-gear"></i>
+					All settings</a>
+			</div>
+		</div>
+	</div>
+</div></div></div><!-- /page header --><!-- Content area --><div class="content">{% block content %}
+
+<!-- Basic modals -->
+<div
+	class="card">
+
+	<!-- Schedule -->
+	<div class="timeline-row">
+		<div class="timeline-icon">
+			<img src="{{asset('global_assets/images/placeholders/placeholder.jpg')}}" alt="">
+		</div>
+
+		<div class="card">
+			<div class="card-header header-elements-inline">
+				<h6 class="card-title font-weight-semibold">Administrator space</h6>
+				<div class="header-elements">
+					<div class="list-icons">
+						<div class="list-icons-item dropdown"></div>
+					</div>
+				</div>
+			</div>
+
+			<div class="card-body">
+				<div class="my-schedule"></div>
+			</div>
+		</div>
+	</div>
+	<!-- /schedule -->
+
+</div>{% endblock %}</div></div><!-- /main content --></div><!-- /page content --><!-- Footer --><div class="navbar navbar-expand-lg navbar-light"><div class="text-center d-lg-none w-100"><button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse" data-target="#navbar-footer"><i class="icon-unfold mr-2"></i>Footer</button></div><div class="navbar-collapse collapse" id="navbar-footer"><span class="navbar-text">&copy; 2015 - 2018.<a href="#">Limitless Web App Kit</a>by<a href="http://themeforest.net/user/Kopyov" target="_blank">Eugene Kopyov</a></span><ul class="navbar-nav ml-lg-auto"><li class="nav-item">
+<a href="https://kopyov.ticksy.com/" class="navbar-nav-link" target="_blank">
+	<i class="icon-lifebuoy mr-2"></i>
+	Support</a></li><li class="nav-item">
+<a href="http://demo.interface.club/limitless/docs/" class="navbar-nav-link" target="_blank">
+	<i class="icon-file-text2 mr-2"></i>
+	Docs</a></li><li class="nav-item">
+<a href="https://themeforest.net/item/limitless-responsive-web-application-kit/13080328?ref=kopyov" class="navbar-nav-link font-weight-semibold">
+	<span class="text-pink-400">
+		<i class="icon-cart2 mr-2"></i>
+		Purchase</span>
+</a></li></ul></div></div><!-- /footer --></body></html>

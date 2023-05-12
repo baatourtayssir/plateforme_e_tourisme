@@ -89,7 +89,7 @@
 					{# <th>Country</th> #}
 					<th>Country</th>
 					{# <th>Good Address</th> #}
-					<th>Categories</th>
+				{# 	<th>Categories</th> #}
 					<th>Agence</th>
 
 					{# <th>Reviews</th> #}
@@ -108,7 +108,7 @@
 						<td>
 							<a href="{{ path('app_travel_show', {'id': travel.id}) }}">{{travel.title}}</a>
 						</td>
-						<td><img src="{{ asset('uploads/images/offer/travel/picture/' ~ travel.picture) }}" width="80" alt="No picture"></td>
+						<td><img src="{{ asset('uploads/images/offer/picture/' ~ travel.picture) }}" width="80" alt="No picture"></td>
 
 						{# <td>{{ travel.description |raw}}</td>
 												<td>{{ travel.inclus |raw}}</td>
@@ -126,11 +126,11 @@
 													{% endfor %}
 												</td> #}
 
-						<td>
+						{# <td>
 							{% for category in travel.categories %}
 								{{ category.style }}
 							{% endfor %}
-						</td>
+						</td> #}
 						<td>{{ travel.agence.name }}</td>
 
 						

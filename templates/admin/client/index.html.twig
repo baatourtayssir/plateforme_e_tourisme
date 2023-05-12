@@ -1,0 +1,142 @@
+{% extends 'base.html.twig' %}
+{% block javascripts %}
+	<!-- Theme JS files -->
+	<script src="{{ asset("global_assets/js/plugins/tables/datatables/datatables.min.js")}}"></script>
+	<script src="{{ asset("global_assets/js/plugins/forms/selects/select2.min.js")}}"></script>
+	<script src="{{asset("global_assets/js/demo_pages/datatables_basic.js")}}"></script>
+	<!-- /theme JS files -->
+{% endblock %}
+{% block title %}Client list
+{% endblock %}
+{% block menu %}
+	<h4>
+		<i class="icon-arrow-left52 mr-2"></i>
+		<span class="font-weight-semibold">Home</span>
+		- Client pages</h4>
+{% endblock %}
+{% block menu_petit %}
+	<div class="breadcrumb">
+		<a href="#" class="breadcrumb-item">
+			<i class="icon-home2 mr-2"></i>
+			Home</a>
+		<span class="breadcrumb-item active">Client Pages -Client management
+		</span>
+	</div>
+{% endblock %}
+
+
+{% block content %}
+
+
+	<!-- Basic datatable -->
+	<div class="card">
+		<div class="card-header header-elements-inline">
+			<h5 class="card-title">Client list</h5>
+			<div class="header-elements">
+				<div class="list-icons">
+					<a href="{{path('app_client_new')}}" class="nav-link">
+
+						<button type="submit" class="btn btn-success">
+							<b>
+								<i class="icon-plus3 mr-1"></i>
+							</b>
+							<big>Add client</big>
+						</button>
+					</a>
+				</div>
+
+			</div>
+		</div>
+
+		<table class="table datatable-basic">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Lastname</th>
+					
+					<th>Profile picture</th>
+					<th>Email</th>
+					<th>Address</th>
+					<th>PhoneNumber</th>
+					<th></th>
+					<th>Actions</th>
+				</tr>
+				
+					
+			</thead>
+			<tbody>
+				{% for client in clients %}
+					<tr>
+						<td>{{ client.id }}</td>
+						<td>{{ client.lastname }}</td>
+						<td>
+							{% if client.avatar == true %}
+
+								<img src="{{ asset('uploads/images/client/image/' ~ client.avatar) }}" width="45" height="45" class="rounded-circle">
+
+
+							{% elseif client.avatar == false %}
+								<img src="{{asset('global_assets/images/placeholders/profile.png')}}" width="45" height="45" class="rounded-circle">
+
+
+							{% endif %}
+						</td>
+						<td>{{ client.email }}</td>
+						
+						
+						<td>{{ client.address }}</td>
+						<td>{{ client.phoneNumber}}</td>
+						<td></td>
+						
+                        
+						<td>
+							<div class="row ">
+								<a class="btn btn-primary btn-sm mr-1" href="{{ path('app_client_edit', {'id': client.id}) }}">
+									<i class="icon-pencil7 mr-1"></i>
+									Edit
+								</a>
+
+								<a class="btn btn-danger btn-sm text-white" data-toggle="modal" data-target="#modal_Delete{{client.id}}">
+									<i class="icon-bin mr-1 "></i>
+									Delete</a>
+							</div>
+						</td>
+
+					</tr>
+					<!-- Delete modal -->
+					<div id="modal_Delete{{client.id}}" class="modal fade" tabindex="-1">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header bg-danger">
+									<h5 class="modal-title">Deletion</h5>
+									<button type="button" class="close" data-dismiss="modal">&times;</button>
+								</div>
+
+								<div
+									class="modal-body">
+									{# <h6 class="font-weight-semibold">Text in a modal</h6> #}
+									<p>Are you sure to delete this agent.</p>
+
+								</div>
+
+								<div class="modal-footer">
+									<button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+									<a href="{{ path('app_client_delete', {'id': client.id}) }}">
+										<button type="button" class="btn bg-danger">Delete</button>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- /Delete modal -->
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="9">no records found</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+
+	</div>
+{% endblock %}

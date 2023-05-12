@@ -1,0 +1,90 @@
+{# {% block title %}>Register !
+{% endblock %} #}
+<!-- Global stylesheets -->
+<link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+<link href="{{asset("global_assets/css/icons/icomoon/styles.css")}}" rel="stylesheet" type="text/css">
+<link href="{{asset("assets/css/bootstrap.min.css")}}" rel="stylesheet" type="text/css">
+<link href="{{asset("assets/css/bootstrap_limitless.min.css")}}" rel="stylesheet" type="text/css">
+<link href="{{asset("assets/css/layout.min.css")}}" rel="stylesheet" type="text/css">
+<link href="{{asset("assets/css/components.min.css")}}" rel="stylesheet" type="text/css">
+<link
+href="{{asset("assets/css/colors.min.css")}}" rel="stylesheet" type="text/css">
+<!-- /global stylesheets -->
+{% block stylesheets %}{% endblock %}
+
+<!-- Core JS files -->
+<script src="{{asset("global_assets/js/main/jquery.min.js")}}"></script>
+<script src="{{asset("global_assets/js/main/bootstrap.bundle.min.js")}}"></script>
+<script src="{{asset("global_assets/js/plugins/loaders/blockui.min.js")}}"></script>
+<!-- /core JS files -->
+
+<!-- Theme JS files -->
+<script src="{{asset("global_assets/js/plugins/forms/styling/uniform.min.js")}}"></script>
+
+<script src="{{asset("assets/js/app.js")}}"></script>
+<script src="{{asset("global_assets/js/demo_pages/login.js")}}"></script>
+<!-- /theme JS files -->
+{% block javascripts %}{% endblock %}
+
+{% block body %}
+
+
+	<!-- Page content -->
+	<div
+		class="page-content login-cover">
+
+		<!-- Main content -->
+		<div
+			class="content-wrapper">
+
+			<!-- Content area -->
+			<div
+				class="content d-flex justify-content-center align-items-center">
+				<!-- Registration form -->
+<div class="login-form wmin-sm-400" action="index.html">
+				
+					<div class="card mb-0">
+						<div class="card-body">
+							<div class="text-center mb-3">
+								<i class="icon-plus3 icon-2x text-success border-success border-3 rounded-round p-3 mb-3 mt-1"></i>
+								<h5 class="mb-0">Create account</h5>
+								<span class="d-block text-muted">As Client</span>
+							</div>
+
+							<div class="form-group text-center text-muted content-divider">
+								<span class="px-2">Your credentials</span>
+							</div>
+
+
+							{{ form_start(registrationForm) }}
+							
+							{{ form_row(registrationForm.email) }}
+							{{ form_row(registrationForm.password, {label: 'Password'}) }}
+							{{ form_row(registrationForm.lastname) }}
+							{{ form_row(registrationForm.phoneNumber) }}
+							{{ form_row(registrationForm.address) }}
+							{{ form_row(registrationForm.avatar) }}
+							<br><br>
+							{# {{ form_row(registrationForm.agreeTerms) }} #}
+
+							<button type="submit" class="btn bg-teal-400 btn-block">Register
+								 <i class="icon-circle-right2 ml-2"></i> 
+							</button>
+							<br>
+							<div class="text-center">
+								<a href="{{path('app_agent_register')}}">Register as an agency?</a>
+							</div> 
+							{{ form_end(registrationForm) }}
+							
+
+
+						</div>
+					</div>
+				</div>
+				<!-- /registration form -->
+			</div>
+		</div>
+	</div>
+
+{% endblock %} 
+

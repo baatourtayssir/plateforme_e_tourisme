@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Client;
 use DateTimeInterface;
 
 #[ORM\Entity(repositoryClass: ReviewsRepository::class)]
@@ -36,7 +37,7 @@ class Reviews
     private ?\DateTimeInterface $date = null;
 
     #[ORM\ManyToOne(inversedBy: 'reviews')]
-    private ?User $user = null;
+    private ?Client $client = null;
     
     public function getId(): ?int
     {
@@ -137,14 +138,14 @@ class Reviews
         return $this;
     }
 
-    public function getUser(): ?User
+    public function getClient(): ?Client
     {
-        return $this->user;
+        return $this->client;
     }
 
-    public function setUser(?User $user): self
+    public function setClient(?Client $client): self
     {
-        $this->user = $user;
+        $this->client = $client;
 
         return $this;
     }

@@ -55,7 +55,7 @@
 					<td>{{price_list.datedebut|date("d/m/Y")}}</td>
 					<td>{{price_list.dateFin|date("d/m/Y")}}</td>
 					<td>
-						{% for excursion in price_list.Included_excursions %}
+						{% for excursion in price_list.ExcursionsIncluded %}
 							{# <a href="{{ path('app_excursion_show', {'id': excursion.id}) }}"> #}{{ excursion.title }}{# </a> #}
 						{% endfor %}
 					</td>
@@ -67,11 +67,6 @@
 						{% endfor %}
 					</td>
 
-					{# <td>
-																	{% for excursion in price_list.excursions %}
-																		{{ excursion.title }}
-																	{% endfor %}
-																</td> #}
 					{# <td>{{price_list.offer}}</td> #}
 					<td></td>
 

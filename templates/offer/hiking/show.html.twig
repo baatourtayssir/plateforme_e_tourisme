@@ -52,13 +52,13 @@
 					<div class="card blog-horizontal">
 						<div class="card-body">
 							<div class="card-img-actions mr-3">
-								<img class="card-img img-fluid" src="{{ asset('uploads/images/offer/hiking/picture/' ~ hiking.picture) }}" alt="">
+								<img class="card-img img-fluid" src="{{ asset('uploads/images/offer/picture/' ~ hiking.picture) }}" alt="">
 								<br><br>
 
 								<div {# class="card-footer" #}>
 									{% for image in hiking.images %}
 										<a href="#">
-											<img src="{{ asset('uploads/images/offer/hiking/pictures/' ~ image) }}" class="rounded" width="60" height="60" alt="">
+											<img src="{{ asset('uploads/images/offer/pictures/' ~ image) }}" class="rounded" width="60" height="60" alt="">
 										</a>
 									{% endfor %}
 									<a href="{{ path('app_hiking_edit', {'id': hiking.id}) }}" class="btn btn-icon bg-transparent border-slate-300 text-slate rounded border-dashed">

@@ -76,8 +76,8 @@
 					{# <th>Country</th> #}
 					<th>Country</th>
 					{# <th>Good Address</th> #}
-					<th>Categories</th>
-					<th>Agence</th>
+{# 					<th>Categories</th>
+ #}					<th>Agence</th>
 
 					{# <th>Reviews</th> #}
 
@@ -92,7 +92,7 @@
 					<tr>
 						<td>{{ omra.id }}</td>
 						<td><a href="{{ path('app_omra_show', {'id': omra.id}) }}"> {{omra.title}} </a> </td>
-						<td><img src="{{ asset('uploads/images/offer/omra/picture/' ~ omra.picture) }}" width="80" alt="No picture"></td>
+						<td><img src="{{ asset('uploads/images/offer/picture/' ~ omra.picture) }}" width="80" alt="No picture"></td>
 
 						{# <td>{{ omra.description |raw}}</td>
 						<td>{{ omra.inclus |raw}}</td>
@@ -109,11 +109,11 @@
 								{{ goodAddress.intitule }}
 							{% endfor %}
 						</td> #}
-						<td>
+						{# <td>
 							{% for category in omra.categories %}
 								{{ category.style }}
 							{% endfor %}
-						</td>
+						</td> #}
 						<td>{{ omra.agence.name }}</td>
 						<td>
 							<div class="row ">

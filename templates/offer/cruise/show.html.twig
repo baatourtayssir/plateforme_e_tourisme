@@ -52,13 +52,13 @@
 					<div class="card blog-horizontal">
 						<div class="card-body">
 							<div class="card-img-actions mr-3">
-								<img class="card-img img-fluid" src="{{ asset('uploads/images/offer/cruise/picture/' ~ cruise.picture) }}" alt="">
+								<img class="card-img img-fluid" src="{{ asset('uploads/images/offer/picture/' ~ cruise.picture) }}" alt="">
 								<br><br>
 
 								<div {# class="card-footer" #}>
 									{% for image in cruise.images %}
 										<a href="#">
-											<img src="{{ asset('uploads/images/offer/cruise/pictures/' ~ image) }}" class="rounded" width="60" height="60" alt="">
+											<img src="{{ asset('uploads/images/offer/pictures/' ~ image) }}" class="rounded" width="60" height="60" alt="">
 										</a>
 									{% endfor %}
 									<a href="{{ path('app_cruise_edit', {'id': cruise.id}) }}" class="btn btn-icon bg-transparent border-slate-300 text-slate rounded border-dashed">
@@ -116,241 +116,227 @@
 								{% endif %}
 							</div>
 						</div>
-						<div
-							class="text-right mr-3">
-							{# 							<a href="{{ path('app_cruise_edit', {'id': cruise.id}) }}" class="btn btn-primary text-white">
-																																																															 #}
-							<a class="btn btn-primary text-white" data-toggle="modal" data-target="#modal_edit{{cruise.id}}">
+						<div class="text-right mr-3">
+							<a href="{{ path('app_cruise_edit', {'id': cruise.id}) }}" class="btn btn-primary text-white">
 
-								<i class="icon-pencil3 mr-2 "></i>
-								Edit
-							</a>
-						</div>
-						<br>
-
-						<!-- Primary modal -->
-						<div id="modal_edit{{cruise.id}}" class="modal fade" tabindex="-1">
-							<div class="modal-dialog">
-								<div class="modal-content">
-									<div class="modal-header bg-primary">
-										<h6 class="modal-title">Primary header</h6>
-										<button type="button" class="close" data-dismiss="modal">&times;</button>
-									</div>
-
-									<div class="modal-body">
-
-										{{ form_start(form, {'method': 'get'}) }}
-
-
-										<div {# class="form-control" #}>
-											<i class="fa fa-calendar"></i>
-											{{ form_label(form.title) }}
-											{{ form_widget(form.title) }}
-											<div class="form-error">
-												{{ form_errors(form.title) }}
-											</div>
-										</div>
-										<br>
-										<div {# class="form-control" #}>
-											<i class="fa fa-calendar"></i>
-											{{ form_label(form.description) }}
-											{{ form_widget(form.description, { 'attr': {'class': 'summernote'} }) }}
-											<div class="form-error">
-												{{ form_errors(form.description) }}
-											</div>
-										</div>
-										<br>
-										<div {# class="form-control" #}>
-											<i class="fa fa-calendar"></i>
-											{{ form_label(form.inclus) }}
-											{{ form_widget(form.inclus, { 'attr': {'class': 'summernote'} }) }}
-											<div class="form-error">
-												{{ form_errors(form.inclus) }}
-											</div>
-										</div>
-										<br>
-										<div {# class="form-control" #}>
-											<i class="fa fa-calendar"></i>
-											{{ form_label(form.nonInclus) }}
-											{{ form_widget(form.nonInclus, { 'attr': {'class': 'summernote'} }) }}
-											<div class="form-error">
-												{{ form_errors(form.nonInclus) }}
-											</div>
-										</div>
-										<br>
-										<div {# class="form-control" #}>
-											<i class="fa fa-calendar"></i>
-											{{ form_label(form.countries) }}
-											{{ form_widget(form.countries, { 'attr': {'class': 'form-control select-search'} }) }}
-											<div class="form-error">
-												{{ form_errors(form.countries) }}
-											</div>
-										</div>
-										<br>
-										<div {# class="form-control select" #}>
-											<i class="fa fa-calendar"></i>
-											{{ form_label(form.goodAddress) }}
-											{{ form_widget(form.goodAddress) }}
-											<div class="form-error">
-												{{ form_errors(form.goodAddress) }}
-											</div>
-										</div>
-										<br>
-										<div {# class="form-control" #}>
-											<i class="fa fa-calendar"></i>
-											{{ form_label(form.agence) }}
-											{{ form_widget(form.agence) }}
-											<div class="form-error">
-												{{ form_errors(form.agence) }}
-											</div>
-										</div>
-										<br>
-										<div {# class="form-control select" #}>
-											<i class="fa fa-calendar"></i>
-											{{ form_label(form.categories) }}
-											{{ form_widget(form.categories) }}
-											<div class="form-error">
-												{{ form_errors(form.categories) }}
-											</div>
-										</div>
-										<br>
-
-										{{ form_label(form.picture) }}
-										<div class="form-control">
-											<i class="fa fa-calendar"></i>
-											{{ form_widget(form.picture) }}
-											<div class="form-error">
-												{{ form_errors(form.picture) }}
-											</div>
-										</div>
-										<br>
-										{{ form_label(form.images) }}
-										<div class="form-control">
-											<i class="fa fa-calendar"></i>
-											{{ form_widget(form.images) }}
-											<div class="form-error">
-												{{ form_errors(form.images) }}
-											</div>
-										</div>
-										<br>
-
-										<div class="fc-left modal-footer">
-											<a href="{{ path("app_cruise_index")}}">
-												<button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-											</a>
-
-											<button type="submit" class="btn btn-success">{{ button_label|default('Save') }}
-												<i class="icon-paperplane ml-2"></i>
-											</button>
-										</div>
-
-
-										{{ form_end(form) }}
-
-
-										{# <br>
-																																																																																									<div class="fc-left modal-footer">
-																																																																																										<button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
-																																																																																
-																																																																																										<button type="submit" class="btn bg-primary">
-																																																																																											{{ button_label|default('Save changes') }}
-																																																																																											<i class="icon-paperplane ml-2"></i>
-																																																																																										</button>
-																																																																																									</div>
-																																																																																
-																																																																																
-																																																																																									{{ form_end(form) }} #}
-
-									</div>
-
-
-								</div>
+{# 								<a class="btn btn-primary text-white" data-toggle="modal" data-target="#modal_edit{{cruise.id}}">
+ #}
+									<i class="icon-pencil3 mr-2 "></i>
+									Edit
+								</a>
 							</div>
+							<br>
+
+							<!-- Primary modal -->
+							{# <div id="modal_edit{{cruise.id}}" class="modal fade" tabindex="-1">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header bg-primary">
+											<h6 class="modal-title">Primary header</h6>
+											<button type="button" class="close" data-dismiss="modal">&times;</button>
+										</div>
+
+										<div class="modal-body">
+
+											{{ form_start(form, {'method': 'get'}) }}
+
+
+											<div>
+												<i class="fa fa-calendar"></i>
+												{{ form_label(form.title) }}
+												{{ form_widget(form.title) }}
+												<div class="form-error">
+													{{ form_errors(form.title) }}
+												</div>
+											</div>
+											<br>
+											<div >
+												<i class="fa fa-calendar"></i>
+												{{ form_label(form.description) }}
+												{{ form_widget(form.description, { 'attr': {'class': 'summernote'} }) }}
+												<div class="form-error">
+													{{ form_errors(form.description) }}
+												</div>
+											</div>
+											<br>
+											<div >
+												<i class="fa fa-calendar"></i>
+												{{ form_label(form.inclus) }}
+												{{ form_widget(form.inclus, { 'attr': {'class': 'summernote'} }) }}
+												<div class="form-error">
+													{{ form_errors(form.inclus) }}
+												</div>
+											</div>
+											<br>
+											<div>
+												<i class="fa fa-calendar"></i>
+												{{ form_label(form.nonInclus) }}
+												{{ form_widget(form.nonInclus, { 'attr': {'class': 'summernote'} }) }}
+												<div class="form-error">
+													{{ form_errors(form.nonInclus) }}
+												</div>
+											</div>
+											<br>
+											<div >
+												<i class="fa fa-calendar"></i>
+												{{ form_label(form.countries) }}
+												{{ form_widget(form.countries, { 'attr': {'class': 'form-control select-search'} }) }}
+												<div class="form-error">
+													{{ form_errors(form.countries) }}
+												</div>
+											</div>
+											<br>
+											<div >
+												<i class="fa fa-calendar"></i>
+												{{ form_label(form.goodAddress) }}
+												{{ form_widget(form.goodAddress) }}
+												<div class="form-error">
+													{{ form_errors(form.goodAddress) }}
+												</div>
+											</div>
+											<br>
+											<div >
+												<i class="fa fa-calendar"></i>
+												{{ form_label(form.agence) }}
+												{{ form_widget(form.agence) }}
+												<div class="form-error">
+													{{ form_errors(form.agence) }}
+												</div>
+											</div>
+											<br>
+																					<div >
+																						<i class="fa fa-calendar"></i>
+																						{{ form_label(form.categories) }}
+																						{{ form_widget(form.categories) }}
+																						<div class="form-error">
+																							{{ form_errors(form.categories) }}
+																						</div>
+																					</div>
+																					<br> 
+
+											{{ form_label(form.picture) }}
+											<div class="form-control">
+												<i class="fa fa-calendar"></i>
+												{{ form_widget(form.picture) }}
+												<div class="form-error">
+													{{ form_errors(form.picture) }}
+												</div>
+											</div>
+											<br>
+											{{ form_label(form.images) }}
+											<div class="form-control">
+												<i class="fa fa-calendar"></i>
+												{{ form_widget(form.images) }}
+												<div class="form-error">
+													{{ form_errors(form.images) }}
+												</div>
+											</div>
+											<br>
+
+											<div class="fc-left modal-footer">
+												<a href="{{ path("app_cruise_index")}}">
+													<button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+												</a>
+
+												<button type="submit" class="btn btn-success">{{ button_label|default('Save') }}
+													<i class="icon-paperplane ml-2"></i>
+												</button>
+											</div>
+
+
+											{{ form_end(form) }}
+
+
+											</div>
+
+
+									</div>
+								</div>
+							</div> #}
+							<!-- /primary modal -->
+
+
 						</div>
-						<!-- /primary modal -->
+						<!-- /blog layout #2 with image -->
 
-
-					</div>
-					<!-- /blog layout #2 with image -->
-
-
-				</div>
-			</div>
-
-
-			<div class="timeline-row">
-				<div class="timeline-icon">
-					<div class="bg-danger">
-						<i class="icon-coins icon-2x"></i>
 
 					</div>
 				</div>
 
-				<div class="content">
 
-					<div>
-						<h2 class="timeline-title">Price list</h2>
+				<div class="timeline-row">
+					<div class="timeline-icon">
+						<div class="bg-danger">
+							<i class="icon-coins icon-2x"></i>
+
+						</div>
+					</div>
+
+					<div class="content">
+
+						<div>
+							<h2 class="timeline-title">Price list</h2>
 
 
-						{{ render(controller('App\\Controller\\PriceListController::showPriceListToCruise', { 'cruise': cruise })) }}
+							{{ render(controller('App\\Controller\\PriceListController::showPriceListToCruise', { 'cruise': cruise })) }}
 
+
+						</div>
 
 					</div>
+
 
 				</div>
 
 
-			</div>
+				<div class="timeline-row">
+					<div class="timeline-icon">
+						<div class="bg-danger">
+							<i class="mi-room mi-2x"></i>
 
-
-			<div class="timeline-row">
-				<div class="timeline-icon">
-					<div class="bg-danger">
-						<i class="mi-room mi-2x"></i>
-
-					</div>
-				</div>
-
-				<div class="content">
-
-					<div>
-						<h2 class="timeline-title">Good Address list</h2>
-
-
-						{{ render(controller('App\\Controller\\GoodAddressController::show', { 'offer': offer})) }}
-
-
+						</div>
 					</div>
 
-				</div>
+					<div class="content">
+
+						<div>
+							<h2 class="timeline-title">Good Address list</h2>
 
 
-			</div>
+							{{ render(controller('App\\Controller\\GoodAddressController::show', { 'offer': offer})) }}
 
 
-			<div class="timeline-row">
-				<div class="timeline-icon">
-					<div class="bg-danger">
-						<i class="icon-comment-discussion icon-2x"></i>
-
-					</div>
-				</div>
-
-				<div class="content">
-
-					<div>
-						<h2 class="timeline-title">Reviews list</h2>
-
-						{# {% if goodAddress is not empty %} #}
-						{{ render(controller('App\\Controller\\ReviewsController::showReviewsToCruise', { 'cruise': cruise })) }}
-						{# {% endif %} #}
+						</div>
 
 					</div>
+
 
 				</div>
 
 
+				<div class="timeline-row">
+					<div class="timeline-icon">
+						<div class="bg-danger">
+							<i class="icon-comment-discussion icon-2x"></i>
+
+						</div>
+					</div>
+
+					<div class="content">
+
+						<div>
+							<h2 class="timeline-title">Reviews list</h2>
+
+							{# {% if goodAddress is not empty %} #}
+							{{ render(controller('App\\Controller\\ReviewsController::showReviewsToCruise', { 'cruise': cruise })) }}
+							{# {% endif %} #}
+
+						</div>
+
+					</div>
+
+
+				</div>
 			</div>
 		</div>
-	</div>
-{% endblock %}
+	{% endblock %}

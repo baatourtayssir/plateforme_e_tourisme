@@ -1,0 +1,126 @@
+{% extends 'base.html.twig' %}
+
+{% block javascripts %}
+	<script src="{{asset("global_assets/js/demo_pages/form_checkboxes_radios.js")}}"></script>
+
+	<script src="{{asset("global_assets/js/plugins/forms/styling/uniform.min.js")}}"></script>
+	<script src="{{asset("global_assets/js/plugins/forms/styling/switchery.min.js")}}"></script>
+	<script src="{{asset("global_assets/js/plugins/forms/styling/switch.min.js")}}"></script>
+{% endblock %}
+
+{% block title %}
+	Client
+
+{% endblock %}
+{% block menu %}
+	<h4>
+		<i class="icon-arrow-left52 mr-2"></i>
+		<span class="font-weight-semibold">Home</span>
+		- Client pages</h4>
+{% endblock %}
+{% block menu_petit %}
+	<div class="breadcrumb">
+		<a href="#" class="breadcrumb-item">
+			<i class="icon-home2 mr-2"></i>
+			Home</a>
+		<span class="breadcrumb-item active">Client Pages -Client management
+		</span>
+	</div>
+{% endblock %}
+
+{% block content %}
+	<!-- Summernote editor -->
+	<div class="card">
+		<div class="card-header header-elements-inline">
+			<h5 class="card-title">{{ client.lastname}}</h5>
+			<div class="header-elements">
+				<div class="list-icons">
+					<a class="list-icons-item" data-action="collapse"></a>
+					<a class="list-icons-item" data-action="reload"></a>
+					<a class="list-icons-item" data-action="remove"></a>
+				</div>
+			</div>
+		</div>
+
+		<div class="content justify-content-center align-items-center">
+
+
+			{{ form_start(form) }}
+
+
+			<div {# class="form-control" #}>
+				<i class="fa fa-calendar"></i>
+				{{ form_label(form.email) }}
+				{{ form_widget(form.email) }}
+				<div class="form-error">
+					{{ form_errors(form.email) }}
+				</div>
+			</div>
+			<br>
+			<div {# class="form-control" #}>
+				<i class="fa fa-calendar"></i>
+				{{ form_label(form.password) }}
+				{{ form_widget(form.password) }}
+				<div class="form-error">
+					{{ form_errors(form.password) }}
+				</div>
+			</div>
+			<br>
+			<div {# class="form-control" #}>
+				<i class="fa fa-calendar"></i>
+				{{ form_label(form.lastname) }}
+				{{ form_widget(form.lastname) }}
+				<div class="form-error">
+					{{ form_errors(form.lastname) }}
+				</div>
+			</div>
+			<br>
+			<div {# class="form-control" #}>
+				<i class="fa fa-calendar"></i>
+				{{ form_label(form.phoneNumber) }}
+				{{ form_widget(form.phoneNumber) }}
+				<div class="form-error">
+					{{ form_errors(form.phoneNumber) }}
+				</div>
+			</div>
+			<br>
+			<div {# class="form-control" #}>
+				<i class="fa fa-calendar"></i>
+				{{ form_label(form.address) }}
+				{{ form_widget(form.address) }}
+				<div class="form-error">
+					{{ form_errors(form.address) }}
+				</div>
+			</div>
+			
+			<br>
+			{{ form_label(form.avatar) }}
+			<div class="form-control">
+				<i class="fa fa-calendar"></i>
+
+				{{ form_widget(form.avatar) }}
+				<div class="form-error">
+					{{ form_errors(form.avatar) }}
+				</div>
+			</div>
+			<br>
+			
+
+			<br><br>
+			<div class="fc-left modal-footer">
+				<a href="{{ path("app_client_index")}}">
+					<button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+				</a>
+
+				<button type="submit" class="btn btn-success">{{ button_label|default('Save') }}
+					<i class="icon-paperplane ml-2"></i>
+				</button>
+			</div>
+
+			{{ form_end(form) }}
+
+
+		</div>
+
+	</div>
+{% endblock %}

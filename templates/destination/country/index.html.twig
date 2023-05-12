@@ -27,90 +27,94 @@
 
 
 {% block content %}
-	
 
-		<!-- Basic datatable -->
-		<div class="card">
-			<div class="card-header header-elements-inline">
-				<h5 class="card-title">Country list</h5>
-				<div class="header-elements">
-					<div class="list-icons">
-						<a href="{{path('app_country_new')}}" class="nav-link">
 
-							<button type="submit" class="btn btn-success">
-								<b>
-									<i class="icon-plus3 mr-1"></i>
-								</b>
-								<big>Add Country</big> </button>
-						</a>
-					</div>
+	<!-- Basic datatable -->
+	<div class="card">
+		<div class="card-header header-elements-inline">
+			<h5 class="card-title">Country list</h5>
+			<div class="header-elements">
+				<div class="list-icons">
+					<a href="{{path('app_country_new')}}" class="nav-link">
 
+						<button type="submit" class="btn btn-success">
+							<b>
+								<i class="icon-plus3 mr-1"></i>
+							</b>
+							<big>Add Country</big>
+						</button>
+					</a>
 				</div>
+
 			</div>
+		</div>
 
-			<table class="table datatable-basic">
-				<thead>
+		<table class="table datatable-basic">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Name</th>
+					<th>Picture</th>
+					<th>Geographical</th>
+					<th class="">Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for country in countries %}
 					<tr>
-						<th>Id</th>
-						<th>Name</th>
-						<th>Geographical</th>
-						<th class="">Actions</th>
+						<td>{{ country.id }}</td>
+						<td>{{ country.intitule }}</td>
+						<td><img src="{{ asset('uploads/images/country/picture/' ~ country.picture) }}" width="70" height="70" alt="No picture"></td>
+
+						<td>{{country.geographical.location}}</td>
+
+
+						<td>
+							<div class="row">
+								<a href="{{ path('app_country_edit', {'id': country.id}) }}" class="btn btn-primary btn-sm mr-1">
+									<i class="icon-pencil7 mr-1"></i>
+									Edit
+								</a>
+								<a class="btn btn-danger btn-sm text-white " data-toggle="modal" data-target="#modal_Delete{{country.id}}">
+									<i class="icon-bin mr-1"></i>
+									Delete</a>
+							</div>
+						</td>
 					</tr>
-				</thead>
-				<tbody>
-					{% for country in countries %}
-						<tr>
-							<td>{{ country.id }}</td>
-							<td>{{ country.intitule }}</td>
-							<td>{{country.geographical.location}}</td>
-
-
-							<td>
-								<div class="row">
-									<a href="{{ path('app_country_edit', {'id': country.id}) }}" class="btn btn-primary btn-sm mr-1">
-										<i class="icon-pencil7 mr-1"></i>
-										Edit
-									</a>
-									<a class="btn btn-danger btn-sm text-white " data-toggle="modal" data-target="#modal_Delete{{country.id}}">
-										<i class="icon-bin mr-1"></i>
-										Delete</a>
+					<!-- Delete modal -->
+					<div id="modal_Delete{{country.id}}" class="modal fade" tabindex="-1">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header bg-danger">
+									<h5 class="modal-title">Deletion</h5>
+									<button type="button" class="close" data-dismiss="modal">&times;</button>
 								</div>
-							</td>
-						</tr>
-						<!-- Delete modal -->
-						<div id="modal_Delete{{country.id}}" class="modal fade" tabindex="-1">
-							<div class="modal-dialog">
-								<div class="modal-content">
-									<div class="modal-header bg-danger">
-										<h5 class="modal-title">Deletion</h5>
-										<button type="button" class="close" data-dismiss="modal">&times;</button>
-									</div>
 
-									<div
-										class="modal-body">
-										{# <h6 class="font-weight-semibold">Text in a modal</h6> #}
-										<p>Are you sure to delete this country.</p>
+								<div
+									class="modal-body">
+									{# <h6 class="font-weight-semibold">Text in a modal</h6> #}
+									<p>Are you sure to delete this country.</p>
 
-									</div>
+								</div>
 
-									<div class="modal-footer">
-										<button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
-										<a href="{{ path('app_country_delete',{'id': country.id})}}">
-											<button type="button" class="btn bg-danger">Delete</button>
-										</a>
-									</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+									<a href="{{ path('app_country_delete',{'id': country.id})}}">
+										<button type="button" class="btn bg-danger">Delete</button>
+									</a>
 								</div>
 							</div>
 						</div>
-						<!-- /Delete modal -->
-					{% else %}
-						<tr>
-							<td colspan="5">no records found</td>
-						</tr>
-					{% endfor %}
-				</tbody>
-			</table>
-		</div>
+					</div>
+					<!-- /Delete modal -->
+				{% else %}
+					<tr>
+						<td colspan="5">no records found</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
 
 
 {% endblock %}

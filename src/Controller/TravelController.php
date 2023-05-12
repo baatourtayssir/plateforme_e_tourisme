@@ -47,7 +47,7 @@ class TravelController extends AbstractController
         $form = $this->createForm(TravelType::class, $travel);
         $form->handleRequest($request);
        /*  dd($travel); */
-
+dd($travel);
         if ($form->isSubmitted() && $form->isValid()) {
            
             $myFile = $form['picture']->getData();
@@ -307,5 +307,7 @@ class TravelController extends AbstractController
             'form' => $form,
         ]);
     }
+
+    
 
 }

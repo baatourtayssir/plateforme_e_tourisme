@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Service\KernelService;
 
 #[Route('/country')]
 class CountryController extends AbstractController
@@ -22,13 +23,18 @@ class CountryController extends AbstractController
     }
 
     #[Route('/new', name: 'app_country_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, CountryRepository $countryRepository): Response
+    public function new(Request $request, CountryRepository $countryRepository, KernelService $kernelService): Response
     {
         $country = new Country();
         $form = $this->createForm(CountryType::class, $country);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $myFile = $form['picture']->getData();
+            if ($myFile) {
+                $fileName = $kernelService->loadPictureCountry($myFile);
+                $country->setPicture($fileName);
+            }
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($country);
             $entityManager->flush();
@@ -45,12 +51,19 @@ class CountryController extends AbstractController
 
 
     #[Route('/{id}/edit', name: 'app_country_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Country $country, CountryRepository $countryRepository): Response
+    public function edit(Request $request, Country $country, CountryRepository $countryRepository, KernelService $kernelService): Response
     {
         $form = $this->createForm(CountryType::class, $country);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $myFile = $form['picture']->getData();
+            if ($myFile) {
+                $fileName = $kernelService->loadPictureCountry($myFile);
+                $country->setPicture($fileName);
+            }
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($country);
             $entityManager->flush();

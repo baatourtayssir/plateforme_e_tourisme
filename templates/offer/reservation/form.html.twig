@@ -45,7 +45,15 @@
 		<div class="content justify-content-center align-items-center">
 			{{ form_start(form) }}
 
-
+			<div {# class="form-control" #}>
+				<i class="fa fa-calendar"></i>
+				{{ form_label(form.client) }}
+				{{ form_widget(form.client, { 'attr': {'class': 'form-control select-search'} }) }}
+				<div class="form-error">
+					{{ form_errors(form.client) }}
+				</div>
+			</div>
+			<br>
 			<div {# class="form-control" #}>
 				<i class="fa fa-calendar"></i>
 				{{ form_label(form.dateReservation) }}
@@ -90,19 +98,19 @@
 					{{ form_errors(form.offer) }}
 				</div>
 			</div>
-			
+
 			<br>
-			
-		{# 	<div >
-				<i class="fa fa-calendar"></i>
-				{{ form_label(form.agence) }}
-				{{ form_widget(form.agence) }}
-				<div class="form-error">
-					{{ form_errors(form.agence) }}
-				</div>
-			</div>
-			<br> #}
-			
+
+			{# 	<div >
+							<i class="fa fa-calendar"></i>
+							{{ form_label(form.agence) }}
+							{{ form_widget(form.agence) }}
+							<div class="form-error">
+								{{ form_errors(form.agence) }}
+							</div>
+						</div>
+						<br> #}
+
 
 			<div class="fc-left modal-footer">
 				<a href="{{ path("app_reservation_index")}}">

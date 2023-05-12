@@ -5,8 +5,10 @@ namespace App\Controller;
 use App\Entity\Admin;
 use App\Entity\Agence;
 use App\Entity\Agent;
+use App\Entity\Client;
 use App\Entity\User;
 use App\Form\AdminType;
+use App\Form\ClientType;
 use App\Form\RegisterAgentType;
 use App\Form\UserType as FormUserType;
 use App\Service\KernelService;
@@ -31,11 +33,6 @@ class RegistrationController extends AbstractController
         $user = new Admin();
         $form = $this->createForm(AdminType::class, $user);
         $form->handleRequest($request);
-
-
-      
-
-
         if ($form->isSubmitted() && $form->isValid()) {
 
             $myFile = $form['avatar']->getData();
@@ -117,6 +114,45 @@ class RegistrationController extends AbstractController
         }
 
         return $this->render('registration/register_agent.html.twig', [
+            'registrationForm' => $form->createView(),
+        ]);
+    }
+
+
+    #[Route('/register/Client', name: 'app_register_client')]
+    public function registerClient(Request $request, UserPasswordHasherInterface $userPasswordHasher, KernelService $kernelService, UserAuthenticatorInterface $userAuthenticator, UsersAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
+    {
+        $client = new Client();
+        $form = $this->createForm(ClientType::class, $client);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $myFile = $form['avatar']->getData();
+                if ($myFile) {
+                    $fileName = $kernelService->loadProfileClient($myFile);
+                    $client->setAvatar($fileName);
+                }
+            // encode the plain password
+            $client->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $client,
+                    $form->get('password')->getData()
+                )
+            );
+            $client->setRoles(["ROLE_CLIENT"]);
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($client);
+            $entityManager->flush();
+            // do anything else you need here, like send an email
+
+            return $userAuthenticator->authenticateUser(
+                $client,
+                $authenticator,
+                $request
+            );
+        }
+
+        return $this->render('registration/register_client.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
     }

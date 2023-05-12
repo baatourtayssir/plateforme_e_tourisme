@@ -50,57 +50,6 @@ class AgentController extends AbstractController
     } */
 
 
-    /*    #[Route('/new/agent', name: 'app_agent_new_agent', methods: ['GET', 'POST'])]
-    public function newAgent(Request $request, AgentRepository $agentRepository, UserPasswordHasherInterface $userPasswordHasher, KernelService $kernelService): Response
-    {
-        $agent = new Agent();
-
-        $form = $this->createForm(AgentType::class, $agent);
-        $form->handleRequest($request);
-        $agent->setRoles(['ROLE_AGENT']);
-
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $myFile = $form['avatar']->getData();
-            if ($myFile) {
-                $fileName = $kernelService->loadProfile($myFile);
-                $agent->setAvatar($fileName);
-            }
-
-
-            $agent->setPassword(
-                $userPasswordHasher->hashPassword(
-                    $agent,
-                    $form->get('password')->getData()
-                )
-            );
-
-
-            $agent->setRoles(array_merge($agent->getRoles(), $form->get('roles')->getData()));
-
-
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($agent);
-            $entityManager->flush();
-            
-             /* 
-            if (in_array('ROLE_ADMIN', $agent->getRoles())) { */
-    /*             return $this->redirectToRoute('agence_', [], Response::HTTP_SEE_OTHER);
-           /*  }
-            elseif (in_array('ROLE_SUPER_AGENT', $agent->getRoles())){
-                return $this->redirectToRoute('app_agence_new', [], Response::HTTP_SEE_OTHER);
-            } */
-    /*         }
- 
-        return $this->renderForm('admin/agent/form.html.twig', [
-            'agent' => $agent,
-            'form' => $form,
-        ]);
-    }
-
- */
-
     #[Route('/new', name: 'app_agent_new', methods: ['GET', 'POST'])]
     public function new(Request $request, AgentRepository $agentRepository, UserPasswordHasherInterface $userPasswordHasher, KernelService $kernelService): Response
     {

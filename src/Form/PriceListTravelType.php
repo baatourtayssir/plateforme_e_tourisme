@@ -41,7 +41,7 @@ class PriceListTravelType extends AbstractType
                 'attr' => ['class' => 'form-control select'],
             ))
            
-            ->add('Included_excursions', EntityType::class, array(
+            ->add('ExcursionsIncluded', EntityType::class, array(
                 'class'     => Excursion::class,
                 'choice_label' => 'title',
                 'label' => 'Excursion included',

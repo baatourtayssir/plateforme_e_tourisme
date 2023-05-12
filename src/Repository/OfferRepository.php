@@ -3,8 +3,11 @@
 namespace App\Repository;
 
 use App\Entity\Offer;
+use App\Model\SearchData;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query;
+
 
 /**
  * @extends ServiceEntityRepository<Offer>
@@ -38,6 +41,46 @@ class OfferRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
+    public function findOffresByPays($pays)
+{
+    return $this->createQueryBuilder('o')
+        ->where('o.pays = :pays')
+        ->setParameter('pays', $pays)
+        ->orderBy('o.id', 'ASC')
+        ->getQuery()
+        ->getResult();
+}
+
+
+public function findOffresByCountries($country)
+{
+    $qb = $this->createQueryBuilder('o');
+    
+    $qb->andWhere(':country MEMBER OF o.countries')
+       ->setParameter('country', $country);
+       
+    return $qb->getQuery()->getResult();
+}
+
+
+
+public function search(SearchData $search): array
+{
+    $query = $this->createQueryBuilder('o')
+        ->leftJoin('o.countries', 'c')
+        ->andWhere('o.title LIKE :q OR o.description LIKE :q')
+        ->setParameter('q', '%'.$search->q.'%');
+
+    if (!empty($search->country)) {
+        $query->andWhere('c.intitule = :country')
+            ->setParameter('country', $search->country);
+    }
+
+    return $query->getQuery()->getResult();
+}
+
+
 
 //    /**
 //     * @return Offer[] Returns an array of Offer objects

@@ -77,7 +77,7 @@
 					{# <th>Country</th> #}
 					<th>Countries</th>
 					{# <th>Good Address</th> #}
-					<th>Categories</th>
+				{# 	<th>Categories</th> #}
 					<th>Agence</th>
 
 					{# <th>Reviews</th> #}
@@ -96,7 +96,7 @@
 							<a href="{{ path('app_cruise_show', {'id': cruise.id}) }}">{{cruise.title}}
 							</a>
 						</td>
-						<td><img src="{{ asset('uploads/images/offer/cruise/picture/' ~ cruise.picture) }}" width="80" alt="No picture"></td>
+						<td><img src="{{ asset('uploads/images/offer/picture/' ~ cruise.picture) }}" width="80" alt="No picture"></td>
 
 						{# <td>{{ cruise.description |raw}}</td>
 																		<td>{{ cruise.inclus |raw}}</td>
@@ -122,11 +122,11 @@
 																				{{ goodAddress.intitule }}
 																			{% endfor %}
 																		</td> #}
-							<td>
+							{# <td>
 								{% for category in cruise.categories %}
 							{{ category.style }}
 						{% endfor %}
-						</td><td>
+						</td> #}<td>
 						{{ cruise.agence.name }}
 						</td>
 

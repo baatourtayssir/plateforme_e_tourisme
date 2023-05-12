@@ -1,0 +1,63 @@
+{% extends 'front/home.html.twig' %}
+{% block avion %}{% endblock %}
+{% block top_menu %}
+
+	<!--page title start-->
+	<div class="page_title" data-stellar-background-ratio="0" data-stellar-vertical-offset="0" style="background-image:url(assets/images/bg/page_title_bg.jpg);">
+		<ul>
+			<li><a href="javascript:;">Good Address</a></li>
+		</ul>
+	</div>
+	<!--page title end-->
+	<div class="clearfix"></div>
+
+
+{% endblock %}
+
+{% block content %}
+
+	<!--  special offer section start -->
+	<div class="full_width travelite_world_section">
+		<div class="container">
+			<div class="row">
+
+				<div class="heading_team">
+					{# <h3>Special offers</h3>
+					<p>Create stunning pages with our powerful admin panel. Functionality and usability combine. Travelllers Deals and Offers on Hotels, Vacation Packages, Flights, Cruises and Car Rentals</p>
+				 #}</div>
+
+				<!-- first ractangle start -->
+                {% for good_address in goodAddresses %}
+				<div class="col-lg-3 col-md-3 col-sm-6">
+					<div class=" full_width offer_box_wrapper">
+						{# <div class="circle_icon">
+							90%
+							<span>off</span>
+						</div> #}
+						<div class="img_overlay_wrapper">
+							<img src="{{ asset('uploads/images/goodAddress/picture/' ~ good_address.picture) }}" class="img-responsive" alt="offer">
+							<div class="img_overlay"></div>
+						</div>
+						<div class="full_width offer_inner">
+							<h4>{{good_address.intitule}}</h4>
+							<p>{{good_address.region.intitule}}</p>
+							<div class="overlay_btn">                       
+								<a href="{{path('app_front_goodAddress_show',{'id': good_address.id})}}" class="green_btn">See all</a>
+							</div>
+
+						</div>
+					</div>
+				</div>
+                {% endfor %}
+				<!-- first ractangle End -->
+
+				<div class="full_width destination_button">
+					<a href="#" class="black_btn feature_more_btn">more destination</a>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<!--  special offer section End -->
+
+{% endblock %}

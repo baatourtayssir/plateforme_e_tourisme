@@ -90,7 +90,7 @@
 					{# <th>Country</th> #}
 					<th>Region</th>
 					{# <th>Good Address</th> #}
-					<th>Categories</th>
+				{# 	<th>Categories</th> #}
 					<th>Agence</th>
 					
 
@@ -110,7 +110,7 @@
 						<td>
 							<a href="{{ path('app_excursion_show', {'id': excursion.id}) }}">{{excursion.title}}</td>
 						</td>
-						<td><img src="{{ asset('uploads/images/offer/excursion/picture/' ~ excursion.picture) }}" width="80" alt="No picture"></td>
+						<td><img src="{{ asset('uploads/images/offer/picture/' ~ excursion.picture) }}" width="80" alt="No picture"></td>
 
 						{# <td>{{ excursion.description |raw}}</td> #}
 						{# <td>{{ excursion.inclus |raw}}</td>
@@ -137,11 +137,11 @@
 							{% endfor %}
 						</td> #}
 
-						<td>
+						{# <td>
 							{% for category in excursion.categories %}
 								{{ category.style }}
 							{% endfor %}
-						</td>
+						</td> #}
 						<td>{{ excursion.agence.name }}</td>
 
 
