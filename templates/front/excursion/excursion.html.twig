@@ -5,7 +5,7 @@
 	<!--page title start-->
 	<div class="page_title" data-stellar-background-ratio="0" data-stellar-vertical-offset="0" style="background-image:url({{asset("/front/assets/images/Home/home4.jpg")}});">
 		<ul>
-			<li><a href="javascript:;">Organized trip</a></li>
+			<li><a href="javascript:;">Organized excursion</a></li>
 		</ul>
 	</div>
 	<!--page title end-->
@@ -21,13 +21,13 @@
 		<div class="container">
 			<div class="row">
 				<div class="heading_team">
-					<h3>travel list</h3>
+					<h3>Excursion list</h3>
 					<p>Embark on an unforgettable journey with our meticulously crafted organized tour, where you'll experience the perfect blend of adventure, exploration, and relaxation.</p>
 				</div>
 				<div class="flights_special_offers full_width">
 					<div
 						class="row">
-                        {% for travel in travels %}
+                        {% for excursion in excursions %}
                             
                        
 						<!-- first ractangle start -->
@@ -38,13 +38,13 @@
 									20%
 									<span>off</span>
 								</div> #}
-                                <a href="{{path('app_front_travel_show',{'travel': travel.id})}}">
+                                <a href="{{path('app_front_excursion_show',{'excursion': excursion.id})}}">
 								<div class="img_overlay_wrapper">
-									<img src="{{ asset('uploads/images/offer/picture/' ~ travel.picture) }}" class="img-responsive" alt="offer">
+									<img src="{{ asset('uploads/images/offer/picture/' ~ excursion.picture) }}" class="img-responsive" alt="offer">
 									<div class="img_overlay"></div>
 								</div>
 								<div class="full_width offer_inner">
-									<h4>{{travel.title}}</h4>
+									<h4>{{excursion.title}}</h4>
 								</div>
                                 </a>
 							</div>

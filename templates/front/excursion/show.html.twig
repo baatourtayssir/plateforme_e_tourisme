@@ -3,11 +3,10 @@
 
 {% block top_menu %}
 
-
 	<!--page title start-->
 	<div class="page_title" data-stellar-background-ratio="0" data-stellar-vertical-offset="0" style="background-image:url({{asset("/front/assets/images/Home/home4.jpg")}});">
 		<ul>
-			<li><a href="javascript:;">Cruise &nbsp Details &nbsp for &nbsp{{cruise.title}}</a></li>
+			<li><a href="javascript:;">Excursion &nbsp Details &nbsp for &nbsp{{excursion.title}}</a></li>
 		</ul>
 	</div>
 	<!--page title end-->
@@ -64,37 +63,33 @@
 
 						</aside>
 
-						<aside class="widget hotel_widgets">
-							<h4 class="widget-title">Other cruises</h4>
+						<aside class="widget hotel_widgets ">
+							<h4 class="widget-title">Other Excursion</h4>
 							<ul>
-								{% for croisiere in cruises[:5] %}
+								{% for excursion in excursions[:5] %}
 
 
 									<li>
-										<img src="{{ asset('uploads/images/offer/picture/' ~ croisiere.picture) }}" alt="hotel thumb">
+										<img src="{{ asset('uploads/images/offer/picture/' ~ excursion.picture) }}" alt="hotel thumb">
 										<div>
 											<h4>
-												<a href="#">{{croisiere.title}}</a>
+												<a href="#">{{excursion.title}}</a>
 											</h4>
-											{% for country in croisiere.countries %}
-												<span>{{country.intitule}}</span>
+											{% for region in excursion.regions %}
+												<span>{{region.intitule}}</span>
 											{% endfor %}
 
 
 										</div>
 									</li>
 								{% endfor %}
-
-
 							</ul>
-
 						</aside>
-
 						<aside class="">
 							<div class="travalite_latest_event">
 								<h4 class="right_event_title">Other good addresses</h4>
 								<ul>
-									{% for address in goodAddresses[:4] %}
+									{% for address in goodAddresses %}
 										<li>
 											<div class="latest_event_date"></div>
 											<div class="left_latest_thumb">
@@ -119,9 +114,9 @@
 
 						<aside class="">
 							<div class="travalite_latest_event">
-								<h4 class="right_event_title">Show articles</h4>
+								<h4 class="right_event_title">show articles</h4>
 								<ul>
-									{% for article in articles[:3] %}
+									{% for article in articles %}
 										<li>
 											<div class="latest_event_date"></div>
 											<div class="left_latest_thumb">
@@ -144,7 +139,6 @@
 
 						</aside>
 
-
 					</div>
 				</div>
 				<!-- left sidebar end -->
@@ -156,7 +150,7 @@
 
 							<div class="bottom_desc">
 
-								<h5 class="includes_text">{{cruise.agence.name}}
+								<h5 class="includes_text">{{excursion.agence.name}}
 									:</h5>
 								<!-- desc icons Start-->
 								<br>
@@ -165,7 +159,7 @@
 
 										<ul class="">
 											<li>
-												<div><img src="{{asset('uploads/images/agences/logo/' ~ cruise.agence.brochureFilename) }}"></div>
+												<div><img src="{{ asset('uploads/images/agences/logo/' ~ excursion.agence.brochureFilename) }}"></div>
 
 											</li>
 
@@ -175,16 +169,16 @@
 
 										<ul class="">
 											<li>
-												{{cruise.agence.description|raw}}
+												{{excursion.agence.description|raw}}
 
 											</li>
-
 											<div class="team_social_media">
 												<i class="fa fa-facebook"></i>
 												<i class="fa fa-pinterest-p"></i>
 												<i class="fa fa-dribbble"></i>
 												<i class="fa fa-twitter"></i>
 											</div>
+
 										</ul>
 										<!-- desc icons End-->
 
@@ -193,22 +187,22 @@
 								</div>
 								<br><br>
 								<div class="top_head_bar">
-									<h4>{{cruise.title}}</h4>
-									{% for country in cruise.countries %}
-										<span class="sub_city">{{country.intitule}}</span>
+									<h4>{{excursion.title}}</h4>
+									{% for region in excursion.regions %}
+										<span class="sub_city">{{region.intitule}}</span>
 									{% endfor %}
 								</div>
 								<br><br><br>
 								<!-- slider start -->
 								<div class="hotel_thumbnail_slider">
 									<ul class="thumbnail_hotel_slider">
-										{% for image in cruise.images %}
+										{% for image in excursion.images %}
 											<li><img src="{{ asset('uploads/images/offer/pictures/' ~ image) }}" alt="slide"></li>
 										{% endfor %}
 									</ul>
 
 									<div id="bx-pager" class="hotel_thumbnail_crousel">
-										{% for image in cruise.images %}
+										{% for image in excursion.images %}
 											<a data-slide-index="{{ loop.index0 }}" href=""><img src="{{ asset('uploads/images/offer/pictures/' ~ image) }}" alt="slide"></a>
 										{% endfor %}
 									</div>
@@ -216,36 +210,35 @@
 
 								<!-- slider end -->
 
+								<!-- Booking area Start-->
+								{# <div class="booking_area_section">
+																																																																																																																																																																																																																																																																																																																																																																																																																																														<p>{{travel.description|raw}}</p>
+																																																																																																																																																																																																																																																																																																																																																																																																																																							
+																																																																																																																																																																																																																																																																																																																																																																																																																																							
+																																																																																																																																																																																																																																																																																																																																																																																																																																													</div> #}
+								<!-- Booking area End -->
+
 								<!-- package tabs start -->
-								<div class="full_width hotel_details_mdl_tab" id="travelite_middle_tabs">
-									<div class="pcg_tabs_panel">
+									<div class="full_width hotel_details_mdl_tab" id="travelite_middle_tabs"> <div class="pcg_tabs_panel">
 										<ul>
-											<li>
-												<a href="#tab_search_1">Infomation</a>
-											</li>
-											<li>
-												<a href="#tab_search_2" class="">Price list</a>
-											</li>
-											{# <li><a href="#tab_search_4" class="">Excursion not included</a></li> #}
-											<li>
-												<a href="#tab_search_5" class="">Good address</a>
-											</li>
-											<li>
-												<a href="#tab_search_3" class="">Review</a>
-											</li>
+											<li><a href="#tab_search_1">Infomation</a></li>
+											<li><a href="#tab_search_2" class="">Price list</a></li>
+{# 											<li><a href="#tab_search_4" class="">Excursion not included</a></li>
+ #}											<li><a href="#tab_search_5" class="">Good address</a></li>
+											<li><a href="#tab_search_3" class="">Review</a></li>
 										</ul>
 									</div>
 									<!--  tab content start -->
 									<div id="tab_search_1" class="tab_details_part hotel_details_tab">
 
-										<p>{{cruise.description|raw}}</p>
+										<p>{{excursion.description|raw}}</p>
 
 
 										<div class="inner_content">
 											<div class="inner_title">
 												<i class="fa fa-check-square-o"></i>
 												Included</div>
-											<p>{{cruise.inclus|raw}}</p>
+											<p>{{excursion.inclus|raw}}</p>
 
 										</div>
 
@@ -254,7 +247,7 @@
 											<div class="inner_title">
 												<i class="fa fa-square-o"></i>
 												Not included</div>
-											<p>{{cruise.nonInclus|raw}}</p>
+											<p>{{excursion.nonInclus|raw}}</p>
 										</div>
 
 									</div>
@@ -392,12 +385,12 @@
 															</div>
 														</div>
 														<div class="col-md-9">
-															<div class="customer_says_slider">
+															<div {# class="customer_says_slider" #}>
 																<div class="owl-carousel owl-theme">
-																	<div class="item active"><img id="css_1" src="{{ asset('uploads/images/reviews/picture/' ~ review.picture) }}" width="100%" alt=""/></div>
+																	<div class="item active"><img src="{{ asset('uploads/images/reviews/picture/' ~ review.picture) }}" alt=""/></div>
 
 																	{% for image in review.images %}
-																		<div class="item active"><img id="css_1" src="{{ asset('uploads/images/reviews/pictures/' ~ image) }}" alt=""/></div>
+																		<div class="item active"><img src="{{ asset('uploads/images/reviews/pictures/' ~ image) }}" alt=""/></div>
 																	{% endfor %}
 
 
@@ -413,6 +406,7 @@
 									</div>
 									<!--  tab content End -->
 									<!--  tab content start -->
+
 									<div id="tab_search_5" class="tab_details_part hotel_details_tab">
 										<div
 											class="inner_content">
@@ -433,6 +427,10 @@
 																		{{goodAddress.region.intitule}}</li>
 
 																</ul>
+																{# <span class="doller_pricing">
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																			$50</span> #}
+
+
 																<div class="full_width main_recent_wrap">
 																	<div class="left_thumb">
 																		<img src="{{ asset('uploads/images/goodAddress/picture/' ~ goodAddress.picture) }}" alt="blogimg" class="img-responsive">
@@ -460,58 +458,56 @@
 
 								</div>
 								<!-- package tabs End -->
-
 							</div>
 							<!-- right main start -->
+
 						</div>
 						<!-- col-lg-9-end -->
-
 						<br><br>
-						<div class="full_width hotel_details_mdl_tab ui-tabs ui-corner-all ui-widget ui-widget-content">
-							<aside class="widget modify_search_widget">
-								<br><br>
-								<div class="tab_details_part hotel_details_tab ui-tabs-panel ui-corner-bottom ui-widget-content">
-									<h4 class="widget-title">Reservation submission</h4>
-									<div class="sidebar_form">
-										{{ form_start(form, { 'action': path('app_front_cruise_reservation', {'cruise': cruise.id}), 'method': 'POST' }) }}
-
-
-										<br>
-										<div class="destination_field">
-											<label>Price list</label>
-											{{ form_widget(form.note) }}
-											<div class="form-error">
-												{{ form_errors(form.note) }}
+						{% if app.user %}
+							<div class="full_width hotel_details_mdl_tab ui-tabs ui-corner-all ui-widget ui-widget-content">
+								<aside class="widget modify_search_widget">
+									<br><br>
+									<div class="tab_details_part hotel_details_tab ui-tabs-panel ui-corner-bottom ui-widget-content">
+										<h4 class="widget-title">Reservation submission</h4>
+										<div class="sidebar_form">
+											{{ form_start(form, { 'action': path('app_front_excursion_reservation', {'excursion': excursion.id}), 'method': 'POST' }) }}
+											<br>
+											<div class="destination_field">
+												<label>Price list</label>
+												{{ form_widget(form.note) }}
+												<div class="form-error">
+													{{ form_errors(form.note) }}
+												</div>
 											</div>
+											<br>
+											<div class="destination_field">
+												<label>Message</label>
+												{{ form_widget(form.message) }}
+												<div class="form-error">
+													{{ form_errors(form.message) }}
+												</div>
+											</div>
+											<br>
+											<button type="submit" class="btn-travel btn-yellow">{{ button_label|default('Save') }}</button>
+											{{ form_end(form) }}
+											<br>
+											{% for flashMessage in app.flashes('success') %}
+												<div class="alert alert-success">
+													{{ flashMessage }}
+												</div>
+											{% endfor %}
+											{% for flashMessage in app.flashes('error') %}
+												<div class="alert alert-danger">
+													{{ flashMessage }}
+												</div>
+											{% endfor %}
 										</div>
-										<br>
-										<div class="destination_field">
-											<label>Message</label>
-											{{ form_widget(form.message) }}
-											<div class="form-error">
-												{{ form_errors(form.message) }}
-											</div>
-										</div>
-
-										<br>
-										<button type="submit" class="btn-travel btn-yellow">{{ button_label|default('Save') }}</button>
-										{{ form_end(form) }}
-										<br>
-										{% for flashMessage in app.flashes('success') %}
-											<div class="alert alert-success">
-												{{ flashMessage }}
-											</div>
-										{% endfor %}
-
-										{% for flashMessage in app.flashes('error') %}
-											<div class="alert alert-danger">
-												{{ flashMessage }}
-											</div>
-										{% endfor %}
 									</div>
-								</div>
-							</aside>
-						</div>
+								</aside>
+							</div>
+						{% endif %}
+
 					</div>
 					<!--  row main -->
 				</div>
@@ -520,12 +516,11 @@
 			</div>
 			<!-- main wrapper -->
 			<!--content body end-->
-
 		</div>
 	</div>
 {% endblock %}
-{% block javascripts %}
 
+{% block javascripts %}
 
 	<!--main js file start-->
 	<script type="text/javascript" src="{{asset("front/assets/js/jquery.min.js")}}"></script>

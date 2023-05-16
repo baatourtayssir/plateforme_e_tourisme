@@ -1,0 +1,188 @@
+{% extends 'front/home.html.twig' %}
+{% block avion %}{% endblock %}
+
+{% block top_menu %}
+
+	<!--page title start-->
+	<div class="page_title" data-stellar-background-ratio="0" data-stellar-vertical-offset="0" style="background-image:url({{asset(" /front/assets/images/Home/home4.jpg")}});">
+		<ul>
+			<li><a href="javascript:;">Article &nbsp Details &nbsp for &nbsp{{article.title}}</a></li>
+		</ul>
+	</div>
+	<!--page title end-->
+	<div class="clearfix"></div>
+
+
+{% endblock %}
+
+{% block content %}
+	<!-- traveller story section start -->
+	<section class="full_width ds_traveller_story">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-5 col-md-5 col-sm-8 col-xs-8">
+					<div class="left_side_slider">
+
+						<ul class="about_slider">
+							<li><img src="{{ asset('uploads/images/article/picture/' ~ article.picture) }}" alt=""></li>
+							{% for image in article.images %}
+								<li><img src="{{ asset('uploads/images/article/pictures/' ~ image) }}" alt=""></li>
+							{% endfor %}
+
+						</ul>
+
+					</div>
+				</div>
+				<div class="col-lg-7 col-md-7 col-sm-12 travelite_about_right_side">
+					<div class="right_side_details">
+						<h3>Article :
+							<b class="traveller_text_b">{{article.title}}</b>
+						</h3>
+						<h5>
+
+							{{article.shortDescription|raw}}</i>
+					</h5>
+					<p>
+						{{article.description|raw}}
+					</p>
+				</div>
+				<div
+					class="full_width check_lists">{# <ul>
+																				<li>
+																					<label>integrity</label>
+																					<p>-Doing the right thing</p>
+																				</li>
+																				<li>
+																					<label>Responsible</label>
+																					<p>-think globel,act local</p>
+																				</li>
+																				<li>
+																					<label>Growth</label>
+																					<p>-Stakeholders in our own success</p>
+																				</li>
+																				<li>
+																					<label>Innovation</label>
+																					<p>-Thriving on new ideas and embracing change</p>
+																				</li>
+																				<li>
+																					<label>Fun</label>
+																					<p>-It’s engrained into who we are and what we do</p>
+																				</li>
+																				<li>
+																					<label>Passion</label>
+																					<p>-We are inspired by the work we do and the trips we offer</p>
+																				</li>
+																			</ul> #}
+
+				</div>
+				{# <div class="pull_left btn_left">
+															<a href="#" class="btn_green gallery_btn">view our gallery</a>
+														</div> #}
+
+			</div>
+		</div>
+
+	</div>
+
+</section>
+<!-- traveller story section End -->
+
+<!-- around world sec start -->
+<div class="full_width around_world_sec">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-4 col-md-4 col-sm-6">
+				<div class="section_main">
+					<div class="icon">
+						<i class="fa fa-anchor"></i>
+					</div>
+					<div class="box_inner">
+						<h4 class="box_title">our core values</h4>
+						<p>By offering adventure-craving travellers an alternative to the resorts, cruises and motorcoach 
+																														tours they were accustomed to, he not only changed the way people looked at their holiday time, but changed the face of travel forever.</p>
+
+						<a href="#">read more</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-4 col-sm-6">
+				<div class="section_main">
+					<div class="icon">
+						<i class="fa fa-thumbs-up"></i>
+					</div>
+					<div class="box_inner">
+						<h4 class="box_title">why choose travellers ?</h4>
+						<p>By offering adventure-craving travellers an alternative to the resorts, cruises and motorcoach 
+																														tours they were accustomed to, he not only changed the way people looked at their holiday time, but changed the face of travel forever.</p>
+
+						<a href="#">read more</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-4 col-sm-6">
+				<div class="section_main">
+					<div class="icon">
+						<i class="fa fa-life-ring"></i>
+					</div>
+					<div class="box_inner">
+						<h4 class="box_title">Sustainable Tourism</h4>
+						<p>By offering adventure-craving travellers an alternative to the resorts, cruises and motorcoach 
+																														tours they were accustomed to, he not only changed the way people looked at their holiday time, but changed the face of travel forever.</p>
+
+						<a href="#">read more</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-lg-4 col-md-4 col-sm-6">
+				<div class="section_main">
+					<div class="icon">
+						<i class="fa fa-users"></i>
+					</div>
+					<div class="box_inner">
+						<h4 class="box_title">our core values</h4>
+						<p>By offering adventure-craving travellers an alternative to the resorts, cruises and motorcoach 
+																														tours they were accustomed to, he not only changed the way people looked at their holiday time, but changed the face of travel forever.</p>
+
+						<a href="#">read more</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-4 col-sm-6">
+				<div class="section_main">
+
+					<div class="icon">
+						<i class="fa fa-trophy"></i>
+					</div>
+					<div class="box_inner">
+						<h4 class="box_title">why choose travellers ?</h4>
+						<p>By offering adventure-craving travellers an alternative to the resorts, cruises and motorcoach 
+																														tours they were accustomed to, he not only changed the way people looked at their holiday time, but changed the face of travel forever.</p>
+
+						<a href="#">read more</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-4 col-sm-6">
+				<div class="section_main">
+
+
+					<div class="icon">
+						<i class="fa fa-link"></i>
+					</div>
+					<div class="box_inner">
+						<h4 class="box_title">Sustainable Tourism</h4>
+						<p>By offering adventure-craving travellers an alternative to the resorts, cruises and motorcoach 
+																														tours they were accustomed to, he not only changed the way people looked at their holiday time, but changed the face of travel forever.</p>
+
+						<a href="#">read more</a>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<!--row End -->
+	</div>
+	<!-- container End -->
+</div>
+<!-- around world sec End -->{% endblock %}

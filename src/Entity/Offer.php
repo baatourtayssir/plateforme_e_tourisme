@@ -80,7 +80,6 @@ class Offer
     {
         $this->countries = new ArrayCollection();
         $this->goodAddress = new ArrayCollection();
-
         $this->reviews = new ArrayCollection();
         $this->images = new ArrayCollection();
         $this->reservations = new ArrayCollection();

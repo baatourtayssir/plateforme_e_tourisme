@@ -2,10 +2,11 @@
 {% block avion %}{% endblock %}
 {% block top_menu %}
 
-	<!--page title start-->
+
+<!--page title start-->
 	<div class="page_title" data-stellar-background-ratio="0" data-stellar-vertical-offset="0" style="background-image:url({{asset("/front/assets/images/Home/home4.jpg")}});">
 		<ul>
-			<li><a href="javascript:;">Good Address</a></li>
+			<li><a href="javascript:;">Articles</a></li>
 		</ul>
 	</div>
 	<!--page title end-->
@@ -14,54 +15,56 @@
 
 {% endblock %}
 
+
 {% block content %}
 
-	<!--  special offer section start -->
-	<div class="full_width travelite_world_section">
+
+	<div class="full_width latest_news_section">
 		<div class="container">
-			<div class="row">
-
+			<div class="row row_top">
 				<div class="heading_team">
-					<h3>Special good Addresses</h3>
+					<h3>Tourism News</h3>
 					<p>
-						Discover unique and special addresses for exceptional travel experiences.</p>
-
+						Stay updated with the latest in tourism news and trends.</p>
 				</div>
+				{% for article in articles %}
 
-				<!-- first ractangle start -->
-				{% for good_address in goodAddresses %}
+
+					<!--  news box start -->
 					<div class="col-lg-3 col-md-3 col-sm-6">
-						<div
-							class=" full_width offer_box_wrapper">
-							{# <div class="circle_icon">
-																																										90%
-																																										<span>off</span>
-																																									</div> #}
-							<div class="img_overlay_wrapper">
-								<img src="{{ asset('uploads/images/goodAddress/picture/' ~ good_address.picture) }}" class="img-responsive" alt="offer">
-								<div class="img_overlay"></div>
+						<div class="latest_news_wrapper">
+							<div class="news_thumb_wrapper">
+								<img src="{{ asset('uploads/images/article/picture/' ~ article.picture) }}" alt="news image" class="img-responsive">
+								<div class="latest_news_overlay"></div>
 							</div>
-							<div class="full_width offer_inner">
-								<h4>{{good_address.intitule}}</h4>
-								<p>{{good_address.region.intitule}}</p>
-								<div class="overlay_btn">
-									<a href="{{path('app_front_goodAddress_show',{'id': good_address.id})}}" class="green_btn">See all</a>
-								</div>
+							<div class="latest_news_desc">
+								<h4>
+									<a href="#">{{article.title}}</a>
+								</h4>
+								<div class="news_heading_tag">
+									{% for category in article.categories %}
 
+
+										<span>{{category.style}}</span>
+
+									{% endfor %}
+								</div>
+								<p>{{article.shortDescription|raw}}</p>
+								<div class="news_read_more">
+									<a href="{{path('app_front_article_show',{'id': article.id})}}" class="read_more">Read More</a>
+								</div>
 							</div>
 						</div>
 					</div>
 				{% endfor %}
-				<!-- first ractangle End -->
+				<!--  news box End -->
 
-				<div class="full_width destination_button">
-					<a href="#" class="black_btn feature_more_btn">more destination</a>
-				</div>
 
 			</div>
 		</div>
 	</div>
-	<!--  special offer section End -->
+
+	<!-- latest news section start -->
 
 
 	<!-- slider_tab_main end -->
@@ -176,6 +179,5 @@
 	<!-- counter section End -->
 <!-- feature section start -->
 	<!-- slider_tab_main end -->
-
 
 {% endblock %}

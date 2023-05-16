@@ -4,7 +4,7 @@
 {% block top_menu %}
 
 	<!--page title start-->
-	<div class="page_title" data-stellar-background-ratio="0" data-stellar-vertical-offset="0" style="background-image:url(assets/images/bg/page_title_bg.jpg);">
+	<div class="page_title" data-stellar-background-ratio="0" data-stellar-vertical-offset="0" style="background-image:url({{asset("/front/assets/images/Home/home4.jpg")}});">
 		<ul>
 			<li><a href="javascript:;">Travel &nbsp Details &nbsp for &nbsp{{travel.title}}</a></li>
 		</ul>
@@ -63,59 +63,81 @@
 
 						</aside>
 
-						<aside class="widget hotel_widgets">
-							<h4 class="widget-title">Australia Hotels</h4>
+						<aside class="widget hotel_widgets ">
+							<h4 class="widget-title">Other travels</h4>
 							<ul>
-								<li>
-									<img src="https://via.placeholder.com/70x70" alt="hotel thumb">
-									<div>
-										<h4>
-											<a href="#">Diamond Hotel</a>
-										</h4>
-										<p>$199 / Night</p>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
+								{% for voyage in travels[:5] %}
 
-									</div>
-								</li>
-								<li>
-									<img src="https://via.placeholder.com/70x70" alt="hotel thumb">
-									<div>
-										<h4>
-											<a href="#">sliver Hotel</a>
-										</h4>
-										<p>$199 / Night</p>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
 
-									</div>
-								</li>
-								<li>
-									<img src="https://via.placeholder.com/70x70" alt="hotel thumb">
-									<div>
-										<h4>
-											<a href="#">platinum Hotel</a>
-										</h4>
-										<p>$199 / Night</p>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
+									<li>
+										<img src="{{ asset('uploads/images/offer/picture/' ~ voyage.picture) }}" alt="hotel thumb">
+										<div>
+											<h4>
+												<a href="#">{{voyage.title}}</a>
+											</h4>
+											{% for country in voyage.countries %}
+												<span>{{country.intitule}}</span>
+											{% endfor %}
 
-									</div>
-								</li>
 
+										</div>
+									</li>
+								{% endfor %}
 							</ul>
+						</aside>
+						<aside class="">
+							<div class="travalite_latest_event">
+								<h4 class="right_event_title">Other good addresses</h4>
+								<ul>
+									{% for address in goodAddresses %}
+										<li>
+											<div class="latest_event_date"></div>
+											<div class="left_latest_thumb">
+												<img src="{{ asset('uploads/images/goodAddress/picture/' ~ address.picture) }}" alt="latest event">
+											</div>
+											<div class="lates_event_right_side">
+												<h4>
+													<a href="#">{{address.intitule}}</a>
+												</h4>
+												{# <p>{{address.description|raw}}</p> #}
+
+											</div>
+
+										</li>
+									{% endfor %}
+
+
+								</ul>
+							</div>
 
 						</aside>
 
+						<aside class="">
+							<div class="travalite_latest_event">
+								<h4 class="right_event_title">show articles</h4>
+								<ul>
+									{% for article in articles %}
+										<li>
+											<div class="latest_event_date"></div>
+											<div class="left_latest_thumb">
+												<img src="{{ asset('uploads/images/article/picture/' ~ article.picture) }}" alt="latest event">
+											</div>
+											<div class="lates_event_right_side">
+												<h4>
+													<a href="#">{{article.title}}</a>
+												</h4>
+												<p>{{article.shortDescription|raw}}</p>
+
+											</div>
+
+										</li>
+									{% endfor %}
+
+
+								</ul>
+							</div>
+
+						</aside>
 
 					</div>
 				</div>
@@ -150,7 +172,12 @@
 												{{travel.agence.description|raw}}
 
 											</li>
-
+											<div class="team_social_media">
+												<i class="fa fa-facebook"></i>
+												<i class="fa fa-pinterest-p"></i>
+												<i class="fa fa-dribbble"></i>
+												<i class="fa fa-twitter"></i>
+											</div>
 
 										</ul>
 										<!-- desc icons End-->
@@ -185,10 +212,10 @@
 
 								<!-- Booking area Start-->
 								{# <div class="booking_area_section">
-																																																																																																																																																																																																																																																																																																																																																														<p>{{travel.description|raw}}</p>
-																																																																																																																																																																																																																																																																																																																																																							
-																																																																																																																																																																																																																																																																																																																																																							
-																																																																																																																																																																																																																																																																																																																																																													</div> #}
+																																																																																																																																																																																																																																																																																																																																																																																																																																														<p>{{travel.description|raw}}</p>
+																																																																																																																																																																																																																																																																																																																																																																																																																																							
+																																																																																																																																																																																																																																																																																																																																																																																																																																							
+																																																																																																																																																																																																																																																																																																																																																																																																																																													</div> #}
 								<!-- Booking area End -->
 
 								<!-- package tabs start -->
@@ -404,7 +431,7 @@
 																		<a href="#">{{excursionNontIncluded.excursion}}</a>
 																	</h4>
 																	{# <span class="time_date">
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																<i class="fa fa-clock-o"></i>4days</span> #}
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																										<i class="fa fa-clock-o"></i>4days</span> #}
 																</div>
 																<div class="bottom_desc">
 																	<h5>
@@ -418,8 +445,8 @@
 																		<button type="submit" value="proceed to next step" class="btn_green proceed_buttton btns">view Details</button>
 																	</div>
 																	{# <div>
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																<a href="#" class="list_view_details btns">view Details</a>
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																															</div> #}
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																										<a href="#" class="list_view_details btns">view Details</a>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																									</div> #}
 																</div>
 															</div>
 														</div>
@@ -457,7 +484,7 @@
 
 																</ul>
 																{# <span class="doller_pricing">
-																																																																																																																																																																																																																																																																																																																																																																																																			$50</span> #}
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																			$50</span> #}
 
 
 																<div class="full_width main_recent_wrap">
@@ -493,55 +520,50 @@
 						</div>
 						<!-- col-lg-9-end -->
 						<br><br>
-						<div class="full_width hotel_details_mdl_tab ui-tabs ui-corner-all ui-widget ui-widget-content">
-							<aside class="widget modify_search_widget">
-								<br><br>
-								<div class="tab_details_part hotel_details_tab ui-tabs-panel ui-corner-bottom ui-widget-content">
-									<h4 class="widget-title">Reservation submission</h4>
-									<div class="sidebar_form">
-
-										{{ form_start(form, { 'action': path('app_front_travel_reservation', {'travel': travel.id}), 'method': 'POST' }) }}
-
-
-										<br>
-										<div class="destination_field">
-											<label>Price list</label>
-											{{ form_widget(form.note) }}
-											<div class="form-error">
-												{{ form_errors(form.note) }}
+						{% if app.user %}
+							<div class="full_width hotel_details_mdl_tab ui-tabs ui-corner-all ui-widget ui-widget-content">
+								<aside class="widget modify_search_widget">
+									<br><br>
+									<div class="tab_details_part hotel_details_tab ui-tabs-panel ui-corner-bottom ui-widget-content">
+										<h4 class="widget-title">Reservation submission</h4>
+										<div class="sidebar_form">
+											{{ form_start(form, { 'action': path('app_front_travel_reservation', {'travel': travel.id}), 'method': 'POST' }) }}
+											<br>
+											<div class="destination_field">
+												<label>Price list</label>
+												{{ form_widget(form.note) }}
+												<div class="form-error">
+													{{ form_errors(form.note) }}
+												</div>
 											</div>
+											<br>
+											<div class="destination_field">
+												<label>Message</label>
+												{{ form_widget(form.message) }}
+												<div class="form-error">
+													{{ form_errors(form.message) }}
+												</div>
+											</div>
+											<br>
+											<button type="submit" class="btn-travel btn-yellow">{{ button_label|default('Save') }}</button>
+											{{ form_end(form) }}
+											<br>
+											{% for flashMessage in app.flashes('success') %}
+												<div class="alert alert-success">
+													{{ flashMessage }}
+												</div>
+											{% endfor %}
+											{% for flashMessage in app.flashes('error') %}
+												<div class="alert alert-danger">
+													{{ flashMessage }}
+												</div>
+											{% endfor %}
 										</div>
-										<br>
-										<div class="destination_field">
-											<label>Message</label>
-											{{ form_widget(form.message) }}
-											<div class="form-error">
-												{{ form_errors(form.message) }}
-											</div>
-										</div>
-
-
-										<br>
-										<button type="submit" class="btn-travel btn-yellow">{{ button_label|default('Save') }}</button>
-
-
-										{{ form_end(form) }}
-										<br>
-										{% for flashMessage in app.flashes('success') %}
-											<div class="alert alert-success">
-												{{ flashMessage }}
-											</div>
-										{% endfor %}
-
-										{% for flashMessage in app.flashes('error') %}
-											<div class="alert alert-danger">
-												{{ flashMessage }}
-											</div>
-										{% endfor %}
 									</div>
-								</div>
-							</aside>
-						</div>
+								</aside>
+							</div>
+						{% endif %}
+
 					</div>
 					<!--  row main -->
 				</div>

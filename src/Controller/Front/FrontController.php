@@ -2,7 +2,10 @@
 
 namespace App\Controller\Front;
 
+use App\Entity\Agence;
+use App\Entity\Article;
 use App\Entity\Cruise;
+use App\Entity\Excursion;
 use App\Entity\GoodAddress;
 use App\Entity\Offer;
 use App\Entity\Reservation;
@@ -12,10 +15,12 @@ use App\Form\ReservationType;
 use App\Form\SearchType;
 use App\Model\SearchData;
 use App\Repository\AgenceRepository;
+use App\Repository\ArticleRepository;
 use App\Repository\CategoriesRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\CountryRepository;
 use App\Repository\CruiseRepository;
+use App\Repository\ExcursionRepository;
 use App\Repository\GeographicalRepository;
 use App\Repository\GoodAddressRepository;
 use App\Repository\OfferRepository;
@@ -102,6 +107,15 @@ class FrontController extends AbstractController
         ]);
     }
 
+    #[Route('/excursion', name: 'app_front_excursion', methods: ['GET', 'POST'])]
+    public function excursion(ExcursionRepository $excursionRepository): Response
+    {
+        $excursions = $excursionRepository->findAll();
+        return $this->render('front/excursion/excursion.html.twig', [
+            'excursions' => $excursions,
+        ]);
+    }
+
 
     /*        #[Route('/cruise/{cruise}', name: 'app_front_cruise_show', methods: ['GET', 'POST'])]
     public function showCruise(Request $request, Cruise $cruise, Security $security, FlashBagInterface $flashBag, GeographicalRepository $geographicalRepository, CountryRepository $countryRepository, CategoryRepository $categoryRepository): Response
@@ -172,13 +186,18 @@ class FrontController extends AbstractController
         GeographicalRepository $geographicalRepository,
         CountryRepository $countryRepository,
         CategoryRepository $categoryRepository,
-        RequestStack $requestStack
+        RequestStack $requestStack,
+        CruiseRepository $cruiseRepository,
+        GoodAddressRepository $goodAddressRepository,
+        ArticleRepository $articleRepository
     ): Response {
         $geographicals = $geographicalRepository->findAll();
         $countries = $countryRepository->findAll();
         $categories = $categoryRepository->findAll();
         $priceLists = $cruise->getPriceLists();
-
+        $cruises = $cruiseRepository->findAll();
+        $goodAddresses = $goodAddressRepository->findAll();
+        $articles = $articleRepository->findAll();
         $GoodAddresses = $cruise->getGoodAddress();
         $Reviews = $cruise->getReviews();
 
@@ -192,9 +211,12 @@ class FrontController extends AbstractController
 
         return $this->render('front/cruise/show.html.twig', [
             'cruise' => $cruise,
+            'cruises' => $cruises,
+            'articles' => $articles,
             'geographicals' => $geographicals,
             'countries' => $countries,
             'categories' => $categories,
+            'goodAddresses' => $goodAddresses,
             'priceLists' => $priceLists,
             'GoodAddresses' => $GoodAddresses,
             'Reviews' => $Reviews,
@@ -280,6 +302,61 @@ class FrontController extends AbstractController
 
         ]);
     }
+
+
+
+
+
+
+    #[Route('/article', name: 'app_front_article', methods: ['GET', 'POST'])]
+    public function article(ArticleRepository $articleRepository): Response
+    {
+
+        $articles = $articleRepository->findAll();
+        return $this->render('front/article/article.html.twig', [
+            'articles' => $articles,
+        ]);
+    }
+
+
+
+    #[Route('/article/{id}', name: 'app_front_article_show', methods: ['GET', 'POST'])]
+    public function showArticle(Request $request, Article $article): Response
+    {
+        return $this->render('front/article/show.html.twig', [
+            'article' => $article,
+
+        ]);
+    }
+
+
+
+
+    #[Route('/agence', name: 'app_front_agence', methods: ['GET', 'POST'])]
+    public function agence(AgenceRepository $agenceRepository): Response
+    {
+
+        $agencies = $agenceRepository->findAll();
+        return $this->render('front/agence/agence.html.twig', [
+            'agencies' => $agencies,
+        ]);
+    }
+
+
+
+    #[Route('/agence/{id}', name: 'app_front_agence_show', methods: ['GET', 'POST'])]
+    public function showAgence(Request $request, Agence $agence): Response
+    {
+        return $this->render('front/agence/show.html.twig', [
+            'agence' => $agence,
+
+        ]);
+    }
+
+
+
+
+
 
 
 
@@ -381,28 +458,34 @@ class FrontController extends AbstractController
 */
 
     #[Route('/travel/{travel}', name: 'app_front_travel_show', methods: ['GET'])]
-    public function showTravl(
+    public function showTravel(
         Travel $travel,
         GeographicalRepository $geographicalRepository,
         CountryRepository $countryRepository,
         CategoryRepository $categoryRepository,
-        RequestStack $requestStack
+        RequestStack $requestStack,
+        TravelRepository $travelRepository,
+        GoodAddressRepository $goodAddressRepository,
+        ArticleRepository $articleRepository
     ): Response {
         $geographicals = $geographicalRepository->findAll();
         $countries = $countryRepository->findAll();
         $categories = $categoryRepository->findAll();
         $priceLists = $travel->getPriceLists();
+        $travels = $travelRepository->findAll();
         /* foreach ($priceLists as $priceList) {
             $hotels = $priceList->getHotels();
         } */
         $ExcursionsNotIncluded = $travel->getTravelExcursions();
         $GoodAddresses = $travel->getGoodAddress();
         $Reviews = $travel->getReviews();
+        $goodAddresses = $goodAddressRepository->findAll();
+        $articles = $articleRepository->findAll();
 
 
         // Créer une instance de Reservation et le formulaire de réservation
         $reservation = new Reservation();
-                $form = $this->createForm(ReservationOfferType::class, $reservation);
+        $form = $this->createForm(ReservationOfferType::class, $reservation);
 
         /* $form = $this->createForm(ReservationOfferType::class, $reservation, [
             'price_lists' => $priceLists,
@@ -412,8 +495,11 @@ class FrontController extends AbstractController
 
         return $this->render('front/travel/show.html.twig', [
             'travel' => $travel,
+            'travels' => $travels,
             'geographicals' => $geographicals,
             'countries' => $countries,
+            'goodAddresses' => $goodAddresses,
+            'articles' => $articles,
             'categories' => $categories,
             'priceLists' => $priceLists,
             /* 'hotels' => $hotels, */
@@ -439,7 +525,7 @@ class FrontController extends AbstractController
         /* $priceLists = $travel->getPriceLists(); */
 
         $reservation = new Reservation();
-                $form = $this->createForm(ReservationOfferType::class, $reservation);
+        $form = $this->createForm(ReservationOfferType::class, $reservation);
 
         /* $form = $this->createForm(ReservationFormType::class, $reservation, [
             'price_lists' => $priceLists,
@@ -463,4 +549,100 @@ class FrontController extends AbstractController
 
         return $this->redirectToRoute('app_front_travel_show', ['travel' => $travel->getId()]);
     }
+
+
+
+
+    #[Route('/excursion/{excursion}', name: 'app_front_excursion_show', methods: ['GET'])]
+    public function showExcursion(
+        Excursion $excursion,
+        GeographicalRepository $geographicalRepository,
+        CountryRepository $countryRepository,
+        CategoryRepository $categoryRepository,
+        RequestStack $requestStack,
+        ExcursionRepository $excursionRepository,
+        GoodAddressRepository $goodAddressRepository,
+        ArticleRepository $articleRepository
+    ): Response {
+        $geographicals = $geographicalRepository->findAll();
+        $countries = $countryRepository->findAll();
+        $categories = $categoryRepository->findAll();
+        $priceLists = $excursion->getPriceLists();
+        $excursions = $excursionRepository->findAll();
+        /* foreach ($priceLists as $priceList) {
+            $hotels = $priceList->getHotels();
+        } */
+       
+        $GoodAddresses = $excursion->getGoodAddress();
+        $Reviews = $excursion->getReviews();
+        $goodAddresses = $goodAddressRepository->findAll();
+        $articles = $articleRepository->findAll();
+
+
+        // Créer une instance de Reservation et le formulaire de réservation
+        $reservation = new Reservation();
+        $form = $this->createForm(ReservationOfferType::class, $reservation);
+
+        /* $form = $this->createForm(ReservationOfferType::class, $reservation, [
+            'price_lists' => $priceLists,
+        ]); */
+        // Récupérer la requête actuelle depuis le RequestStack
+        $currentRequest = $requestStack->getCurrentRequest();
+
+        return $this->render('front/excursion/show.html.twig', [
+            'excursion' => $excursion,
+            'excursions' => $excursions,
+            'geographicals' => $geographicals,
+            'countries' => $countries,
+            'goodAddresses' => $goodAddresses,
+            'articles' => $articles,
+            'categories' => $categories,
+            'priceLists' => $priceLists,
+            /* 'hotels' => $hotels, */
+            'GoodAddresses' => $GoodAddresses,
+            'Reviews' => $Reviews,
+            'form' => $form->createView(),
+            'currentRequest' => $currentRequest,
+        ]);
+    }
+
+
+
+
+    #[Route('/{excursion}/excursion/reservation', name: 'app_front_excursion_reservation', methods: ['POST'])]
+    public function createReservationExcursion(Request $request, Excursion $excursion, Security $security, PriceListRepository $priceListRepository, FlashBagInterface $flashBag): Response
+    {
+        if (!$security->getUser()) {
+            // Rediriger vers la page de connexion
+            return $this->redirectToRoute('app_login');
+        }
+
+        /* $priceLists = $travel->getPriceLists(); */
+
+        $reservation = new Reservation();
+        $form = $this->createForm(ReservationOfferType::class, $reservation);
+
+        /* $form = $this->createForm(ReservationFormType::class, $reservation, [
+            'price_lists' => $priceLists,
+        ]); */
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $client = $this->getUser();
+            $reservation->setAgence($excursion->getAgence());
+            $reservation->setOffer($excursion);
+            $reservation->setClient($client);
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($reservation);
+            $entityManager->flush();
+
+            $flashBag->add('success', 'La réservation a été effectuée avec succès.');
+        } else {
+            $flashBag->add('error', 'Le formulaire de réservation est invalide.');
+        }
+
+        return $this->redirectToRoute('app_front_excursion_show', ['excursion' => $excursion->getId()]);
+    }
+
 }
