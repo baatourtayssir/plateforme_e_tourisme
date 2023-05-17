@@ -1,0 +1,155 @@
+{% extends 'front/home.html.twig' %}
+{% block avion %}{% endblock %}
+
+{% block top_menu %}
+    	<!--page title start-->
+	<div class="page_title" data-stellar-background-ratio="0" data-stellar-vertical-offset="0" style="background-image:url({{asset("/front/assets/images/Home/home4.jpg")}});">
+		<ul>
+			<li><a href="javascript:;">Organized trip</a></li>
+		</ul>
+	</div>
+	<!--page title end-->
+
+
+	<div class="clearfix"></div>
+
+
+{% endblock %}
+
+{% block content %}
+	<!-- event section start -->
+	<div class="full_width event_page_section">
+		<div class="container">
+			<div
+				class="row">
+				<!-- left_part main Start-->
+				<div
+					class="col-lg-8 col-md-8 col-sm-12">
+					<!-- slder part Start -->
+					<div class="events_thumb_slider">
+
+						<div
+							id="syncro_slide" class="owl-carousel owl-theme">
+							<!--  item one  start -->
+							<div class="item">
+								<div class="row">
+									<div class="slide_img_wrpr col-lg-7 col-md-7 col-sm-7">
+										<div class="containt_container">
+											<h4 class="travelite_slide_title">{{agence.name}}</h4>
+											<p class="slide_timing">
+												<i class="icon-envelop4 mr-3"></i>
+												{{agence.email}}</p>
+											<ul class="social_reviews">
+
+												<li>
+													<a href="#">
+														<i class="icon-phone2 mr-1"></i>
+														{{agence.phoneNumber}}</a>
+												</li>
+												<li>
+													<a href="#">
+														<i class="icon-location4 mr-1"></i>
+														{{agence.adress}}</a>
+												</li>
+
+											</ul>
+										</div>
+										<img src="{{ asset('uploads/images/agences/logo/' ~ agence.brochureFilename) }}" alt="" class="img-responsive">
+
+									</div>
+									<div class="col-lg-5 col-md-5 col-sm-5 slide_right_thumb">
+
+										<p class="slide_paragraph">{{agence.description|raw}}</p>
+									</div>
+
+								</div>
+							</div>
+							<!--  item one  End -->
+
+						</div>
+					</div>
+					<!-- slder part end -->
+
+
+					<!-- Event posts start -->
+					<div class="full_width event_posts_section">
+						<div class="row">
+
+							{% for article in articles[2:] %}
+								<div class="col-lg-12">
+									<div class="full_width event_recent_posts">
+										<h4 class="rec_cat_title">
+											<a href="#">{{article.title}}</a>
+										</h4>
+										<ul>
+											{% for category in article.categories %}
+												<li>{{ category.style }}</li>
+											{% endfor %}
+										</ul>
+										{# <span class="doller_pricing">
+																															$50</span> #}
+
+
+										<div class="full_width main_recent_wrap">
+											<div class="left_thumb">
+												<img src="{{ asset('uploads/images/article/picture/' ~ article.picture) }}" alt="blogimg" class="img-responsive">
+											</div>
+
+											<div class="right_content">
+												<p>{{article.shortDescription|raw}}</p>
+												<a href="#">Read more..</a>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- recent_post_end -->
+							{% endfor %}
+
+						</div>
+					</div>
+					<!-- Event posts End -->
+					<div class="full_width next_prev_event_links"></div>
+				</div>
+				<!-- left_part main End -->
+
+				<!-- right_part start -->
+				<div class="col-lg-4 col-md-4 col-sm-12 event_right_side">
+						<div class="travalite_latest_event"> <h4 class="right_event_title">latest offers</h4>
+						<ul>
+							{% for offer in offers %}
+								<li>
+									<div class="latest_event_date">
+										{% for country in offer.countries %}
+
+
+											<span>{{country.intitule}}</span>
+										</div>
+									{% endfor %}
+									<div class="left_latest_thumb">
+										<img src="{{ asset('uploads/images/offer/picture/' ~ offer.picture) }}" alt="latest event">
+									</div>
+									<div class="lates_event_right_side">
+										<h4>
+											<a href="#">{{offer.title}}</a>
+										</h4>
+										</div>
+
+								</li>
+							{% endfor %}
+
+
+						</ul>
+					</div>
+
+				</div>
+
+				<!-- right_part End -->
+
+			</div>
+		</div>
+
+	</div>
+	<!-- event section End -->
+
+
+{% endblock %}

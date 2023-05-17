@@ -21,6 +21,10 @@ class Hiking extends Offer
         return $this->id;
     } */
 
+    public function __construct()
+    {
+        parent::__construct();
+    }
     public function getRegion(): ?Region
     {
         return $this->region;

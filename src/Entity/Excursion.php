@@ -29,12 +29,11 @@ class Excursion extends Offer
     
     public function __construct()
     {
+        parent::__construct();
         $this->regions = new ArrayCollection();
        $this->travelExcursions = new ArrayCollection();
        /*  $this->images = new ArrayCollection();  */
        $this->prices = new ArrayCollection();
-      
-        
     
     }
 

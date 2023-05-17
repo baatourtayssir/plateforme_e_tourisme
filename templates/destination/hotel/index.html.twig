@@ -52,16 +52,16 @@
 
 		<table class="table datatable-basic">
 			<thead>
-				
+
 				<tr>
 					<th>Id</th>
 					<th>Intitule</th>
 					<th>Picture</th>
 					<th>Address</th>
 					<th>Region</th>
-					<th colspan="2">characteristic</th>
+					{# <th colspan="2">characteristic</th> #}
 					{% if is_granted ('ROLE_ADMIN') %}
-						<th class="">Actions</th>
+						<th>Actions</th>
 					{% endif %}
 				</tr>
 
@@ -79,8 +79,8 @@
 						<td><img src="{{ asset('uploads/images/hotel/picture/' ~ hotel.picture) }}" width="80" height="80" alt="No picture"></td>
 						<td>{{ hotel.address }}</td>
 						<td>{{ hotel.region.intitule }}</td>
-						<td>{{ hotel.characteristic|raw}}</td>
-						<td></td>
+						{# <td>{{ hotel.characteristic|raw}}</td> #}
+						{# <td></td> #}
 
 						<td>
 
@@ -99,6 +99,7 @@
 								</div>
 							{% endif %}
 						</td>
+						
 
 
 					</tr>

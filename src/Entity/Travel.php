@@ -23,6 +23,7 @@ class Travel extends Offer
 
     public function __construct()
     {
+        parent::__construct();
         $this->countries = new ArrayCollection();
         $this->travelExcursions = new ArrayCollection();
 

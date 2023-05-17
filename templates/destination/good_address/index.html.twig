@@ -60,7 +60,7 @@
 					<th>Region</th>
 					{# <th colspan="2">Description</th> #}
 					<th>Category</th>
-					<th colspan="2">Pictures</th>
+					{# <th colspan="2">Pictures</th> #}
 
 					{% if is_granted ('ROLE_ADMIN') %}
 						<th>Actions</th>
@@ -84,14 +84,14 @@
 						{# <td>{{ good_address.description|raw}}</td>
 																		<td></td> #}
 						<td>{{good_address.category}}</td>
-						<td>
+						{# <td>
 							{% for image in good_address.images %}
 								<a href="#">
 									<img src="{{ asset('uploads/images/goodAddress/pictures/' ~ image) }}" class="rounded mr-2" width="60" height="60" alt="">
 								</a>
 							{% endfor %}
-						</td>
-						<td></td>
+						</td> #}
+						{# <td></td> #}
 
 
 						<td>
@@ -110,6 +110,7 @@
 								</div>
 							{% endif %}
 						</td>
+						
 
 					</tr>
 					<!-- Delete modal -->

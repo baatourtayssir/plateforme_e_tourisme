@@ -345,11 +345,14 @@ class FrontController extends AbstractController
 
 
     #[Route('/agence/{id}', name: 'app_front_agence_show', methods: ['GET', 'POST'])]
-    public function showAgence(Request $request, Agence $agence): Response
+    public function showAgence(Request $request, Agence $agence, ArticleRepository $articleRepository): Response
     {
+        $offers= $agence->getOffers();
+        $articles= $articleRepository->findAll();
         return $this->render('front/agence/show.html.twig', [
             'agence' => $agence,
-
+            'offers' =>$offers,
+            'articles' => $articles,
         ]);
     }
 
