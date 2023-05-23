@@ -2,10 +2,11 @@
 {% block avion %}{% endblock %}
 {% block top_menu %}
 
-	<!--page title start-->
-	<div class="page_title" data-stellar-background-ratio="0" data-stellar-vertical-offset="0" style="background-image:url({{asset(" /front/assets/images/Home/home4.jpg")}});">
+
+		<!--page title start-->
+	<div class="page_title" data-stellar-background-ratio="0" data-stellar-vertical-offset="0" style="background-image:url({{asset("/front/assets/images/Home/home4.jpg")}});">
 		<ul>
-			<li><a href="javascript:;">Hotels</a></li>
+			<li><a href="javascript:;"> Hotels</a></li>
 		</ul>
 	</div>
 	<!--page title end-->
@@ -28,7 +29,7 @@
 						<!--  place sort start -->
 						{% for hotel in hotels %}
 
-							<div class="col-lg-4 col-md-4 col-sm-6">
+							<div class="col-lg-6 col-md-6 col-sm-6">
 
 								<div class="sorting_places_wrap grid_sorting">
 									<div class="top_head_bar">
@@ -36,7 +37,7 @@
 											<a href="#">{{hotel.intitule}}</a>
 										</h4>
 										<span class="time_date">
-											<i class="fa fa-clock-o"></i>
+											<i class="icon-location4 mr-1"></i>
 											{{hotel.region.intitule}}</span>
 									</div>
 									<a href="{{path('app_front_hotel_show',{'id': hotel.id})}}">

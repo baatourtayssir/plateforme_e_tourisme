@@ -9,6 +9,8 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Client;
 use DateTimeInterface;
+use DateTimeImmutable;
+use Doctrine\ORM\Event\LifecycleEventArgs;
 
 #[ORM\Entity(repositoryClass: ReviewsRepository::class)]
 class Reviews
@@ -35,6 +37,10 @@ class Reviews
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE , nullable: true)]
     private ?\DateTimeInterface $date = null;
+
+
+  /*   #[ORM\Column(type: 'datetime_immutable')]
+    private ?\DateTimeInterface $dateReservation = null; */
 
     #[ORM\ManyToOne(inversedBy: 'reviews')]
     private ?Client $client = null;
@@ -83,8 +89,34 @@ class Reviews
     public function __construct()
     {
         $this->images = new ArrayCollection();
-        $this->date = new \DateTimeImmutable();
+       /*  $this->date = new \DateTimeImmutable(); */
     }
+
+
+    
+ 
+    public function getDateReviews(): ?DateTimeImmutable
+    {
+        return $this->date;
+    }
+
+    public function setDateReview(DateTimeImmutable $date): self
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    
+
+    #[ORM\PrePersist]
+    public function prePersist(LifecycleEventArgs $event): void
+    {
+        if ($this->date === null) {
+            $this->date = new DateTimeImmutable();
+        }
+    }
+
 
     // Getter et setter pour le champ `images`
     public function getImages(): Collection

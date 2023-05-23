@@ -10,6 +10,7 @@
 		</ul>
 	</div>
 	<!--page title end-->
+
 	<div class="clearfix"></div>
 
 
@@ -27,41 +28,41 @@
 					<div class="travelite_left_sidebar">
 
 						{# <aside class="widget destination_widget">
-																									<h4 class="widget-title">chosse geographocal</h4>
-																									<div class="travel_checkbox_round">
-																										{% for geographocal in geographicals %}
-																											<input type="checkbox" id="singapore">
-																											<label for="singapore">{{geographocal.location}}</label>
-																										{% endfor %}
-																		
-																									</div>
-																		
-																								</aside> #}
+																															<h4 class="widget-title">chosse geographocal</h4>
+																															<div class="travel_checkbox_round">
+																																{% for geographocal in geographicals %}
+																																	<input type="checkbox" id="singapore">
+																																	<label for="singapore">{{geographocal.location}}</label>
+																																{% endfor %}
+																								
+																															</div>
+																								
+																														</aside> #}
 
 
 						{# <aside class="widget destination_widget">
-																									<h4 class="widget-title">chosse country</h4>
-																									<div class="travel_checkbox_round">
-																										{% for country in countries %}
-																											<input type="checkbox" id="Default">
-																											<label for="Default">{{country.intitule}}</label>
-																										{% endfor %}
-																		
-																		
-																									</div>
-																		
-																								</aside> #}
+																															<h4 class="widget-title">chosse omra</h4>
+																															<div class="travel_checkbox_round">
+																																{% for country in countries %}
+																																	<input type="checkbox" id="Default">
+																																	<label for="Default">{{country.intitule}}</label>
+																																{% endfor %}
+																								
+																								
+																															</div>
+																								
+																														</aside> #}
 
 						{# <aside class="widget category_widget">
-																									<h4 class="widget-title">Category</h4>
-																									<div class="travel_checkbox_round">
-																										{% for category in categories %}
-																											<input type="checkbox" id="default_1">
-																											<label for="default_1">{{category.style}}</label>
-																										{% endfor %}
-																									</div>
-																		
-																								</aside> #}
+																															<h4 class="widget-title">Category</h4>
+																															<div class="travel_checkbox_round">
+																																{% for category in categories %}
+																																	<input type="checkbox" id="default_1">
+																																	<label for="default_1">{{category.style}}</label>
+																																{% endfor %}
+																															</div>
+																								
+																														</aside> #}
 
 							<aside class="widget hotel_widgets "> <h4 class="widget-title">Other Excursion</h4>
 							<ul>
@@ -211,29 +212,19 @@
 
 								<!-- Booking area Start-->
 								{# <div class="booking_area_section">
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																						<p>{{travel.description|raw}}</p>
-																																																																																																																																																																																																																																																																																																																																																																																																																																																															
-																																																																																																																																																																																																																																																																																																																																																																																																																																																															
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																					</div> #}
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																														<p>{{travel.description|raw}}</p>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																							
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																							
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																													</div> #}
 								<!-- Booking area End -->
 
 								<!-- package tabs start -->
 									<div class="full_width hotel_details_mdl_tab" id="travelite_middle_tabs"> <div class="pcg_tabs_panel">
 										<ul>
-											<li>
-												<a href="#tab_search_1">Infomation</a>
-											</li>
-											<li>
-												<a href="#tab_search_2" class="">Price list</a>
-											</li>
-											{# 											<li><a href="#tab_search_4" class="">Excursion not included</a></li>
-																																	 #}
-											<li>
-												<a href="#tab_search_5" class="">Good address</a>
-											</li>
-											<li>
-												<a href="#tab_search_3" class="">Review</a>
-											</li>
+											<li><a href="#tab_search_1">Infomation</a></li>
+											<li><a href="#tab_search_2" class="">Price list</a></li>
+											<li><a href="#tab_search_5" class="">Good address</a></li>
+											<li><a href="#tab_search_3" class="">Review</a></li>
 										</ul>
 									</div>
 									<!--  tab content start -->
@@ -318,7 +309,7 @@
 															<div
 																class="left_lists col-lg-4 col-md-4">
 																{# <h5 class="includes_text">
-																																																																	Excursion included:</h5> #}
+																																																																																	Excursion included:</h5> #}
 																<table>
 																	{% for excursion in price.ExcursionsIncluded %}
 																		<tr>
@@ -438,7 +429,7 @@
 
 																</ul>
 																{# <span class="doller_pricing">
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																			$50</span> #}
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																			$50</span> #}
 
 
 																<div class="full_width main_recent_wrap">

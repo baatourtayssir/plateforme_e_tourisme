@@ -3,8 +3,9 @@
 
 {% block top_menu %}
 
+
 	<!--page title start-->
-	<div class="page_title" data-stellar-background-ratio="0" data-stellar-vertical-offset="0" style="background-image:url({{asset("/front/assets/images/Home/home4.jpg")}});">
+	<div class="page_title" data-stellar-background-ratio="0" data-stellar-vertical-offset="0" style="background-image:url({{asset(" /front/assets/images/Home/home4.jpg")}});">
 		<ul>
 			<li><a href="javascript:;">Travel &nbsp Details &nbsp for &nbsp{{travel.title}}</a></li>
 		</ul>
@@ -25,45 +26,8 @@
 				<!-- left sidebar start -->
 				<div class="col-lg-3 col-md-3 col-sm-12">
 					<div class="travelite_left_sidebar">
-
-						{# <aside class="widget destination_widget">
-																			<h4 class="widget-title">chosse geographocal</h4>
-																			<div class="travel_checkbox_round">
-																				{% for geographocal in geographicals %}
-																					<input type="checkbox" id="singapore">
-																					<label for="singapore">{{geographocal.location}}</label>
-																				{% endfor %}
-												
-																			</div>
-												
-																		</aside> #}
-
-
-						{# <aside class="widget destination_widget">
-																			<h4 class="widget-title">chosse country</h4>
-																			<div class="travel_checkbox_round">
-																				{% for country in countries %}
-																					<input type="checkbox" id="Default">
-																					<label for="Default">{{country.intitule}}</label>
-																				{% endfor %}
-												
-												
-																			</div>
-												
-																		</aside> #}
-
-						{# <aside class="widget category_widget">
-																			<h4 class="widget-title">Category</h4>
-																			<div class="travel_checkbox_round">
-																				{% for category in categories %}
-																					<input type="checkbox" id="default_1">
-																					<label for="default_1">{{category.style}}</label>
-																				{% endfor %}
-																			</div>
-												
-																		</aside> #}
-
-							<aside class="widget hotel_widgets "> <h4 class="widget-title">Other travels</h4>
+						<aside class="widget hotel_widgets ">
+							<h4 class="widget-title">Other travels</h4>
 							<ul>
 								{% for voyage in travels[:5] %}
 
@@ -211,10 +175,10 @@
 
 								<!-- Booking area Start-->
 								{# <div class="booking_area_section">
-																																																																																																																																																																																																																																																																																																																																																																																																																																																														<p>{{travel.description|raw}}</p>
-																																																																																																																																																																																																																																																																																																																																																																																																																																																							
-																																																																																																																																																																																																																																																																																																																																																																																																																																																							
-																																																																																																																																																																																																																																																																																																																																																																																																																																																													</div> #}
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																														<p>{{travel.description|raw}}</p>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																							
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																							
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																													</div> #}
 								<!-- Booking area End -->
 
 								<!-- package tabs start -->
@@ -430,7 +394,7 @@
 																		<a href="#">{{excursionNontIncluded.excursion}}</a>
 																	</h4>
 																	{# <span class="time_date">
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																												<i class="fa fa-clock-o"></i>4days</span> #}
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																		<i class="fa fa-clock-o"></i>4days</span> #}
 																</div>
 																<div class="bottom_desc">
 																	<h5>
@@ -444,8 +408,8 @@
 																		<button type="submit" value="proceed to next step" class="btn_green proceed_buttton btns">view Details</button>
 																	</div>
 																	{# <div>
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																												<a href="#" class="list_view_details btns">view Details</a>
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																											</div> #}
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																		<a href="#" class="list_view_details btns">view Details</a>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																	</div> #}
 																</div>
 															</div>
 														</div>
@@ -483,7 +447,7 @@
 
 																</ul>
 																{# <span class="doller_pricing">
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																			$50</span> #}
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																			$50</span> #}
 
 
 																<div class="full_width main_recent_wrap">
@@ -536,7 +500,7 @@
 												</div>
 											</div>
 											<br>
-											<button type="submit" class="btn-travel btn-yellow">{{ button_label|default('Save') }}</button>
+											<button type="submit" class="btn-travel btn-yellow">{{ button_label|default('SAVE') }}</button>
 											{{ form_end(form) }}
 											<br>
 											{% for flashMessage in app.flashes('success') %}
@@ -544,18 +508,6 @@
 													{{ flashMessage }}
 
 												</div>
-												{# <aside class="widget modify_search_widget">
-													<br><br>
-													<div class="tab_details_part hotel_details_tab ui-tabs-panel ui-corner-bottom ui-widget-content">
-														<h4 class="widget-title">Your reservation details</h4>
-														<div class="sidebar_form">
-
-														{{reservation.priceList}}
-														
-														</div>
-													</div>
-												</aside> #}
-
 
 											{% endfor %}
 											{% for flashMessage in app.flashes('error') %}
@@ -567,7 +519,69 @@
 									</div>
 								</aside>
 							</div>
+
+
+							<!-- event form Start -->
+							<div class="full_width travelite_event_form">
+								<div class="row">
+									<h4 class="widget-title">Submit reviews</h4>
+									<form>
+
+
+										<div class="col-lg-3 col-md-3 col-sm-3">
+
+											<div class="sidebar_form">
+												{{ form_start(formReview, { 'action': path('app_front_travel_review', {'travel': travel.id}), 'method': 'POST' }) }}
+												<br>
+												<div class="destination_field">
+													<label>Comment</label>
+													{{ form_widget(formReview.comment, { 'attr': {'class': 'form-control select-search'} }) }}
+													<div class="form-error">
+														{{ form_errors(formReview.comment) }}
+													</div>
+												</div>
+												<br>
+												<div class="destination_field">
+													<label>Picture
+													</label>
+													{{ form_widget(formReview.picture, { 'attr': {'class': 'form-control select-search'} }) }}
+													<div class="form-error">
+														{{ form_errors(formReview.picture) }}
+													</div>
+												</div>
+												<br>
+												<div class="destination_field">
+													<label>Pictures</label>
+													{{ form_widget(formReview.images, { 'attr': {'class': 'form-control select-search'} }) }}
+													<div class="form-error">
+														{{ form_errors(formReview.images) }}
+													</div>
+												</div>
+												<br>
+												<button type="submit" class="btn-travel btn-yellow">{{ button_label|default('SAVE') }}</button>
+												{{ form_end(form) }}
+												<br>
+												{% for flashMessage in app.flashes('success') %}
+													<div class="alert alert-success">
+														{{ flashMessage }}
+
+													</div>
+
+												{% endfor %}
+												{% for flashMessage in app.flashes('error') %}
+													<div class="alert alert-danger">
+														{{ flashMessage }}
+													</div>
+												{% endfor %}
+											</div>
+										</div>
+									</form>
+								</div>
+
+							</div>
+							<!-- event form End -->
 						{% endif %}
+
 
 					</div>
 					<!--  row main -->

@@ -8,14 +8,19 @@ use App\Entity\Country;
 use App\Entity\Cruise;
 use App\Entity\Excursion;
 use App\Entity\GoodAddress;
+use App\Service\KernelService;
 use App\Entity\Hiking;
 use App\Entity\Hotel;
 use App\Entity\Offer;
 use App\Entity\Omra;
+use App\Entity\Pictures;
 use App\Entity\Reservation;
+use App\Entity\Reviews;
 use App\Entity\Travel;
 use App\Form\ReservationOfferType;
 use App\Form\ReservationType;
+use App\Form\ReviewsOfferClientType;
+use App\Form\ReviewsType;
 use App\Form\SearchType;
 use App\Model\SearchData;
 use App\Repository\AgenceRepository;
@@ -39,7 +44,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use App\Service\KernelService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\SecurityBundle;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -134,67 +138,23 @@ class FrontController extends AbstractController
         ]);
     }
 
+    #[Route('/omra', name: 'app_front_omra', methods: ['GET', 'POST'])]
+    public function omra(OmraRepository $omraRepository): Response
+    {
+        $omras = $omraRepository->findAll();
+        return $this->render('front/omra/omra.html.twig', [
+            'omras' => $omras,
+        ]);
+    }
 
-    /*        #[Route('/cruise/{cruise}', name: 'app_front_cruise_show', methods: ['GET', 'POST'])]
-    public function showCruise(Request $request, Cruise $cruise, Security $security, FlashBagInterface $flashBag, GeographicalRepository $geographicalRepository, CountryRepository $countryRepository, CategoryRepository $categoryRepository): Response
+
+
+    #[Route('/contact', name: 'app_front_contact')]
+    public function contact(): Response
     {
 
-        $geographicals = $geographicalRepository->findAll();
-        $countries = $countryRepository->findAll();
-        $categories = $categoryRepository->findAll();
-        $priceLists = $cruise->getPriceLists();
-        foreach ($priceLists as $priceList) {
-            $hotels = $priceList->getHotels();
-        }
-
-        $GoodAddresses = $cruise->getGoodAddress();
-        $Reviews = $cruise->getReviews();
-        $agence = $cruise->getAgence();
-        $reservation = new Reservation();
-        $form = $this->createForm(ReservationOfferType::class, $reservation);
-        $form->handleRequest($request);
-
-        if (!$security->getUser()) {
-            // Rediriger vers la page d'inscription du client
-            return $this->redirectToRoute('app_register_client');
-        }
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $client = $this->getUser();
-            $reservation->setAgence($agence);
-            $reservation->setOffer($cruise);
-            $reservation->setClient($client);
-
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($reservation);
-            $entityManager->persist($cruise);
-            $entityManager->flush();
-
-            $flashBag->add('success', 'La réservation a été effectuée avec succès.');
-
-            $reservation = new Reservation();
-            $form = $this->createForm(ReservationOfferType::class, $reservation);
-        }
-
-        return $this->render('front/cruise/show.html.twig', [
-            'cruise' => $cruise,
-            'geographicals' => $geographicals,
-            'countries' => $countries,
-            'categories' => $categories,
-            'priceLists' => $priceLists,
-            'hotels' => $hotels,
-            'GoodAddresses' => $GoodAddresses,
-            'Reviews' => $Reviews,
-            'reservation' => $reservation,
-            'form' => $form->createView(),
-        ]);
-    } */
-
-
-
-
-
+        return $this->render('front/contact/contact.html.twig');
+    }
 
 
 
@@ -364,15 +324,10 @@ class FrontController extends AbstractController
     public function showHotel(Request $request, Hotel $hotel, ArticleRepository $articleRepository, GoodAddressRepository $goodAddressRepository): Response
     {
 
-        $prices = $hotel->getPriceLists();
-        foreach($prices as $price){
-        $offers=$price->getOffer();
-        }
         $articles = $articleRepository->findAll();
         $goodAddresses = $goodAddressRepository->findAll();
         return $this->render('front/hotel/show.html.twig', [
             'hotel' => $hotel,
-            'offers' => $offers,
             'articles' => $articles,
             'goodAddresses' => $goodAddresses,
 
@@ -475,65 +430,6 @@ class FrontController extends AbstractController
         /*   return $this->render('front/show_offer.html.twig', array('offer' => $offer)); */
     }
 
-    /*     #[Route('/{id}/details/travel', name: 'app_front_travel_details', methods: ['GET', 'POST'])]
-    public function detailsTravel($id): Response
-    {
-        $entityManager = $this->getDoctrine()->getManager();
-        $travel = $entityManager->getRepository(Travel::class)->find($id);
-    
-        return new Response($this->renderView('front/travel/detail.html.twig', [
-            'travel' => $travel,
-        ]));
-       
-    } */
-
-
-
-    /*       #[Route('/{id}', name: 'app_front_travel_show', methods: ['GET', 'POST'])]
-    public function showtravel(Request $request,Travel $travel, GeographicalRepository $geographicalRepository, CountryRepository $countryRepository, CategoryRepository $categoryRepository): Response
-    {
-
-        $geographicals = $geographicalRepository->findAll();
-        $countries = $countryRepository->findAll();
-        $categories = $categoryRepository->findAll();
-        $priceLists = $travel->getPriceLists();
-        foreach ($priceLists as $priceList) {
-            $hotels = $priceList->getHotels();
-        }
-        $ExcursionsNotIncluded = $travel->getTravelExcursions();
-        $GoodAddresses = $travel->getGoodAddress();
-        $Reviews = $travel->getReviews();
-        $agence= $travel->getAgence();
-        $reservation = new Reservation();
-        $form = $this->createForm(ReservationOfferType::class, $reservation);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $reservation->setAgence($agence);
-            $reservation->setOffer($travel);
-            
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($reservation);
-            $entityManager->persist($travel);
-            $entityManager->flush();
-        }
-
-        return $this->render('front/travel/show.html.twig', [
-            'travel' => $travel,
-            'geographicals' => $geographicals,
-            'countries' => $countries,
-            'categories' => $categories,
-            'priceLists' => $priceLists,
-            'hotels' => $hotels,
-            'ExcursionsNotIncluded' => $ExcursionsNotIncluded,
-            'GoodAddresses' => $GoodAddresses,
-            'Reviews' =>$Reviews,
-            'reservation' => $reservation,
-            'form' => $form->createView(),
-        ]);
-    }
-*/
 
     #[Route('/travel/{id}', name: 'app_front_travel_show', methods: ['GET'])]
     public function showTravel(
@@ -542,6 +438,7 @@ class FrontController extends AbstractController
         CountryRepository $countryRepository,
         CategoryRepository $categoryRepository,
         RequestStack $requestStack,
+        RequestStack $requestStackNew,
         TravelRepository $travelRepository,
         GoodAddressRepository $goodAddressRepository,
         ArticleRepository $articleRepository
@@ -566,11 +463,17 @@ class FrontController extends AbstractController
         $reservation = new Reservation();
         $form = $this->createForm(ReservationOfferType::class, $reservation);
 
+
+        $review = new Reviews();
+        $formReview = $this->createForm(ReviewsOfferClientType::class, $review);
+
+
         /* $form = $this->createForm(ReservationOfferType::class, $reservation, [
             'price_lists' => $priceLists,
         ]); */
         // Récupérer la requête actuelle depuis le RequestStack
         $currentRequest = $requestStack->getCurrentRequest();
+        $currentRequestNew = $requestStackNew->getCurrentRequest();
 
         return $this->render('front/travel/show.html.twig', [
             'travel' => $travel,
@@ -586,8 +489,11 @@ class FrontController extends AbstractController
             'GoodAddresses' => $GoodAddresses,
             'Reviews' => $Reviews,
             'form' => $form->createView(),
+            'formReview' => $formReview->createView(),
             'currentRequest' => $currentRequest,
+            'currentRequestNew' => $currentRequestNew,
             'reservation' => $reservation,
+            'review' => $review,
         ]);
     }
 
@@ -631,6 +537,73 @@ class FrontController extends AbstractController
         return $this->redirectToRoute('app_front_travel_show', ['travel' => $travel->getId()]);
     }
 
+
+
+    #[Route('/{travel}/travel/review', name: 'app_front_travel_review', methods: ['POST'])]
+    public function createReviewTravel($id, Travel $travel,KernelService $kernelService,Request $request,  Security $security, FlashBagInterface $flashBag): Response
+    {
+
+        if (!$security->getUser()) {
+            // Rediriger vers la page de connexion
+            return $this->redirectToRoute('app_login');
+        }
+
+        /* $priceLists = $travel->getPriceLists(); */
+
+        $review = new Reviews();
+        $review->getDateReviews(new \DateTimeImmutable());
+        $formReview = $this->createForm(ReviewsOfferClientType::class, $review);
+
+        /* $form = $this->createForm(ReservationFormType::class, $reservation, [
+            'price_lists' => $priceLists,
+        ]); */
+        $formReview->handleRequest($request);
+
+        if ($formReview->isSubmitted() && $formReview->isValid()) {
+            $client = $this->getUser();
+
+            $review->setOffer($travel);
+
+
+
+            $review->setClient($client);
+
+            $myFile = $formReview['picture']->getData();
+            if ($myFile) {
+                $fileName = $kernelService->loadpicture($myFile);
+                $review->setPicture($fileName);
+            }
+
+            $images = $formReview->get('images')->getData();
+
+            // On boucle sur les images
+            foreach ($images as $image) {
+                // On génère un nouveau nom de fichier
+                $fichier = md5(uniqid()) . '.' . $image->guessExtension();
+
+                // On copie le fichier dans le dossier uploads
+                $image->move(
+                    $this->getParameter('pictures_directory'),
+                    $fichier
+                );
+
+                // On crée l'image dans la base de données
+                $img = new Pictures();
+                $img->setName($fichier);
+                $review->addImage($img);
+            }
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($review);
+            $entityManager->flush();
+
+            $flashBag->add('success', 'The review has been made successfully.');
+        } else {
+            $flashBag->add('error', 'The booking form is invalid.');
+        }
+
+        return $this->redirectToRoute('app_front_travel_show', ['travel' => $travel->getId()]);
+    }
 
 
 
@@ -868,4 +841,97 @@ class FrontController extends AbstractController
 
 
 
+
+
+    #[Route('/omra/{id}', name: 'app_front_omra_show', methods: ['GET'])]
+    public function showOmra(
+        Omra $omra,
+        GeographicalRepository $geographicalRepository,
+        CountryRepository $countryRepository,
+        CategoryRepository $categoryRepository,
+        RequestStack $requestStack,
+        OmraRepository $omraRepository,
+        GoodAddressRepository $goodAddressRepository,
+        ArticleRepository $articleRepository
+    ): Response {
+        $geographicals = $geographicalRepository->findAll();
+        $countries = $countryRepository->findAll();
+        $categories = $categoryRepository->findAll();
+        $priceLists = $omra->getPriceLists();
+        $omras = $omraRepository->findAll();
+        /* foreach ($priceLists as $priceList) {
+            $hotels = $priceList->getHotels();
+        } */
+
+        $GoodAddresses = $omra->getGoodAddress();
+        $Reviews = $omra->getReviews();
+        $goodAddresses = $goodAddressRepository->findAll();
+        $articles = $articleRepository->findAll();
+
+
+        // Créer une instance de Reservation et le formulaire de réservation
+        $reservation = new Reservation();
+        $form = $this->createForm(ReservationOfferType::class, $reservation);
+
+        /* $form = $this->createForm(ReservationOfferType::class, $reservation, [
+            'price_lists' => $priceLists,
+        ]); */
+        // Récupérer la requête actuelle depuis le RequestStack
+        $currentRequest = $requestStack->getCurrentRequest();
+
+        return $this->render('front/omra/show.html.twig', [
+            'omra' => $omra,
+            'omras' => $omras,
+            'geographicals' => $geographicals,
+            'countries' => $countries,
+            'goodAddresses' => $goodAddresses,
+            'articles' => $articles,
+            'categories' => $categories,
+            'priceLists' => $priceLists,
+            /* 'hotels' => $hotels, */
+            'GoodAddresses' => $GoodAddresses,
+            'Reviews' => $Reviews,
+            'form' => $form->createView(),
+            'currentRequest' => $currentRequest,
+        ]);
+    }
+
+
+
+
+    #[Route('/{omra}/omra/reservation', name: 'app_front_omra_reservation', methods: ['POST'])]
+    public function createReservationOmra(Request $request, Omra $omra, Security $security, PriceListRepository $priceListRepository, FlashBagInterface $flashBag): Response
+    {
+        if (!$security->getUser()) {
+            // Rediriger vers la page de connexion
+            return $this->redirectToRoute('app_login');
+        }
+
+        /* $priceLists = $travel->getPriceLists(); */
+
+        $reservation = new Reservation();
+        $form = $this->createForm(ReservationOfferType::class, $reservation);
+
+        /* $form = $this->createForm(ReservationFormType::class, $reservation, [
+            'price_lists' => $priceLists,
+        ]); */
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $client = $this->getUser();
+            $reservation->setAgence($omra->getAgence());
+            $reservation->setOffer($omra);
+            $reservation->setClient($client);
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($reservation);
+            $entityManager->flush();
+
+            $flashBag->add('success', 'La réservation a été effectuée avec succès.');
+        } else {
+            $flashBag->add('error', 'Le formulaire de réservation est invalide.');
+        }
+
+        return $this->redirectToRoute('app_front_omra_show', ['omra' => $omra->getId()]);
+    }
 }

@@ -3,10 +3,11 @@
 
 {% block top_menu %}
 
-	<!--page title start-->
-	<div class="page_title" data-stellar-background-ratio="0" data-stellar-vertical-offset="0" style="background-image:url({{asset(" /front/assets/images/Home/home4.jpg")}});">
+
+		<!--page title start-->
+	<div class="page_title" data-stellar-background-ratio="0" data-stellar-vertical-offset="0" style="background-image:url({{asset("/front/assets/images/Home/home4.jpg")}});">
 		<ul>
-			<li><a href="javascript:;">Hiking &nbsp Details &nbsp for &nbsp{{hiking.title}}</a></li>
+			<li><a href="javascript:;">Hiking Details for {{hiking.title}}</a></li>
 		</ul>
 	</div>
 	<!--page title end-->
@@ -27,41 +28,41 @@
 					<div class="travelite_left_sidebar">
 
 						{# <aside class="widget destination_widget">
-																															<h4 class="widget-title">chosse geographocal</h4>
-																															<div class="travel_checkbox_round">
-																																{% for geographocal in geographicals %}
-																																	<input type="checkbox" id="singapore">
-																																	<label for="singapore">{{geographocal.location}}</label>
-																																{% endfor %}
-																								
-																															</div>
-																								
-																														</aside> #}
+																																											<h4 class="widget-title">chosse geographocal</h4>
+																																											<div class="travel_checkbox_round">
+																																												{% for geographocal in geographicals %}
+																																													<input type="checkbox" id="singapore">
+																																													<label for="singapore">{{geographocal.location}}</label>
+																																												{% endfor %}
+																																				
+																																											</div>
+																																				
+																																										</aside> #}
 
 
 						{# <aside class="widget destination_widget">
-																															<h4 class="widget-title">chosse country</h4>
-																															<div class="travel_checkbox_round">
-																																{% for country in countries %}
-																																	<input type="checkbox" id="Default">
-																																	<label for="Default">{{country.intitule}}</label>
-																																{% endfor %}
-																								
-																								
-																															</div>
-																								
-																														</aside> #}
+																																											<h4 class="widget-title">chosse country</h4>
+																																											<div class="travel_checkbox_round">
+																																												{% for country in countries %}
+																																													<input type="checkbox" id="Default">
+																																													<label for="Default">{{country.intitule}}</label>
+																																												{% endfor %}
+																																				
+																																				
+																																											</div>
+																																				
+																																										</aside> #}
 
 						{# <aside class="widget category_widget">
-																															<h4 class="widget-title">Category</h4>
-																															<div class="travel_checkbox_round">
-																																{% for category in categories %}
-																																	<input type="checkbox" id="default_1">
-																																	<label for="default_1">{{category.style}}</label>
-																																{% endfor %}
-																															</div>
-																								
-																														</aside> #}
+																																											<h4 class="widget-title">Category</h4>
+																																											<div class="travel_checkbox_round">
+																																												{% for category in categories %}
+																																													<input type="checkbox" id="default_1">
+																																													<label for="default_1">{{category.style}}</label>
+																																												{% endfor %}
+																																											</div>
+																																				
+																																										</aside> #}
 
 							<aside class="widget hotel_widgets "> <h4 class="widget-title">Other Hiking</h4>
 							<ul>
@@ -186,9 +187,9 @@
 								<br><br>
 								<div class="top_head_bar">
 									<h4>{{hiking.title}}</h4>
-									
-										<span class="sub_city">{{hiking.region.intitule}}</span>
-									
+
+									<span class="sub_city">{{hiking.region.intitule}}</span>
+
 								</div>
 								<br><br><br>
 								<!-- slider start -->
@@ -210,10 +211,10 @@
 
 								<!-- Booking area Start-->
 								{# <div class="booking_area_section">
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																														<p>{{travel.description|raw}}</p>
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																							
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																							
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																													</div> #}
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																														<p>{{travel.description|raw}}</p>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																							
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																							
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																													</div> #}
 								<!-- Booking area End -->
 
 								<!-- package tabs start -->
@@ -226,7 +227,7 @@
 												<a href="#tab_search_2" class="">Price list</a>
 											</li>
 											{# 											<li><a href="#tab_search_4" class="">Hiking not included</a></li>
-																																												 #}
+																																																																		 #}
 											<li>
 												<a href="#tab_search_5" class="">Good address</a>
 											</li>
@@ -317,13 +318,13 @@
 															<div
 																class="left_lists col-lg-4 col-md-4">
 																{# <h5 class="includes_text">
-																																																																																	Hiking included:</h5> #}
+																																																																																																																	Hiking included:</h5> #}
 																<table>
-																	{% for hiking in price.ExcursionsIncluded %}
-																		<tr>
-																			<td class="label_list">{{hiking.title}}</td>
-																		</tr>
-																	{% endfor %}
+																	{# {% for hiking in price.ExcursionsIncluded %}
+																																																				<tr>
+																																																					<td class="label_list">{{hiking.title}}</td>
+																																																				</tr>
+																																																			{% endfor %} #}
 																</table>
 															</div>
 															<div class="right_includes col-lg-8 col-md-8">
@@ -437,7 +438,7 @@
 
 																</ul>
 																{# <span class="doller_pricing">
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																			$50</span> #}
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																			$50</span> #}
 
 
 																<div class="full_width main_recent_wrap">

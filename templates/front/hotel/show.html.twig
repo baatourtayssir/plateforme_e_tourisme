@@ -3,10 +3,10 @@
 
 {% block top_menu %}
 
-	<!--page title start-->
-	<div class="page_title" data-stellar-background-ratio="0" data-stellar-vertical-offset="0" style="background-image:url({{asset(" /front/assets/images/Home/home4.jpg")}});">
+			<!--page title start-->
+	<div class="page_title" data-stellar-background-ratio="0" data-stellar-vertical-offset="0" style="background-image:url({{asset("/front/assets/images/Home/home4.jpg")}});">
 		<ul>
-			<li><a href="javascript:;">DETAILS &nbsp OF &nbsp  A &nbsp{{hotel.intitule}}</a></li>
+			<li><a href="javascript:;">DETAILS  OF   A {{hotel.intitule}}</a></li>
 		</ul>
 	</div>
 	<!--page title end-->
@@ -70,24 +70,20 @@
 				<!-- right_part start -->
 				<div class="col-lg-4 col-md-4 col-sm-12 event_right_side">
 					<div class="travalite_latest_event">
-						<h4 class="right_event_title">offers of this hotel</h4>
+						<h4 class="right_event_title">Good Address</h4>
 						<ul>
-							{% for offer in offers %}
+							{% for address in goodAddresses[1:5] %}
 								<li>
-									<div class="latest_event_date">
-										{% for country in offer.countries %}
-
-
-											<span>{{country.intitule}}</span>
-										</div>
-									{% endfor %}
+									<div class="latest_event_date"></div>
 									<div class="left_latest_thumb">
-										<img src="{{ asset('uploads/images/offer/picture/' ~ offer.picture) }}" alt="latest event">
+										<img src="{{ asset('uploads/images/goodAddress/picture/' ~ address.picture) }}" alt="latest event">
 									</div>
 									<div class="lates_event_right_side">
 										<h4>
-											<a href="#">{{offer.title}}</a>
+											<a href="#">{{address.intitule}}</a>
 										</h4>
+										{# <p>{{address.description|raw}}</p> #}
+
 									</div>
 
 								</li>
