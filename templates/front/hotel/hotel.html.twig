@@ -1,0 +1,75 @@
+{% extends 'front/home.html.twig' %}
+{% block avion %}{% endblock %}
+{% block top_menu %}
+
+	<!--page title start-->
+	<div class="page_title" data-stellar-background-ratio="0" data-stellar-vertical-offset="0" style="background-image:url({{asset(" /front/assets/images/Home/home4.jpg")}});">
+		<ul>
+			<li><a href="javascript:;">Hotels</a></li>
+		</ul>
+	</div>
+	<!--page title end-->
+	<div class="clearfix"></div>
+
+
+{% endblock %}
+
+{% block content %}
+
+	<!-- special offers section start -->
+	<div class="full_width travelite_world_section">
+		<div
+			class="container">
+			<!-- sorting places section -->
+			<div class="row">
+				<div class="full_width sorting_places_section">
+					<div
+						class="row">
+						<!--  place sort start -->
+						{% for hotel in hotels %}
+
+							<div class="col-lg-4 col-md-4 col-sm-6">
+
+								<div class="sorting_places_wrap grid_sorting">
+									<div class="top_head_bar">
+										<h4>
+											<a href="#">{{hotel.intitule}}</a>
+										</h4>
+										<span class="time_date">
+											<i class="fa fa-clock-o"></i>
+											{{hotel.region.intitule}}</span>
+									</div>
+									<a href="{{path('app_front_hotel_show',{'id': hotel.id})}}">
+										<div class="thumb_wrape">
+											<img src="{{ asset('uploads/images/hotel/picture/' ~ hotel.picture) }}" alt="Grid pic">
+										</div>
+									</a>
+									<div class="bottom_desc">
+										<h5>
+											<i class="icon-location4 mr-1"></i>
+											{{hotel.address}}</h5>
+										<!-- desc icons Start-->
+
+										<!-- desc icons End-->
+									</div>
+								</div>
+
+							</div>
+
+						{% endfor %}
+						<!--  place sort End -->
+
+
+					</div>
+
+
+				</div>
+
+			</div>
+			<!-- sorting places section -->
+		</div>
+	</div>
+	<!-- special offers section end -->
+
+
+{% endblock %}

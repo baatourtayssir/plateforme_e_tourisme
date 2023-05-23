@@ -14,6 +14,9 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use App\Entity\PriceList;
+use Doctrine\ORM\EntityRepository;
+
 
 
 
@@ -37,24 +40,31 @@ class ReservationType extends AbstractType
                 'choice_label' => 'lastname',
                 'label' => 'User Last Name',
             ])
-            ->add('dateReservation', DateType::class, [
-                'widget' => 'choice',
-                'input'  => 'datetime_immutable'
 
-            ])
-            /*  ->add('dateReservation', DateTimeType::class, [
-                'widget' => 'single_text',
-                'label' => 'Date de réservation',
-                'html5' => false,
-                'format' => 'yyyy-MM-dd HH:mm:ss',
-                'attr' => ['class' => 'datetimepicker'],
-            ]) */
-            ->add('status', TextareaType::class, ['attr' => ['class' => 'form-control']])
-            ->add('message', TextareaType::class, ['attr' => ['class' => 'form-control']])
-            ->add('note', TextareaType::class, ['attr' => ['class' => 'form-control']])
             ->add('offer', EntityType::class, ['class' => Offer::class, 'choice_label' => 'title', 'attr' => ['class' => 'form-control select-search']])
-            /*             ->add('agence', EntityType::class, ['class' => Agence::class, 'choice_label' => 'name', 'attr' => ['class' => 'form-control']])
- */;
+            /* ->add('priceList', EntityType::class, [
+                'class' => PriceList::class,
+                'choice_label' => 'name',
+                'placeholder' => 'Choose a price list',
+                'required' => true,
+                'label' => 'Price List',
+                'choices' => [],
+                'query_builder' => function (EntityRepository $repository) use ($options) {
+                    $offer = $options['data']->getOffer();
+
+                    return $repository->createQueryBuilder('pl')
+                        ->andWhere('pl.offer = :offer')
+                        ->setParameter('offer', $offer);
+                },
+            ]) */
+            ->add('priceList', EntityType::class, ['class' => PriceList::class, 'choice_label' => 'title','group_by'  => 'offer.title', 'attr' => ['class' => 'form-control select-search']])
+
+            ;
+    }
+
+    public function setDefaultChoices(OptionsResolver $resolver, $choices): void
+    {
+        $resolver->setDefault('choices', $choices);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

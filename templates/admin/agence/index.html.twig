@@ -59,7 +59,7 @@
 					<th>Email</th>
 					<th>Phone number</th>
 					<th colspan="2">Adress</th>
-					<th>Actions</th>
+					<th class="text-center">Actions</th>
 				</tr>
 
 
@@ -80,7 +80,7 @@
 					<td></td>
 
 						<td>
-							<div class="row">
+							<div class="modal-footer">
 								<a href="{{ path('app_agence_edit', {'id': agence.id}) }}" class="btn btn-primary btn-sm mr-1"> <i class="icon-pencil7 mr-1 {# icon-2x #} "></i>Edit
 								</a>
 								<a class="btn btn-danger btn-sm text-white" data-toggle="modal" data-target="#modal_Delete{{agence.id}}"> <i class="icon-bin mr-1{# icon-2x #}"></i>Delete</a>

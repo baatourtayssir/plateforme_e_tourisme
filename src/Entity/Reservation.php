@@ -6,6 +6,7 @@ use App\Repository\ReservationRepository;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Event\LifecycleEventArgs;
 
 #[ORM\Entity(repositoryClass: ReservationRepository::class)]
 class Reservation
@@ -15,17 +16,9 @@ class Reservation
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
+    #[ORM\Column(type: 'datetime_immutable')]
     private ?\DateTimeInterface $dateReservation = null;
 
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $status = null;
-
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $message = null;
-
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $note = null;
                                                                                        
     #[ORM\ManyToOne(inversedBy: 'reservations')]
     private ?Offer $offer = null;
@@ -36,23 +29,16 @@ class Reservation
     #[ORM\ManyToOne(inversedBy: 'reservations')]
     private ?Client $client = null;
 
+    #[ORM\ManyToOne(inversedBy: 'reservations')]
+    private ?PriceList $priceList = null;
+
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-/*     public function getDateReservation(): ?\DateTimeInterface
-    {
-        return $this->dateReservation;
-    }
 
-    public function setDateReservation(\DateTimeInterface $dateReservation): self
-    {
-        $this->dateReservation = $dateReservation;
-
-        return $this;
-    } */
 
     public function getDateReservation(): ?DateTimeImmutable
     {
@@ -66,41 +52,17 @@ class Reservation
         return $this;
     }
 
-    public function getStatus(): ?string
+    
+
+    #[ORM\PrePersist]
+    public function prePersist(LifecycleEventArgs $event): void
     {
-        return $this->status;
+        if ($this->dateReservation === null) {
+            $this->dateReservation = new DateTimeImmutable();
+        }
     }
 
-    public function setStatus(string $status): self
-    {
-        $this->status = $status;
 
-        return $this;
-    }
-
-    public function getMessage(): ?string
-    {
-        return $this->message;
-    }
-
-    public function setMessage(string $message): self
-    {
-        $this->message = $message;
-
-        return $this;
-    }
-
-    public function getNote(): ?string
-    {
-        return $this->note;
-    }
-
-    public function setNote(string $note): self
-    {
-        $this->note = $note;
-
-        return $this;
-    }
 
     public function getOffer(): ?Offer
     {
@@ -134,6 +96,18 @@ class Reservation
     public function setClient(?Client $client): self
     {
         $this->client = $client;
+
+        return $this;
+    }
+
+    public function getPriceList(): ?PriceList
+    {
+        return $this->priceList;
+    }
+
+    public function setPriceList(?PriceList $priceList): self
+    {
+        $this->priceList = $priceList;
 
         return $this;
     }

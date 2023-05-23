@@ -5,7 +5,7 @@
 
 
 	<!--page title start-->
-	<div class="page_title" data-stellar-background-ratio="0" data-stellar-vertical-offset="0" style="background-image:url({{asset("/front/assets/images/Home/home4.jpg")}});">
+	<div class="page_title" data-stellar-background-ratio="0" data-stellar-vertical-offset="0" style="background-image:url({{asset(" /front/assets/images/Home/home4.jpg")}});">
 		<ul>
 			<li><a href="javascript:;">Cruise &nbsp Details &nbsp for &nbsp{{cruise.title}}</a></li>
 		</ul>
@@ -27,45 +27,44 @@
 				<div class="col-lg-3 col-md-3 col-sm-12">
 					<div class="travelite_left_sidebar">
 
-						<aside class="widget destination_widget">
-							<h4 class="widget-title">chosse geographocal</h4>
-							<div class="travel_checkbox_round">
-								{% for geographocal in geographicals %}
-									<input type="checkbox" id="singapore">
-									<label for="singapore">{{geographocal.location}}</label>
-								{% endfor %}
-
-							</div>
-
-						</aside>
-
-
-						<aside class="widget destination_widget">
-							<h4 class="widget-title">chosse country</h4>
-							<div class="travel_checkbox_round">
-								{% for country in countries %}
-									<input type="checkbox" id="Default">
-									<label for="Default">{{country.intitule}}</label>
-								{% endfor %}
+						{# <aside class="widget destination_widget">
+																									<h4 class="widget-title">chosse geographocal</h4>
+																									<div class="travel_checkbox_round">
+																										{% for geographocal in geographicals %}
+																											<input type="checkbox" id="singapore">
+																											<label for="singapore">{{geographocal.location}}</label>
+																										{% endfor %}
+																		
+																									</div>
+																		
+																								</aside> #}
 
 
-							</div>
+						{# <aside class="widget destination_widget">
+																									<h4 class="widget-title">chosse country</h4>
+																									<div class="travel_checkbox_round">
+																										{% for country in countries %}
+																											<input type="checkbox" id="Default">
+																											<label for="Default">{{country.intitule}}</label>
+																										{% endfor %}
+																		
+																		
+																									</div>
+																		
+																								</aside> #}
 
-						</aside>
+						{# <aside class="widget category_widget">
+																									<h4 class="widget-title">Category</h4>
+																									<div class="travel_checkbox_round">
+																										{% for category in categories %}
+																											<input type="checkbox" id="default_1">
+																											<label for="default_1">{{category.style}}</label>
+																										{% endfor %}
+																									</div>
+																		
+																								</aside> #}
 
-						<aside class="widget category_widget">
-							<h4 class="widget-title">Accomodation</h4>
-							<div class="travel_checkbox_round">
-								{% for category in categories %}
-									<input type="checkbox" id="default_1">
-									<label for="default_1">{{category.style}}</label>
-								{% endfor %}
-							</div>
-
-						</aside>
-
-						<aside class="widget hotel_widgets">
-							<h4 class="widget-title">Other cruises</h4>
+							<aside class="widget hotel_widgets"> <h4 class="widget-title">Other cruises</h4>
 							<ul>
 								{% for croisiere in cruises[:5] %}
 
@@ -243,7 +242,7 @@
 
 										<div class="inner_content">
 											<div class="inner_title">
-												<i class="fa fa-check-square-o"></i>
+												<i class="icon-checkmark3 icon-2x text-success mr-2"></i>
 												Included</div>
 											<p>{{cruise.inclus|raw}}</p>
 
@@ -252,7 +251,8 @@
 
 										<div class="inner_content">
 											<div class="inner_title">
-												<i class="fa fa-square-o"></i>
+												<i class="icon-cross2 mr-2 icon-2x text-danger"></i>
+
 												Not included</div>
 											<p>{{cruise.nonInclus|raw}}</p>
 										</div>
@@ -475,24 +475,13 @@
 									<div class="sidebar_form">
 										{{ form_start(form, { 'action': path('app_front_cruise_reservation', {'cruise': cruise.id}), 'method': 'POST' }) }}
 
-
-										<br>
 										<div class="destination_field">
 											<label>Price list</label>
-											{{ form_widget(form.note) }}
+											{{ form_widget(form.priceList, { 'attr': {'class': 'form-control select-search'} }) }}
 											<div class="form-error">
-												{{ form_errors(form.note) }}
+												{{ form_errors(form.priceList) }}
 											</div>
 										</div>
-										<br>
-										<div class="destination_field">
-											<label>Message</label>
-											{{ form_widget(form.message) }}
-											<div class="form-error">
-												{{ form_errors(form.message) }}
-											</div>
-										</div>
-
 										<br>
 										<button type="submit" class="btn-travel btn-yellow">{{ button_label|default('Save') }}</button>
 										{{ form_end(form) }}

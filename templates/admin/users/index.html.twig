@@ -81,7 +81,7 @@
 						<td>{{ admin.email }}</td>
 
 
-							<td>
+						<td>
 							{% set super_admin = false %}
 							{% set _admin = false %}
 
@@ -97,24 +97,28 @@
 
 							{% if super_admin %}
 								<p>Super_admin</p>
-							
+
 
 							{% elseif _admin %}
-								<p>Admin<p>
-							{% endif %}
+								<p>Admin</p>
+								<p>
+								{% endif %}
+							</td>
 						</td>
-
 						<td>
 							<div class="modal-footer ">
 								<a href="{{ path('app_admin_edit', {'id': admin.id}) }}" class="btn btn-primary btn-sm mr-1 ">
 									<i class="icon-pencil7 mr-1{# icon-2x #} "></i>
 									Edit
 								</a>
-								<a class="btn btn-danger btn-sm text-white" data-toggle="modal" data-target="#modal_Delete{{admin.id}}">
-									<i class="icon-bin mr-1 {# icon-2x #}"></i>
+								{% if not super_admin %}
 
-									Delete
-								</a>
+									<a class="btn btn-danger btn-sm text-white" data-toggle="modal" data-target="#modal_Delete{{admin.id}}">
+										<i class="icon-bin mr-1 {# icon-2x #}"></i>
+
+										Delete
+									</a>
+								{% endif %}
 							</div>
 						</td>
 					</tr>

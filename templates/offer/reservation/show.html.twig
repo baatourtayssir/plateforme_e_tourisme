@@ -47,12 +47,15 @@
 			<tr>
 				<th>Id</th>
 				<th>Client last name</th>
-				<th>Date</th>
+				<th>Client phone number</th>
+				{# <th>Date</th>
 				<th>Status</th>
 				<th>Massage</th>
-				<th>Note</th>
+				<th>Note</th> #}
 				<th>Offer</th>
-				<th class="text-center">Actions</th>
+				<th>Price list</th>
+				<th>Date reservation</th>
+				<th class="">Actions</th>
 			</tr>
 
 
@@ -62,13 +65,16 @@
 				<tr>
 					<td>{{ reservation.id }}</td>
 					<td>{{reservation.client.lastname}}</td>
-					<td>{{reservation.dateReservation|date("d/m/Y")}}</td>
+					<td>{{reservation.client.phoneNumber}}</td>
+					{# <td>{{reservation.dateReservation|date("d/m/Y")}}</td>
 					<td>{{ reservation.status |raw}}</td>
 					<td>{{ reservation.message |raw}}</td>
-					<td>{{ reservation.note |raw}}</td>
+					<td>{{ reservation.note |raw}}</td> #}
 					<td>{{ reservation.offer.title }}</td>
+					<td>{{reservation.priceList.title}}</td>
+					<td>{{reservation.dateReservation|date("d/m/Y")}}</td>
 					<td>
-						<div class="row ">
+						<div class="modal-footer">
 							<a href="{{ path('app_reservation_edit_reservation', { 'agence': reservation.agence.getId() ,'id': reservation.id}) }}" {# data-toggle="modal" data-target="#modal_edit_add{{reservation.id}}" #} class="btn btn-primary btn-sm mr-1 text-white">
 								<i class="icon-pencil7 mr-1"></i>
 

@@ -32,7 +32,7 @@
 {% block content %}
 	<div class="card">
 		<div class="card-header header-elements-inline">
-			<h6 class="card-title">{{reservation.status|raw}}</h6>
+			<h6 class="card-title"></h6>
 			<div class="header-elements">
 				<div class="list-icons">
 					<a class="list-icons-item" data-action="collapse"></a>
@@ -45,7 +45,7 @@
 		<div class="content justify-content-center align-items-center">
 			{{ form_start(form) }}
 
-			<div {# class="form-control" #}>
+			<div>
 				<i class="fa fa-calendar"></i>
 				{{ form_label(form.client) }}
 				{{ form_widget(form.client, { 'attr': {'class': 'form-control select-search'} }) }}
@@ -54,7 +54,7 @@
 				</div>
 			</div>
 			<br>
-			<div {# class="form-control" #}>
+		{# 	<div >
 				<i class="fa fa-calendar"></i>
 				{{ form_label(form.dateReservation) }}
 				{{ form_widget(form.dateReservation, { 'attr': {'class': 'form-control'} }) }}
@@ -62,8 +62,8 @@
 					{{ form_errors(form.dateReservation) }}
 				</div>
 			</div>
-			<br>
-			<div {# class="form-control" #}>
+			<br> #}
+		{# 	<div>
 				<i class="fa fa-calendar"></i>
 				{{ form_label(form.status) }}
 				{{ form_widget(form.status, { 'attr': {'class': 'summernote'} }) }}
@@ -72,7 +72,7 @@
 				</div>
 			</div>
 			<br>
-			<div {# class="form-control" #}>
+			<div >
 				<i class="fa fa-calendar"></i>
 				{{ form_label(form.message) }}
 				{{ form_widget(form.message, { 'attr': {'class': 'summernote'} }) }}
@@ -81,14 +81,14 @@
 				</div>
 			</div>
 			<br>
-			<div {# class="form-control" #}>
+			<div>
 				<i class="fa fa-calendar"></i>
 				{{ form_label(form.note) }}
 				{{ form_widget(form.note, { 'attr': {'class': 'summernote'} }) }}
 				<div class="form-error">
 					{{ form_errors(form.note) }}
 				</div>
-			</div>
+			</div> #}
 			<br>
 			<div {# class="form-control" #}>
 				<i class="fa fa-calendar"></i>
@@ -100,6 +100,14 @@
 			</div>
 
 			<br>
+			<div {# class="form-control" #}>
+				<i class="fa fa-calendar"></i>
+				{{ form_label(form.priceList) }}
+				{{ form_widget(form.priceList, { 'attr': {'class': 'form-control select-search'} }) }}
+				<div class="form-error">
+					{{ form_errors(form.priceList) }}
+				</div>
+			</div>
 
 			{# 	<div >
 							<i class="fa fa-calendar"></i>

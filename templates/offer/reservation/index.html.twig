@@ -56,11 +56,12 @@
 				<tr>
 					<th>Id</th>
 					<th>Client last name</th>
-					<th>Date</th>
+					{# <th>Date</th>
 					<th>Status</th>
 					<th>Massage</th>
-					<th>Note</th>
+					<th>Note</th> #}
 					<th>Offer</th>
+					<th>Price List</th>
 {# 					<th>Agence</th>
  #}					<th class="text-center">Actions</th>
 				</tr>
@@ -72,11 +73,12 @@
 					<tr>
 						<td>{{ reservation.id }}</td>
 						<td>{{reservation.client.lastname}}</td>
-						<td>{{reservation.dateReservation|date("d/m/Y")}}</td>
+						{# <td>{{reservation.dateReservation|date("d/m/Y")}}</td>
 						<td>{{ reservation.status |raw}}</td>
 						<td>{{ reservation.message |raw}}</td>
-						<td>{{ reservation.note |raw}}</td>
+						<td>{{ reservation.note |raw}}</td> #}
 						<td>{{ reservation.offer.title }}</td>
+						<td>{{reservation.priceList.title}}</td>
 {# 						<td>{{ reservation.agence.name }}</td>
  #}						<td>
 							<div class="row ">

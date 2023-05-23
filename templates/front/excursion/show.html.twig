@@ -4,7 +4,7 @@
 {% block top_menu %}
 
 	<!--page title start-->
-	<div class="page_title" data-stellar-background-ratio="0" data-stellar-vertical-offset="0" style="background-image:url({{asset("/front/assets/images/Home/home4.jpg")}});">
+	<div class="page_title" data-stellar-background-ratio="0" data-stellar-vertical-offset="0" style="background-image:url({{asset(" /front/assets/images/Home/home4.jpg")}});">
 		<ul>
 			<li><a href="javascript:;">Excursion &nbsp Details &nbsp for &nbsp{{excursion.title}}</a></li>
 		</ul>
@@ -26,45 +26,44 @@
 				<div class="col-lg-3 col-md-3 col-sm-12">
 					<div class="travelite_left_sidebar">
 
-						<aside class="widget destination_widget">
-							<h4 class="widget-title">chosse geographocal</h4>
-							<div class="travel_checkbox_round">
-								{% for geographocal in geographicals %}
-									<input type="checkbox" id="singapore">
-									<label for="singapore">{{geographocal.location}}</label>
-								{% endfor %}
-
-							</div>
-
-						</aside>
-
-
-						<aside class="widget destination_widget">
-							<h4 class="widget-title">chosse country</h4>
-							<div class="travel_checkbox_round">
-								{% for country in countries %}
-									<input type="checkbox" id="Default">
-									<label for="Default">{{country.intitule}}</label>
-								{% endfor %}
+						{# <aside class="widget destination_widget">
+																									<h4 class="widget-title">chosse geographocal</h4>
+																									<div class="travel_checkbox_round">
+																										{% for geographocal in geographicals %}
+																											<input type="checkbox" id="singapore">
+																											<label for="singapore">{{geographocal.location}}</label>
+																										{% endfor %}
+																		
+																									</div>
+																		
+																								</aside> #}
 
 
-							</div>
+						{# <aside class="widget destination_widget">
+																									<h4 class="widget-title">chosse country</h4>
+																									<div class="travel_checkbox_round">
+																										{% for country in countries %}
+																											<input type="checkbox" id="Default">
+																											<label for="Default">{{country.intitule}}</label>
+																										{% endfor %}
+																		
+																		
+																									</div>
+																		
+																								</aside> #}
 
-						</aside>
+						{# <aside class="widget category_widget">
+																									<h4 class="widget-title">Category</h4>
+																									<div class="travel_checkbox_round">
+																										{% for category in categories %}
+																											<input type="checkbox" id="default_1">
+																											<label for="default_1">{{category.style}}</label>
+																										{% endfor %}
+																									</div>
+																		
+																								</aside> #}
 
-						<aside class="widget category_widget">
-							<h4 class="widget-title">Accomodation</h4>
-							<div class="travel_checkbox_round">
-								{% for category in categories %}
-									<input type="checkbox" id="default_1">
-									<label for="default_1">{{category.style}}</label>
-								{% endfor %}
-							</div>
-
-						</aside>
-
-						<aside class="widget hotel_widgets ">
-							<h4 class="widget-title">Other Excursion</h4>
+							<aside class="widget hotel_widgets "> <h4 class="widget-title">Other Excursion</h4>
 							<ul>
 								{% for excursion in excursions[:5] %}
 
@@ -89,7 +88,7 @@
 							<div class="travalite_latest_event">
 								<h4 class="right_event_title">Other good addresses</h4>
 								<ul>
-									{% for address in goodAddresses %}
+									{% for address in goodAddresses[1:5] %}
 										<li>
 											<div class="latest_event_date"></div>
 											<div class="left_latest_thumb">
@@ -116,7 +115,7 @@
 							<div class="travalite_latest_event">
 								<h4 class="right_event_title">show articles</h4>
 								<ul>
-									{% for article in articles %}
+									{% for article in articles[:3] %}
 										<li>
 											<div class="latest_event_date"></div>
 											<div class="left_latest_thumb">
@@ -212,20 +211,29 @@
 
 								<!-- Booking area Start-->
 								{# <div class="booking_area_section">
-																																																																																																																																																																																																																																																																																																																																																																																																																																														<p>{{travel.description|raw}}</p>
-																																																																																																																																																																																																																																																																																																																																																																																																																																							
-																																																																																																																																																																																																																																																																																																																																																																																																																																							
-																																																																																																																																																																																																																																																																																																																																																																																																																																													</div> #}
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																						<p>{{travel.description|raw}}</p>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																															
+																																																																																																																																																																																																																																																																																																																																																																																																																																																															
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																					</div> #}
 								<!-- Booking area End -->
 
 								<!-- package tabs start -->
 									<div class="full_width hotel_details_mdl_tab" id="travelite_middle_tabs"> <div class="pcg_tabs_panel">
 										<ul>
-											<li><a href="#tab_search_1">Infomation</a></li>
-											<li><a href="#tab_search_2" class="">Price list</a></li>
-{# 											<li><a href="#tab_search_4" class="">Excursion not included</a></li>
- #}											<li><a href="#tab_search_5" class="">Good address</a></li>
-											<li><a href="#tab_search_3" class="">Review</a></li>
+											<li>
+												<a href="#tab_search_1">Infomation</a>
+											</li>
+											<li>
+												<a href="#tab_search_2" class="">Price list</a>
+											</li>
+											{# 											<li><a href="#tab_search_4" class="">Excursion not included</a></li>
+																																	 #}
+											<li>
+												<a href="#tab_search_5" class="">Good address</a>
+											</li>
+											<li>
+												<a href="#tab_search_3" class="">Review</a>
+											</li>
 										</ul>
 									</div>
 									<!--  tab content start -->
@@ -236,7 +244,7 @@
 
 										<div class="inner_content">
 											<div class="inner_title">
-												<i class="fa fa-check-square-o"></i>
+												<i class="icon-checkmark3 icon-2x text-success mr-2"></i>
 												Included</div>
 											<p>{{excursion.inclus|raw}}</p>
 
@@ -245,7 +253,8 @@
 
 										<div class="inner_content">
 											<div class="inner_title">
-												<i class="fa fa-square-o"></i>
+												<i class="icon-cross2 mr-2 icon-2x text-danger"></i>
+
 												Not included</div>
 											<p>{{excursion.nonInclus|raw}}</p>
 										</div>
@@ -306,9 +315,10 @@
 														<!--  review area start -->
 														<!-- tab include area Start -->
 														<div class="inludes_section">
-															<div class="left_lists col-lg-4 col-md-4">
-																<h5 class="includes_text">
-																	Excursion included:</h5>
+															<div
+																class="left_lists col-lg-4 col-md-4">
+																{# <h5 class="includes_text">
+																																																																	Excursion included:</h5> #}
 																<table>
 																	{% for excursion in price.ExcursionsIncluded %}
 																		<tr>
@@ -428,7 +438,7 @@
 
 																</ul>
 																{# <span class="doller_pricing">
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																			$50</span> #}
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																			$50</span> #}
 
 
 																<div class="full_width main_recent_wrap">
@@ -472,20 +482,11 @@
 										<h4 class="widget-title">Reservation submission</h4>
 										<div class="sidebar_form">
 											{{ form_start(form, { 'action': path('app_front_excursion_reservation', {'excursion': excursion.id}), 'method': 'POST' }) }}
-											<br>
 											<div class="destination_field">
 												<label>Price list</label>
-												{{ form_widget(form.note) }}
+												{{ form_widget(form.priceList, { 'attr': {'class': 'form-control select-search'} }) }}
 												<div class="form-error">
-													{{ form_errors(form.note) }}
-												</div>
-											</div>
-											<br>
-											<div class="destination_field">
-												<label>Message</label>
-												{{ form_widget(form.message) }}
-												<div class="form-error">
-													{{ form_errors(form.message) }}
+													{{ form_errors(form.priceList) }}
 												</div>
 											</div>
 											<br>

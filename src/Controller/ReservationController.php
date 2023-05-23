@@ -5,16 +5,19 @@ namespace App\Controller;
 use App\Entity\Agence;
 use App\Entity\Offer;
 use App\Entity\Reservation;
+use App\Entity\PriceList;
 use App\Form\ReservationType;
 use App\Repository\AgenceRepository;
 use App\Repository\ReservationRepository;
 use App\Repository\OfferExcursionRepository;
 use App\Repository\OfferRepository;
 use DateTimeImmutable;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\ORM\EntityManagerInterface;
 
 #[Route('/reservation')]
 class ReservationController extends AbstractController
@@ -29,7 +32,7 @@ class ReservationController extends AbstractController
 
 
 
-/*     #[Route('/', name: 'app_reservation_show', methods: ['GET'])]
+    /*     #[Route('/', name: 'app_reservation_show', methods: ['GET'])]
     public function show($agence, Request $request)
     {
         $entityManager = $this->getDoctrine()->getManager();
@@ -57,16 +60,85 @@ class ReservationController extends AbstractController
             'reservations' => $reservations,
         ]);
     }  */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*      #[Route('/', name: 'app_reservation_show', methods: ['GET'])]
+    public function show($agence, Request $request)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $reservations = $this->getDoctrine()->getRepository(Reservation::class)->findBy(['agence' => $agence]);
+
+        $reservation = null; // Initialise la variable à null avant la boucle
+
+        foreach ($reservations as $res) {
+            $form = $this->createForm(ReservationType::class, $res);
+            $form->get('priceList')->getConfig()->getOption('choices')->setDefaultChoices($form->getConfig()->getOption('choices'));
+
+            $form->handleRequest($request);
+
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $entityManager->persist($res);
+                $entityManager->flush();
+                return $this->redirectToRoute('app_reservation_index', [], Response::HTTP_SEE_OTHER);
+            }
+
+            $formView = $form->createView();
+            $reservation = $res; // Affecte la réservation courante à la variable $reservation
+        }
+
+        // Vérifie si une réservation a été trouvée
+        if (!$reservation) {
+            $reservation = new Reservation();
+            $agenceEntity = $entityManager->getRepository(Agence::class)->find($agence);
+            $reservation->setAgence($agenceEntity);
+            $form = $this->createForm(ReservationType::class, $reservation);
+        } else {
+            $form = $this->createForm(ReservationType::class, $reservation);
+            $formView = $form->createView();
+        }
+
+        $formView = $form->createView();
+
+        return $this->render('offer/reservation/show.html.twig', [
+            'reservation' => $reservation,
+            'form' => $formView,
+            'reservations' => $reservations,
+        ]);
+    } */
+
+
+
+
+
+
+
+
+
+
     #[Route('/', name: 'app_reservation_show', methods: ['GET'])]
     public function show($agence, Request $request)
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $reservations = $this->getDoctrine()->getRepository(Reservation::class)->findBy(['agence' => $agence]); 
+        $reservations = $this->getDoctrine()->getRepository(Reservation::class)->findBy(['agence' => $agence]);
     
         $reservation = null; // Initialise la variable à null avant la boucle
     
         foreach ($reservations as $res) {
             $form = $this->createForm(ReservationType::class, $res);
+    
             $form->handleRequest($request);
     
             if ($form->isSubmitted() && $form->isValid()) {
@@ -99,7 +171,15 @@ class ReservationController extends AbstractController
         ]);
     }
     
-    
+
+
+
+
+
+
+
+
+
 
 
 
@@ -108,6 +188,8 @@ class ReservationController extends AbstractController
     public function new(Request $request, int $id, AgenceRepository $agenceRepository, ReservationRepository $reservationRepository): Response
     {
         $reservation = new Reservation();
+        $reservation->setDateReservation(new \DateTimeImmutable());
+ 
         $form = $this->createForm(ReservationType::class, $reservation);
         $form->handleRequest($request);
 
@@ -189,6 +271,8 @@ class ReservationController extends AbstractController
     public function newReservation(Request $request, int $id, AgenceRepository $agenceRepository, ReservationRepository $reservationRepository): Response
     {
         $reservation = new Reservation();
+        $reservation->setDateReservation(new \DateTimeImmutable());
+
         $form = $this->createForm(ReservationType::class, $reservation);
         $form->handleRequest($request);
 

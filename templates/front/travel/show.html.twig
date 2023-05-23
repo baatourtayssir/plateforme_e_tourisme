@@ -26,45 +26,44 @@
 				<div class="col-lg-3 col-md-3 col-sm-12">
 					<div class="travelite_left_sidebar">
 
-						<aside class="widget destination_widget">
-							<h4 class="widget-title">chosse geographocal</h4>
-							<div class="travel_checkbox_round">
-								{% for geographocal in geographicals %}
-									<input type="checkbox" id="singapore">
-									<label for="singapore">{{geographocal.location}}</label>
-								{% endfor %}
-
-							</div>
-
-						</aside>
-
-
-						<aside class="widget destination_widget">
-							<h4 class="widget-title">chosse country</h4>
-							<div class="travel_checkbox_round">
-								{% for country in countries %}
-									<input type="checkbox" id="Default">
-									<label for="Default">{{country.intitule}}</label>
-								{% endfor %}
+						{# <aside class="widget destination_widget">
+																			<h4 class="widget-title">chosse geographocal</h4>
+																			<div class="travel_checkbox_round">
+																				{% for geographocal in geographicals %}
+																					<input type="checkbox" id="singapore">
+																					<label for="singapore">{{geographocal.location}}</label>
+																				{% endfor %}
+												
+																			</div>
+												
+																		</aside> #}
 
 
-							</div>
+						{# <aside class="widget destination_widget">
+																			<h4 class="widget-title">chosse country</h4>
+																			<div class="travel_checkbox_round">
+																				{% for country in countries %}
+																					<input type="checkbox" id="Default">
+																					<label for="Default">{{country.intitule}}</label>
+																				{% endfor %}
+												
+												
+																			</div>
+												
+																		</aside> #}
 
-						</aside>
+						{# <aside class="widget category_widget">
+																			<h4 class="widget-title">Category</h4>
+																			<div class="travel_checkbox_round">
+																				{% for category in categories %}
+																					<input type="checkbox" id="default_1">
+																					<label for="default_1">{{category.style}}</label>
+																				{% endfor %}
+																			</div>
+												
+																		</aside> #}
 
-						<aside class="widget category_widget">
-							<h4 class="widget-title">Accomodation</h4>
-							<div class="travel_checkbox_round">
-								{% for category in categories %}
-									<input type="checkbox" id="default_1">
-									<label for="default_1">{{category.style}}</label>
-								{% endfor %}
-							</div>
-
-						</aside>
-
-						<aside class="widget hotel_widgets ">
-							<h4 class="widget-title">Other travels</h4>
+							<aside class="widget hotel_widgets "> <h4 class="widget-title">Other travels</h4>
 							<ul>
 								{% for voyage in travels[:5] %}
 
@@ -212,10 +211,10 @@
 
 								<!-- Booking area Start-->
 								{# <div class="booking_area_section">
-																																																																																																																																																																																																																																																																																																																																																																																																																																														<p>{{travel.description|raw}}</p>
-																																																																																																																																																																																																																																																																																																																																																																																																																																							
-																																																																																																																																																																																																																																																																																																																																																																																																																																							
-																																																																																																																																																																																																																																																																																																																																																																																																																																													</div> #}
+																																																																																																																																																																																																																																																																																																																																																																																																																																																														<p>{{travel.description|raw}}</p>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																							
+																																																																																																																																																																																																																																																																																																																																																																																																																																																							
+																																																																																																																																																																																																																																																																																																																																																																																																																																																													</div> #}
 								<!-- Booking area End -->
 
 								<!-- package tabs start -->
@@ -236,7 +235,7 @@
 
 										<div class="inner_content">
 											<div class="inner_title">
-												<i class="fa fa-check-square-o"></i>
+												<i class="icon-checkmark3 icon-2x text-success mr-2"></i>
 												Included</div>
 											<p>{{travel.inclus|raw}}</p>
 
@@ -245,7 +244,7 @@
 
 										<div class="inner_content">
 											<div class="inner_title">
-												<i class="fa fa-square-o"></i>
+												<i class="icon-cross2 mr-2 icon-2x text-danger"></i>
 												Not included</div>
 											<p>{{travel.nonInclus|raw}}</p>
 										</div>
@@ -431,7 +430,7 @@
 																		<a href="#">{{excursionNontIncluded.excursion}}</a>
 																	</h4>
 																	{# <span class="time_date">
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																										<i class="fa fa-clock-o"></i>4days</span> #}
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																												<i class="fa fa-clock-o"></i>4days</span> #}
 																</div>
 																<div class="bottom_desc">
 																	<h5>
@@ -445,8 +444,8 @@
 																		<button type="submit" value="proceed to next step" class="btn_green proceed_buttton btns">view Details</button>
 																	</div>
 																	{# <div>
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																										<a href="#" class="list_view_details btns">view Details</a>
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																									</div> #}
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																												<a href="#" class="list_view_details btns">view Details</a>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																											</div> #}
 																</div>
 															</div>
 														</div>
@@ -484,7 +483,7 @@
 
 																</ul>
 																{# <span class="doller_pricing">
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																			$50</span> #}
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																			$50</span> #}
 
 
 																<div class="full_width main_recent_wrap">
@@ -531,17 +530,9 @@
 											<br>
 											<div class="destination_field">
 												<label>Price list</label>
-												{{ form_widget(form.note) }}
+												{{ form_widget(form.priceList, { 'attr': {'class': 'form-control select-search'} }) }}
 												<div class="form-error">
-													{{ form_errors(form.note) }}
-												</div>
-											</div>
-											<br>
-											<div class="destination_field">
-												<label>Message</label>
-												{{ form_widget(form.message) }}
-												<div class="form-error">
-													{{ form_errors(form.message) }}
+													{{ form_errors(form.priceList) }}
 												</div>
 											</div>
 											<br>
@@ -551,7 +542,21 @@
 											{% for flashMessage in app.flashes('success') %}
 												<div class="alert alert-success">
 													{{ flashMessage }}
+
 												</div>
+												{# <aside class="widget modify_search_widget">
+													<br><br>
+													<div class="tab_details_part hotel_details_tab ui-tabs-panel ui-corner-bottom ui-widget-content">
+														<h4 class="widget-title">Your reservation details</h4>
+														<div class="sidebar_form">
+
+														{{reservation.priceList}}
+														
+														</div>
+													</div>
+												</aside> #}
+
+
 											{% endfor %}
 											{% for flashMessage in app.flashes('error') %}
 												<div class="alert alert-danger">

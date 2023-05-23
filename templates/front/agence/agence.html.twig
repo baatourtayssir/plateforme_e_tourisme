@@ -2,8 +2,8 @@
 {% block avion %}{% endblock %}
 {% block top_menu %}
 
-	<!--page title start-->
-	<div class="page_title" data-stellar-background-ratio="0" data-stellar-vertical-offset="0" style="background-image:url({{asset(" /front/assets/images/Home/home4.jpg")}});">
+		<!--page title start-->
+	<div class="page_title" data-stellar-background-ratio="0" data-stellar-vertical-offset="0" style="background-image:url({{asset("/front/assets/images/Home/home4.jpg")}});">
 		<ul>
 			<li><a href="javascript:;">Agencies</a></li>
 		</ul>
@@ -37,15 +37,13 @@
 						<a href="{{path('app_front_agence_show',{'id': agence.id})}}">
 							<div
 								class="col_25 ractangle_box_cover">
-								{# <div class="circle_icon">
-																																																																						<i class="fa fa-soundcloud big_circle"></i>
-																																																																					</div> #}
-								<div class="full_width ractangle_inner">
+								
+								<div class="full_width ">
 									<img src="{{ asset('uploads/images/agences/logo/' ~ agence.brochureFilename) }}" alt="house">
-									<div class="inner_ovelay">
+									{# <div class="inner_ovelay">
 										<h4>{{agence.name}}</h4>
-										{# <p>8 tours available</p> #}
-									</div>
+										
+									</div> #}
 								</div>
 
 								<div class="circle_icon">
@@ -67,46 +65,5 @@
 	<!-- slider_tab_main end -->
 
 
-	<!-- team section start -->
-		<div class="full_width team_section"> <div class="container">
-			<div class="row">
-				<div class="heading_team">
-					<h3>OUR PARTNERS</h3>
-					<p>We take pride in collaborating with prestigious partners.</p>
-				</div>
-				{% for agence in agencies %}
-
-
-					<!-- team first start -->
-
-					<div class="col-lg-3 col-md-3 col-sm-6">
-						<div class="tr_team_wrapper full_width">
-							<a href="{{path('app_front_agence_show',{'id': agence.id})}}">
-								<div class="thumb_wrap">
-									<img src="{{ asset('uploads/images/agences/logo/' ~ agence.brochureFilename) }}" class="img-responsive" alt="">
-								</div>
-								<div class="tr_team_desc">
-									<h5>{{agence.name}}</h5>
-									{# <div class="title_tag">
-																																		CEO
-																																	</div> #}
-									<div class="team_social_media">
-										<i class="fa fa-facebook"></i>
-										<i class="fa fa-pinterest-p"></i>
-										<i class="fa fa-dribbble"></i>
-										<i class="fa fa-twitter"></i>
-									</div>
-								</div>
-							</a>
-						</div>
-					</div>
-
-					<!-- team first end -->
-				{% endfor %}
-
-			</div>
-		</div>
-	</div>
-	<!-- team section start -->
 
 {% endblock %}

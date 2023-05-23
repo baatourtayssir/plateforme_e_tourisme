@@ -1,0 +1,122 @@
+{% extends 'front/home.html.twig' %}
+{% block avion %}{% endblock %}
+{% block top_menu %}
+
+	<!--page title start-->
+	<div class="page_title" data-stellar-background-ratio="0" data-stellar-vertical-offset="0" style="background-image:url({{asset("/front/assets/images/Home/home4.jpg")}});">
+		<ul>
+			<li><a href="javascript:;">Offers in {{country.intitule}}</a></li>
+		</ul>
+	</div>
+	<!--page title end-->
+	<div class="clearfix"></div>
+
+
+{% endblock %}
+
+{% block content %}
+
+	<!-- special offers section start -->
+	<div class="full_width travelite_world_section">
+		<div class="container">
+			<div class="row">
+				<div class="heading_team">
+					<h3>Offer list</h3>
+					<p>Embark on an unforgettable journey with our meticulously crafted organized tour, where you'll experience the perfect blend of adventure, exploration, and relaxation.</p>
+				</div>
+				<div class="flights_special_offers full_width">
+					<div
+						class="row">
+                        {% for offer in offers %}
+                            
+                       
+						<!-- first ractangle start -->
+                        
+						<div class="col-lg-3 col-md-3 col-sm-6">
+							<div class=" full_width offer_box_wrapper">
+								{# <div class="circle_icon">
+									20%
+									<span>off</span>
+								</div> #}
+                                <a href="{{path('app_front_offer_show',{'id': offer.id})}}">
+								<div class="img_overlay_wrapper">
+									<img src="{{ asset('uploads/images/offer/picture/' ~ offer.picture) }}" class="img-responsive" alt="offer">
+									<div class="img_overlay"></div>
+								</div>
+								<div class="full_width offer_inner">
+									<h4>{{offer.title}}</h4>
+								</div>
+                                </a>
+							</div>
+						</div>
+                        
+						<!-- first ractangle End -->
+                         {% endfor %}
+
+                          {% for excursion in regionExcursions %}
+                            
+                       
+						<!-- first ractangle start -->
+                        
+						<div class="col-lg-3 col-md-3 col-sm-6">
+							<div class=" full_width offer_box_wrapper">
+								{# <div class="circle_icon">
+									20%
+									<span>off</span>
+								</div> #}
+                                <a href="{{path('app_front_offer_show',{'id': excursion.id})}}">
+								<div class="img_overlay_wrapper">
+									<img src="{{ asset('uploads/images/offer/picture/' ~ excursion.picture) }}" class="img-responsive" alt="offer">
+									<div class="img_overlay"></div>
+								</div>
+								<div class="full_width offer_inner">
+									<h4>{{excursion.title}}</h4>
+								</div>
+                                </a>
+							</div>
+						</div>
+                        
+						<!-- first ractangle End -->
+                         {% endfor %}
+
+
+                          {% for hiking in regionHikings %}
+                            
+                       
+						<!-- first ractangle start -->
+                        
+						<div class="col-lg-3 col-md-3 col-sm-6">
+							<div class=" full_width offer_box_wrapper">
+								{# <div class="circle_icon">
+									20%
+									<span>off</span>
+								</div> #}
+                                <a href="{{path('app_front_offer_show',{'id': hiking.id})}}">
+								<div class="img_overlay_wrapper">
+									<img src="{{ asset('uploads/images/offer/picture/' ~ hiking.picture) }}" class="img-responsive" alt="offer">
+									<div class="img_overlay"></div>
+								</div>
+								<div class="full_width offer_inner">
+									<h4>{{hiking.title}}</h4>
+								</div>
+                                </a>
+							</div>
+						</div>
+                        
+						<!-- first ractangle End -->
+                         {% endfor %}
+
+
+						
+					</div>
+				</div>
+				{# <div class="full_width destination_button">
+					<a href="#" class="btn_green btns feature_more_btn">more offers</a>
+				</div> #}
+			</div>
+		</div>
+	</div>
+	<!-- special offers section end -->
+
+{% endblock %}
+

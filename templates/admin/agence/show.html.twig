@@ -59,75 +59,75 @@
 					</div>
 
 					{# <div class="profile-cover">
-																																																			<div class="profile-cover-img" style="background-image: url(../../../../global_assets/images/placeholders/avion.jpg)"></div>
-																																																			<div class="media align-items-center text-center text-md-left flex-column flex-md-row m-0">
-																																																				<div class="mr-md-3 mb-2 mb-md-0">
-																																																					<a href="#" class="profile-thumb">
-																																																						<img src="{{ asset('uploads/images/agences/logo/' ~ agence.brochurefilename) }}" class="border-white rounded-circle" width="48" height="48" alt="">
-																																																					</a>
-																																																				</div>
-																																													
-																																																				<div class="media-body text-white">
-																																													
-																																																					<h1 class="mb-0">{{agence.name}}</h1>
-																																																					<span class="d-block">{{agence.adress}}</span>
-																																																				</div>
-																																													
-																																																			</div>
-																																																		</div>
-																																													
-																																													
-																																																		<div class="d-flex align-items-start flex-column flex-md-row">
-																																													
-																																													
-																																																			<div class="tab-content w-100 order-2 order-md-1">
-																																																				<div
-																																																					class="tab-pane fade active show" id="activity">
-																																													
-																																																					<!-- Sales stats -->
-																																																					<div class="card">
-																																																						<div class="card-header header-elements-sm-inline">
-																																																							<h1 class="card-title">{{agence.name}}</h1>
-																																													
-																																													
-																																																						</div>
-																																													
-																																																						<div class="card-body">
-																																																							<div class="chart-container">
-																																																								<div class="chart has-fixed-height" id="weekly_statistics">
-																																													
-																																																									<h6>
-																																																										<i class="icon-mail5 text-muted"></i>
-																																																										{{agence.email}}</h6>
-																																																									<h6>
-																																																										<i class="icon-phone2"></i>
-																																																										{{agence.phoneNumber}}</h6>
-																																													
-																																													
-																																																									<br><br><br><br>
-																																																									<div class="card-body" style="background-color:#f8fdf7;">
+																																																								<div class="profile-cover-img" style="background-image: url(../../../../global_assets/images/placeholders/avion.jpg)"></div>
+																																																								<div class="media align-items-center text-center text-md-left flex-column flex-md-row m-0">
+																																																									<div class="mr-md-3 mb-2 mb-md-0">
+																																																										<a href="#" class="profile-thumb">
+																																																											<img src="{{ asset('uploads/images/agences/logo/' ~ agence.brochurefilename) }}" class="border-white rounded-circle" width="48" height="48" alt="">
+																																																										</a>
+																																																									</div>
+																																																		
+																																																									<div class="media-body text-white">
+																																																		
+																																																										<h1 class="mb-0">{{agence.name}}</h1>
+																																																										<span class="d-block">{{agence.adress}}</span>
+																																																									</div>
+																																																		
+																																																								</div>
+																																																							</div>
+																																																		
+																																																		
+																																																							<div class="d-flex align-items-start flex-column flex-md-row">
+																																																		
+																																																		
+																																																								<div class="tab-content w-100 order-2 order-md-1">
+																																																									<div
+																																																										class="tab-pane fade active show" id="activity">
+																																																		
+																																																										<!-- Sales stats -->
 																																																										<div class="card">
-																																																											<h4>{{agence.description|raw}}</h4>
+																																																											<div class="card-header header-elements-sm-inline">
+																																																												<h1 class="card-title">{{agence.name}}</h1>
+																																																		
+																																																		
+																																																											</div>
+																																																		
+																																																											<div class="card-body">
+																																																												<div class="chart-container">
+																																																													<div class="chart has-fixed-height" id="weekly_statistics">
+																																																		
+																																																														<h6>
+																																																															<i class="icon-mail5 text-muted"></i>
+																																																															{{agence.email}}</h6>
+																																																														<h6>
+																																																															<i class="icon-phone2"></i>
+																																																															{{agence.phoneNumber}}</h6>
+																																																		
+																																																		
+																																																														<br><br><br><br>
+																																																														<div class="card-body" style="background-color:#f8fdf7;">
+																																																															<div class="card">
+																																																																<h4>{{agence.description|raw}}</h4>
+																																																															</div>
+																																																														</div>
+																																																													</div>
+																																																												</div>
+																																																												<div class="text-right ">
+																																																													<a class="btn btn-primary text-white" data-toggle="modal" data-target="#modal_theme_primary{{agence.id}}">
+																																																														<i class="icon-pencil3 mr-2 "></i>
+																																																														Edit
+																																																		
+																																																		
+																																																													</a>
+																																																												</div>
+																																																		
+																																																		
+																																																											</div>
+																																																											<!-- /sales stats -->
 																																																										</div>
 																																																									</div>
 																																																								</div>
-																																																							</div>
-																																																							<div class="text-right ">
-																																																								<a class="btn btn-primary text-white" data-toggle="modal" data-target="#modal_theme_primary{{agence.id}}">
-																																																									<i class="icon-pencil3 mr-2 "></i>
-																																																									Edit
-																																													
-																																													
-																																																								</a>
-																																																							</div>
-																																													
-																																													
-																																																						</div>
-																																																						<!-- /sales stats -->
-																																																					</div>
-																																																				</div>
-																																																			</div>
-																																																		</div> #}
+																																																							</div> #}
 
 					<!-- Details -->
 					<div class="card">
@@ -164,26 +164,29 @@
 
 							</div>
 							{# 	<ul class="list-inline list-inline-dotted text-muted mb-0">
-																																																																																																																								<li class="list-inline-item">
-																																																																																																																									<i class="icon-envelop4 mr-1"></i>
-																																																																																																																									{{agence.email}}</li>
-																																																																																																																								<li class="list-inline-item">
-																																																																																																																									<i class="icon-phone2 mr-1"></i>
-																																																																																																																									{{agence.phoneNumber}}</li>
-																																																																																																																							</ul>
-																																																																																																																							<br> #}
+																																																																																																																															<li class="list-inline-item">
+																																																																																																																																<i class="icon-envelop4 mr-1"></i>
+																																																																																																																																{{agence.email}}</li>
+																																																																																																																															<li class="list-inline-item">
+																																																																																																																																<i class="icon-phone2 mr-1"></i>
+																																																																																																																																{{agence.phoneNumber}}</li>
+																																																																																																																														</ul>
+																																																																																																																														<br> #}
 							<div class="mb-4">
 								<h6 class="font-weight-semibold">Description</h6>
 								{{agence.description|raw}}
 							</div>
 
 							<div class="text-right ">
-								<a class="btn btn-primary text-white" data-toggle="modal" data-target="#modal_theme_primary{{agence.id}}">
-									<i class="icon-pencil3 mr-2 "></i>
-									Edit
+								{% if  is_granted ('ROLE_SUPER_AGENT') %}
+
+									<a class="btn btn-primary text-white" data-toggle="modal" data-target="#modal_theme_primary{{agence.id}}">
+										<i class="icon-pencil3 mr-2 "></i>
+										Edit
 
 
-								</a>
+									</a>
+								{% endif %}
 							</div>
 						</div>
 					</div>
@@ -450,25 +453,25 @@
 
 
 			{# 			<div class="timeline-row">
-																															<div class="timeline-icon">
-																																<img src="../../../../global_assets/images/placeholders/placeholder.jpg" alt="">
-																															</div>
-																											
-																															<div class="content">
-																											
-																																<div>
-																																	<h2 class="timeline-title">Offers list</h2>
-																											
-																																	{% if offers is not empty %}
-																																		{{ render(controller('App\\Controller\\OfferController::index', { 'agence': agence })) }}
-																																	{% endif %}
-																											
-																																</div>
-																											
-																															</div>
-																											
-																											
-																														</div> #}
+																																		<div class="timeline-icon">
+																																			<img src="../../../../global_assets/images/placeholders/placeholder.jpg" alt="">
+																																		</div>
+																														
+																																		<div class="content">
+																														
+																																			<div>
+																																				<h2 class="timeline-title">Offers list</h2>
+																														
+																																				{% if offers is not empty %}
+																																					{{ render(controller('App\\Controller\\OfferController::index', { 'agence': agence })) }}
+																																				{% endif %}
+																														
+																																			</div>
+																														
+																																		</div>
+																														
+																														
+																																	</div> #}
 
 			{# {% if reservations is not empty %} #}
 			<div class="timeline-row">
